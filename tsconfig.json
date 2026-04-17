@@ -9,6 +9,13 @@
     "dist"
   ],
   "compilerOptions": {
-    "strictNullChecks": true
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "strictNullChecks": true,
+    "ignoreDeprecations": "6.0"
   }
 }
