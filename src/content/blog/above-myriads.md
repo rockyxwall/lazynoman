@@ -4,8 +4,6 @@ description: "Everything you need to know about Above Myriads — its real sourc
 pubDate: 2026-04-08
 updatedDate: 2026-04-08
 tags: ["manhua", "above myriads", "cultivation", "beyond myriad peoples", "above ten thousand people", "i am unaware that i am the peerless martial god", "web novel", "xianxia"]
-category: "Manhua Guide"
-readingTime: "8 min read"
 heroImage: '../../assets/img/above-myriads.jpg'
 draft: false
 ---
