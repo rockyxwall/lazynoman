@@ -1,8 +1,8 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import { ModeToggle } from '@/components/ModeToggle';
 ---
-
 <header>
 	<nav>
 		<h2><a href="/">{SITE_TITLE}</a></h2>
@@ -13,6 +13,7 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/anime">Anime</HeaderLink>
 			<HeaderLink href="/movie">Movies</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
+			<ModeToggle client:load />
 		</div>
 	</nav>
 </header>
@@ -57,3 +58,22 @@ import HeaderLink from './HeaderLink.astro';
 		}
 	}
 </style>
+
+<script is:inline>
+	const getThemePreference = () => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
+		}
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	};
+	const isDark = getThemePreference() === 'dark';
+	document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+ 
+	if (typeof localStorage !== 'undefined') {
+		const observer = new MutationObserver(() => {
+			const isDark = document.documentElement.classList.contains('dark');
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		});
+		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+	}
+</script>
