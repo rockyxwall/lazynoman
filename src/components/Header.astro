@@ -13,7 +13,7 @@ import { ModeToggle } from '@/components/ModeToggle';
 			<HeaderLink href="/anime">Anime</HeaderLink>
 			<HeaderLink href="/movie">Movies</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
-			<ModeToggle client:load />
+			<HeaderLink><ModeToggle client:load /></HeaderLink>
 		</div>
 	</nav>
 </header>
@@ -21,8 +21,9 @@ import { ModeToggle } from '@/components/ModeToggle';
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		background: var(--background);
+		border-bottom: 1px solid var(--border);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 5%);
 	}
 	h2 {
 		margin: 0;
@@ -32,6 +33,7 @@ import { ModeToggle } from '@/components/ModeToggle';
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
+		color: var(--foreground);
 	}
 	nav {
 		display: flex;
@@ -40,13 +42,18 @@ import { ModeToggle } from '@/components/ModeToggle';
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--black);
+		color: var(--foreground);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 	}
 	nav a.active {
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		border-bottom-color: var(--primary);
+	}
+	.internal-links {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 	.social-links,
 	.social-links a {

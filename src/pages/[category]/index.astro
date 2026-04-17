@@ -57,16 +57,16 @@ const { categoryName, posts } = Astro.props;
 			}
 			.title {
 				margin: 0;
-				color: rgb(var(--black));
+				color: var(--foreground);
 				line-height: 1;
 			}
 			.date {
 				margin: 0;
-				color: rgb(var(--gray));
+				color: var(--muted-foreground);
 			}
 			ul li a:hover h4,
 			ul li a:hover .date {
-				color: rgb(var(--accent));
+				color: var(--primary);
 			}
 			@media (max-width: 720px) {
 				ul {
