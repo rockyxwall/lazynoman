@@ -6,7 +6,7 @@ updatedDate: 2026-04-08
 tags: ["review", "novel review", "cultivation", "simulation", "webnovel", "eastern fantasy", "group chat novel", "weak to strong"]
 category: "Novel Review"
 readingTime: "6 min read"
-heroImage: '../../assets/img/simulation-towards-immortality-in-a-group-chat.jpg'
+heroImage: '/src/assets/img/novel/simulation-towards-immortality-in-a-group-chat.jpg'
 draft: false
 ---
 ## Is It Worth Reading?
