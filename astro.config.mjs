@@ -10,7 +10,9 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: 'https://lazynoman.com',
   integrations: [mdx(), sitemap(), react()],
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: 'compile'
+  }),
   vite: {
     plugins: [tailwindcss()],
     resolve: {
