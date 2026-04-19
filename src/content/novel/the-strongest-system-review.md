@@ -1,11 +1,10 @@
 ---
 title: "The Strongest System — My First Cultivation Novel"
-description: ""
+description: "Lin Fan is loud, shameless, prideful, and hilarious in this classic cultivation novel. A perfect starter for the genre with a system that keeps things light and funny."
 pubDate: 2026-04-15
 updatedDate: 2026-04-15
 tags: ["chinese", "web novel", "cultivation", "system", "comedy"]
 heroImage: ''
-draft: false
 ---
 
 ## Novel Info
