@@ -7,8 +7,6 @@ tags: ["reincarnation","chinese", "web novel", "cultivation", "system"]
 heroImage: ''
 ---
 
-## Others Level Up, but I Pursue Cultivation!
-
 | | |
 |---|---|
 | **Author** | Three Five Mysterious Seven |

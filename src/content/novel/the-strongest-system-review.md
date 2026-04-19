@@ -7,8 +7,6 @@ tags: ["chinese", "web novel", "cultivation", "system", "comedy"]
 heroImage: ''
 ---
 
-## Novel Info
-
 | | |
 |---|---|
 | **Author** | Xinfeng |
