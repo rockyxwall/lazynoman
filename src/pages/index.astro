@@ -1,9 +1,14 @@
 ---
-import '../styles/globals.css'
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('post'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
 ---
 
 <!doctype html>
@@ -11,27 +16,51 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="flex flex-col min-h-screen">
+	<body class="flex flex-col min-h-screen bg-background text-foreground">
 		<Header />
-		<main class="flex-grow py-8 md:py-16">
-			<h1 class="text-4xl md:text-6xl font-bold mb-6">🧑‍🚀 Hello, LazyNoman!</h1>
-			<div class="space-y-6 text-foreground max-w-none">
-				<p>
-					Welcome to LazyNoman. This is a space for sharing thoughts, projects, and ideas.
+		
+		<main class="grow pt-8 pb-16 px-4">
+			{/* Hero Section */}
+			<section class="py-12 md:py-20 mb-12 border-b border-border">
+				<div class="max-w-4xl mx-auto text-center space-y-6">
+					<h1 class="text-4xl md:text-7xl font-bold tracking-tight">
+						Welcome to <span class="text-primary">{SITE_TITLE}</span>
+					</h1>
+					<p class="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+						Exploring the worlds of <span class="font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-4">Novels</span> and <span class="font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-4">Manga</span> with in-depth reviews and thoughts.
+					</p>
+					<div class="flex flex-wrap justify-center gap-4 pt-4">
+						<a href="/novel" class="px-8 py-3 bg-primary text-primary-foreground font-bold rounded-lg shadow-lg hover:opacity-90 transition-all no-underline">Browse Novels</a>
+						<a href="/manga" class="px-8 py-3 bg-secondary text-secondary-foreground font-bold rounded-lg shadow-sm border border-border hover:bg-muted transition-all no-underline">Explore Mangas</a>
+					</div>
+				</div>
+			</section>
+
+			{/* Recent Updates */}
+			<section class="max-w-4xl mx-auto">
+				<div class="mb-8">
+					<h2 class="text-3xl font-bold">Recent Updates</h2>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+					{posts.map((post) => (
+						<PostCard post={post} />
+					))}
+				</div>
+			</section>
+
+			{/* About Brief */}
+			<section class="max-w-4xl mx-auto mt-20 p-8 rounded-2xl bg-muted/50 border border-border text-center">
+				<h2 class="text-2xl font-bold mb-4">About the Project</h2>
+				<p class="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+					LazyNoman is a space built for clarity and efficiency. Whether you're looking for your next read or want to dive into a detailed manga analysis, we've got you covered.
 				</p>
-				<p>
-					The site is built with efficiency and simplicity in mind, providing a clean interface for reading and exploration.
-				</p>
-				<p>Feel free to explore the content:</p>
-				<ul class="list-disc pl-6 space-y-2">
-					<li>Read our latest content in the <strong>Novels</strong> and <strong>Manga</strong> sections.</li>
-					<li>Learn more about the project in the <strong>About</strong> page.</li>
-				</ul>
-				<p>
-					Stay tuned for more updates and content!
-				</p>
-			</div>
+				<a href="/about" class="inline-flex items-center font-bold text-primary hover:underline">
+					Learn more about us <span class="ml-1">&rarr;</span>
+				</a>
+			</section>
 		</main>
+
 		<Footer />
 	</body>
 </html>
