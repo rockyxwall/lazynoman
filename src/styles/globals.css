@@ -137,10 +137,7 @@
   }
 
   main {
-    width: 720px;
-    max-width: calc(100% - 2em);
-    margin: auto;
-    padding: 3em 1em;
+    @apply container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-4xl;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -167,9 +164,7 @@
     text-decoration: underline;
   }
 
-  p { margin-bottom: 1em; }
-
-  .prose p { margin-bottom: 2em; }
+  p { margin-bottom: 2em; }
 
   textarea, input { font-size: 16px; }
 
@@ -212,7 +207,6 @@
 
   @media (max-width: 720px) {
     body { font-size: 18px; }
-    main { padding: 1em; }
   }
 }
 

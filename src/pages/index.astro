@@ -11,24 +11,26 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen">
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, LazyNoman!</h1>
-			<p>
-				Welcome to LazyNoman. This is a space for sharing thoughts, projects, and ideas.
-			</p>
-			<p>
-				The site is built with efficiency and simplicity in mind, providing a clean interface for reading and exploration.
-			</p>
-			<p>Feel free to explore the content:</p>
-			<ul>
-				<li>Read our latest content in the <strong>Novels</strong> and <strong>Manga</strong> sections.</li>
-				<li>Learn more about the project in the <strong>About</strong> page.</li>
-			</ul>
-			<p>
-				Stay tuned for more updates and content!
-			</p>
+		<main class="flex-grow py-8 md:py-16">
+			<h1 class="text-4xl md:text-6xl font-bold mb-6">🧑‍🚀 Hello, LazyNoman!</h1>
+			<div class="space-y-6 text-foreground max-w-none">
+				<p>
+					Welcome to LazyNoman. This is a space for sharing thoughts, projects, and ideas.
+				</p>
+				<p>
+					The site is built with efficiency and simplicity in mind, providing a clean interface for reading and exploration.
+				</p>
+				<p>Feel free to explore the content:</p>
+				<ul class="list-disc pl-6 space-y-2">
+					<li>Read our latest content in the <strong>Novels</strong> and <strong>Manga</strong> sections.</li>
+					<li>Learn more about the project in the <strong>About</strong> page.</li>
+				</ul>
+				<p>
+					Stay tuned for more updates and content!
+				</p>
+			</div>
 		</main>
 		<Footer />
 	</body>

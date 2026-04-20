@@ -3,64 +3,19 @@ import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 import { ModeToggle } from '@/components/ModeToggle';
 ---
-<header>
-	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
+
+<header class="border-b bg-background shadow-sm px-4">
+	<nav class="container mx-auto flex items-center justify-between max-w-4xl">
+		<h2 class="text-xl font-bold m-0 leading-none">
+			<a href="/" class="no-underline text-foreground hover:text-primary transition-colors">{SITE_TITLE}</a>
+		</h2>
+		<div class="flex items-center gap-2 sm:gap-4">
 			<HeaderLink href="/novel">Novels</HeaderLink>
 			<HeaderLink href="/manga">Manga</HeaderLink>
-			<!-- <HeaderLink href="/anime">Anime</HeaderLink> -->
-			<!-- <HeaderLink href="/movie">Movies</HeaderLink> -->
 			<HeaderLink href="/about">About</HeaderLink>
-			<HeaderLink><ModeToggle client:load /></HeaderLink>
+			<div class="ml-2 py-4">
+				<ModeToggle client:load />
+			</div>
 		</div>
 	</nav>
 </header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: var(--background);
-		border-bottom: 1px solid var(--border);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-		color: var(--foreground);
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--foreground);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--primary);
-	}
-	.internal-links {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
-</style>

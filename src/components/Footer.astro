@@ -2,28 +2,10 @@
 const today = new Date();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} LazyNoman. All rights reserved.
+<footer class="py-8 text-center border-t bg-background text-muted-foreground mt-auto">
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+		<p class="text-sm mb-0">
+			&copy; {today.getFullYear()} LazyNoman. All rights reserved.
+		</p>
+	</div>
 </footer>
-<style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: var(--background);
-		border-top: 1px solid var(--border);
-		color: var(--muted-foreground);
-		text-align: center;
-	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-	.social-links a {
-		text-decoration: none;
-		color: var(--muted-foreground);
-	}
-	.social-links a:hover {
-		color: var(--foreground);
-	}
-</style>

@@ -9,6 +9,12 @@ export async function getStaticPaths() {
 		props: post,
 	}));
 }
+
+const { slug } = Astro.params;
+if (slug !== undefined && (slug.startsWith('@') || slug.startsWith('_'))) {
+  return new Response(null, { status: 404 });
+}
+
 type Props = CollectionEntry<'post'>;
 
 const post = Astro.props;
