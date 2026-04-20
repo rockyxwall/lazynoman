@@ -29,9 +29,9 @@ const { categoryName, posts } = Astro.props;
 	<head>
 		<BaseHead title={`${categoryName} | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="flex flex-col min-h-screen">
+	<body>
 		<Header />
-		<main class="flex-grow py-8 md:py-12">
+		<main>
             <header class="mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}</h1>
                 <p class="text-lg text-muted-foreground">

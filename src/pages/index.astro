@@ -16,10 +16,10 @@ const posts = (await getCollection('post'))
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="flex flex-col min-h-screen bg-background text-foreground">
+	<body>
 		<Header />
 		
-		<main class="grow pt-8 pb-16 px-4">
+		<main>
 			{/* Hero Section */}
 			<section class="py-12 md:py-20 mb-12 border-b border-border">
 				<div class="max-w-4xl mx-auto text-center space-y-6">
