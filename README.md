@@ -1,6 +1,6 @@
-# LazyNoman Blog
+# LazyNoman
 
-A personal blog project for sharing thoughts, projects, and ideas.
+A personal space for sharing thoughts, projects, and ideas.
 
 ## 🚀 Project Structure
 

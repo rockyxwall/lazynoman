@@ -1,19 +1,19 @@
-# GEMINI.md - LazyNoman Blog Project
+# GEMINI.md - LazyNoman Project
 
 ## Project Overview
-This project is the **LazyNoman Blog**, a personal space for sharing thoughts, projects, and ideas. It is built with a focus on simplicity, efficiency, and clean content delivery.
+This project is **LazyNoman**, a personal space for sharing thoughts, projects, and ideas. It is built with a focus on simplicity, efficiency, and clean content delivery.
 
 ### Key Technologies
 - **Astro**: The core web framework (v6.x).
 - **TypeScript**: Used for type safety throughout the project.
 - **MDX**: Support for Markdown with embedded components.
-- **Astro Content Collections**: Type-safe management of blog posts in `src/content/blog`.
+- **Astro Content Collections**: Type-safe management of content in `src/content`.
 - **Bun**: The recommended package manager and runtime.
 - **Sitemap & RSS**: Integrated for SEO and content distribution.
 
 ## Project Structure
 - `src/components/`: Reusable Astro components (Header, Footer, etc.).
-- `src/content/`: Blog post source files (Markdown and MDX).
+- `src/content/`: Content source files (Markdown and MDX).
 - `src/layouts/`: Common page layouts (e.g., `BlogPost.astro`).
 - `src/pages/`: File-based routing for the website.
 - `src/styles/`: Global CSS styles.
@@ -33,7 +33,7 @@ The project uses `bun` for managing dependencies and running scripts.
 
 ## Development Conventions
 ### Content Management
-- Blog posts are stored in `src/content/blog/`.
+- Content is stored in `src/content/`.
 - Frontmatter must follow the schema defined in `src/content.config.ts`:
   - `title`: string
   - `description`: string
