@@ -32,70 +32,132 @@ const { categoryName, posts } = Astro.props;
 		<style>
 			main {
 				width: 960px;
+                max-width: 100%;
 			}
 			ul {
 				display: flex;
-				flex-wrap: wrap;
+				flex-direction: column;
 				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
 				padding: 0;
 			}
 			ul li {
-				width: calc(50% - 1rem);
+				width: 100%;
 			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
+			.card {
+				display: flex;
+				flex-direction: row;
+				gap: 1.5rem;
+				padding: 1.5rem;
+				border: 1px solid var(--border);
 				border-radius: 12px;
+				background: var(--card);
+				text-decoration: none;
+				transition: border-color 0.2s ease, box-shadow 0.2s ease;
+                color: inherit;
 			}
-			ul li a {
-				display: block;
+			.card:hover {
+				border-color: var(--primary);
+                box-shadow: var(--box-shadow);
+			}
+			.card-image {
+				flex: 0 0 240px;
+				height: 160px;
+				object-fit: cover;
+				border-radius: 8px;
+			}
+			.card-content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
 			}
 			.title {
 				margin: 0;
 				color: var(--foreground);
-				line-height: 1;
+				line-height: 1.2;
+                font-size: 1.75rem;
+                font-weight: 700;
 			}
-			.date {
+			.dates {
 				margin: 0;
 				color: var(--muted-foreground);
+                font-size: 0.9rem;
+                display: flex;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 0.5rem;
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: var(--primary);
-			}
+            .description {
+                margin: 0;
+                color: var(--foreground);
+                opacity: 0.8;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .read-more {
+                margin-top: auto;
+                font-weight: 600;
+                color: var(--primary);
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
 			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
+				.card {
+					flex-direction: column;
+                    padding: 1rem;
 				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
+                .card-image {
+                    flex: 0 0 auto;
+                    width: 100%;
+                    height: 200px;
+                }
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-            <h1>{categoryName}</h1>
+            <h1 class="mb-8">{categoryName}</h1>
 			<section>
 				<ul>
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/${post.id}/`}>
+								<a href={`/${post.id}/`} class="card">
 									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
+										<Image 
+                                            width={480} 
+                                            height={320} 
+                                            src={post.data.heroImage} 
+                                            alt="" 
+                                            class="card-image"
+                                        />
 									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+                                    <div class="card-content">
+                                        <h2 class="title">{post.data.title}</h2>
+                                        <div class="dates">
+                                            <span>
+                                                <strong>Published:</strong> <FormattedDate date={post.data.pubDate} />
+                                            </span>
+                                            {post.data.updatedDate && (
+                                                <span>
+                                                    <strong>Updated:</strong> <FormattedDate date={post.data.updatedDate} />
+                                                </span>
+                                            )}
+                                        </div>
+                                        <p class="description">{post.data.description}</p>
+                                        <div class="read-more">
+                                            Read Review &rarr;
+                                        </div>
+                                    </div>
 								</a>
 							</li>
 						))
