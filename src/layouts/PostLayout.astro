@@ -225,7 +225,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   .separator {
     height: 1px;
     background: var(--p-border);
-    margin-bottom: 1.75rem;
+    margin-bottom: 2.5em;
   }
 
   /* ── Prose ─────────────────────────────────────────────────────────── */
@@ -238,17 +238,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
   @media (max-width: 640px) {
     .post-prose { font-size: 1.125rem; } /* 18px mobile */
-  }
-
-  /* Drop cap */
-  .post-prose :global(p:first-of-type::first-letter) {
-    font-family: 'Atkinson', sans-serif;
-    font-size: 4.5em;
-    font-weight: 700;
-    float: left;
-    line-height: 0.8;
-    margin: 0.09em 0.1em 0 0;
-    color: var(--p-primary);
   }
 
   /* Paragraphs */
@@ -371,9 +360,5 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     .title-block.has-hero { margin-top: -3rem; }
 
     .post-title { font-size: clamp(1.625rem, 7.5vw, 2.25rem); }
-
-    .post-prose :global(p:first-of-type::first-letter) {
-      font-size: 3.75em;
-    }
   }
 </style>
