@@ -18,13 +18,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 	<body class="flex flex-col min-h-screen">
 		<Header />
-		<main class="flex-grow py-8 md:py-12">
+		<main class="grow py-8 md:py-12">
 			<article class="max-w-none">
 				<div class="w-full mb-8 md:mb-12">
 					{heroImage && (
 						<Image 
-							width={1020} 
-							height={510} 
 							src={heroImage} 
 							alt="" 
 							class="w-full h-auto rounded-xl shadow-lg border border-border"
