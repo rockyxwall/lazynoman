@@ -22,7 +22,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     <main>
       <article>
 
-        {/* ── Hero Image ──────────────────────────────────────────── */}
+        {/* ── Hero Image ── */}
         {heroImage && (
           <div class="hero-wrapper">
             <Image
@@ -34,10 +34,10 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           </div>
         )}
 
-        {/* ── Title Block ─────────────────────────────────────────── */}
+        {/* ── Title Block ── */}
         <div class={`title-block mx-auto max-w-4xl px-4 sm:px-6 ${heroImage ? 'has-hero' : 'no-hero'}`}>
 
-          {/* ornamental kicker  ─── ◆ ─── */}
+          {/* ornamental kicker  ── ◆ ── */}
           <div class="kicker" aria-hidden="true">
             <span class="kicker-line" />
             <span class="kicker-diamond" />
@@ -63,7 +63,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           <div class="separator" aria-hidden="true" />
         </div>
 
-        {/* ── Prose Body ──────────────────────────────────────────── */}
+        {/* ── Prose Body ── */}
         <div class="mx-auto max-w-4xl px-4 sm:px-6 pb-24">
           <div class="post-prose">
             <slot />
@@ -79,11 +79,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 <style>
   /*
-   * ─────────────────────────────────────────────────────────────────────
+   * ──
    * THEME BRIDGE
    * Mirrors the site's @theme OKLCH tokens so every CSS calculation here
    * stays in sync automatically when the .dark class is toggled on <html>.
-   * ─────────────────────────────────────────────────────────────────────
+   * ──
    */
   :root {
     --p-bg:       oklch(1 0 0);
@@ -104,7 +104,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     --p-muted:    oklch(0.62 0 0);
   }
 
-  /* ── Hero ──────────────────────────────────────────────────────────── */
+  /* ── Hero ── */
   .hero-wrapper {
     position: relative;
     width: 100%;
@@ -137,7 +137,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     );
   }
 
-  /* ── Title Block ───────────────────────────────────────────────────── */
+  /* ── Title Block ── */
   .title-block {
     position: relative;
     z-index: 2;
@@ -148,7 +148,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   .title-block.has-hero  { margin-top: -5.5rem; }
   .title-block.no-hero   { margin-top: 3.5rem; }
 
-  /* ── Kicker ornament  ─── ◆ ─── */
+  /* ── Kicker ornament  ── ◆ ── */
   .kicker {
     display: flex;
     align-items: center;
@@ -173,7 +173,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     display: block;
   }
 
-  /* ── Title ─────────────────────────────────────────────────────────── */
+  /* ── Title ── */
   .post-title {
     font-family: 'Atkinson', sans-serif;
     font-size: clamp(1.875rem, 5vw, 3rem);
@@ -191,7 +191,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
       0 2px 24px color-mix(in oklch, var(--p-bg) 40%, transparent);
   }
 
-  /* ── Meta ──────────────────────────────────────────────────────────── */
+  /* ── Meta ── */
   .post-meta {
     display: flex;
     align-items: center;
@@ -221,14 +221,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     color: var(--p-muted);
   }
 
-  /* ── Separator ─────────────────────────────────────────────────────── */
+  /* ── Separator ─── */
   .separator {
     height: 1px;
     background: var(--p-border);
     margin-bottom: 2.5em;
   }
 
-  /* ── Prose ─────────────────────────────────────────────────────────── */
+  /* ── Prose ── */
   .post-prose {
     font-family: 'Atkinson', 'Geist Variable', sans-serif;
     font-size: 1.25rem;    /* 20px desktop */
@@ -355,7 +355,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     color: var(--p-fg);
   }
 
-  /* ── Mobile ────────────────────────────────────────────────────────── */
+  /* ── Mobile ─── */
   @media (max-width: 640px) {
     .title-block.has-hero { margin-top: -3rem; }
 
