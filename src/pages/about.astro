@@ -1,63 +1,115 @@
 ---
-import AboutHeroImage from '../assets/img/about/blog-placeholder-about.jpg';
-import Layout from '../layouts/PostLayout.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const title = `About | ${SITE_TITLE}`;
+const description = "who even is lazynoman?";
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body class="flex flex-col min-h-screen bg-background text-foreground">
+		<Header />
+		<main class="grow">
+			<article>
+				<span class="inline-block text-xs font-medium text-muted-foreground tracking-widest uppercase mb-4">
+					lazynoman.com — about
+				</span>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+				<h1 class="text-4xl md:text-6xl font-bold mb-6">who even is lazynoman?</h1>
+				<p class="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-relaxed">
+					the short answer: someone who ran out of things to read. the long answer is below.
+				</p>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+				<hr class="my-12" />
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+				<div class="space-y-8">
+					<p>
+						okay so. at some point i hit a wall. i had read so many webnovels, so many manga chapters, watched so much anime
+						that i genuinely ran out of stuff that matched my taste. not like "i can't find anything right now" — i mean i
+						actually exhausted the genres i liked. that's not a brag, it's just what happens when you consume stories the
+						way i do.
+					</p>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+					<p>
+						i'm not a 30-minutes-today, 30-minutes-tomorrow type of person. when i'm into something i sit down and i go.
+						full day. if a manga has finished its story in novel form, i'm reading the novel. if an anime is still airing
+						but the manga is done, i'm reading the manga and probably never coming back to the anime.
+						<span class="text-muted-foreground font-medium italic">(sorry not sorry.)</span> i don't rewatch. i don't reread. i just keep moving
+						forward until there's nothing left.
+					</p>
+
+					<div class="flex flex-wrap gap-4 my-10">
+						<div class="bg-muted/50 border border-border rounded-xl px-5 py-3 text-base">
+							<strong class="text-foreground">130+</strong> webnovels read
+						</div>
+						<div class="bg-muted/50 border border-border rounded-xl px-5 py-3 text-base">
+							<strong class="text-foreground">20,000+</strong> manga/manhwa chapters
+						</div>
+						<div class="bg-muted/50 border border-border rounded-xl px-5 py-3 text-base font-medium">
+							novels &gt; manga &gt; anime
+						</div>
+					</div>
+
+					<p>
+						so when you've consumed that much, two things happen. one — you develop opinions. strong ones. you know what
+						actually works in a story and what's just filler dressed up in pretty art. two — you start wanting to tell
+						other people what's worth their time so they don't have to waste it on the stuff that isn't.
+					</p>
+
+					<p>
+						that's what this site is. i'm not a critic, i'm not a journalist, i'm just someone who's been deep in this
+						world long enough to have a real read on it. i won't sugarcoat. if something is mid i'll say it's mid. if
+						something actually wrecked me in the best way i'll tell you that too.
+					</p>
+
+					<hr class="my-12" />
+
+					<section>
+						<h3 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-6">what i actually like</h3>
+						<div class="flex flex-wrap gap-3 mb-12">
+							{['fantasy', 'isekai (when done right)', 'cultivation novels', 'slow-burn with payoff', 'deep world-building', 'manhwa', 'animation movies'].map(tag => (
+								<span class="text-sm rounded-full px-4 py-1.5 bg-primary/10 text-primary border border-primary/20 font-medium">{tag}</span>
+							))}
+						</div>
+					</section>
+
+					<section>
+						<h3 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-6">what i can't stand</h3>
+						<div class="flex flex-wrap gap-3 mb-12">
+							{['incomplete adaptations', 'filler that goes nowhere', 'anime that stops before the good part', 'rewatching/rereading'].map(tag => (
+								<span class="text-sm rounded-full px-4 py-1.5 bg-destructive/10 text-destructive border border-destructive/20 font-medium">{tag}</span>
+							))}
+						</div>
+					</section>
+
+					<div class="bg-muted/30 border border-border rounded-3xl p-8 md:p-12 mb-12 relative overflow-hidden group">
+						<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
+						<h3 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-4">the big dream</h3>
+						<p class="text-lg md:text-xl leading-relaxed m-0 text-foreground/90">
+							one day i want to build a proper tracking platform — something where you can log every anime, manga, novel,
+							and game in one place and actually see it all together. anilist is great but it doesn't cover everything.
+							that's a project for later. for now this site is where i put my thoughts while i figure out how to build
+							that thing.
+						</p>
+					</div>
+
+					<p class="text-xl">
+						if you're also someone who ran out of good things to read and you're desperately hunting for the next story
+						that won't disappoint you — you're in the right place. welcome.
+					</p>
+
+					<p class="text-muted-foreground mt-16 flex items-center gap-2">
+						— <span class="font-bold text-foreground text-lg tracking-tight">lazynoman</span>
+					</p>
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
