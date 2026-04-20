@@ -14,7 +14,7 @@ This project is **LazyNoman**, a personal space for sharing thoughts, projects, 
 ## Project Structure
 - `src/components/`: Reusable Astro components (Header, Footer, etc.).
 - `src/content/`: Content source files (Markdown and MDX).
-- `src/layouts/`: Common page layouts (e.g., `BlogPost.astro`).
+- `src/layouts/`: Common page layouts (e.g., `PostLayout.astro`).
 - `src/pages/`: File-based routing for the website.
 - `src/styles/`: Global CSS styles.
 - `public/`: Static assets like favicons and fonts.
