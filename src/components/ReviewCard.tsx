@@ -1,21 +1,11 @@
 import React from 'react';
 
 const hlPresets: Record<string, React.CSSProperties> = {
-  red:   { background: "rgba(226,75,74,0.14)",   color: "#e08080" },
-  amber: { background: "rgba(186,117,23,0.18)",  color: "#cfa050" },
-  blue:  { background: "rgba(55,138,221,0.14)",  color: "#6aaedd" },
-  green: { background: "rgba(99,153,34,0.14)",   color: "#85bb44" },
-  gray:  { background: "rgba(255,255,255,0.06)", color: "oklch(0.85 0 0)" },
-};
-
-const verdictPresets: Record<string, string> = {
-  agree:    "#85bb44",
-  disagree: "#e08080",
-  nuance:   "#cfa050",
-  neutral:  "oklch(0.6 0 0)",
-  info:     "#6aaedd",
-  positive: "#85bb44",
-  negative: "#e08080",
+  red:   { background: "color-mix(in srgb, #ef4444 15%, transparent)", color: "color-mix(in srgb, #ef4444 65%, var(--foreground))" },
+  amber: { background: "color-mix(in srgb, #f59e0b 18%, transparent)", color: "color-mix(in srgb, #f59e0b 65%, var(--foreground))" },
+  blue:  { background: "color-mix(in srgb, #3b82f6 15%, transparent)", color: "color-mix(in srgb, #3b82f6 65%, var(--foreground))" },
+  green: { background: "color-mix(in srgb, #22c55e 15%, transparent)", color: "color-mix(in srgb, #22c55e 65%, var(--foreground))" },
+  gray:  { background: "color-mix(in oklch, var(--foreground) 8%, transparent)", color: "var(--foreground)" },
 };
 
 const scoreColors: Record<number, string> = {
@@ -46,7 +36,6 @@ export default function ReviewCard({
   score = 3,
   scoreNote,
   sections = [],
-  verdict = [],
 }: any) {
   const initials = name.split(/[_\s]/).map((w: any) => w[0]?.toUpperCase()).slice(0, 2).join("");
   const clamped = Math.max(1, Math.min(5, Math.round(score)));
@@ -73,12 +62,12 @@ export default function ReviewCard({
 
       <div>
         {sections.map((sec: any, i: number) => (
-          <div key={i} style={{ borderBottom: i < sections.length - 1 ? "0.5px solid oklch(0.28 0 0)" : "none" }}>
+          <div key={i} style={{ borderBottom: i < sections.length - 1 ? "0.5px solid var(--border)" : "none" }}>
             <div style={s.sectionHeading}>
               <span>{sec.heading}</span>
               <span style={s.headingRule} />
             </div>
-            <p style={s.sectionText}>{renderText(sec.text)}</p>
+            <div style={s.sectionText}>{renderText(sec.text)}</div>
             {sec.myReaction && (
               <div style={s.reaction}>
                 <span style={s.lnTag}>ln //</span>
@@ -88,97 +77,77 @@ export default function ReviewCard({
           </div>
         ))}
       </div>
-
-      {verdict.length > 0 && (
-        <div style={s.verdictStrip}>
-          {verdict.map((v: any, i: number) => (
-            <div key={i} style={{
-              ...s.verdictPill,
-              color: verdictPresets[v.color] || verdictPresets.neutral,
-              borderRight: i < verdict.length - 1 ? "0.5px solid oklch(0.28 0 0)" : "none",
-            }}>
-              {v.label}
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
 
 const s: Record<string, React.CSSProperties> = {
   card: {
-    background: "oklch(0.23 0 0)",
-    border: "0.5px solid oklch(0.28 0 0)",
+    background: "var(--card)",
+    border: "0.5px solid var(--border)",
     borderRadius: "0.625rem",
     overflow: "hidden",
     marginBottom: "1.5rem",
-    fontFamily: "'Lora', Georgia, serif",
+    fontFamily: "'Atkinson', 'Geist Variable', sans-serif",
   },
   header: {
     display: "flex", alignItems: "center", gap: "12px",
-    padding: "1rem 1.25rem",
-    borderBottom: "0.5px solid oklch(0.28 0 0)",
-    background: "oklch(0.28 0 0)",
+    padding: "1rem clamp(1rem, 3vw, 1.25rem)",
+    borderBottom: "0.5px solid var(--border)",
+    background: "color-mix(in oklch, var(--secondary) 80%, var(--card))",
   },
   avatar: {
     width: "40px", height: "40px", borderRadius: "50%",
     background: "rgba(192,57,43,0.15)", border: "1px solid rgba(192,57,43,0.35)",
     display: "flex", alignItems: "center", justifyContent: "center",
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", fontWeight: 500,
+    fontFamily: "'Geist Mono', monospace", fontSize: "13px", fontWeight: 500,
     color: "#e07070", flexShrink: 0,
   },
   nameLine: { display: "flex", alignItems: "center", gap: "8px" },
   name: {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "13px",
-    fontWeight: 500, color: "oklch(0.92 0 0)",
+    fontFamily: "'Atkinson', sans-serif", fontSize: "15px",
+    fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.01em",
   },
   badge: {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "10px",
+    fontFamily: "'Geist Mono', monospace", fontSize: "10px",
     padding: "2px 7px", borderRadius: "3px",
-    background: "oklch(0.23 0 0)", color: "oklch(0.65 0 0)",
-    border: "0.5px solid oklch(0.38 0 0)", letterSpacing: "0.04em",
+    background: "color-mix(in oklch, var(--background) 70%, transparent)", color: "var(--muted-foreground)",
+    border: "0.5px solid var(--border)", letterSpacing: "0.04em",
   },
   scoreLine: { display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" },
   stars: { fontSize: "12px", letterSpacing: "1px" },
-  starsEmpty: { fontSize: "12px", letterSpacing: "1px", color: "oklch(0.38 0 0)" },
+  starsEmpty: { fontSize: "12px", letterSpacing: "1px", color: "color-mix(in oklch, var(--muted-foreground) 40%, transparent)" },
   scoreNum: {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "10px",
+    fontFamily: "'Geist Mono', monospace", fontSize: "10px",
     fontWeight: 500, marginLeft: "1px",
   },
   scoreNote: {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: "oklch(0.52 0 0)",
+    fontFamily: "'Geist Mono', monospace", fontSize: "10px", color: "var(--muted-foreground)",
   },
   sectionHeading: {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", fontWeight: 500,
-    letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.58 0 0)",
-    padding: "0.85rem 1.25rem 0", display: "flex", alignItems: "center", gap: "8px",
+    fontFamily: "'Atkinson', sans-serif", fontSize: "13px", fontWeight: 700,
+    letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted-foreground)",
+    padding: "0.85rem clamp(1rem, 3vw, 1.25rem) 0", display: "flex", alignItems: "center", gap: "8px",
   },
-  headingRule: { flex: 1, height: "0.5px", background: "oklch(0.28 0 0)", display: "block" },
+  headingRule: { flex: 1, height: "0.5px", background: "var(--border)", display: "block" },
   sectionText: {
-    fontSize: "14px", lineHeight: 1.75, color: "oklch(0.82 0 0)",
-    padding: "0.55rem 1.25rem 0.75rem",
+    fontSize: "clamp(1rem, 1.2vw + 0.6rem, 1.125rem)", lineHeight: 1.75, color: "var(--foreground)",
+    padding: "0.55rem clamp(1rem, 3vw, 1.25rem) 0.75rem",
   },
   reaction: {
-    margin: "0 1.25rem 0.9rem 2rem",
+    margin: "0 clamp(1rem, 3vw, 1.25rem) 0.9rem clamp(1rem, 5vw, 2rem)",
     padding: "0.45rem 0.75rem",
-    background: "oklch(0.255 0 0)",
-    borderLeft: "1.5px solid oklch(0.38 0 0)",
+    background: "color-mix(in oklch, var(--card) 40%, var(--secondary))",
+    borderLeft: "2px solid color-mix(in oklch, var(--muted-foreground) 50%, transparent)",
     borderRadius: 0,
     display: "flex", gap: "9px", alignItems: "flex-start",
   },
   lnTag: {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", fontWeight: 500,
-    color: "oklch(0.52 0 0)", whiteSpace: "nowrap", paddingTop: "2px",
+    fontFamily: "'Geist Mono', monospace", fontSize: "10px", fontWeight: 500,
+    color: "var(--muted-foreground)", whiteSpace: "nowrap", paddingTop: "2px",
     letterSpacing: "0.05em", flexShrink: 0,
   },
   reactionText: {
-    fontSize: "12.5px", fontStyle: "italic", lineHeight: 1.6, color: "oklch(0.65 0 0)",
-  },
-  verdictStrip: { display: "flex", borderTop: "0.5px solid oklch(0.28 0 0)" },
-  verdictPill: {
-    flex: 1, textAlign: "center",
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "10px",
-    letterSpacing: "0.07em", textTransform: "uppercase", padding: "0.5rem 0.25rem",
+    fontSize: "clamp(0.9rem, 1vw + 0.5rem, 1rem)", fontStyle: "italic", lineHeight: 1.6, color: "var(--muted-foreground)",
   },
 };
