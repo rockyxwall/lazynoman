@@ -16,7 +16,11 @@ export async function getStaticPaths() {
       categoryName: category.charAt(0).toUpperCase() + category.slice(1),
       posts: allPosts
         .filter(post => post.id.startsWith(category + '/'))
-        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+        .sort((a, b) => {
+          const aDate = a.data.updatedDate ?? a.data.pubDate;
+          const bDate = b.data.updatedDate ?? b.data.pubDate;
+          return bDate.valueOf() - aDate.valueOf();
+        })
     }
   }));
 }

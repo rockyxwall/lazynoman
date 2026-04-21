@@ -7,7 +7,11 @@ import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('post'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .sort((a, b) => {
+    const aDate = a.data.updatedDate ?? a.data.pubDate;
+    const bDate = b.data.updatedDate ?? b.data.pubDate;
+    return bDate.valueOf() - aDate.valueOf();
+  })
   .slice(0, 4);
 ---
 
