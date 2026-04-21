@@ -46,17 +46,20 @@ export default function ReviewCard({
 
       <div style={s.header}>
         <div style={s.avatar}>{initials}</div>
-        <div style={{ flex: 1 }}>
-          <div style={s.nameLine}>
+        <div style={{ flex: 1, display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", columnGap: "16px", rowGap: "8px" }}>
+          
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
             <span style={s.name}>{name}</span>
-            <span style={s.badge}>{source}</span>
+            <div style={s.scoreLine}>
+              <span style={{ ...s.stars, color: starColor }}>{"★".repeat(clamped)}</span>
+              <span style={s.starsEmpty}>{"★".repeat(5 - clamped)}</span>
+              <span style={{ ...s.scoreNum, color: starColor }}>{clamped}/5</span>
+              {scoreNote && <span style={s.scoreNote}>· {scoreNote}</span>}
+            </div>
           </div>
-          <div style={s.scoreLine}>
-            <span style={{ ...s.stars, color: starColor }}>{"★".repeat(clamped)}</span>
-            <span style={s.starsEmpty}>{"★".repeat(5 - clamped)}</span>
-            <span style={{ ...s.scoreNum, color: starColor }}>{clamped}/5</span>
-            {scoreNote && <span style={s.scoreNote}>· {scoreNote}</span>}
-          </div>
+
+          <span style={s.badge}>{source}</span>
+
         </div>
       </div>
 
@@ -103,7 +106,6 @@ const s: Record<string, React.CSSProperties> = {
     fontFamily: "'Geist Mono', monospace", fontSize: "13px", fontWeight: 500,
     color: "#e07070", flexShrink: 0,
   },
-  nameLine: { display: "flex", alignItems: "center", gap: "8px" },
   name: {
     fontFamily: "'Atkinson', sans-serif", fontSize: "15px",
     fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.01em",
@@ -114,15 +116,15 @@ const s: Record<string, React.CSSProperties> = {
     background: "color-mix(in oklch, var(--background) 70%, transparent)", color: "var(--muted-foreground)",
     border: "0.5px solid var(--border)", letterSpacing: "0.04em",
   },
-  scoreLine: { display: "flex", alignItems: "center", gap: "4px", marginTop: "4px" },
-  stars: { fontSize: "12px", letterSpacing: "1px" },
-  starsEmpty: { fontSize: "12px", letterSpacing: "1px", color: "color-mix(in oklch, var(--muted-foreground) 40%, transparent)" },
+  scoreLine: { display: "flex", alignItems: "center", gap: "4px" },
+  stars: { fontSize: "13.5px", letterSpacing: "1px" },
+  starsEmpty: { fontSize: "13.5px", letterSpacing: "1px", color: "color-mix(in oklch, var(--muted-foreground) 40%, transparent)" },
   scoreNum: {
-    fontFamily: "'Geist Mono', monospace", fontSize: "10px",
-    fontWeight: 500, marginLeft: "1px",
+    fontFamily: "'Geist Mono', monospace", fontSize: "12px",
+    fontWeight: 600, marginLeft: "2px",
   },
   scoreNote: {
-    fontFamily: "'Geist Mono', monospace", fontSize: "10px", color: "var(--muted-foreground)",
+    fontFamily: "'Geist Mono', monospace", fontSize: "11px", color: "var(--muted-foreground)",
   },
   sectionHeading: {
     fontFamily: "'Atkinson', sans-serif", fontSize: "13px", fontWeight: 700,
