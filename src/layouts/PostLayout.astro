@@ -35,7 +35,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         )}
 
         {/* ── Title Block ── */}
-        <div class={`title-block mx-auto max-w-4xl px-4 sm:px-6 ${heroImage ? 'has-hero' : 'no-hero'}`}>
+        <div class={`title-block mx-auto max-w-4xl ${heroImage ? 'has-hero' : 'no-hero'}`}>
 
           {/* ornamental kicker  ── ◆ ── */}
           <div class="kicker" aria-hidden="true">
@@ -64,7 +64,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         </div>
 
         {/* ── Prose Body ── */}
-        <div class="mx-auto max-w-4xl px-4 sm:px-6 pb-24">
+        <div class="mx-auto max-w-4xl pb-24">
           <div class="post-prose">
             <slot />
           </div>
@@ -342,13 +342,70 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   }
 
   /* Lists */
-  .post-prose :global(ul),
-  .post-prose :global(ol) {
-    padding-left: 1.5em;
+  .post-prose :global(ul) {
+    list-style-type: disc;
+    padding-left: 1.5rem;
     margin-bottom: 1.55em;
   }
 
-  .post-prose :global(li) { margin-bottom: 0.45em; }
+  .post-prose :global(ol) {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.55em;
+  }
+
+  .post-prose :global(li) {
+    margin-bottom: 0.45em;
+    padding-left: 0.35rem;
+  }
+
+  .post-prose :global(li > p) {
+    margin-top: 0.45em;
+    margin-bottom: 0.45em;
+  }
+
+  /* Nested Lists */
+  .post-prose :global(ul ul),
+  .post-prose :global(ol ol),
+  .post-prose :global(ul ol),
+  .post-prose :global(ol ul) {
+    margin-top: 0.45em;
+    margin-bottom: 0.45em;
+  }
+
+  /* Custom marker color */
+  .post-prose :global(li::marker) {
+    color: var(--p-muted);
+    font-weight: 600;
+  }
+
+  /* Tables */
+  .post-prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-size: 0.95em;
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    overflow: hidden;
+  }
+
+  .post-prose :global(th),
+  .post-prose :global(td) {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--p-border);
+    text-align: left;
+  }
+
+  .post-prose :global(th) {
+    background: var(--p-secondary);
+    color: var(--p-fg);
+    font-weight: 700;
+  }
+
+  .post-prose :global(tr:nth-child(even)) {
+    background: color-mix(in oklch, var(--p-secondary) 30%, transparent);
+  }
 
   .post-prose :global(strong) {
     font-weight: 700;
