@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = 'LazyNoman';
 export const SITE_DESCRIPTION = 'Personal reviews and recommendations on novels, manga, and anime — honest takes, no fluff.';
-export const SITE_SOCIAL_IMAGE = '/favicons/source/favicon-with-no-bg-opti.webp';
+export const SITE_SOCIAL_IMAGE = '/favicons/source/favicon-with-bg.jpeg';

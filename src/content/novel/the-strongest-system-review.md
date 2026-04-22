@@ -4,7 +4,7 @@ description: "Lin Fan is loud, shameless, prideful, and hilarious in this classi
 pubDate: 2026-04-15
 updatedDate: 2026-04-15
 tags: ["chinese", "web novel", "cultivation", "system", "comedy"]
-heroImage: '/src/assets/img/novel/the-strongest-system-review.webp'
+heroImage: '../../assets/img/novel/the-strongest-system-review.webp'
 ---
 
 | | |

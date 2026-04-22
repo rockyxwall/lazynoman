@@ -4,7 +4,7 @@ description: "A solid simulator-cultivation novel with a great first half and an
 pubDate: 2025-04-19
 updatedDate: 2025-04-19
 tags: ["reincarnation","chinese", "web novel", "cultivation", "system"]
-heroImage: '/src/assets/img/novel/others-level-up-but-i-pursue-cultivation-review.webp'
+heroImage: '../../assets/img/novel/others-level-up-but-i-pursue-cultivation-review.webp'
 ---
 
 | | |
