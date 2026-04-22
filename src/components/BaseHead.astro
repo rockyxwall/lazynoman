@@ -10,11 +10,12 @@ interface Props {
 	ogType?: 'website' | 'article';
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
 const { title, description, image, ogType = 'website' } = Astro.props;
 
-// Determine image URL with fallback to constant
+// 1. Resolve the canonical URL
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// 2. Resolve the raw image path
 let rawImagePath = SITE_SOCIAL_IMAGE;
 if (image) {
 	if (typeof image === 'string') {
@@ -24,11 +25,14 @@ if (image) {
 	}
 }
 
-// Ensure absolute URL
-// If rawImagePath starts with http, use it as is. Otherwise, join with site.
-const imageUrl = rawImagePath.startsWith('http') 
-	? rawImagePath 
-	: new URL(rawImagePath, Astro.site).href;
+/**
+ * 3. Construct the absolute Image URL
+ * 
+ * If rawImagePath is an absolute URL (starts with http/https), use it.
+ * If it starts with '/', it's a root-relative path (public folder or build asset).
+ * Otherwise, treat it as relative to the current page.
+ */
+const imageUrl = new URL(rawImagePath, Astro.site);
 ---
 
 <!-- Global Metadata -->
