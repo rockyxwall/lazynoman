@@ -15,10 +15,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image, ogType = 'website' } = Astro.props;
 
 // Determine image URL with fallback to constant
-const rawImagePath = image ? (typeof image === 'string' ? image : image.src) : SITE_SOCIAL_IMAGE;
+let rawImagePath = SITE_SOCIAL_IMAGE;
+if (image) {
+	if (typeof image === 'string') {
+		rawImagePath = image;
+	} else if (typeof image === 'object' && image.src) {
+		rawImagePath = image.src;
+	}
+}
 
 // Ensure absolute URL
-const imageUrl = new URL(rawImagePath, Astro.site);
+// If rawImagePath starts with http, use it as is. Otherwise, join with site.
+const imageUrl = rawImagePath.startsWith('http') 
+	? rawImagePath 
+	: new URL(rawImagePath, Astro.site).href;
 ---
 
 <!-- Global Metadata -->
