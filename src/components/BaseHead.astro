@@ -1,7 +1,7 @@
 ---
 import '../styles/globals.css';
 import type { ImageMetadata } from 'astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_SOCIAL_IMAGE } from '../consts';
 
 interface Props {
 	title: string;
@@ -12,11 +12,13 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/favicons/source/favicon-with-no-bg-opti.webp', ogType = 'website' } = Astro.props;
+const { title, description, image, ogType = 'website' } = Astro.props;
 
-// Determine image URL
-const imagePath = typeof image === 'string' ? image : image.src;
-const imageUrl = new URL(imagePath, Astro.site);
+// Determine image URL with fallback to constant
+const rawImagePath = image ? (typeof image === 'string' ? image : image.src) : SITE_SOCIAL_IMAGE;
+
+// Ensure absolute URL
+const imageUrl = new URL(rawImagePath, Astro.site);
 ---
 
 <!-- Global Metadata -->
