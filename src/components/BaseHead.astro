@@ -1,9 +1,6 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
 import '../styles/globals.css';
 import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/img/about/blog-placeholder-about.jpg';
 import { SITE_TITLE } from '../consts';
 
 interface Props {
@@ -15,12 +12,11 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage, ogType = 'website' } = Astro.props;
+const { title, description, image = '/favicons/source/favicon-with-no-bg-opti.webp', ogType = 'website' } = Astro.props;
 
 // Determine image URL
-const imageUrl = typeof image === 'string' 
-	? new URL(image, Astro.site) 
-	: new URL(image.src, Astro.site);
+const imagePath = typeof image === 'string' ? image : image.src;
+const imageUrl = new URL(imagePath, Astro.site);
 ---
 
 <!-- Global Metadata -->
