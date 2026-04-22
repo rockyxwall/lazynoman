@@ -1,18 +1,23 @@
 ---
-title: "Others Level Up, but I Pursue Cultivation! — Review"
-description: "A solid simulator-cultivation novel with a great first half and an OP MC who uses life simulations to bring cultivation back to the real world. Perfect for a chill read."
+title: Others Level Up, but I Pursue Cultivation! — Review
+description: A solid simulator-cultivation novel with a great first half and an OP MC who uses life simulations to bring cultivation back to the real world. Perfect for a chill read.
 pubDate: 2025-04-19
 updatedDate: 2025-04-19
-tags: ["reincarnation","chinese", "web novel", "cultivation", "system"]
-heroImage: '../../assets/img/novel/others-level-up-but-i-pursue-cultivation-review.webp'
+tags:
+  - reincarnation
+  - chinese
+  - web-novel
+  - cultivation
+  - system
+heroImage: ../../assets/img/novel/others-level-up-but-i-pursue-cultivation-review.webp
 ---
 
-| | |
-|---|---|
-| **Author** | Three Five Mysterious Seven |
-| **Type** | Web Novel (CN) |
-| **Tags** | Reincarnation, System, Cultivation |
-| **Chapters** | 1,523 — Completed |
+|              |                                    |
+| ------------ | ---------------------------------- |
+| **Author**   | Three Five Mysterious Seven        |
+| **Type**     | Web Novel (CN)                     |
+| **Tags**     | Reincarnation, System, Cultivation |
+| **Chapters** | 1,523 — Completed                  |
 
 ---
 

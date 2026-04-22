@@ -1,13 +1,14 @@
 ---
-title: "Simulation Towards Immortality In A Group Chat — Review"
-description: "A full review of the cultivation web novel Simulation Towards Immortality In A Group Chat by Ethereal Like A Dream. Is the Life Simulator concept worth your time across 1,294 chapters?"
+title: Simulation Towards Immortality In A Group Chat — Review
+description: A full review of the cultivation web novel Simulation Towards Immortality In A Group Chat by Ethereal Like A Dream. Is the Life Simulator concept worth your time across 1,294 chapters?
 pubDate: 2026-04-08
 updatedDate: 2026-04-08
-tags: ["review", "novel review", "cultivation", "simulation", "webnovel", "eastern fantasy", "group chat novel", "weak to strong"]
-category: "Novel Review"
-readingTime: "6 min read"
-heroImage: '../../assets/img/novel/simulation-towards-immortality-in-a-group-chat-review.webp'
-draft: false
+tags:
+  - review
+  - cultivation
+  - simulation
+  - webnovel
+heroImage: ../../assets/img/novel/simulation-towards-immortality-in-a-group-chat-review.webp
 ---
 ## Is It Worth Reading?
 
