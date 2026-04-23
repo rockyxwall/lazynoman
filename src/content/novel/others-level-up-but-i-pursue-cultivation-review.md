@@ -19,13 +19,9 @@ heroImage: ../../assets/img/novel/others-level-up-but-i-pursue-cultivation-revie
 | **Tags**     | Reincarnation, System, Cultivation |
 | **Chapters** | 1,523 — Completed                  |
 
----
-
 ## The Short Version
 
 Solid simulator-cultivation novel. Great first half, repetitive middle, weak ending. Good chill read if you like OP MCs with zero suffering.
-
----
 
 ## My Review
 
@@ -49,15 +45,11 @@ I'd recommend this to people who like overpowered MCs, no real tension, no crisi
 | Translation Quality | ⭐⭐ Weak — number inconsistencies throughout |
 | **My Score** | **7/10** |
 
----
-
 ## Read or Skip?
 
 **Read if —** you like simulator or cultivation novels, OP MCs with no real struggle, slow farming and development stories, chill reads.
 
 **Skip if —** you need a strong ending, consistent translation, a memorable MC, or any real tension.
-
----
 
 ## What Others Think
 

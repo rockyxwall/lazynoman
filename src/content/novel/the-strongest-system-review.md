@@ -26,8 +26,6 @@ synonyms:
 
 Funny, shameless MC. Great world. Weak ending. Perfect starter novel — don't expect depth.
 
----
-
 ## My Review
 This was my first Chinese cultivation novel. I went in blind, had zero comparisons, and genuinely loved it. Take my 10/10 with that context.
 
@@ -49,15 +47,11 @@ The ending is bad. Not "disappointing" bad — actually bad. It felt like the au
 | Translation Quality | Good |
 | **My Score** | **10/10** *(first novel bias)* |
 
----
-
 ## Read or Skip?
 
 **Read if —** you want something light and funny, you're new to the genre, you enjoy shameless & overpowered MC, low stakes is fine with you.
 
 **Skip if —** you need serious plot, consistent logic in the power system, meaningful side characters, or a good ending.
-
----
 
 ## What Others Think
 
