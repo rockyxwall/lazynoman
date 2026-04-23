@@ -91,9 +91,6 @@ const metaItems = [
             </p>
           )}
 
-          {/* Summary — the real lede */}
-          {summary && <p class="post-summary">{summary}</p>}
-
           {/* Metadata strip */}
           {metaItems.length > 0 && (
             <dl class="meta-strip">
@@ -115,10 +112,17 @@ const metaItems = [
             </div>
           )}
 
+          {/* Summary — the real lede */}
+          {summary && <p class="post-summary">{summary}</p>}
+
         </header>
 
         {/* ── Divider ── */}
-        <div class="post-divider mx-auto max-w-4xl px-1" aria-hidden="true" />
+        <div class="post-divider mx-auto max-w-4xl" aria-hidden="true">
+          <span class="divider-line"></span>
+          <span class="divider-diamond"></span>
+          <span class="divider-line"></span>
+        </div>
 
         {/* ── Prose Body ── */}
         <div class="mx-auto max-w-4xl px-1 pb-24 pt-1">
@@ -295,7 +299,7 @@ const metaItems = [
     font-size: clamp(1.0625rem, 1.2vw + 0.65rem, 1.1875rem);
     line-height: 1.7;
     color: var(--p-muted);
-    font-style: italic;
+    font-style: normal;
     margin: 0 0 1.75rem;
   }
 
@@ -381,9 +385,26 @@ const metaItems = [
   /* ── Post Divider ── */
 
   .post-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0; /* prose container supplies top padding */
+  }
+
+  .divider-line {
+    flex: 1;
     height: 1px;
     background: var(--p-border);
-    margin-bottom: 0; /* prose container supplies top padding */
+  }
+
+  .divider-diamond {
+    flex: 0 0 10px;
+    width: 10px;
+    height: 10px;
+    background: var(--p-primary);
+    transform: rotate(45deg);
+    border-radius: 1px;
+    opacity: 0.8;
   }
 
 
