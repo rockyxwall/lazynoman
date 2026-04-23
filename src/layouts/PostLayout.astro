@@ -8,7 +8,31 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'post'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  category,
+  creator,
+  medium,
+  status,
+  platform,
+  progress,
+  tags,
+  summary,
+  officialTitle,
+  synonyms,
+} = Astro.props;
+
+const metaItems = [
+  { label: 'Creator',  value: creator  },
+  { label: 'Medium',   value: medium   },
+  { label: 'Status',   value: status   },
+  { label: 'Platform', value: platform },
+  { label: 'Progress', value: progress },
+].filter((item): item is { label: string; value: string } => Boolean(item.value));
 ---
 
 <html lang="en">
@@ -24,47 +48,79 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
         {/* ── Hero Image ── */}
         {heroImage && (
-          <div class="hero-wrapper">
+          <div class="hero-wrap">
             <Image
               src={heroImage}
-              alt=""
+              alt={`Cover for ${title}`}
               class="hero-img"
             />
             <div class="hero-veil" aria-hidden="true" />
           </div>
         )}
 
-        {/* ── Title Block ── */}
-        <div class={`title-block mx-auto max-w-4xl ${heroImage ? 'has-hero' : 'no-hero'}`}>
+        {/* ── Post Header ── */}
+        <header class={`post-header mx-auto max-w-4xl px-6 ${heroImage ? 'has-hero' : 'no-hero'}`}>
 
-          {/* ornamental kicker  ── ◆ ── */}
-          <div class="kicker" aria-hidden="true">
-            <span class="kicker-line" />
-            <span class="kicker-diamond" />
-            <span class="kicker-line" />
-          </div>
-
-          <h1 class="post-title">
-            {title}
-          </h1>
-
-          {/* meta row */}
-          <div class="post-meta">
-            <span class="meta-badge">
+          {/* Dateline */}
+          <p class="post-dateline">
+            {category && <span class="dateline-category">{category}</span>}
+            {category && <span class="dateline-sep" aria-hidden="true">·</span>}
+            <time datetime={pubDate.toISOString()}>
               <FormattedDate date={pubDate} />
-            </span>
+            </time>
             {updatedDate && (
-              <span class="meta-updated">
-                Updated <FormattedDate date={updatedDate} />
+              <span class="dateline-updated">
+                · Updated <FormattedDate date={updatedDate} />
               </span>
             )}
-          </div>
+          </p>
 
-          <div class="separator" aria-hidden="true" />
-        </div>
+          {/* Post title — reviewer's headline */}
+          <h1 class="post-title">{title}</h1>
+
+          {/* Official title + synonyms */}
+          {(officialTitle || (synonyms && synonyms.length > 0)) && (
+            <p class="official-title-line">
+              {officialTitle && <span class="official-name">{officialTitle}</span>}
+              {synonyms && synonyms.length > 0 && (
+                <span class="official-synonyms">
+                  {officialTitle ? ' · ' : ''}{synonyms.join(' · ')}
+                </span>
+              )}
+            </p>
+          )}
+
+          {/* Summary — the real lede */}
+          {summary && <p class="post-summary">{summary}</p>}
+
+          {/* Metadata strip */}
+          {metaItems.length > 0 && (
+            <dl class="meta-strip">
+              {metaItems.map(({ label, value }) => (
+                <div class="meta-pair">
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {/* Tags */}
+          {tags && tags.length > 0 && (
+            <div class="post-tags" role="list" aria-label="Tags">
+              {tags.map((tag: string) => (
+                <span class="tag" role="listitem">{tag}</span>
+              ))}
+            </div>
+          )}
+
+        </header>
+
+        {/* ── Divider ── */}
+        <div class="post-divider mx-auto max-w-4xl px-6" aria-hidden="true" />
 
         {/* ── Prose Body ── */}
-        <div class="mx-auto max-w-4xl pb-24">
+        <div class="mx-auto max-w-4xl px-6 pb-24 pt-8">
           <div class="post-prose">
             <slot />
           </div>
@@ -79,50 +135,53 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 <style>
   /*
-   * ──
+   * ─────────────────────────────────────────────────────
    * THEME BRIDGE
-   * Mirrors the site's @theme OKLCH tokens so every CSS calculation here
-   * stays in sync automatically when the .dark class is toggled on <html>.
-   * ──
+   * Mirrors the site's @theme OKLCH tokens; stays in sync
+   * when .dark is toggled on <html>.
+   * ─────────────────────────────────────────────────────
    */
   :root {
-    --p-bg:       oklch(1 0 0);
-    --p-fg:       oklch(0.145 0 0);
-    --p-primary:  oklch(0.205 0 0);
-    --p-secondary:oklch(0.97 0 0);
-    --p-border:   oklch(0.922 0 0);
-    --p-muted:    oklch(0.50 0 0);
-    --p-radius:   0.625rem;
+    --p-bg:        oklch(1 0 0);
+    --p-fg:        oklch(0.145 0 0);
+    --p-primary:   oklch(0.205 0 0);
+    --p-secondary: oklch(0.97 0 0);
+    --p-border:    oklch(0.922 0 0);
+    --p-muted:     oklch(0.50 0 0);
+    --p-radius:    0.625rem;
   }
 
   :global(.dark) {
-    --p-bg:       oklch(0.19 0 0);
-    --p-fg:       oklch(0.92 0 0);
-    --p-primary:  oklch(0.92 0 0);
-    --p-secondary:oklch(0.28 0 0);
-    --p-border:   oklch(0.28 0 0);
-    --p-muted:    oklch(0.62 0 0);
+    --p-bg:        oklch(0.19 0 0);
+    --p-fg:        oklch(0.92 0 0);
+    --p-primary:   oklch(0.92 0 0);
+    --p-secondary: oklch(0.28 0 0);
+    --p-border:    oklch(0.28 0 0);
+    --p-muted:     oklch(0.62 0 0);
   }
 
-  /* ── Hero ── */
-  .hero-wrapper {
+
+  /* ═══════════════════════════
+     HERO
+  ═══════════════════════════ */
+
+  .hero-wrap {
     position: relative;
     width: 100%;
-    height: clamp(260px, 52vh, 580px);
-    overflow: hidden;
+    line-height: 0; /* collapses whitespace gap below img */
   }
 
   .hero-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 35%;
+    height: auto;
     display: block;
+    object-fit: cover;
+    object-position: center 30%;
   }
 
   /*
-   * Gradient veil: transparent → page background.
-   * color-mix() blends smoothly so there's no hard edge in either mode.
+   * Gradient veil: transparent → page-bg.
+   * Starts late (40%) so the image reads fully before fading.
    */
   .hero-veil {
     position: absolute;
@@ -130,118 +189,216 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      transparent 28%,
-      color-mix(in oklch, var(--p-bg) 25%, transparent) 50%,
-      color-mix(in oklch, var(--p-bg) 75%, transparent) 72%,
+      transparent 40%,
+      color-mix(in oklch, var(--p-bg) 18%, transparent) 60%,
+      color-mix(in oklch, var(--p-bg) 68%, transparent) 80%,
       var(--p-bg) 100%
     );
   }
 
-  /* ── Title Block ── */
-  .title-block {
+
+  /* ═══════════════════════════
+     POST HEADER
+  ═══════════════════════════ */
+
+  .post-header {
     position: relative;
     z-index: 2;
-    padding-top: 0;
   }
 
-  /* Pulls up over the hero veil */
-  .title-block.has-hero  { margin-top: -5.5rem; }
-  .title-block.no-hero   { margin-top: 3.5rem; }
+  /* Pulls the header up into the faded veil zone */
+  .post-header.has-hero { margin-top: -5.5rem; }
+  .post-header.no-hero  { margin-top: 3.5rem;  }
 
-  /* ── Kicker ornament  ── ◆ ── */
-  .kicker {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    margin-bottom: 1.25rem;
-  }
 
-  .kicker-line {
-    flex: 1;
-    height: 1px;
-    background: var(--p-border);
-    display: block;
-  }
+  /* ── Dateline ── */
 
-  .kicker-diamond {
-    flex: 0 0 7px;
-    width: 7px;
-    height: 7px;
-    background: var(--p-primary);
-    transform: rotate(45deg);
-    border-radius: 1px;
-    display: block;
-  }
-
-  /* ── Title ── */
-  .post-title {
+  .post-dateline {
     font-family: 'Atkinson', sans-serif;
-    font-size: clamp(2.25rem, 8vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    color: var(--p-fg);
-    margin: 0 0 1.5rem;
-    /*
-     * Soft glow helps legibility when the hero image is busy.
-     * In dark mode, var(--p-bg) is near-black so the shadow is invisible.
-     */
-    text-shadow:
-      0 1px 12px color-mix(in oklch, var(--p-bg) 70%, transparent),
-      0 2px 24px color-mix(in oklch, var(--p-bg) 40%, transparent);
-  }
-
-  /* ── Meta ── */
-  .post-meta {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--p-muted);
+    margin: 0 0 0.875rem;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    margin-bottom: 1.375rem;
-    font-family: 'Atkinson', sans-serif;
+    gap: 0.4rem;
   }
 
-  .meta-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--p-radius);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    background: var(--p-secondary);
+  .dateline-category {
     color: var(--p-primary);
-    border: 1px solid var(--p-border);
+    opacity: 0.8;
   }
 
-  .meta-updated {
-    font-size: 0.875rem;
+  .dateline-sep {
+    opacity: 0.35;
+  }
+
+  .dateline-updated {
+    font-weight: 400;
     font-style: italic;
+    text-transform: none;
+    letter-spacing: 0.03em;
+  }
+
+
+  /* ── Post Title ── */
+
+  .post-title {
+    font-family: 'Atkinson', sans-serif;
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+    color: var(--p-fg);
+    margin: 0 0 0.625rem;
+    /*
+     * Soft glow aids legibility when sitting over the hero veil.
+     * Invisible on plain backgrounds.
+     */
+    text-shadow:
+      0 1px 14px color-mix(in oklch, var(--p-bg) 72%, transparent),
+      0 3px 32px color-mix(in oklch, var(--p-bg) 48%, transparent);
+  }
+
+
+  /* ── Official Title & Synonyms ── */
+
+  .official-title-line {
+    font-family: 'Atkinson', sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin: 0 0 1.375rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .official-name {
+    font-weight: 600;
+    color: var(--p-fg);
+    opacity: 0.55;
+  }
+
+  .official-synonyms {
+    font-weight: 400;
     color: var(--p-muted);
   }
 
-  /* ── Separator ─── */
-  .separator {
-    height: 1px;
-    background: var(--p-border);
-    margin-bottom: 2.5em;
+
+  /* ── Summary / Lede ── */
+
+  .post-summary {
+    font-family: 'Atkinson', sans-serif;
+    font-size: clamp(1.0625rem, 1.2vw + 0.65rem, 1.1875rem);
+    line-height: 1.7;
+    color: var(--p-muted);
+    font-style: italic;
+    margin: 0 0 1.75rem;
   }
 
-  /* ── Prose ── */
+
+  /* ── Metadata Strip ── */
+
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0.5rem;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+
+  .meta-pair {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+  }
+
+  /*
+   * Vertical hairline separator between pairs.
+   * Lives as a flex child via ::before — no extra markup needed.
+   */
+  .meta-pair:not(:first-child)::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 0.75em;
+    background: var(--p-border);
+    margin: 0 0.75rem;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  .meta-pair dt {
+    font-family: 'Atkinson', sans-serif;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--p-muted);
+  }
+
+  .meta-pair dd {
+    font-family: 'Atkinson', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--p-fg);
+    margin: 0;
+  }
+
+
+  /* ── Tags ── */
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin: 0 0 1.625rem;
+  }
+
+  .tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    border-radius: calc(var(--p-radius) * 0.7);
+    background: var(--p-secondary);
+    color: var(--p-muted);
+    border: 1px solid var(--p-border);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .tag:hover {
+    color: var(--p-primary);
+    border-color: color-mix(in oklch, var(--p-primary) 45%, transparent);
+  }
+
+
+  /* ── Post Divider ── */
+
+  .post-divider {
+    height: 1px;
+    background: var(--p-border);
+    margin-bottom: 0; /* prose container supplies top padding */
+  }
+
+
+  /* ═══════════════════════════
+     PROSE BODY
+  ═══════════════════════════ */
+
   .post-prose {
     font-family: 'Atkinson', 'Geist Variable', sans-serif;
-    font-size: clamp(1.125rem, 1.2vw + 0.8rem, 1.25rem); /* Fluid body text: 18px -> 20px+ */
+    font-size: clamp(1.0625rem, 1.2vw + 0.75rem, 1.25rem);
     line-height: 1.75;
     color: var(--p-fg);
   }
 
-  /* Paragraphs */
-  .post-prose :global(p) {
-    margin-bottom: 1.75em;
-  }
+  .post-prose :global(p) { margin-bottom: 1.75em; }
 
-  /* Headings Scale */
   .post-prose :global(h2) {
     font-family: 'Atkinson', sans-serif;
     font-size: clamp(1.75rem, 5vw, 2.25rem);
@@ -290,7 +447,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     color: var(--p-muted);
   }
 
-  /* Blockquote */
   .post-prose :global(blockquote) {
     border-left: 3px solid var(--p-primary);
     background: var(--p-secondary);
@@ -304,7 +460,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
   .post-prose :global(blockquote p) { margin: 0; }
 
-  /* Inline code */
   .post-prose :global(:not(pre) > code) {
     font-family: 'Geist Mono', monospace;
     font-size: 0.875em;
@@ -315,7 +470,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     border: 1px solid var(--p-border);
   }
 
-  /* Code blocks */
   .post-prose :global(pre) {
     font-family: 'Geist Mono', monospace;
     font-size: 0.875rem;
@@ -336,7 +490,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     color: inherit;
   }
 
-  /* Horizontal rule */
   .post-prose :global(hr) {
     border: none;
     height: 1px;
@@ -344,7 +497,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     margin: 2.5em 0;
   }
 
-  /* Links */
   .post-prose :global(a) {
     color: var(--p-primary);
     text-decoration: underline;
@@ -355,7 +507,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
   .post-prose :global(a:hover) { opacity: 0.65; }
 
-  /* Images */
   .post-prose :global(img) {
     width: 100%;
     height: auto;
@@ -365,7 +516,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     display: block;
   }
 
-  /* Lists */
   .post-prose :global(ul) {
     list-style-type: disc;
     padding-left: 1.5rem;
@@ -388,7 +538,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     margin-bottom: 0.45em;
   }
 
-  /* Nested Lists */
   .post-prose :global(ul ul),
   .post-prose :global(ol ol),
   .post-prose :global(ul ol),
@@ -397,13 +546,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     margin-bottom: 0.45em;
   }
 
-  /* Custom marker color */
   .post-prose :global(li::marker) {
     color: var(--p-muted);
     font-weight: 600;
   }
 
-  /* Tables */
   .post-prose :global(table) {
     width: 100%;
     border-collapse: collapse;
@@ -436,10 +583,23 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     color: var(--p-fg);
   }
 
-  /* ── Mobile ─── */
-  @media (max-width: 640px) {
-    .title-block.has-hero { margin-top: -3rem; }
+
+  /* ═══════════════════════════
+     RESPONSIVE
+  ═══════════════════════════ */
+
+  @media (max-width: 768px) {
+    .post-header.has-hero { margin-top: -3.5rem; }
+    .post-header.no-hero  { margin-top: 2rem; }
+
+    .meta-pair:not(:first-child)::before { margin: 0 0.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .post-header.has-hero { margin-top: -2rem; }
 
     .post-title { font-size: clamp(1.625rem, 7.5vw, 2.25rem); }
+
+    /* On very narrow screens the meta strip naturally wraps — no override needed */
   }
 </style>

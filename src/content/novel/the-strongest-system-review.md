@@ -10,15 +10,16 @@ tags:
   - system
   - comedy
 heroImage: ../../assets/img/novel/the-strongest-system-review.webp
----
-
-| | |
-|---|---|
-| **Author** | Xinfeng |
-| **Type** | Web Novel (CN) |
-| **Tags** | Adult, System, Cultivation, Transmigration |
-| **Chapters** | 1,159 — Completed |
-
+category: Novel
+creator: Xinfeng
+medium: Web Novel (CN)
+status: Completed
+platform: Webnovel
+progress: 1159 Chapters
+summary: Yours Truly shall have all of you bow down to me! Arriving in this brand-new world, Lin Fan found himself in possession of a system which allows him to level up indefinitely unbounded by the limitations of this world. Upon learning a powerful technique of Monkey Steals Peaches, Lin Fan realises that he’s poised to literally become the strongest person in this entire world. But of course, how boring would that be unless the whole world gets to know about his great name? Shameless. Righteous. Smart. Lin Fan will let no one (or balls) stand in his way to glory!
+officialTitle: 最强系统 (Zui Qiang Xi Tong)
+synonyms:
+  - TSS
 ---
 
 ## The Short Version

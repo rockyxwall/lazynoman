@@ -12,44 +12,434 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-	</head>
+  <head>
+    <BaseHead title={title} description={description} image={heroImage} ogType="article" />
+  </head>
 
-	<body class="flex flex-col min-h-screen">
-		<Header />
-		<main class="grow py-8 md:py-12">
-			<article class="max-w-none">
-				<div class="w-full mb-8 md:mb-12">
-					{heroImage && (
-						<Image 
-							src={heroImage} 
-							alt="" 
-							class="w-full h-auto rounded-xl shadow-lg border border-border"
-						/>
-					)}
-				</div>
-				<div class="max-w-4xl mx-auto px-4 sm:px-0">
-					<div class="mb-8 text-center">
-						<div class="text-muted-foreground mb-2 text-sm md:text-base">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="italic mt-1">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1 class="text-3xl md:text-5xl font-bold mb-4">{title}</h1>
-						<hr class="border-border" />
-					</div>
-					<div class="space-y-6 text-foreground">
-						<slot />
-					</div>
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+  <body>
+    <Header />
+
+    <main>
+      <article>
+
+        {/* ── Hero Image ── */}
+        {heroImage && (
+          <div class="hero-wrapper">
+            <Image
+              src={heroImage}
+              alt=""
+              class="hero-img"
+            />
+            <div class="hero-veil" aria-hidden="true" />
+          </div>
+        )}
+
+        {/* ── Title Block ── */}
+        <div class={`title-block mx-auto max-w-4xl ${heroImage ? 'has-hero' : 'no-hero'}`}>
+
+          {/* ornamental kicker  ── ◆ ── */}
+          <div class="kicker" aria-hidden="true">
+            <span class="kicker-line" />
+            <span class="kicker-diamond" />
+            <span class="kicker-line" />
+          </div>
+
+          <h1 class="post-title">
+            {title}
+          </h1>
+
+          {/* meta row */}
+          <div class="post-meta">
+            <span class="meta-badge">
+              <FormattedDate date={pubDate} />
+            </span>
+            {updatedDate && (
+              <span class="meta-updated">
+                Updated <FormattedDate date={updatedDate} />
+              </span>
+            )}
+          </div>
+
+          <div class="separator" aria-hidden="true" />
+        </div>
+
+        {/* ── Prose Body ── */}
+        <div class="mx-auto max-w-4xl pb-24">
+          <div class="post-prose">
+            <slot />
+          </div>
+        </div>
+
+      </article>
+    </main>
+
+    <Footer />
+  </body>
 </html>
+
+<style>
+  /*
+   * ──
+   * THEME BRIDGE
+   * Mirrors the site's @theme OKLCH tokens so every CSS calculation here
+   * stays in sync automatically when the .dark class is toggled on <html>.
+   * ──
+   */
+  :root {
+    --p-bg:       oklch(1 0 0);
+    --p-fg:       oklch(0.145 0 0);
+    --p-primary:  oklch(0.205 0 0);
+    --p-secondary:oklch(0.97 0 0);
+    --p-border:   oklch(0.922 0 0);
+    --p-muted:    oklch(0.50 0 0);
+    --p-radius:   0.625rem;
+  }
+
+  :global(.dark) {
+    --p-bg:       oklch(0.19 0 0);
+    --p-fg:       oklch(0.92 0 0);
+    --p-primary:  oklch(0.92 0 0);
+    --p-secondary:oklch(0.28 0 0);
+    --p-border:   oklch(0.28 0 0);
+    --p-muted:    oklch(0.62 0 0);
+  }
+
+  /* ── Hero ── */
+  .hero-wrapper {
+    position: relative;
+    width: 100%;
+    height: clamp(260px, 52vh, 580px);
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    display: block;
+  }
+
+  /*
+   * Gradient veil: transparent → page background.
+   * color-mix() blends smoothly so there's no hard edge in either mode.
+   */
+  .hero-veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 28%,
+      color-mix(in oklch, var(--p-bg) 25%, transparent) 50%,
+      color-mix(in oklch, var(--p-bg) 75%, transparent) 72%,
+      var(--p-bg) 100%
+    );
+  }
+
+  /* ── Title Block ── */
+  .title-block {
+    position: relative;
+    z-index: 2;
+    padding-top: 0;
+  }
+
+  /* Pulls up over the hero veil */
+  .title-block.has-hero  { margin-top: -5.5rem; }
+  .title-block.no-hero   { margin-top: 3.5rem; }
+
+  /* ── Kicker ornament  ── ◆ ── */
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .kicker-line {
+    flex: 1;
+    height: 1px;
+    background: var(--p-border);
+    display: block;
+  }
+
+  .kicker-diamond {
+    flex: 0 0 7px;
+    width: 7px;
+    height: 7px;
+    background: var(--p-primary);
+    transform: rotate(45deg);
+    border-radius: 1px;
+    display: block;
+  }
+
+  /* ── Title ── */
+  .post-title {
+    font-family: 'Atkinson', sans-serif;
+    font-size: clamp(2.25rem, 8vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--p-fg);
+    margin: 0 0 1.5rem;
+    /*
+     * Soft glow helps legibility when the hero image is busy.
+     * In dark mode, var(--p-bg) is near-black so the shadow is invisible.
+     */
+    text-shadow:
+      0 1px 12px color-mix(in oklch, var(--p-bg) 70%, transparent),
+      0 2px 24px color-mix(in oklch, var(--p-bg) 40%, transparent);
+  }
+
+  /* ── Meta ── */
+  .post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.375rem;
+    font-family: 'Atkinson', sans-serif;
+  }
+
+  .meta-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--p-radius);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--p-secondary);
+    color: var(--p-primary);
+    border: 1px solid var(--p-border);
+  }
+
+  .meta-updated {
+    font-size: 0.875rem;
+    font-style: italic;
+    color: var(--p-muted);
+  }
+
+  /* ── Separator ─── */
+  .separator {
+    height: 1px;
+    background: var(--p-border);
+    margin-bottom: 2.5em;
+  }
+
+  /* ── Prose ── */
+  .post-prose {
+    font-family: 'Atkinson', 'Geist Variable', sans-serif;
+    font-size: clamp(1.125rem, 1.2vw + 0.8rem, 1.25rem); /* Fluid body text: 18px -> 20px+ */
+    line-height: 1.75;
+    color: var(--p-fg);
+  }
+
+  /* Paragraphs */
+  .post-prose :global(p) {
+    margin-bottom: 1.75em;
+  }
+
+  /* Headings Scale */
+  .post-prose :global(h2) {
+    font-family: 'Atkinson', sans-serif;
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin: 2.2em 0 0.8em;
+    color: var(--p-fg);
+  }
+
+  .post-prose :global(h3) {
+    font-family: 'Atkinson', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 1.875rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin: 2em 0 0.7em;
+    color: var(--p-fg);
+  }
+
+  .post-prose :global(h4) {
+    font-family: 'Atkinson', sans-serif;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    margin: 1.8em 0 0.6em;
+    color: var(--p-fg);
+  }
+
+  .post-prose :global(h5) {
+    font-family: 'Atkinson', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 1.6em 0 0.5em;
+    color: var(--p-fg);
+  }
+
+  .post-prose :global(h6) {
+    font-family: 'Atkinson', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 1.6em 0 0.5em;
+    color: var(--p-muted);
+  }
+
+  /* Blockquote */
+  .post-prose :global(blockquote) {
+    border-left: 3px solid var(--p-primary);
+    background: var(--p-secondary);
+    margin: 2.25em 0;
+    padding: 1.1em 1.5em;
+    border-radius: 0 var(--p-radius) var(--p-radius) 0;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--p-muted);
+  }
+
+  .post-prose :global(blockquote p) { margin: 0; }
+
+  /* Inline code */
+  .post-prose :global(:not(pre) > code) {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.875em;
+    background: var(--p-secondary);
+    color: var(--p-primary);
+    padding: 0.15em 0.45em;
+    border-radius: calc(var(--p-radius) / 2);
+    border: 1px solid var(--p-border);
+  }
+
+  /* Code blocks */
+  .post-prose :global(pre) {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.875rem;
+    background: var(--p-secondary);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin: 2em 0;
+    line-height: 1.65;
+  }
+
+  .post-prose :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  /* Horizontal rule */
+  .post-prose :global(hr) {
+    border: none;
+    height: 1px;
+    background: var(--p-border);
+    margin: 2.5em 0;
+  }
+
+  /* Links */
+  .post-prose :global(a) {
+    color: var(--p-primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: opacity 0.15s;
+  }
+
+  .post-prose :global(a:hover) { opacity: 0.65; }
+
+  /* Images */
+  .post-prose :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--p-radius);
+    border: 1px solid var(--p-border);
+    margin: 2em 0;
+    display: block;
+  }
+
+  /* Lists */
+  .post-prose :global(ul) {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.55em;
+  }
+
+  .post-prose :global(ol) {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.55em;
+  }
+
+  .post-prose :global(li) {
+    margin-bottom: 0.45em;
+    padding-left: 0.35rem;
+  }
+
+  .post-prose :global(li > p) {
+    margin-top: 0.45em;
+    margin-bottom: 0.45em;
+  }
+
+  /* Nested Lists */
+  .post-prose :global(ul ul),
+  .post-prose :global(ol ol),
+  .post-prose :global(ul ol),
+  .post-prose :global(ol ul) {
+    margin-top: 0.45em;
+    margin-bottom: 0.45em;
+  }
+
+  /* Custom marker color */
+  .post-prose :global(li::marker) {
+    color: var(--p-muted);
+    font-weight: 600;
+  }
+
+  /* Tables */
+  .post-prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-size: 0.95em;
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    overflow: hidden;
+  }
+
+  .post-prose :global(th),
+  .post-prose :global(td) {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--p-border);
+    text-align: left;
+  }
+
+  .post-prose :global(th) {
+    background: var(--p-secondary);
+    color: var(--p-fg);
+    font-weight: 700;
+  }
+
+  .post-prose :global(tr:nth-child(even)) {
+    background: color-mix(in oklch, var(--p-secondary) 30%, transparent);
+  }
+
+  .post-prose :global(strong) {
+    font-weight: 700;
+    color: var(--p-fg);
+  }
+
+  /* ── Mobile ─── */
+  @media (max-width: 640px) {
+    .title-block.has-hero { margin-top: -3rem; }
+
+    .post-title { font-size: clamp(1.625rem, 7.5vw, 2.25rem); }
+  }
+</style>
