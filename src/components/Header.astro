@@ -7,8 +7,10 @@ import { ModeToggle } from '@/components/ModeToggle';
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm shadow-sm">
 	<nav class="container mx-auto flex items-center justify-between h-16 max-w-4xl px-4 sm:px-6 lg:px-8">
 		<div class="flex items-center h-full">
-			<h2 class="text-lg sm:text-xl font-bold m-0 leading-none">
-				<a href="/" class="no-underline text-foreground hover:text-primary transition-colors">{SITE_TITLE}</a>
+			<h2 class="m-0 leading-none">
+				<a href="/" class="flex items-center no-underline transition-opacity hover:opacity-80" aria-label={SITE_TITLE}>
+					<img src="/favicons/favicon.svg" alt="lazynoman_logo" class="w-8 h-8 sm:w-9 sm:h-9" />
+				</a>
 			</h2>
 		</div>
 		<div class="flex items-center gap-1 sm:gap-4 h-full">

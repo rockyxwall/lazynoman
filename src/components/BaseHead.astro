@@ -55,10 +55,8 @@ const imageUrl = new URL(rawImagePath, Astro.site);
 		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
 			return localStorage.getItem('theme');
 		}
-		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			return 'dark';
-		}
-		return 'light';
+		// Default to dark mode for first-time visitors
+		return 'dark';
 	})();
 
 	if (theme === 'light') {
