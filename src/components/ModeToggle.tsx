@@ -12,11 +12,13 @@ import {
 export function ModeToggle() {
   const [theme, setThemeState] = React.useState<
     "light" | "dark" | "system"
-  >("light")
+  >("system")
 
   React.useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark")
-    setThemeState(isDarkMode ? "dark" : "light")
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | "system" | null
+    if (savedTheme) {
+      setThemeState(savedTheme)
+    }
   }, [])
 
   React.useEffect(() => {
@@ -24,7 +26,13 @@ export function ModeToggle() {
       theme === "dark" ||
       (theme === "system" &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
+    
     document.documentElement.classList[isDark ? "add" : "remove"]("dark")
+    if (theme === "system") {
+      localStorage.removeItem("theme")
+    } else {
+      localStorage.setItem("theme", theme)
+    }
   }, [theme])
 
   return (
