@@ -14,6 +14,7 @@ const post = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			draft: z.boolean().optional().default(false),
 			by: z.string().optional(),
 			category: z.string().optional(),
 			creator: z.string().optional(),
