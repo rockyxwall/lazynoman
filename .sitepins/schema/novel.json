@@ -26,8 +26,8 @@
     {
       "name": "pubDate",
       "label": "Publish Date",
-      "type": "string",
-      "value": "2026-05-02T17:31:47.575Z",
+      "type": "Date",
+      "value": "",
       "description": "",
       "isIgnored": false,
       "isRequired": true,
@@ -36,11 +36,12 @@
     {
       "name": "updatedDate",
       "label": "Updated Date",
-      "type": "string",
+      "type": "Date",
       "value": "2026-05-02",
       "description": "",
       "isIgnored": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "alwaysUseCurrentDate": true
     },
     {
       "name": "heroImage",
