@@ -6,7 +6,7 @@
   "template": [
     {
       "name": "title",
-      "label": "title",
+      "label": "Title",
       "type": "string",
       "value": "",
       "description": "title of the post",
