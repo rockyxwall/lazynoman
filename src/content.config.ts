@@ -14,6 +14,17 @@ const post = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			by: z.string().optional(),
+			category: z.string().optional(),
+			creator: z.string().optional(),
+			medium: z.string().optional(),
+			status: z.string().optional(),
+			platform: z.string().optional(),
+			progress: z.string().optional(),
+			tags: z.array(z.string()).optional(),
+			summary: z.string().optional(),
+			officialTitle: z.string().optional(),
+			synonyms: z.array(z.string()).optional(),
 		}),
 });
 

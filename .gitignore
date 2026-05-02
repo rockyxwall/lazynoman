@@ -5,6 +5,7 @@ dist/
 # generated types
 .astro/
 worker-configuration.d.ts
+.obsidian/
 
 # dependencies
 node_modules/
