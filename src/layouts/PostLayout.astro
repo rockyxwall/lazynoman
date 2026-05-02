@@ -80,11 +80,19 @@ const {
         {/* ── Hero Image ── */}
         {heroImage && (
           <div class="hero-wrap rounded-lg overflow-hidden mb-12 shadow-sm border border-border/50">
-            <Image
-              src={heroImage}
-              alt={`Cover for ${title}`}
-              class="hero-img"
-            />
+            {typeof heroImage === 'string' ? (
+              <img
+                src={heroImage}
+                alt={`Cover for ${title}`}
+                class="hero-img"
+              />
+            ) : (
+              <Image
+                src={heroImage}
+                alt={`Cover for ${title}`}
+                class="hero-img"
+              />
+            )}
           </div>
         )}
 
