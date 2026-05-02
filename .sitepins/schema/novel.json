@@ -52,22 +52,6 @@
       "defaultValue": ""
     },
     {
-      "name": "by",
-      "label": "By",
-      "type": "string",
-      "value": "",
-      "description": "",
-      "isIgnored": false,
-      "isRequired": true,
-      "defaultValue": "",
-      "isDropdown": true,
-      "referenceType": "static",
-      "options": [
-        "rockyxwall",
-        "nione"
-      ]
-    },
-    {
       "name": "category",
       "label": "Category",
       "type": "string",
@@ -93,6 +77,22 @@
       "isIgnored": false,
       "defaultValue": "",
       "subType": "string"
+    },
+    {
+      "name": "by",
+      "label": "By",
+      "type": "string",
+      "value": "",
+      "description": "",
+      "isIgnored": false,
+      "isRequired": true,
+      "defaultValue": "",
+      "isDropdown": true,
+      "referenceType": "static",
+      "options": [
+        "rockyxwall",
+        "nione"
+      ]
     }
   ]
 }
