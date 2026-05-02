@@ -1,0 +1,102 @@
+{
+  "file": "src/content/novel/the-innkeeper-review.mdx",
+  "name": "novel",
+  "fileType": "mdx",
+  "fmType": "yaml",
+  "template": [
+    {
+      "name": "title",
+      "label": "title",
+      "type": "string",
+      "value": "",
+      "description": "title of the post",
+      "isIgnored": false,
+      "isRequired": true,
+      "defaultValue": ""
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "type": "string",
+      "value": "",
+      "description": "description of the post",
+      "isIgnored": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "pubDate",
+      "label": "publicDate",
+      "type": "Date",
+      "value": "",
+      "description": "when the post was public",
+      "isIgnored": false,
+      "isRequired": true,
+      "defaultValue": "",
+      "alwaysUseCurrentDate": false
+    },
+    {
+      "name": "updatedDate",
+      "label": "updatedDate",
+      "type": "Date",
+      "value": "",
+      "description": "when the post was updated",
+      "isIgnored": false,
+      "defaultValue": "",
+      "alwaysUseCurrentDate": false
+    },
+    {
+      "name": "heroImage",
+      "label": "heroImage",
+      "type": "media",
+      "value": "",
+      "description": "post image",
+      "isIgnored": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "by",
+      "label": "by",
+      "type": "string",
+      "value": "",
+      "description": "writer name",
+      "isIgnored": false,
+      "isRequired": true,
+      "defaultValue": "",
+      "isDropdown": true,
+      "referenceType": "static",
+      "options": [
+        "rockyxwall",
+        "nione"
+      ]
+    },
+    {
+      "name": "category",
+      "label": "category",
+      "type": "string",
+      "value": "",
+      "description": "select category",
+      "isIgnored": false,
+      "isRequired": true,
+      "defaultValue": "",
+      "isDropdown": true,
+      "referenceType": "static",
+      "options": [
+        "novel",
+        "manga",
+        "game"
+      ]
+    },
+    {
+      "name": "tags",
+      "label": "tags",
+      "type": "Array",
+      "value": [],
+      "description": "post tags",
+      "isIgnored": false,
+      "defaultValue": "",
+      "subType": "string",
+      "isDropdown": true,
+      "referenceType": "static"
+    }
+  ]
+}
