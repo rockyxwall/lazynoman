@@ -1,8 +1,7 @@
 {
-  "content": "src/content",
   "media": "src/assets/img",
-  "public": "public",
+  "content": "src/content",
   "configs": [],
-  "custom-commit": false,
-  "arrangement": []
+  "arrangement": [],
+  "custom-commit": true
 }
