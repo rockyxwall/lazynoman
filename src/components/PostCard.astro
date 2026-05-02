@@ -19,7 +19,7 @@ const category = getCategory(post.id);
 
 <article class="group relative flex flex-col space-y-3 p-4 rounded-xl border border-border bg-card hover:border-muted-foreground/50 hover:shadow-xl transition-all">
 	{post.data.heroImage ? (
-		<div class="w-full aspect-[16/9] overflow-hidden rounded-lg border border-border/50">
+		<div class="w-full aspect-video overflow-hidden rounded-lg border border-border/50">
 			<Image 
 				src={post.data.heroImage} 
 				alt="" 
@@ -27,13 +27,13 @@ const category = getCategory(post.id);
 			/>
 		</div>
 	) : (
-		<div class="w-full aspect-[16/9] rounded-lg border border-border/50 bg-muted/30 flex items-center justify-center overflow-hidden">
-			<div class="w-full h-full bg-gradient-to-br from-muted/50 to-muted animate-pulse flex items-center justify-center">
+		<div class="w-full aspect-video rounded-lg border border-border/50 bg-muted/30 flex items-center justify-center overflow-hidden">
+			<div class="w-full h-full bg-linear-to-br from-muted/50 to-muted animate-pulse flex items-center justify-center">
                 <span class="text-muted-foreground/40 font-bold text-2xl uppercase tracking-tighter opacity-20 select-none">{category}</span>
             </div>
 		</div>
 	)}
-	<div class="flex flex-col flex-grow space-y-2">
+	<div class="flex flex-col grow space-y-2">
 		<div class="flex items-center justify-between gap-2 text-xs font-bold text-muted-foreground">
 			<FormattedDate date={post.data.pubDate} />
 			<div class="flex items-center gap-2">
