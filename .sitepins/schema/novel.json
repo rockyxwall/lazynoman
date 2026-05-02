@@ -6,59 +6,57 @@
   "template": [
     {
       "name": "title",
-      "label": "title",
+      "label": "Title",
       "type": "string",
       "value": "",
-      "description": "title of the post",
+      "description": "",
       "isIgnored": false,
       "isRequired": true,
       "defaultValue": ""
     },
     {
       "name": "description",
-      "label": "description",
+      "label": "Description",
       "type": "string",
       "value": "",
-      "description": "description of the post",
+      "description": "",
       "isIgnored": false,
       "defaultValue": ""
     },
     {
       "name": "pubDate",
-      "label": "publicDate",
-      "type": "Date",
-      "value": "",
-      "description": "when the post was public",
+      "label": "Publish Date",
+      "type": "string",
+      "value": "2026-05-02T17:31:47.575Z",
+      "description": "",
       "isIgnored": false,
       "isRequired": true,
-      "defaultValue": "",
-      "alwaysUseCurrentDate": false
+      "defaultValue": ""
     },
     {
       "name": "updatedDate",
-      "label": "updatedDate",
-      "type": "Date",
-      "value": "",
-      "description": "when the post was updated",
+      "label": "Updated Date",
+      "type": "string",
+      "value": "2026-05-02",
+      "description": "",
       "isIgnored": false,
-      "defaultValue": "",
-      "alwaysUseCurrentDate": false
+      "defaultValue": ""
     },
     {
       "name": "heroImage",
-      "label": "heroImage",
+      "label": "Hero Image",
       "type": "media",
       "value": "",
-      "description": "post image",
+      "description": "",
       "isIgnored": false,
       "defaultValue": ""
     },
     {
       "name": "by",
-      "label": "by",
+      "label": "By",
       "type": "string",
       "value": "",
-      "description": "writer name",
+      "description": "",
       "isIgnored": false,
       "isRequired": true,
       "defaultValue": "",
@@ -71,10 +69,10 @@
     },
     {
       "name": "category",
-      "label": "category",
+      "label": "Category",
       "type": "string",
       "value": "",
-      "description": "select category",
+      "description": "",
       "isIgnored": false,
       "isRequired": true,
       "defaultValue": "",
@@ -88,10 +86,10 @@
     },
     {
       "name": "tags",
-      "label": "tags",
+      "label": "Tags",
       "type": "Array",
       "value": [],
-      "description": "post tags",
+      "description": "",
       "isIgnored": false,
       "defaultValue": "",
       "subType": "string"
