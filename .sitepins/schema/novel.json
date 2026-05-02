@@ -94,9 +94,7 @@
       "description": "post tags",
       "isIgnored": false,
       "defaultValue": "",
-      "subType": "string",
-      "isDropdown": true,
-      "referenceType": "static"
+      "subType": "string"
     }
   ]
 }
