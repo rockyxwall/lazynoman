@@ -46,10 +46,10 @@ const category = getCategory(post.id);
 			<FormattedDate date={post.data.pubDate} />
 			<div class="flex items-center gap-2">
 				{post.data.by && (
-					<span class="flex items-center gap-1 font-medium lowercase">
+					<a href={`/about/${post.data.by}`} class="relative z-10 flex items-center gap-1 font-medium lowercase hover:underline">
 						<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
 						{post.data.by}
-					</span>
+					</a>
 				)}
 				<span class="px-2 py-0.5 rounded bg-secondary text-secondary-foreground border border-border capitalize">
 					{category}

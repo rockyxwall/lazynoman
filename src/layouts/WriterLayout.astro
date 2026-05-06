@@ -1,0 +1,185 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import StatsCard from '../components/custom-ui/StatsCard.astro';
+import TasteTag from '../components/custom-ui/TasteTag.astro';
+import SmallPostCard from '../components/custom-ui/SmallPostCard.astro';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../components/ui/breadcrumb";
+
+const { frontmatter } = Astro.props;
+const { 
+  name, 
+  role, 
+  initial, 
+  joined, 
+  location, 
+  bio, 
+  taste, 
+  slug,
+  stats 
+} = frontmatter;
+
+let posts: any[] = [];
+try {
+  const all = await getCollection('post');
+  posts = all
+    .filter(p => p.data.by === slug)
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+} catch (e) {
+  posts = [];
+}
+
+function fmt(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`${name} | LazyNoman`} description={`Reviews and writing by ${name} on LazyNoman.`} />
+  </head>
+  <body class="bg-background text-foreground antialiased">
+    <Header />
+
+    <main class="mx-auto w-full max-w-4xl px-4 pt-12 pb-24 overflow-x-hidden">
+      <!-- Breadcrumb -->
+      <Breadcrumb className="mb-8">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/about">About</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <!-- Profile Header -->
+      <header class="flex flex-col md:flex-row gap-8 items-start mb-16">
+        <div class="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-foreground text-background flex items-center justify-center text-5xl font-black shrink-0 shadow-2xl">
+          {initial}
+        </div>
+        <div class="flex-1">
+          <span class="inline-block text-xs font-bold text-primary tracking-widest uppercase mb-2">
+            {role}
+          </span>
+          <h1 class="text-4xl md:text-6xl font-bold mb-4">{name}</h1>
+          <div class="flex gap-4 text-sm text-muted-foreground font-medium mb-6 uppercase tracking-wider">
+            <span>Joined {joined}</span>
+            <span class="opacity-30">•</span>
+            <span>{location}</span>
+          </div>
+          <p class="text-xl leading-relaxed text-foreground/90 font-light max-w-3xl">
+            {bio}
+          </p>
+        </div>
+      </header>
+
+      <!-- MDX Content (Personal Story) -->
+      <section class="mb-20 space-y-8 text-lg leading-relaxed markdown-body">
+        <slot />
+
+        {stats && (
+          <div class="flex flex-wrap gap-4 my-10">
+            {stats.map((s: any) => (
+              <StatsCard value={s.value} label={s.label} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <!-- Taste Section -->
+      {taste && taste.length > 0 && (
+        <section class="mb-24">
+          <h2 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-12 flex items-center gap-3">
+            Taste Profile <span class="h-px bg-border flex-1"></span>
+          </h2>
+          
+          <div class="space-y-16">
+            {taste.map((entry: any) => (
+              <div class="group">
+                <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                  <span class="text-3xl">{entry.icon}</span> {entry.category}
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
+                  <div>
+                    <h4 class="text-xs font-black uppercase tracking-widest text-muted-foreground mb-4">What I like</h4>
+                    <div class="flex flex-wrap gap-2">
+                      {entry.likes.map((l: string) => (
+                        <TasteTag variant="primary">
+                          {l}
+                        </TasteTag>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-black uppercase tracking-widest text-muted-foreground mb-4">What I can't stand</h4>
+                    <div class="flex flex-wrap gap-2">
+                      {entry.dislikes.map((d: string) => (
+                        <TasteTag variant="destructive">
+                          {d}
+                        </TasteTag>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-muted/30 border border-border rounded-2xl p-6 relative overflow-hidden">
+                  <div class="absolute top-0 right-0 w-24 h-24 bg-foreground/5 rounded-full -mr-12 -mt-12 opacity-50"></div>
+                  <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-2 relative z-10">currently into</h4>
+                  <p class="text-lg font-semibold tracking-tight text-foreground relative z-10">{entry.currentlyInto}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Reviews Section -->
+      <section>
+        <h2 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-12 flex items-center gap-3">
+          Published Reviews <span class="h-px bg-border flex-1"></span>
+        </h2>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {posts.map(post => (
+            <SmallPostCard post={post} />
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  .markdown-body p {
+    margin-bottom: 1.5rem;
+  }
+  .markdown-body h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
