@@ -18,6 +18,8 @@ const post = defineCollection({
 			by: z.string().optional(),
 			category: z.string().optional(),
 			tags: z.array(z.string()).optional(),
+			rating: z.number().min(1).max(10).optional(),
+			itemAuthor: z.string().optional(),
 		}),
 });
 
