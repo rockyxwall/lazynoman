@@ -6,6 +6,15 @@ import Header from '../../components/Header.astro';
 import PostCard from '../../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../../components/ui/breadcrumb";
+
 export async function getStaticPaths() {
   const allPosts = await getCollection('post');
   const filteredPosts = allPosts.filter((post) => import.meta.env.DEV || !post.data.draft);
@@ -37,6 +46,18 @@ const { categoryName, posts } = Astro.props;
 	<body>
 		<Header />
 		<main>
+            <Breadcrumb className="mb-8">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>{categoryName}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+
             <header class="mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}</h1>
                 <p class="text-lg text-muted-foreground">

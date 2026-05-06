@@ -7,6 +7,14 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import Comments from "../components/Comments.astro";
 import { Tag } from "../components/ui/tag";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../components/ui/breadcrumb";
 import "../styles/markdown.css";
 
 type Props = CollectionEntry<"post">["data"];
@@ -86,6 +94,22 @@ const schema = {
     <Header />
 
     <main class="mx-auto w-full max-w-4xl px-4 pt-12 pb-24 overflow-x-hidden">
+      <Breadcrumb className="mb-8">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/${category}`} className="capitalize">{category}</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{title}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <article>
         {/* ── Post Header ── */}
         <header class="post-header mb-12">
@@ -117,7 +141,7 @@ const schema = {
                         <circle cx="12" cy="7" r="4" />
                       </>
                     </svg>
-                    <span class="inline-block">{by}</span>
+                    <a href={`/about/${by}`} class="inline-block hover:underline">{by}</a>
                   </span>
                 )
               }

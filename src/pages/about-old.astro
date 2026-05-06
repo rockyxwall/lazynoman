@@ -1,0 +1,536 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const SITE_TITLE = 'LazyNoman';
+const SITE_DESCRIPTION = 'About LazyNoman — who we are, what we cover, and the people writing it.';
+
+const writers = [
+  {
+    slug: 'rockyxwall',
+    name: 'rockyxwall',
+    role: 'Founder & Lead Reviewer',
+    avatar: '/avatars/rockyxwall.webp',
+    fallbackInitial: 'R',
+    tagline: 'Reads everything. Finishes most of it.',
+    covers: ['Manga', 'Manhwa', 'Novels', 'Anime', 'Games'],
+    bio: 'The person behind LazyNoman. Probably should be sleeping instead of reading chapter 847.',
+  },
+  {
+    slug: 'nione',
+    name: 'nione',
+    role: 'Contributor',
+    avatar: '/avatars/nione.webp',
+    fallbackInitial: 'N',
+    tagline: 'Passionate about games and immersive simulations.',
+    covers: ['Games', 'Simulation'],
+    bio: 'A writer focusing on the intersection of management and gameplay mechanics.',
+  },
+];
+
+const categories = [
+  { icon: '📖', label: 'Novels & Web Novels', desc: 'LN, WN, LitRPG — the long haul.' },
+  { icon: '🎌', label: 'Manga & Manhwa', desc: 'Japanese, Korean, and Chinese comics.' },
+  { icon: '📺', label: 'Anime', desc: 'Series, films, OVAs — if it moves, we watch it.' },
+  { icon: '🎮', label: 'Games', desc: 'Mostly story-driven, some exceptions.' },
+  { icon: '🎬', label: 'Movies', desc: 'Rare, but when something is worth it.' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`About – ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap');
+
+      /* ─── Reset & tokens ─────────────────────────────────── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      /* ─── Layout helpers ─────────────────────────────────── */
+      .wrap {
+        max-width: var(--max);
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+
+      /* ─── Hero ───────────────────────────────────────────── */
+      .hero {
+        border-bottom: 2px solid var(--ink);
+        padding-block: clamp(3rem, 8vw, 6rem) clamp(2rem, 5vw, 4rem);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            var(--rule) 39px,
+            var(--rule) 40px
+          );
+        opacity: 0.45;
+        pointer-events: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 2rem;
+      }
+
+      .kicker {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .hero-title {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 8vw, 6.5rem);
+        font-weight: 900;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+
+      .hero-title em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .hero-sub {
+        margin-top: 1.5rem;
+        max-width: 48ch;
+        font-size: 1.05rem;
+        color: var(--muted);
+        font-weight: 300;
+      }
+
+      .issue-tag {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.8;
+      }
+
+      /* ─── Section headings ───────────────────────────────── */
+      .section {
+        padding-block: clamp(3rem, 6vw, 5rem);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .section:last-child { border-bottom: none; }
+
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .section-label h2 {
+        font-family: var(--serif);
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        font-weight: 700;
+        line-height: 1.1;
+      }
+
+      .section-label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--rule);
+      }
+
+      /* ─── What We Do ─────────────────────────────────────── */
+      .mission-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: 1px solid var(--rule);
+      }
+
+      .mission-block {
+        padding: 2rem;
+        border-right: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .mission-block:nth-child(even) { border-right: none; }
+      .mission-block:nth-last-child(-n+2) { border-bottom: none; }
+
+      .mission-block h3 {
+        font-family: var(--serif);
+        font-size: 1.15rem;
+        margin-bottom: 0.6rem;
+        color: var(--ink);
+      }
+
+      .mission-block p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        font-weight: 300;
+      }
+
+      .mission-icon {
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+
+      @media (max-width: 560px) {
+        .mission-grid { grid-template-columns: 1fr; }
+        .mission-block { border-right: none !important; }
+        .mission-block:last-child { border-bottom: none !important; }
+        .mission-block:not(:last-child) { border-bottom: 1px solid var(--rule) !important; }
+      }
+
+      /* ─── Philosophy strip ───────────────────────────────── */
+      .philosophy {
+        background: var(--ink);
+        color: var(--paper);
+        padding: clamp(2rem, 5vw, 4rem) var(--gutter);
+      }
+
+      .philosophy-inner {
+        max-width: var(--max);
+        margin-inline: auto;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .philosophy-mark {
+        font-family: var(--serif);
+        font-size: clamp(4rem, 10vw, 8rem);
+        font-weight: 900;
+        font-style: italic;
+        color: var(--accent);
+        line-height: 1;
+        user-select: none;
+      }
+
+      .philosophy-text h3 {
+        font-family: var(--serif);
+        font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: var(--paper);
+      }
+
+      .philosophy-text p {
+        font-size: 0.95rem;
+        color: #a09880;
+        font-weight: 300;
+        max-width: 55ch;
+      }
+
+      @media (max-width: 600px) {
+        .philosophy-inner { grid-template-columns: 1fr; gap: 1rem; }
+        .philosophy-mark { font-size: 4rem; }
+      }
+
+      /* ─── Writers ────────────────────────────────────────── */
+      .writers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--rule);
+        border: 1px solid var(--rule);
+      }
+
+      .writer-card {
+        background: var(--paper);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.15s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .writer-card::after {
+        content: '→';
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.2rem;
+        color: var(--rule);
+        transition: color 0.15s, transform 0.15s;
+      }
+
+      .writer-card:hover {
+        background: #eee9de;
+      }
+
+      .writer-card:hover::after {
+        color: var(--accent);
+        transform: translateX(3px);
+      }
+
+      .writer-avatar {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        border: 2px solid var(--ink);
+        object-fit: cover;
+        background: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--serif);
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--paper);
+        flex-shrink: 0;
+      }
+
+      .writer-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .writer-name {
+        font-family: var(--serif);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .writer-role {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-top: 0.15rem;
+      }
+
+      .writer-tagline {
+        font-size: 0.92rem;
+        color: var(--muted);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 1.5;
+      }
+
+      .writer-covers {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: auto;
+        padding-top: 0.5rem;
+      }
+
+      .tag {
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.25rem 0.6rem;
+        border: 1px solid var(--rule);
+        color: var(--muted);
+      }
+
+      /* ─── Structure callout ──────────────────────────────── */
+      .structure-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+        counter-reset: zone;
+      }
+
+      .zone-item {
+        counter-increment: zone;
+        padding: 1.25rem;
+        border: 1px solid var(--rule);
+        position: relative;
+      }
+
+      .zone-item::before {
+        content: '0' counter(zone);
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .zone-item strong {
+        font-family: var(--serif);
+        font-size: 0.95rem;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.3rem;
+      }
+
+      .zone-item span {
+        font-size: 0.82rem;
+        color: var(--muted);
+        font-weight: 300;
+      }
+
+      /* ─── Responsive hero grid ───────────────────────────── */
+      @media (max-width: 640px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .issue-tag { text-align: left; }
+      }
+
+      main { min-height: 60vh; }
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <main>
+      <!-- ── Hero ── -->
+      <section class="hero">
+        <div class="wrap hero-inner">
+          <div>
+            <p class="kicker">Est. 2026 · Personal Review Space</p>
+            <h1 class="hero-title">Lazy<br /><em>Noman</em></h1>
+            <p class="hero-sub">
+              A small corner of the internet where we read, watch, and play things — then
+              give you an honest account of whether they are worth your time.
+            </p>
+          </div>
+          <div class="issue-tag">
+            Structure v1.0<br />
+            May 2026<br />
+            Reviews · Essays<br />
+            Opinions
+          </div>
+        </div>
+      </section>
+
+      <!-- ── What We Cover ── -->
+      <section class="section">
+        <div class="wrap">
+          <div class="section-label">
+            <h2>What We Cover</h2>
+          </div>
+          <div class="mission-grid">
+            {categories.map(cat => (
+              <div class="mission-block">
+                <span class="mission-icon">{cat.icon}</span>
+                <h3>{cat.label}</h3>
+                <p>{cat.desc}</p>
+              </div>
+            ))}
+            <!-- Filler block to complete the grid visually if odd count -->
+            <div class="mission-block" style="background: #ece7da;">
+              <span class="mission-icon">✍️</span>
+              <h3>The Honest Take</h3>
+              <p>Every review states how far the writer got. No fake completions. No hype for hype's sake.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Philosophy strip ── -->
+      <div class="philosophy">
+        <div class="philosophy-inner">
+          <div class="philosophy-mark">"</div>
+          <div class="philosophy-text">
+            <h3>We write for the person who just searched the title and wants a real answer.</h3>
+            <p>
+              Not SEO fluff. Not an affiliate paragraph. A direct verdict from someone who
+              actually sat with the work — finished it or dropped it and is honest about which.
+              If you want a score and a reason, you're in the right place.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── How We Review ── -->
+      <section class="section">
+        <div class="wrap">
+          <div class="section-label">
+            <h2>How Every Review Is Built</h2>
+          </div>
+          <div class="structure-list">
+            <div class="zone-item">
+              <strong>The Verdict</strong>
+              <span>Direct answer in under 100 words. Score up front.</span>
+            </div>
+            <div class="zone-item">
+              <strong>What Is This?</strong>
+              <span>Spoiler-free premise for people who just heard the name.</span>
+            </div>
+            <div class="zone-item">
+              <strong>My Review</strong>
+              <span>Real opinion. Named strengths, named weaknesses, Pros/Cons table.</span>
+            </div>
+            <div class="zone-item">
+              <strong>Who Is This For?</strong>
+              <span>Read if / Skip if. Helps you decide fast.</span>
+            </div>
+            <div class="zone-item">
+              <strong>Community Take</strong>
+              <span>What the discourse says and where we agree or don't.</span>
+            </div>
+            <div class="zone-item">
+              <strong>FAQ</strong>
+              <span>Top real-world questions — length, completion, age rating, sequels.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Writers ── -->
+      <section class="section">
+        <div class="wrap">
+          <div class="section-label">
+            <h2>The Writers</h2>
+          </div>
+          <div class="writers-grid">
+            {writers.map(writer => (
+              <a href={`/authors/${writer.slug}`} class="writer-card">
+                <div class="writer-header">
+                  <div class="writer-avatar">
+                    {writer.fallbackInitial}
+                  </div>
+                  <div>
+                    <div class="writer-name">{writer.name}</div>
+                    <div class="writer-role">{writer.role}</div>
+                  </div>
+                </div>
+                <p class="writer-tagline">{writer.tagline}</p>
+                <div class="writer-covers">
+                  {writer.covers.map(c => (
+                    <span class="tag">{c}</span>
+                  ))}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,373 @@
+---
+// src/pages/about/nione.astro
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../../components/ui/breadcrumb";
+
+const writer = {
+  slug:     'nione',
+  name:     'nione',
+  role:     'Contributor',
+  initial:  'N',
+  joined:   'May 2026',
+  location: 'In a simulation',
+  bio: `A writer focusing on the intersection of management and gameplay mechanics. Passionate about games and immersive simulations.`,
+};
+
+const taste = [
+  {
+    category: 'Games',
+    icon: '🎮',
+    likes: [
+      'Deep simulation mechanics',
+      'Management and tycoon games',
+      'Immersive worldbuilding',
+    ],
+    dislikes: [
+      'Shallow gameplay loops',
+      'Lack of mechanical depth',
+    ],
+    currentlyInto: 'Supermarket Simulator, Dwarf Fortress',
+  },
+];
+
+let posts: any[] = [];
+try {
+  const all = await getCollection('post');
+  posts = all
+    .filter(p => p.data.by === writer.slug)
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+} catch (e) {
+  posts = [];
+}
+
+const categoryOrder = ['manga', 'manhwa', 'novel', 'anime', 'game', 'movie'];
+const byCategory: Record<string, typeof posts> = {};
+for (const post of posts) {
+  const cat = (post.data.category ?? 'other') as string;
+  (byCategory[cat] ??= []).push(post);
+}
+const sortedCats = Object.keys(byCategory).sort(
+  (a, b) => {
+    const ai = categoryOrder.indexOf(a);
+    const bi = categoryOrder.indexOf(b);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  }
+);
+
+function fmt(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`${writer.name} – LazyNoman`}
+      description={`Reviews and writing by ${writer.name} on LazyNoman.`}
+    />
+    <style>
+      .page-root {
+        font-family: var(--font-sans), sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 896px;
+        margin: 0 auto;
+        padding: 4rem 2rem 8rem;
+      }
+
+      @media (max-width: 640px) {
+        .container { padding: 2rem 1rem 4rem; }
+      }
+
+      /* --- Identity Zone --- */
+      .profile-header {
+        margin-bottom: 6rem;
+      }
+
+      .profile-avatar {
+        width: 6rem;
+        height: 6rem;
+        background: var(--foreground);
+        color: var(--background);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 2rem;
+      }
+
+      .profile-name {
+        font-family: var(--font-heading), sans-serif;
+        font-size: clamp(3rem, 8vw, 5rem);
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        margin-bottom: 1rem;
+      }
+
+      .profile-role {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        margin-bottom: 2rem;
+      }
+
+      .profile-bio {
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        font-weight: 300;
+        max-width: 60ch;
+        line-height: 1.5;
+      }
+
+      /* --- Section Styling --- */
+      .section-label {
+        font-family: var(--font-heading), sans-serif;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 3rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--foreground);
+        display: inline-block;
+      }
+
+      /* --- Taste Grid (Linear flow) --- */
+      .taste-section {
+        margin-bottom: 8rem;
+      }
+
+      .taste-entry {
+        margin-bottom: 4rem;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 3rem;
+      }
+
+      @media (max-width: 768px) {
+        .taste-entry { grid-template-columns: 1fr; gap: 1rem; }
+      }
+
+      .taste-cat {
+        font-family: var(--font-heading), sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .taste-lists {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      @media (max-width: 640px) {
+        .taste-lists { grid-template-columns: 1fr; }
+      }
+
+      .list-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+
+      .taste-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .taste-list li {
+        font-size: 0.9375rem;
+        margin-bottom: 0.5rem;
+        padding-left: 1.25rem;
+        position: relative;
+        line-height: 1.4;
+      }
+
+      .taste-list li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--muted-foreground);
+      }
+
+      .currently-tag {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: var(--muted);
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+      }
+
+      .currently-tag strong {
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        color: var(--muted-foreground);
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      /* --- Portfolio --- */
+      .posts-section {
+        margin-bottom: 4rem;
+      }
+
+      .cat-group {
+        margin-bottom: 3rem;
+      }
+
+      .cat-heading {
+        font-family: var(--font-heading), sans-serif;
+        font-size: 1.25rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        color: var(--foreground);
+      }
+
+      .post-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.2s;
+      }
+
+      .post-link:hover {
+        color: var(--primary);
+      }
+
+      .post-title {
+        font-size: 1.125rem;
+        font-weight: 500;
+      }
+
+      .post-date {
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+      }
+
+      .breadcrumb {
+        margin-bottom: 4rem;
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+      }
+
+      .breadcrumb a {
+        color: var(--foreground);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body class="page-root">
+    <Header />
+
+    <main class="container">
+      <Breadcrumb className="mb-12">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/about">About</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{writer.name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <!-- Identity -->
+      <header class="profile-header">
+        <div class="profile-avatar">{writer.initial}</div>
+        <h1 class="profile-name">{writer.name}</h1>
+        <p class="profile-role">{writer.role}</p>
+        <p class="profile-bio">{writer.bio}</p>
+      </header>
+
+      <!-- Taste Profile (Vertical Flow) -->
+      <section class="taste-section">
+        <span class="section-label">Taste Profile</span>
+        
+        {taste.map(entry => (
+          <div class="taste-entry">
+            <h3 class="taste-cat">{entry.icon} {entry.category}</h3>
+            <div class="taste-content">
+              <div class="taste-lists">
+                <div>
+                  <span class="list-title">Likes</span>
+                  <ul class="taste-list">
+                    {entry.likes.map(l => <li>{l}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <span class="list-title">Dislikes</span>
+                  <ul class="taste-list">
+                    {entry.dislikes.map(d => <li>{d}</li>)}
+                  </ul>
+                </div>
+              </div>
+              <div class="currently-tag">
+                <strong>Currently Into</strong>
+                {entry.currentlyInto}
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <!-- Portfolio -->
+      <section class="posts-section">
+        <span class="section-label">Recent Reviews</span>
+
+        {sortedCats.map(cat => (
+          <div class="cat-group">
+            <h2 class="cat-heading">{cat}</h2>
+            {byCategory[cat].map(post => (
+              <a href={`/${post.slug}`} class="post-link">
+                <span class="post-title">{post.data.title}</span>
+                <span class="post-date">{fmt(post.data.pubDate)}</span>
+              </a>
+            ))}
+          </div>
+        ))}
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

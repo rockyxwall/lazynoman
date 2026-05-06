@@ -1,0 +1,228 @@
+---
+// src/pages/about/index.astro
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../../components/ui/breadcrumb";
+
+const SITE_TITLE = 'LazyNoman';
+const SITE_DESCRIPTION = 'The philosophy and the people behind LazyNoman.';
+
+const writers = [
+  {
+    slug: 'rockyxwall',
+    name: 'rockyxwall',
+    role: 'Founder & Lead Reviewer',
+    initial: 'R',
+    tagline: 'Reads everything. Finishes most of it.',
+    covers: ['Manga', 'Manhwa', 'Novels', 'Anime', 'Games'],
+  },
+  {
+    slug: 'nione',
+    name: 'nione',
+    role: 'Contributor',
+    initial: 'N',
+    tagline: 'Passionate about games and immersive simulations.',
+    covers: ['Games', 'Simulation'],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`About – ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    <style>
+      .page-root {
+        font-family: var(--font-sans), sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: 896px; /* max-w-4xl */
+        margin: 0 auto;
+        padding: 4rem 2rem 8rem;
+      }
+
+      @media (max-width: 640px) {
+        .container { padding: 2rem 1rem 4rem; }
+      }
+
+      /* --- Brutalist Typography --- */
+      .hero-title {
+        font-family: var(--font-heading), sans-serif;
+        font-size: clamp(3rem, 10vw, 6rem);
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        margin-bottom: 2rem;
+        color: var(--foreground);
+      }
+
+      .hero-lead {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        font-weight: 400;
+        max-width: 32ch;
+        line-height: 1.3;
+        margin-bottom: 4rem;
+        color: var(--muted-foreground);
+      }
+
+      .section-title {
+        font-family: var(--font-heading), sans-serif;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--foreground);
+        display: inline-block;
+      }
+
+      /* --- Minimalist Lists --- */
+      .philosophy-text {
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        font-weight: 300;
+        margin-bottom: 6rem;
+        line-height: 1.5;
+      }
+
+      .philosophy-text strong {
+        font-weight: 700;
+        color: var(--foreground);
+      }
+
+      /* --- Writer Cards (Minimalist) --- */
+      .writer-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .writer-card {
+        text-decoration: none;
+        color: inherit;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2rem;
+        align-items: center;
+        padding: 2rem;
+        border: 1px solid transparent;
+        transition: border-color 0.2s, background 0.2s;
+        border-radius: 0.5rem;
+      }
+
+      .writer-card:hover {
+        border-color: var(--border);
+        background: var(--muted);
+      }
+
+      .writer-avatar {
+        width: 5rem;
+        height: 5rem;
+        background: var(--foreground);
+        color: var(--background);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 900;
+      }
+
+      .writer-name {
+        font-family: var(--font-heading), sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 0.25rem;
+      }
+
+      .writer-role {
+        font-size: 1rem;
+        color: var(--muted-foreground);
+        margin-bottom: 0.5rem;
+      }
+
+      .writer-tagline {
+        font-size: 0.9375rem;
+        font-style: italic;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 640px) {
+        .writer-card {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          padding: 1.5rem;
+          border: 1px solid var(--border);
+        }
+      }
+    </style>
+  </head>
+  <body class="page-root">
+    <Header />
+
+    <main class="container">
+      <Breadcrumb className="mb-12">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>About</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <!-- Brutalist Hero -->
+      <h1 class="hero-title">LAZY<br/>NOMAN</h1>
+      <p class="hero-lead">
+        A personal review space where honest words matter more than metrics.
+      </p>
+
+      <!-- Clean Philosophy -->
+      <section>
+        <span class="section-title">Philosophy</span>
+        <div class="philosophy-text">
+          <p>
+            We write for the person who just searched the title and wants a <strong>real answer</strong>. 
+            No SEO fluff. No affiliate padding. Just a direct verdict from someone who actually sat with the work.
+          </p>
+        </div>
+      </section>
+
+      <!-- Simplified Team -->
+      <section>
+        <span class="section-title">The Team</span>
+        <div class="writer-list">
+          {writers.map(w => (
+            <a href={`/about/${w.slug}`} class="writer-card">
+              <div class="writer-avatar">{w.initial}</div>
+              <div class="writer-info">
+                <h2 class="writer-name">{w.name}</h2>
+                <p class="writer-role">{w.role}</p>
+                <p class="writer-tagline">“{w.tagline}”</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
