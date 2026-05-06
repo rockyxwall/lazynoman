@@ -42,7 +42,7 @@ const writers = [
   <body class="bg-background text-foreground antialiased">
     <Header />
 
-    <main class="container mx-auto max-w-4xl px-4 py-12 md:py-20">
+    <main class="mx-auto w-full max-w-4xl px-4 pt-12 pb-24 overflow-x-hidden">
       <!-- Breadcrumb -->
       <Breadcrumb className="mb-8">
         <BreadcrumbList>
@@ -57,18 +57,18 @@ const writers = [
       </Breadcrumb>
 
       <article>
-        <span class="inline-block text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4">
+        <span class="inline-block text-xs font-medium text-muted-foreground tracking-widest uppercase mb-4">
           lazynoman.com — mission
         </span>
 
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-6">the purpose of this site</h1>
-        <p class="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-tight font-medium">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">the purpose of this site</h1>
+        <p class="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-relaxed">
           a place for personal reviews. no more, no less.
         </p>
 
         <hr class="my-12 border-border" />
 
-        <div class="space-y-8 text-lg leading-relaxed">
+        <div class="space-y-8">
           <p>
             LazyNoman is a space dedicated to sharing personal reviews on novels, manga, anime, and games. 
           </p>
@@ -79,15 +79,15 @@ const writers = [
           </p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-10">
-            <div class="bg-muted/50 border border-border rounded-2xl px-6 py-4">
+            <div class="bg-muted/50 border border-border rounded-xl px-5 py-4">
               <span class="block text-xl font-bold text-foreground mb-1">Personal</span>
               <p class="text-sm text-muted-foreground leading-snug">Every word is based on individual experience and feeling.</p>
             </div>
-            <div class="bg-muted/50 border border-border rounded-2xl px-6 py-4">
+            <div class="bg-muted/50 border border-border rounded-xl px-5 py-4">
               <span class="block text-xl font-bold text-foreground mb-1">Subjective</span>
               <p class="text-sm text-muted-foreground leading-snug">Taste varies. We share ours without worrying if others agree.</p>
             </div>
-            <div class="bg-muted/50 border border-border rounded-2xl px-6 py-4">
+            <div class="bg-muted/50 border border-border rounded-xl px-5 py-4">
               <span class="block text-xl font-bold text-foreground mb-1">Direct</span>
               <p class="text-sm text-muted-foreground leading-snug">No sugarcoating. Just an honest account of the experience.</p>
             </div>

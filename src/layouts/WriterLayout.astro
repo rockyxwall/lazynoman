@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import StatsCard from '../components/custom-ui/StatsCard.astro';
 import TasteTag from '../components/custom-ui/TasteTag.astro';
+import SmallPostCard from '../components/custom-ui/SmallPostCard.astro';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -37,20 +38,6 @@ try {
 } catch (e) {
   posts = [];
 }
-
-const categoryOrder = ['manga', 'manhwa', 'novel', 'anime', 'game', 'movie'];
-const byCategory: Record<string, typeof posts> = {};
-for (const post of posts) {
-  const cat = (post.data.category ?? 'other') as string;
-  (byCategory[cat] ??= []).push(post);
-}
-const sortedCats = Object.keys(byCategory).sort(
-  (a, b) => {
-    const ai = categoryOrder.indexOf(a);
-    const bi = categoryOrder.indexOf(b);
-    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-  }
-);
 
 function fmt(d: Date) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -92,7 +79,7 @@ function fmt(d: Date) {
           <span class="inline-block text-xs font-bold text-primary tracking-widest uppercase mb-2">
             {role}
           </span>
-          <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-4">{name}</h1>
+          <h1 class="text-4xl md:text-6xl font-bold mb-4">{name}</h1>
           <div class="flex gap-4 text-sm text-muted-foreground font-medium mb-6 uppercase tracking-wider">
             <span>Joined {joined}</span>
             <span class="opacity-30">•</span>
@@ -105,7 +92,7 @@ function fmt(d: Date) {
       </header>
 
       <!-- MDX Content (Personal Story) -->
-      <section class="mb-20 space-y-8 text-lg leading-relaxed border-l-4 border-primary/20 pl-8 py-2 markdown-body">
+      <section class="mb-20 space-y-8 text-lg leading-relaxed markdown-body">
         <slot />
 
         {stats && (
@@ -171,24 +158,9 @@ function fmt(d: Date) {
           Published Reviews <span class="h-px bg-border flex-1"></span>
         </h2>
 
-        <div class="space-y-12">
-          {sortedCats.map(cat => (
-            <div>
-              <h3 class="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground/60 mb-6 flex items-center gap-4">
-                {cat}
-                <span class="h-px bg-border/50 flex-1"></span>
-              </h3>
-              <div class="grid grid-cols-1 gap-1">
-                {byCategory[cat].map(post => (
-                  <a href={`/${post.slug}`} class="flex justify-between items-center py-4 border-b border-border/50 group hover:border-foreground/20 transition-colors">
-                    <span class="text-lg font-medium group-hover:text-primary transition-colors tracking-tight">{post.data.title}</span>
-                    <span class="text-xs font-bold text-muted-foreground uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                      <FormattedDate date={post.data.pubDate} />
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {posts.map(post => (
+            <SmallPostCard post={post} />
           ))}
         </div>
       </section>

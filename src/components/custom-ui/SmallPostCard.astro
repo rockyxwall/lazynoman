@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../FormattedDate.astro';
+
+interface Props {
+	post: CollectionEntry<'post'>;
+}
+
+const { post } = Astro.props;
+
+// Function to get category from post ID or data
+const getCategory = (post: CollectionEntry<'post'>) => {
+    if (post.data.category) return post.data.category;
+	return post.id.split('/')[0];
+};
+
+const category = getCategory(post);
+---
+
+<article class="group relative flex flex-col space-y-2 p-3 rounded-xl border border-border bg-card hover:border-muted-foreground/50 hover:shadow-lg transition-all h-full">
+	{post.data.heroImage ? (
+		<div class="w-full aspect-video overflow-hidden rounded-lg border border-border/50">
+			{typeof post.data.heroImage === 'string' ? (
+				<img 
+					src={post.data.heroImage} 
+					alt="" 
+					class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+				/>
+			) : (
+				<Image 
+					src={post.data.heroImage} 
+					alt="" 
+					class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+				/>
+			)}
+		</div>
+	) : (
+		<div class="w-full aspect-video rounded-lg border border-border/50 bg-muted/30 flex items-center justify-center overflow-hidden">
+			<div class="w-full h-full bg-linear-to-br from-muted/50 to-muted animate-pulse flex items-center justify-center">
+                <span class="text-muted-foreground/40 font-bold text-lg uppercase tracking-tighter opacity-20 select-none">{category}</span>
+            </div>
+		</div>
+	)}
+	<div class="flex flex-col grow space-y-1">
+		<div class="flex items-center justify-between gap-2 text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+			<FormattedDate date={post.data.pubDate} />
+			<span class="px-1 py-0.5 rounded bg-secondary text-secondary-foreground border border-border capitalize">
+				{category}
+			</span>
+		</div>
+		<h3 class="text-xs md:text-sm font-bold group-hover:text-primary transition-colors leading-tight line-clamp-2">
+			<a href={`/${post.id}/`} class="no-underline text-foreground block before:absolute before:inset-0">
+				{post.data.title}
+			</a>
+		</h3>
+	</div>
+</article>
