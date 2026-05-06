@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className } = Astro.props;
+---
+
+<div class:list={["bg-primary/5 border border-primary/10 rounded-[2rem] p-8 md:p-12 relative overflow-hidden group", className]}>
+  <div class="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full -mr-24 -mt-24 transition-transform group-hover:scale-110"></div>
+  <h3 class="text-sm font-bold tracking-widest uppercase text-primary mb-4 relative z-10">{title}</h3>
+  <div class="text-xl md:text-2xl leading-snug m-0 text-foreground font-semibold relative z-10 tracking-tight">
+    <slot />
+  </div>
+</div>

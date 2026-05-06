@@ -3,6 +3,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import FeatureCard from '../../components/custom-ui/FeatureCard.astro';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,7 +14,7 @@ import {
 } from "../../components/ui/breadcrumb";
 
 const SITE_TITLE = 'LazyNoman';
-const SITE_DESCRIPTION = 'The philosophy and the people behind LazyNoman.';
+const SITE_DESCRIPTION = 'The philosophy and the mission behind LazyNoman.';
 
 const writers = [
   {
@@ -22,7 +23,6 @@ const writers = [
     role: 'Founder & Lead Reviewer',
     initial: 'R',
     tagline: 'Reads everything. Finishes most of it.',
-    covers: ['Manga', 'Manhwa', 'Novels', 'Anime', 'Games'],
   },
   {
     slug: 'nione',
@@ -30,7 +30,6 @@ const writers = [
     role: 'Contributor',
     initial: 'N',
     tagline: 'Passionate about games and immersive simulations.',
-    covers: ['Games', 'Simulation'],
   },
 ];
 ---
@@ -38,145 +37,14 @@ const writers = [
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`About – ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-    <style>
-      .page-root {
-        font-family: var(--font-sans), sans-serif;
-        background: var(--background);
-        color: var(--foreground);
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .container {
-        max-width: 896px; /* max-w-4xl */
-        margin: 0 auto;
-        padding: 4rem 2rem 8rem;
-      }
-
-      @media (max-width: 640px) {
-        .container { padding: 2rem 1rem 4rem; }
-      }
-
-      /* --- Brutalist Typography --- */
-      .hero-title {
-        font-family: var(--font-heading), sans-serif;
-        font-size: clamp(3rem, 10vw, 6rem);
-        font-weight: 900;
-        line-height: 0.9;
-        letter-spacing: -0.04em;
-        margin-bottom: 2rem;
-        color: var(--foreground);
-      }
-
-      .hero-lead {
-        font-size: clamp(1.25rem, 3vw, 1.75rem);
-        font-weight: 400;
-        max-width: 32ch;
-        line-height: 1.3;
-        margin-bottom: 4rem;
-        color: var(--muted-foreground);
-      }
-
-      .section-title {
-        font-family: var(--font-heading), sans-serif;
-        font-size: 0.875rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 2rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid var(--foreground);
-        display: inline-block;
-      }
-
-      /* --- Minimalist Lists --- */
-      .philosophy-text {
-        font-size: clamp(1.1rem, 2vw, 1.4rem);
-        font-weight: 300;
-        margin-bottom: 6rem;
-        line-height: 1.5;
-      }
-
-      .philosophy-text strong {
-        font-weight: 700;
-        color: var(--foreground);
-      }
-
-      /* --- Writer Cards (Minimalist) --- */
-      .writer-list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .writer-card {
-        text-decoration: none;
-        color: inherit;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 2rem;
-        align-items: center;
-        padding: 2rem;
-        border: 1px solid transparent;
-        transition: border-color 0.2s, background 0.2s;
-        border-radius: 0.5rem;
-      }
-
-      .writer-card:hover {
-        border-color: var(--border);
-        background: var(--muted);
-      }
-
-      .writer-avatar {
-        width: 5rem;
-        height: 5rem;
-        background: var(--foreground);
-        color: var(--background);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-heading);
-        font-size: 2rem;
-        font-weight: 900;
-      }
-
-      .writer-name {
-        font-family: var(--font-heading), sans-serif;
-        font-size: 2rem;
-        font-weight: 800;
-        line-height: 1;
-        margin-bottom: 0.25rem;
-      }
-
-      .writer-role {
-        font-size: 1rem;
-        color: var(--muted-foreground);
-        margin-bottom: 0.5rem;
-      }
-
-      .writer-tagline {
-        font-size: 0.9375rem;
-        font-style: italic;
-        opacity: 0.8;
-      }
-
-      @media (max-width: 640px) {
-        .writer-card {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-          padding: 1.5rem;
-          border: 1px solid var(--border);
-        }
-      }
-    </style>
+    <BaseHead title={`About | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body class="page-root">
+  <body class="bg-background text-foreground antialiased">
     <Header />
 
-    <main class="container">
-      <Breadcrumb className="mb-12">
+    <main class="container mx-auto max-w-4xl px-4 py-12 md:py-20">
+      <!-- Breadcrumb -->
+      <Breadcrumb className="mb-8">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -188,34 +56,69 @@ const writers = [
         </BreadcrumbList>
       </Breadcrumb>
 
-      <!-- Brutalist Hero -->
-      <h1 class="hero-title">LAZY<br/>NOMAN</h1>
-      <p class="hero-lead">
-        A personal review space where honest words matter more than metrics.
-      </p>
+      <article>
+        <span class="inline-block text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4">
+          lazynoman.com — mission
+        </span>
 
-      <!-- Clean Philosophy -->
-      <section>
-        <span class="section-title">Philosophy</span>
-        <div class="philosophy-text">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-6">the purpose of this site</h1>
+        <p class="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-tight font-medium">
+          a place for personal reviews. no more, no less.
+        </p>
+
+        <hr class="my-12 border-border" />
+
+        <div class="space-y-8 text-lg leading-relaxed">
           <p>
-            We write for the person who just searched the title and wants a <strong>real answer</strong>. 
-            No SEO fluff. No affiliate padding. Just a direct verdict from someone who actually sat with the work.
+            LazyNoman is a space dedicated to sharing personal reviews on novels, manga, anime, and games. 
           </p>
-        </div>
-      </section>
 
-      <!-- Simplified Team -->
+          <p>
+            The mission is simple: to document how I felt about a specific work. These reviews are entirely subjective. 
+            They might not match your taste, and other people might have completely different opinions. **I don't care about that.**
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-10">
+            <div class="bg-muted/50 border border-border rounded-2xl px-6 py-4">
+              <span class="block text-xl font-bold text-foreground mb-1">Personal</span>
+              <p class="text-sm text-muted-foreground leading-snug">Every word is based on individual experience and feeling.</p>
+            </div>
+            <div class="bg-muted/50 border border-border rounded-2xl px-6 py-4">
+              <span class="block text-xl font-bold text-foreground mb-1">Subjective</span>
+              <p class="text-sm text-muted-foreground leading-snug">Taste varies. We share ours without worrying if others agree.</p>
+            </div>
+            <div class="bg-muted/50 border border-border rounded-2xl px-6 py-4">
+              <span class="block text-xl font-bold text-foreground mb-1">Direct</span>
+              <p class="text-sm text-muted-foreground leading-snug">No sugarcoating. Just an honest account of the experience.</p>
+            </div>
+          </div>
+
+          <p>
+            I won't try to be an "objective critic" or write reviews that please everyone. If I enjoyed something, I'll say why. 
+            If I hated it or felt it was a waste of time, I'll say that too. 
+          </p>
+
+          <FeatureCard title="the core idea" class="my-12">
+            this site exists because i wanted a record of my own journey through stories. if you find something useful here, great. if not, that's fine too.
+          </FeatureCard>
+        </div>
+      </article>
+
+      <hr class="my-20 border-border" />
+
+      <!-- Team Section -->
       <section>
-        <span class="section-title">The Team</span>
-        <div class="writer-list">
+        <h2 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-12">meet the writers</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {writers.map(w => (
-            <a href={`/about/${w.slug}`} class="writer-card">
-              <div class="writer-avatar">{w.initial}</div>
-              <div class="writer-info">
-                <h2 class="writer-name">{w.name}</h2>
-                <p class="writer-role">{w.role}</p>
-                <p class="writer-tagline">“{w.tagline}”</p>
+            <a href={`/about/${w.slug}`} class="group flex items-center gap-6 p-6 bg-muted/30 border border-border rounded-3xl transition-all hover:bg-muted/50 hover:shadow-xl hover:border-muted-foreground/30">
+              <div class="w-16 h-16 rounded-2xl bg-foreground text-background flex items-center justify-center text-3xl font-black group-hover:scale-110 transition-transform">
+                {w.initial}
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{w.name}</h3>
+                <p class="text-sm text-muted-foreground font-medium mb-2 uppercase tracking-wide">{w.role}</p>
+                <p class="text-sm text-muted-foreground italic truncate">"{w.tagline}"</p>
               </div>
             </a>
           ))}
