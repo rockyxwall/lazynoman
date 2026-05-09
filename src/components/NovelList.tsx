@@ -63,11 +63,11 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
         {/* Sidebar Filters */}
         <aside className="space-y-8">
           <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Sort By Start Date</h3>
-            <div className="flex gap-2">
+            <h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Sort By Start Date</h3>
+            <div class="flex gap-2">
               <button
                 onClick={() => setSortOrder('desc')}
-                className={`flex-1 px-4 py-2 rounded-lg border text-[10px] font-bold uppercase tracking-widest font-mono transition-all ${
+                className={`flex-1 px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all ${
                   sortOrder === 'desc'
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'border-border bg-card hover:bg-muted text-foreground'
@@ -77,7 +77,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
               </button>
               <button
                 onClick={() => setSortOrder('asc')}
-                className={`flex-1 px-4 py-2 rounded-lg border text-[10px] font-bold uppercase tracking-widest font-mono transition-all ${
+                className={`flex-1 px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all ${
                   sortOrder === 'asc'
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'border-border bg-card hover:bg-muted text-foreground'
@@ -88,12 +88,12 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Status</h3>
-            <div className="flex flex-wrap lg:flex-col gap-2">
+          <div class="space-y-4">
+            <h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Status</h3>
+            <div class="flex flex-wrap lg:flex-col gap-2">
               <button
                 onClick={() => setSelectedStatus(null)}
-                className={`px-4 py-2 rounded-lg border text-[10px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
+                className={`px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
                   selectedStatus === null
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'border-border bg-card hover:bg-muted text-foreground'
@@ -105,7 +105,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
                 <button
                   key={status}
                   onClick={() => toggleStatus(status)}
-                  className={`px-4 py-2 rounded-lg border text-[10px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
+                  className={`px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
                     selectedStatus === status
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'border-border bg-card hover:bg-muted text-foreground'
@@ -117,14 +117,14 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Genres</h3>
-            <div className="flex flex-wrap gap-2">
+          <div class="space-y-4">
+            <h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Genres</h3>
+            <div class="flex flex-wrap gap-2">
               {genres.map((genre) => (
                 <button
                   key={genre}
                   onClick={() => toggleGenre(genre)}
-                  className={`px-3 py-1 rounded-lg border text-[10px] font-bold uppercase tracking-widest font-mono transition-all ${
+                  className={`px-3 py-1 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all ${
                     selectedGenre === genre
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'border-border bg-card hover:bg-muted text-foreground'
@@ -142,7 +142,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
                 setSelectedStatus(null);
                 setSelectedGenre(null);
               }}
-              className="text-[10px] font-bold uppercase tracking-widest font-mono text-muted-foreground hover:text-primary transition-colors underline underline-offset-4"
+              className="text-[12px] font-bold uppercase tracking-widest font-mono text-muted-foreground hover:text-primary transition-colors underline underline-offset-4"
             >
               Clear Filters
             </button>

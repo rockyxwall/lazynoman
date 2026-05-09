@@ -60,7 +60,7 @@ CREATE INDEX IF NOT EXISTS novel_embeddings_vec_idx
 
 -- Stats Cache
 CREATE TABLE IF NOT EXISTS stats_cache (
-  id             INTEGER PRIMARY KEY CHECK (id = 1),
+  id             INTEGER PRIMARY KEY,
   total_read     INTEGER DEFAULT 0,
   total_finished INTEGER DEFAULT 0,
   total_dropped  INTEGER DEFAULT 0,

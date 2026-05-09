@@ -15,6 +15,31 @@ interface Props {
 
 const { novel, review } = Astro.props;
 
+// Helper functions (same logic as NovelCard.tsx)
+const getProgress = (read: number, total: number) => {
+  if (!total || total === 0) return 0;
+  return Math.min(Math.round((read / total) * 100), 100);
+};
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return null;
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return null;
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '.');
+};
+
+const getInitials = (name: string) => {
+  const stopWords = ['of', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'with', 'from', 'and'];
+  const parts = name.split(/[^a-zA-Z0-9]+/).filter(w => w && !stopWords.includes(w.toLowerCase()));
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.substring(0, 2).toUpperCase();
+};
+
+const progress = getProgress(novel.read_chapters, novel.total_chapters);
+const initials = getInitials(novel.name);
+const startStr = formatDate(novel.start_date) || 'XXXX.XX';
+const endStr = formatDate(novel.end_date) || 'PRESENT';
+
 // Metadata from review if available, otherwise from novel
 const title = review?.data.title || novel.name;
 const description = review?.data.description || `Read my review and track progress for ${novel.name}.`;
@@ -70,50 +95,87 @@ const schema = {
       <article class="space-y-12">
         {/* ── Novel Info Header ── */}
         <header class="flex flex-col md:flex-row gap-12 items-start">
-          <div class="w-full md:w-72 aspect-[3/4] bg-muted rounded-xl border border-border overflow-hidden shadow-2xl flex-shrink-0">
-            <img 
-              src={novel.cover_url || '/img/placeholder.webp'} 
-              alt={novel.name} 
-              class="w-full h-full object-cover" 
-            />
+          <div class="w-full md:w-72 aspect-[3/4] bg-muted rounded-xl border border-border overflow-hidden flex-shrink-0 relative">
+            {novel.cover_url ? (
+              <img 
+                src={novel.cover_url} 
+                alt={novel.name} 
+                class="w-full h-full object-cover" 
+              />
+            ) : (
+              <div class="w-full h-full flex flex-col items-center justify-center gap-2 bg-background">
+                <div class="font-heading font-black text-9xl text-primary opacity-[0.1] select-none">
+                  {initials}
+                </div>
+                <div class="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase opacity-70">
+                  No cover available
+                </div>
+              </div>
+            )}
           </div>
 
-          <div class="flex-grow space-y-8">
+          <div class="flex-grow space-y-8 w-full">
             <div class="space-y-4">
               <div class="flex flex-wrap gap-2 items-center">
-                <span class="bg-primary text-primary-foreground font-mono text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+                <span class="bg-primary text-primary-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                   {novel.status}
                 </span>
                 {novel.rating && (
-                  <span class="bg-muted border border-border text-foreground font-mono text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+                  <span class="bg-muted border border-border text-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                     {novel.rating} / 10
                   </span>
                 )}
                 {novel.media_type && (
-                  <span class="bg-muted border border-border text-muted-foreground font-mono text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+                  <span class="bg-muted border border-border text-muted-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                     {novel.media_type}
                   </span>
                 )}
               </div>
-              <h1 class="novel-title italic uppercase">
+              <h1 class="novel-title italic uppercase text-5xl">
                 {novel.name}
               </h1>
             </div>
 
-            <div class="grid grid-cols-2 gap-6">
-              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
-                <p class="text-[10px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Chapters Read</p>
-                <p class="text-3xl font-black italic tracking-tighter">{novel.read_chapters.toLocaleString()}</p>
+            {/* Progress Section */}
+            <div class="space-y-4 max-w-xl">
+              <div class="progress flex flex-col gap-2">
+                <div class="bar h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    class="fill h-full bg-primary rounded-full transition-all duration-1000" 
+                    style={{ width: `${novel.total_chapters ? progress : (novel.read_chapters > 0 ? 33 : 0)}%` }}
+                  ></div>
+                </div>
+                <div class="prog-lbl font-mono text-[13px] flex justify-between text-muted-foreground uppercase tracking-widest">
+                  <span><strong>CH. {novel.read_chapters.toLocaleString()}</strong></span>
+                  {novel.total_chapters ? (
+                    <span>/ {novel.total_chapters.toLocaleString()}</span>
+                  ) : (
+                    <span class="opacity-40 lowercase text-[11px]">no total</span>
+                  )}
+                </div>
               </div>
-              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
-                <p class="text-[10px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Total Chapters</p>
-                <p class="text-3xl font-black italic tracking-tighter text-muted-foreground/30">{novel.total_chapters ? novel.total_chapters.toLocaleString() : '???'}</p>
+
+              <div class="dates flex items-center gap-3 font-mono text-[11px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+                <span>{startStr}</span>
+                <div class="dates-line flex-1 h-px bg-border"></div>
+                <span>{endStr}</span>
               </div>
             </div>
 
-            <div class="flex flex-wrap gap-2 pt-4 border-t border-border">
+            <div class="grid grid-cols-2 gap-6">
+              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
+                <p class="text-[12px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Chapters Read</p>
+                <p class="text-4xl font-black italic tracking-tighter">{novel.read_chapters.toLocaleString()}</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
+                <p class="text-[12px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Total Chapters</p>
+                <p class="text-4xl font-black italic tracking-tighter text-muted-foreground/30">{novel.total_chapters ? novel.total_chapters.toLocaleString() : '???'}</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-4 border-t border-border">
               {tags.map((tag: string) => (
-                <span class="text-[10px] font-bold font-mono uppercase tracking-[0.15em] text-muted-foreground/60">
+                <span class="text-[12px] font-bold font-mono uppercase tracking-[0.15em] text-muted-foreground/60">
                   #{tag}
                 </span>
               ))}

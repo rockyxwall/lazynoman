@@ -2,6 +2,7 @@ import { db } from '../src/lib/turso';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'csv-parse/sync';
+import { computeStats } from '../src/lib/stats';
 
 async function reimport() {
   console.log('🚀 Starting Database Purge and Re-import...');
@@ -92,10 +93,13 @@ async function reimport() {
           startDate, 
           rating, 
           status, 
-          'Novel' // Default media_type
+          'novel' // Lowercase 'novel'
         ]
       });
     }
+
+    console.log('📊 Updating stats cache...');
+    await computeStats();
 
     console.log('✅ Re-import completed successfully!');
   } catch (error) {
