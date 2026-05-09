@@ -120,16 +120,6 @@ const schema = {
                 <span class="bg-primary text-primary-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                   {novel.status}
                 </span>
-                {novel.rating && (
-                  <span class="bg-muted border border-border text-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
-                    {novel.rating} / 10
-                  </span>
-                )}
-                {novel.media_type && (
-                  <span class="bg-muted border border-border text-muted-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
-                    {novel.media_type}
-                  </span>
-                )}
               </div>
               <h1 class="novel-title italic uppercase text-5xl">
                 {novel.name}
@@ -155,10 +145,22 @@ const schema = {
                 </div>
               </div>
 
-              <div class="dates flex flex-col items-center w-fit font-mono text-[11px] tracking-[0.15em] text-muted-foreground/60 uppercase">
-                <span>{startStr}</span>
-                <div class="w-px h-3 bg-border my-1"></div>
-                <span>{endStr}</span>
+              <div class="flex items-center gap-6">
+                <div class="dates flex flex-col items-center w-fit font-mono text-[11px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+                  <span>{startStr}</span>
+                  <div class="w-px h-3 bg-border my-1"></div>
+                  <span>{endStr}</span>
+                </div>
+
+                {novel.rating && (
+                  <>
+                    <div class="w-px h-8 bg-border"></div>
+                    <div class="flex flex-col items-center gap-1.5">
+                      <div class="font-mono text-sm font-bold leading-none">{novel.rating}</div>
+                      <div class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Rating</div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
