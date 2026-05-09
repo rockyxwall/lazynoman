@@ -69,8 +69,8 @@ const schema = {
     <main class="mx-auto w-full max-w-4xl px-4 pt-12 pb-24 overflow-x-hidden">
       <article class="space-y-12">
         {/* ── Novel Info Header ── */}
-        <header class="flex flex-col md:flex-row gap-8 items-start">
-          <div class="w-full md:w-64 aspect-[3/4] bg-muted rounded-3xl border border-border overflow-hidden shadow-2xl flex-shrink-0">
+        <header class="flex flex-col md:flex-row gap-12 items-start">
+          <div class="w-full md:w-72 aspect-[3/4] bg-muted rounded-xl border border-border overflow-hidden shadow-2xl flex-shrink-0">
             <img 
               src={novel.cover_url || '/img/placeholder.webp'} 
               alt={novel.name} 
@@ -78,64 +78,66 @@ const schema = {
             />
           </div>
 
-          <div class="flex-grow space-y-6">
-            <div class="space-y-2">
+          <div class="flex-grow space-y-8">
+            <div class="space-y-4">
               <div class="flex flex-wrap gap-2 items-center">
-                <Badge variant="outline" className="font-black uppercase italic tracking-widest text-[10px]">
+                <span class="bg-primary text-primary-foreground font-mono text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                   {novel.status}
-                </Badge>
+                </span>
                 {novel.rating && (
-                  <span class="text-sm font-black text-yellow-500 flex items-center gap-1">
-                    ★ {novel.rating} / 10
+                  <span class="bg-muted border border-border text-foreground font-mono text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+                    {novel.rating} / 10
                   </span>
                 )}
                 {novel.media_type && (
-                  <Badge variant="secondary" className="font-bold uppercase text-[10px]">
+                  <span class="bg-muted border border-border text-muted-foreground font-mono text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                     {novel.media_type}
-                  </Badge>
+                  </span>
                 )}
               </div>
-              <h1 class="novel-title">
+              <h1 class="novel-title italic uppercase">
                 {novel.name}
               </h1>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 bg-muted/50 rounded-2xl border border-border">
-                <p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Chapters Read</p>
-                <p class="text-2xl font-black">{novel.read_chapters}</p>
+            <div class="grid grid-cols-2 gap-6">
+              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
+                <p class="text-[10px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Chapters Read</p>
+                <p class="text-3xl font-black italic tracking-tighter">{novel.read_chapters.toLocaleString()}</p>
               </div>
-              <div class="p-4 bg-muted/50 rounded-2xl border border-border">
-                <p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Total Chapters</p>
-                <p class="text-2xl font-black">{novel.total_chapters || '?'}</p>
+              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
+                <p class="text-[10px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Total Chapters</p>
+                <p class="text-3xl font-black italic tracking-tighter text-muted-foreground/30">{novel.total_chapters ? novel.total_chapters.toLocaleString() : '???'}</p>
               </div>
             </div>
 
-            <div class="flex flex-wrap gap-2">
-              {novel.genres.map((genre: string) => (
-                <Badge variant="secondary" className="font-bold">#{genre}</Badge>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-border">
+              {tags.map((tag: string) => (
+                <span class="text-[10px] font-bold font-mono uppercase tracking-[0.15em] text-muted-foreground/60">
+                  #{tag}
+                </span>
               ))}
             </div>
           </div>
         </header>
 
         {/* ── Review Content Wrapper ── */}
-        <div class="pt-12 border-t border-border space-y-8">
+        <div class="pt-16 border-t border-border space-y-12">
           {review && (
-            <div class="space-y-4">
+            <div class="space-y-6">
               <h2 class="review-title">{title}</h2>
-              <div class="post-meta-row text-muted-foreground">
-                <div class="post-dateline flex flex-wrap items-center gap-x-6 gap-y-3 text-xs tracking-wider font-medium opacity-80">
-                  <span class="flex items-center gap-1.5 leading-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><path d="M3 10h18"></path><path d="M8 2v4"></path><path d="M16 2v4"></path></svg>
-                    <time datetime={pubDate.toISOString()} class="inline-block">
+              <div class="post-meta-row text-muted-foreground border-b border-border/50 pb-6">
+                <div class="post-dateline flex flex-wrap items-center gap-x-8 gap-y-3 text-[10px] tracking-[0.2em] font-bold uppercase font-mono">
+                  <span class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+                    <time datetime={pubDate.toISOString()}>
                       <FormattedDate date={pubDate} />
                     </time>
                   </span>
                   {updatedDate && (
-                    <span class="dateline-updated flex items-center gap-1.5 leading-none">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M12 7v5l4 2" /></svg>
-                      <span class="inline-block">Updated <FormattedDate date={updatedDate} /></span>
+                    <span class="flex items-center gap-2">
+                      <span class="w-1.5 h-1.5 rounded-full bg-yellow-500/30"></span>
+                      <span>Updated <FormattedDate date={updatedDate} /></span>
                     </span>
                   )}
                 </div>
@@ -143,7 +145,9 @@ const schema = {
             </div>
           )}
           
-          <slot />
+          <div class="markdown-body">
+            <slot />
+          </div>
         </div>
 
         {review && <Comments />}

@@ -1,0 +1,146 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500&display=swap');
+#nr{--bg:oklch(1 0 0);--fg:oklch(0.145 0 0);--pr:oklch(0.205 0 0);--pr-fg:oklch(0.985 0 0);--sec:oklch(0.97 0 0);--mu:oklch(0.97 0 0);--mu-fg:oklch(0.556 0 0);--bd:oklch(0.922 0 0);--card:oklch(1 0 0);--r:0.625rem;--hd:'Atkinson Hyperlegible',system-ui,sans-serif;--mn:'Geist Mono',monospace;--sn:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-family:var(--sn);padding:1.25rem;transition:background .25s,color .25s}
+#nr.dk{--bg:oklch(0.19 0 0);--fg:oklch(0.92 0 0);--card:oklch(0.23 0 0);--pr:oklch(0.92 0 0);--pr-fg:oklch(0.19 0 0);--sec:oklch(0.28 0 0);--mu:oklch(0.28 0 0);--mu-fg:oklch(0.7 0 0);--bd:oklch(0.35 0 0)}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.topbar-label{font-family:var(--mn);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu-fg)}
+.tbtn{font-family:var(--mn);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border:1px solid var(--bd);border-radius:var(--r);background:var(--sec);color:var(--fg);cursor:pointer;transition:all .15s}
+.tbtn:hover{background:var(--pr);color:var(--pr-fg);border-color:var(--pr)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
+.col-label{font-family:var(--mn);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu-fg);margin:0 0 .4rem .1rem;display:flex;align-items:center;gap:.4rem}
+.col-label::after{content:'';flex:1;height:1px;background:var(--bd)}
+.nv{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:background .25s,border-color .25s}
+.cover{width:100%;height:152px;overflow:hidden;flex-shrink:0;position:relative}
+.cover svg{display:block;width:100%;height:100%}
+.cover-typo{width:100%;height:100%;background:var(--pr);display:flex;flex-direction:column;justify-content:flex-end;padding:.875rem;box-sizing:border-box;position:relative;overflow:hidden}
+.cover-typo-bg{position:absolute;top:-1rem;right:-1rem;font-family:var(--hd);font-weight:700;font-size:7rem;line-height:1;letter-spacing:-.06em;color:var(--pr-fg);opacity:.07;pointer-events:none;user-select:none;white-space:nowrap}
+.cover-typo-title{font-family:var(--hd);font-weight:700;font-size:1rem;line-height:1.1;letter-spacing:-.04em;color:var(--pr-fg);position:relative;z-index:1;text-transform:uppercase}
+.cover-typo-sub{font-family:var(--mn);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pr-fg);opacity:.5;margin-top:.35rem;position:relative;z-index:1}
+.cover-placeholder{width:100%;height:100%;background:var(--sec);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;position:relative}
+.cover-placeholder-init{font-family:var(--hd);font-weight:700;font-size:4.5rem;line-height:1;letter-spacing:-.05em;color:var(--pr);opacity:.15}
+.cover-placeholder-line{font-family:var(--mn);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mu-fg);opacity:.7}
+.body{padding:.875rem;display:flex;flex-direction:column;gap:.625rem;flex:1}
+.badges{display:flex;gap:.4rem;flex-wrap:wrap}
+.badge{font-family:var(--mn);font-size:.6rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .5rem;border-radius:99px}
+.badge-solid{background:var(--pr);color:var(--pr-fg)}
+.badge-out{background:transparent;border:1px solid var(--bd);color:var(--mu-fg)}
+.title{font-family:var(--hd);font-weight:700;font-size:1.05rem;line-height:1.2;letter-spacing:-.04em;color:var(--fg);margin:0;font-style:italic}
+.title-xl{font-size:1.35rem;letter-spacing:-.05em}
+.progress{display:flex;flex-direction:column;gap:.35rem}
+.bar{height:2px;background:var(--sec);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:var(--pr);border-radius:99px}
+.prog-lbl{font-family:var(--mn);font-size:.65rem;display:flex;justify-content:space-between;color:var(--mu-fg)}
+.prog-lbl strong{color:var(--fg);font-weight:500}
+.dates{display:flex;align-items:center;gap:.5rem;font-family:var(--mn);font-size:.62rem;letter-spacing:.03em;color:var(--mu-fg)}
+.dates-line{flex:1;height:1px;background:var(--bd)}
+.stats{display:flex;gap:.875rem;border-top:1px solid var(--bd);padding-top:.625rem;margin-top:0}
+.stat{display:flex;flex-direction:column;gap:.1rem}
+.stat-val{font-family:var(--mn);font-size:.82rem;font-weight:500;color:var(--fg);letter-spacing:-.02em}
+.stat-lbl{font-family:var(--mn);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu-fg)}
+.divider{width:100%;height:1px;background:var(--bd);margin:0}
+.card-foot{padding:.625rem .875rem;background:var(--sec);display:flex;align-items:center;justify-content:space-between}
+.foot-txt{font-family:var(--mn);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu-fg)}
+.foot-dot{width:5px;height:5px;border-radius:50%;background:var(--pr);opacity:.5}
+.title-only-body{padding:1.25rem .875rem;justify-content:space-between;min-height:130px}
+.to-rule{width:2rem;height:2px;background:var(--pr);border-radius:99px;margin-top:.25rem}
+.not-started{font-family:var(--mn);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu-fg);margin-top:auto;padding-top:.75rem}
+</style>
+<h2 class="sr-only">Novel card showcase — four states from full data to title only, with light and dark mode toggle</h2>
+<div id="nr">
+  <div class="topbar">
+    <div class="topbar-label">Novel Card / Graceful Degradation</div>
+    <button class="tbtn" onclick="document.getElementById('nr').classList.toggle('dk')">Toggle Dark</button>
+  </div>
+
+  <div class="grid">
+
+    <div>
+      <div class="col-label">Full data</div>
+      <div class="nv">
+        <div class="cover">
+          <svg viewBox="0 0 300 152" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="300" height="152" fill="oklch(0.145 0 0)"/>
+            <rect x="0" y="0" width="300" height="152" fill="oklch(0.985 0 0)" opacity="0.02"/>
+            <rect x="200" y="-20" width="160" height="160" fill="none" stroke="oklch(0.985 0 0)" stroke-width="0.5" opacity="0.12" rx="4"/>
+            <rect x="220" y="0" width="160" height="160" fill="none" stroke="oklch(0.985 0 0)" stroke-width="0.5" opacity="0.07" rx="4"/>
+            <line x1="0" y1="140" x2="300" y2="140" stroke="oklch(0.985 0 0)" stroke-width="0.5" opacity="0.15"/>
+            <text x="14" y="60" font-family="'Atkinson Hyperlegible',sans-serif" font-weight="700" font-style="italic" font-size="36" fill="oklch(0.985 0 0)" letter-spacing="-1" opacity="0.95">A Will</text>
+            <text x="14" y="98" font-family="'Atkinson Hyperlegible',sans-serif" font-weight="700" font-style="italic" font-size="36" fill="oklch(0.985 0 0)" letter-spacing="-1" opacity="0.95">Eternal</text>
+            <text x="14" y="133" font-family="'Geist Mono',monospace" font-size="8" fill="oklch(0.985 0 0)" letter-spacing="3" opacity="0.35" text-transform="uppercase">XIANXIA · VOL. 7</text>
+            <rect x="14" y="142" width="48" height="1.5" fill="oklch(0.985 0 0)" opacity="0.4" rx="1"/>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="badges"><span class="badge badge-solid">Reading</span><span class="badge badge-out">Xianxia</span></div>
+          <p class="title">A Will Eternal</p>
+          <div class="progress">
+            <div class="bar"><div class="fill" style="width:71%"></div></div>
+            <div class="prog-lbl"><span><strong>Ch. 1,430</strong></span><span>/ 2,016</span></div>
+          </div>
+          <div class="dates"><span>2024.01</span><div class="dates-line"></div><span>Present</span></div>
+          <div class="stats">
+            <div class="stat"><div class="stat-val">2.0M</div><div class="stat-lbl">Words</div></div>
+            <div class="stat"><div class="stat-val">4.8</div><div class="stat-lbl">Rating</div></div>
+            <div class="stat"><div class="stat-val">71%</div><div class="stat-lbl">Done</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-label">No cover · chapters · dates</div>
+      <div class="nv">
+        <div class="cover">
+          <div class="cover-typo">
+            <div class="cover-typo-bg">TR</div>
+            <div class="cover-typo-title">The Ruins<br>of Eternity</div>
+            <div class="cover-typo-sub">Fantasy · Completed</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="badges"><span class="badge badge-out">Completed</span><span class="badge badge-out">Fantasy</span></div>
+          <p class="title">The Ruins of Eternity</p>
+          <div class="progress">
+            <div class="bar"><div class="fill" style="width:100%"></div></div>
+            <div class="prog-lbl"><span><strong>Ch. 342</strong></span><span>/ 342 · Finished</span></div>
+          </div>
+          <div class="dates"><span>2023.06</span><div class="dates-line"></div><span>2024.02</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-label">Title + chapter only</div>
+      <div class="nv">
+        <div class="cover">
+          <div class="cover-placeholder">
+            <div class="cover-placeholder-init">SS</div>
+            <div class="cover-placeholder-line">No cover available</div>
+          </div>
+        </div>
+        <div class="body">
+          <p class="title">Sovereign of the Stars</p>
+          <div class="progress">
+            <div class="bar"><div class="fill" style="width:33%"></div></div>
+            <div class="prog-lbl"><span><strong>Ch. 88</strong></span><span style="opacity:.4">no total</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="col-label">Title only</div>
+      <div class="nv">
+        <div class="body title-only-body" style="display:flex;flex-direction:column">
+          <div>
+            <div class="to-rule"></div>
+          </div>
+          <p class="title title-xl" style="margin-top:.75rem">Iron Throne Chronicles</p>
+          <p class="not-started">Not started · 0 chapters read</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

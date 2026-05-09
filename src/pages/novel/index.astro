@@ -26,5 +26,24 @@ const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 			<NovelList client:load initialNovels={novels} genres={genres} statuses={statuses} reviewedSlugs={reviewedSlugs} />
 		</main>
 		<Footer />
+
+		<style is:global>
+			.novel-card {
+				--hd: 'Atkinson', sans-serif;
+				--mn: 'Geist Mono', monospace;
+				--sn: 'Inter', sans-serif;
+			}
+			.novel-card .title {
+				font-family: var(--hd);
+			}
+			.novel-card .font-mono {
+				font-family: var(--mn);
+			}
+			.novel-card .cover-typo-bg {
+				font-family: var(--hd);
+				user-select: none;
+				pointer-events: none;
+			}
+		</style>
 	</body>
 </html>
