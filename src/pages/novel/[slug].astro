@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from 'astro:content';
+import { loadNovels } from '../../lib/parseNovels';
+import PostLayout from '../../layouts/PostLayout.astro';
+import TrackerCard from '../../components/TrackerCard.astro';
+
+export async function getStaticPaths() {
+  const novels = await loadNovels();
+  const reviews = await getCollection('post', ({ id }) => id.startsWith('novel/'));
+
+  // Create a map for quick lookup: stripped-slug -> collection entry
+  // e.g. "the-innkeeper" -> entry for "novel/the-innkeeper-review.mdx"
+  const reviewMap = Object.fromEntries(
+    reviews.map(r => {
+      const strippedSlug = r.id.replace(/^novel\//, '').replace(/-review$/, '');
+      return [strippedSlug, r];
+    })
+  );
+
+  return novels.map((novel) => {
+    return {
+      params: { slug: novel.slug },
+      props: { 
+        novel, 
+        review: reviewMap[novel.slug] || null 
+      },
+    };
+  });
+}
+
+const { novel, review } = Astro.props;
+
+// Default metadata if no review exists
+const postData = review ? review.data : {
+  title: `${novel.name} | Novel Tracker`,
+  description: `Reading progress and details for ${novel.name}. Currently ${novel.status}.`,
+  pubDate: novel.startDate ? new Date(novel.startDate) : new Date(),
+  category: 'novel',
+  heroImage: novel.coverUrl || undefined,
+};
+
+const Content = review ? (await render(review)).Content : null;
+---
+
+<PostLayout {...postData}>
+  <TrackerCard novel={novel} />
+  
+  {Content ? (
+    <div class="mt-12 prose prose-lg dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  ) : (
+    <div class="mt-12 p-8 rounded-xl bg-muted/30 border border-dashed border-border text-center">
+      <p class="text-muted-foreground">No full review written yet for this title.</p>
+    </div>
+  )}
+</PostLayout>
