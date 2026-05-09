@@ -55,7 +55,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
           Novels ({filteredNovels.length})
         </h1>
         <p className="text-xl text-muted-foreground font-medium max-w-2xl">
-          My personal library, synced live from Notion. Every chapter read, every rating given.
+          A list of all the novels I've read and where I am in each story.
         </p>
       </header>
 

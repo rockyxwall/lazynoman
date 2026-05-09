@@ -46,10 +46,15 @@ export default function NovelCard({ novel, hasReview }: NovelCardProps) {
   return (
     <a
       href={`/novel/${novel.slug}`}
-      className="novel-card group no-underline block h-full"
+      className="novel-card group no-underline block h-full relative"
     >
-      <div className="nv bg-card border border-border rounded-lg overflow-hidden flex flex-col h-full transition-all duration-300 hover:bg-muted">
-        
+      {/* --- EXTERNAL CORNER GLOW ACCENTS (CONCENTRIC BENDS) --- */}
+      <div className="absolute -top-1 -left-1 w-5 h-5 border-t-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tl-[12px]"></div>
+      <div className="absolute -top-1 -right-1 w-5 h-5 border-t-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tr-[12px]"></div>
+      <div className="absolute -bottom-1 -left-1 w-5 h-5 border-b-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-bl-[12px]"></div>
+      <div className="absolute -bottom-1 -right-1 w-5 h-5 border-b-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-br-[12px]"></div>
+
+      <div className="nv bg-card border border-border rounded-lg overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-primary/50 relative z-10">
         {/* --- UNIVERSAL MINIMALIST COVER AREA --- */}
         <div className="cover h-40 overflow-hidden shrink-0 relative border-b border-border bg-muted/30">
           {hasCover ? (
