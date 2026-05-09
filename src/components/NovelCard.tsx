@@ -4,9 +4,10 @@ import type { Novel } from '../lib/parseNovels';
 interface NovelCardProps {
   novel: Novel;
   hasReview?: boolean;
+  reviewCover?: string | any;
 }
 
-export default function NovelCard({ novel, hasReview }: NovelCardProps) {
+export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardProps) {
   const getProgress = (read: number, total: number) => {
     if (!total || total === 0) return 0;
     return Math.min(Math.round((read / total) * 100), 100);
@@ -31,7 +32,8 @@ export default function NovelCard({ novel, hasReview }: NovelCardProps) {
   };
 
   const progress = getProgress(novel.read_chapters, novel.total_chapters);
-  const hasCover = !!novel.cover_url;
+  const displayCover = novel.cover_url || reviewCover;
+  const hasCover = !!displayCover;
   const isNotStarted = novel.read_chapters === 0;
   const hasExtendedMetadata = !!(novel.rating || novel.start_date);
 
@@ -59,7 +61,7 @@ export default function NovelCard({ novel, hasReview }: NovelCardProps) {
         <div className="cover w-full aspect-video overflow-hidden shrink-0 relative rounded-lg border border-border/50 bg-muted/30">
           {hasCover ? (
             <img
-              src={novel.cover_url || ''}
+              src={displayCover || ''}
               alt={novel.name}
               className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
             />

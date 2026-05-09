@@ -6,20 +6,25 @@ interface NovelListProps {
   initialNovels: Novel[];
   genres: string[];
   statuses: string[];
-  reviewedSlugs?: string[];
+  reviewedReviews?: { id: string; heroImage?: string | any }[];
 }
 
-export default function NovelList({ initialNovels, genres, statuses, reviewedSlugs = [] }: NovelListProps) {
+export default function NovelList({ initialNovels, genres, statuses, reviewedReviews = [] }: NovelListProps) {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [showOnlyReviewed, setShowOnlyReviewed] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
-  const hasReview = (novelSlug: string) => {
-    return reviewedSlugs.some(id => {
-      const postId = id.toLowerCase();
+  const getReviewInfo = (novelSlug: string) => {
+    const review = reviewedReviews.find(r => {
+      const postId = r.id.toLowerCase();
       const slug = novelSlug.toLowerCase();
       return postId.includes(slug) || slug.includes(postId.split('/').pop() || '');
     });
+    return {
+      hasReview: !!review,
+      reviewCover: review?.heroImage
+    };
   };
 
   const filteredNovels = useMemo(() => {
@@ -27,7 +32,8 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
       .filter((novel) => {
         const statusMatch = !selectedStatus || novel.status === selectedStatus;
         const genreMatch = !selectedGenre || novel.genres.includes(selectedGenre);
-        return statusMatch && genreMatch;
+        const reviewMatch = !showOnlyReviewed || getReviewInfo(novel.slug).hasReview;
+        return statusMatch && genreMatch && reviewMatch;
       })
       .sort((a, b) => {
         if (!a.start_date) return 1;
@@ -38,7 +44,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
         if (isNaN(dateB)) return -1;
         return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
       });
-  }, [initialNovels, selectedStatus, selectedGenre, sortOrder]);
+  }, [initialNovels, selectedStatus, selectedGenre, showOnlyReviewed, sortOrder]);
 
   const toggleStatus = (status: string) => {
     setSelectedStatus(selectedStatus === status ? null : status);
@@ -62,6 +68,21 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
         <aside className="space-y-8">
+          <div className="space-y-4">
+            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Special</h3>
+            <button
+              onClick={() => setShowOnlyReviewed(!showOnlyReviewed)}
+              className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
+                showOnlyReviewed
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'border-border bg-card hover:bg-muted text-foreground'
+              }`}
+            >
+              <span>Reviewed Only</span>
+              <span className={`w-2 h-2 rounded-full ${showOnlyReviewed ? 'bg-primary-foreground animate-pulse' : 'bg-muted-foreground/30'}`}></span>
+            </button>
+          </div>
+
           <div className="space-y-4">
             <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Sort By Start Date</h3>
             <div className="flex gap-2">
@@ -153,13 +174,17 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedSlu
         <div className="lg:col-span-3 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
             {filteredNovels.length > 0 ? (
-              filteredNovels.map((novel) => (
-                <NovelCard 
-                  key={novel.id} 
-                  novel={novel} 
-                  hasReview={hasReview(novel.slug)} 
-                />
-              ))
+              filteredNovels.map((novel) => {
+                const { hasReview, reviewCover } = getReviewInfo(novel.slug);
+                return (
+                  <NovelCard 
+                    key={novel.id} 
+                    novel={novel} 
+                    hasReview={hasReview}
+                    reviewCover={reviewCover}
+                  />
+                );
+              })
             ) : (
               <div className="col-span-full py-12 text-center space-y-4">
                 <p className="text-muted-foreground font-black italic uppercase tracking-tighter text-2xl">No novels found matching these filters.</p>
