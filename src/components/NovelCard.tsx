@@ -124,27 +124,32 @@ export default function NovelCard({ novel, hasReview }: NovelCardProps) {
               </div>
 
               {bodyState === 'extended' && (
-                <div className="space-y-4 pt-2">
-                  <div className="dates flex items-center gap-2 font-mono text-[11px] tracking-widest text-muted-foreground/60 uppercase">
+                <div className="metadata grid grid-cols-[auto_1px_1fr] gap-x-4 pt-4 border-t border-border mt-4">
+                  {/* Column 1: Dates */}
+                  <div className="flex flex-col items-center font-mono text-[11px] tracking-widest text-muted-foreground/60 uppercase leading-none py-1">
                     <span>{formatDate(novel.start_date) || 'XXXX.XX'}</span>
-                    <div className="dates-line flex-1 h-[1px] bg-border/50"></div>
+                    <div className="w-px h-3 bg-border/50 my-1"></div>
                     <span>{formatDate(novel.end_date) || 'PRESENT'}</span>
                   </div>
 
-                  {novel.rating && (
-                    <div className="stats pt-4 border-t border-border flex gap-6">
-                      <div className="stat flex flex-col">
-                        <div className="stat-val font-mono text-xs font-bold">{novel.rating}</div>
-                        <div className="stat-lbl font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Rating</div>
+                  {/* Column 2: Vertical Separator */}
+                  <div className="w-[1px] bg-border/50 self-stretch"></div>
+
+                  {/* Column 3: Stats (Centered Vertically) */}
+                  <div className="flex items-center gap-8 h-full">
+                    {novel.rating && (
+                      <div className="flex flex-col items-center w-16 gap-1.5">
+                        <div className="stat-val font-mono text-xs font-bold leading-none">{novel.rating}</div>
+                        <div className="stat-lbl font-mono text-[10px] uppercase tracking-widest text-muted-foreground leading-none">Rating</div>
                       </div>
-                      {progress > 0 && (
-                        <div className="stat flex flex-col">
-                          <div className="stat-val font-mono text-xs font-bold">{progress}%</div>
-                          <div className="stat-lbl font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Done</div>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                    )}
+                    {progress > 0 && (
+                      <div className="flex flex-col items-center w-16 gap-1.5">
+                        <div className="stat-val font-mono text-xs font-bold leading-none">{progress}%</div>
+                        <div className="stat-lbl font-mono text-[10px] uppercase tracking-widest text-muted-foreground leading-none">Done</div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
