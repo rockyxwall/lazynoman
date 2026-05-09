@@ -1,103 +1,104 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
-import PostCard from '../../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { loadNovels } from '../../lib/parseNovels';
+import { getAllNovels } from '../../lib/fetchNovels';
 import { Badge } from '../../components/ui/badge';
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "../../components/ui/breadcrumb";
-
-const novels = await loadNovels();
-const reviews = await getCollection('post', ({ id }) => id.startsWith('novel/'));
-
-// Sort by startDate (desc)
-const sortedNovels = [...novels].sort((a, b) => {
-  if (!a.startDate) return 1;
-  if (!b.startDate) return -1;
-  return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
-});
-
-const statusColors: Record<string, string> = {
-  Reading: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-  Finished: "bg-green-500/10 text-green-500 border-green-500/20",
-  Dropped: "bg-red-500/10 text-red-500 border-red-500/20",
-  Paused: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-};
+const novels = await getAllNovels();
+const genres = [...new Set(novels.flatMap(n => n.genres))].sort();
+const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Novels | ${SITE_TITLE}`} description={`Tracking my reading progress across various web novels. ${novels.length} titles and counting.`} />
+		<BaseHead title={`Novel Tracker | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
-		<main>
-            <Breadcrumb className="mb-8">
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>Novels</BreadcrumbPage>
-                    </BreadcrumbItem>
-                </BreadcrumbList>
-            </Breadcrumb>
+		<main class="max-w-6xl mx-auto px-4 py-12">
+			<header class="mb-12 space-y-4">
+				<h1 class="text-4xl md:text-5xl font-black tracking-tighter italic uppercase">Novel Tracker</h1>
+				<p class="text-xl text-muted-foreground font-medium max-w-2xl">
+					My personal library, synced live from Notion. Every chapter read, every rating given.
+				</p>
+			</header>
 
-            <header class="mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Novel Tracker</h1>
-                <p class="text-lg text-muted-foreground">
-                    My personal log of every web novel I've touched.
-                </p>
-            </header>
-			
-			<section>
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{
-						sortedNovels.map((novel) => (
-							<a href={`/novel/${novel.slug}`} class="group block p-5 bg-card border border-border rounded-xl hover:border-primary transition-colors no-underline">
-                <div class="flex justify-between items-start mb-3">
-                  <Badge variant="outline" class={`${statusColors[novel.status] || "bg-muted text-muted-foreground"} text-[10px] uppercase font-bold tracking-tighter px-2 py-0`}>
-                    {novel.status}
-                  </Badge>
-                  {novel.rating > 0 && <span class="text-xs font-bold text-primary">⭐ {novel.rating}</span>}
-                </div>
-                <h3 class="text-lg font-bold group-hover:text-primary transition-colors line-clamp-2 mb-2 leading-tight">
-                  {novel.name}
-                </h3>
-                <div class="flex items-end justify-between mt-auto pt-2 border-t border-border/50">
-                  <div class="text-xs text-muted-foreground">
-                    <span class="font-bold text-foreground">{novel.readChapters}</span> chapters read
-                  </div>
-                  {novel.totalChapters > 0 && (
-                    <div class="text-[10px] text-muted-foreground/60 italic">
-                      of {novel.totalChapters}
-                    </div>
-                  )}
-                </div>
-              </a>
-						))
-					}
+			<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+				{/* Sidebar Filters */}
+				<aside class="space-y-8">
+					<div class="space-y-4">
+						<h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic">Status</h3>
+						<div class="flex flex-wrap lg:flex-col gap-2">
+							{statuses.map(status => (
+								<button class="px-4 py-2 rounded-xl border border-border bg-card text-sm font-bold hover:bg-muted transition-all text-left">
+									{status}
+								</button>
+							))}
+						</div>
+					</div>
+
+					<div class="space-y-4">
+						<h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic">Genres</h3>
+						<div class="flex flex-wrap gap-2">
+							{genres.map(genre => (
+								<button class="px-3 py-1 rounded-lg border border-border bg-card text-[10px] font-bold hover:bg-muted transition-all">
+									#{genre}
+								</button>
+							))}
+						</div>
+					</div>
+				</aside>
+
+				{/* Main Content */}
+				<div class="lg:col-span-3 space-y-6">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						{novels.map(novel => (
+							<a href={`/novel/${novel.slug}`} class="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-primary/5 transition-all flex flex-col no-underline text-foreground">
+								<div class="p-6 flex gap-4 flex-grow">
+									<div class="w-20 h-28 bg-muted rounded-xl flex-shrink-0 flex items-center justify-center text-muted-foreground border border-border overflow-hidden">
+										<img 
+                                            src={novel.coverUrl || '/img/placeholder.webp'} 
+                                            alt={novel.name} 
+                                            class="w-full h-full object-cover" 
+                                        />
+									</div>
+									<div class="space-y-2 min-w-0">
+										<div class="flex items-center gap-2">
+											<Badge variant="outline" class="text-[10px] uppercase font-black px-2 py-0.5 rounded-lg">
+												{novel.status}
+											</Badge>
+											{novel.rating && (
+												<span class="text-xs font-bold text-yellow-500 flex items-center gap-1">
+													★ {novel.rating}
+												</span>
+											)}
+										</div>
+										<h2 class="font-black text-lg leading-tight group-hover:text-primary transition-colors truncate">
+											{novel.name}
+										</h2>
+										<div class="flex flex-wrap gap-1">
+											{novel.genres.slice(0, 3).map(genre => (
+												<span class="text-[10px] font-bold text-muted-foreground">#{genre}</span>
+											))}
+										</div>
+									</div>
+								</div>
+								<div class="px-6 py-4 bg-muted/30 border-t border-border flex justify-between items-center">
+									<p class="text-xs font-bold">
+										<span class="text-muted-foreground">Chapters:</span> {novel.readChapters}
+									</p>
+									<span class="text-xs font-black italic uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+										View Details →
+									</span>
+								</div>
+							</a>
+						))}
+					</div>
 				</div>
-                
-                {novels.length === 0 && (
-                    <div class="py-20 text-center">
-                        <p class="text-xl text-muted-foreground">No novels found. Export your Notion CSV to src/data/novels.csv.</p>
-                        <a href="/" class="mt-4 inline-block text-primary font-bold hover:underline">&larr; Back to Home</a>
-                    </div>
-                )}
-			</section>
+			</div>
 		</main>
 		<Footer />
 	</body>

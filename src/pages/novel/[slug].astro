@@ -1,57 +1,106 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { loadNovels } from '../../lib/parseNovels';
-import PostLayout from '../../layouts/PostLayout.astro';
-import TrackerCard from '../../components/TrackerCard.astro';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getAllNovels } from '../../lib/fetchNovels';
+import { Badge } from '../../components/ui/badge';
 
 export async function getStaticPaths() {
-  const novels = await loadNovels();
-  const reviews = await getCollection('post', ({ id }) => id.startsWith('novel/'));
-
-  // Create a map for quick lookup: stripped-slug -> collection entry
-  // e.g. "the-innkeeper" -> entry for "novel/the-innkeeper-review.mdx"
-  const reviewMap = Object.fromEntries(
-    reviews.map(r => {
-      const strippedSlug = r.id.replace(/^novel\//, '').replace(/-review$/, '');
-      return [strippedSlug, r];
-    })
-  );
-
-  return novels.map((novel) => {
-    return {
-      params: { slug: novel.slug },
-      props: { 
-        novel, 
-        review: reviewMap[novel.slug] || null 
-      },
-    };
-  });
+	const novels = await getAllNovels();
+	return novels.map((novel) => ({
+		params: { slug: novel.slug },
+		props: { novel },
+	}));
 }
 
-const { novel, review } = Astro.props;
+const { novel } = Astro.props;
 
-// Default metadata if no review exists
-const postData = review ? review.data : {
-  title: `${novel.name} | Novel Tracker`,
-  description: `Reading progress and details for ${novel.name}. Currently ${novel.status}.`,
-  pubDate: novel.startDate ? new Date(novel.startDate) : new Date(),
-  category: 'novel',
-  heroImage: novel.coverUrl || undefined,
-};
-
-const Content = review ? (await render(review)).Content : null;
+// Try to find a matching review in content collections
+const allPosts = await getCollection('post');
+const review = allPosts.find(p => p.data.category === 'novel' && p.id.split('/').pop()?.replace('.mdx', '') === novel.reviewSlug);
+const { Content } = review ? await render(review) : { Content: null };
 ---
 
-<PostLayout {...postData}>
-  <TrackerCard novel={novel} />
-  
-  {Content ? (
-    <div class="mt-12 prose prose-lg dark:prose-invert max-w-none">
-      <Content />
-    </div>
-  ) : (
-    <div class="mt-12 p-8 rounded-xl bg-muted/30 border border-dashed border-border text-center">
-      <p class="text-muted-foreground">No full review written yet for this title.</p>
-    </div>
-  )}
-</PostLayout>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${novel.name} | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="max-w-4xl mx-auto px-4 py-12">
+			<article class="space-y-12">
+				{/* Novel Header */}
+				<header class="flex flex-col md:flex-row gap-8 items-start">
+					<div class="w-full md:w-64 aspect-[3/4] bg-muted rounded-3xl border border-border overflow-hidden shadow-2xl flex-shrink-0">
+						<img 
+                            src={novel.coverUrl || '/img/placeholder.webp'} 
+                            alt={novel.name} 
+                            class="w-full h-full object-cover" 
+                        />
+					</div>
+
+					<div class="flex-grow space-y-6">
+						<div class="space-y-2">
+							<div class="flex flex-wrap gap-2 items-center">
+								<Badge variant="outline" class="font-black uppercase italic tracking-widest text-[10px]">
+									{novel.status}
+								</Badge>
+								{novel.rating && (
+									<span class="text-sm font-black text-yellow-500 flex items-center gap-1">
+										★ {novel.rating} / 10
+									</span>
+								)}
+								{novel.mediaType && (
+									<Badge variant="secondary" class="font-bold uppercase text-[10px]">
+										{novel.mediaType}
+									</Badge>
+								)}
+							</div>
+							<h1 class="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
+								{novel.name}
+							</h1>
+						</div>
+
+						<div class="grid grid-cols-2 gap-4">
+							<div class="p-4 bg-muted/50 rounded-2xl border border-border">
+								<p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Chapters Read</p>
+								<p class="text-2xl font-black">{novel.readChapters}</p>
+							</div>
+							<div class="p-4 bg-muted/50 rounded-2xl border border-border">
+								<p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Total Chapters</p>
+								<p class="text-2xl font-black">{novel.totalChapters || '?'}</p>
+							</div>
+						</div>
+
+						<div class="flex flex-wrap gap-2">
+							{novel.genres.map(genre => (
+								<Badge variant="secondary" class="font-bold">#{genre}</Badge>
+							))}
+						</div>
+					</div>
+				</header>
+
+				{/* Review Content */}
+				{Content ? (
+					<section class="space-y-8 pt-12 border-t border-border">
+						<div class="flex items-center gap-4 mb-8">
+							<h2 class="text-2xl font-black italic uppercase tracking-widest">Personal Review</h2>
+							<div class="h-px flex-grow bg-border"></div>
+						</div>
+						<div class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-a:text-primary">
+							<Content />
+						</div>
+					</section>
+				) : (
+					<section class="p-8 rounded-3xl bg-muted/30 border border-border text-center space-y-4">
+						<p class="text-muted-foreground font-medium">No detailed review available yet for this title.</p>
+					</section>
+				)}
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
