@@ -41,7 +41,7 @@ const { categoryName, posts } = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`${categoryName} | ${SITE_TITLE}`} description={`Browse all ${categoryName} reviews and recommendations on LazyNoman. Honest takes and personal rankings.`} />
+		<BaseHead title={`${categoryName} | ${SITE_TITLE}`} description={`Browse all my ${categoryName.toLowerCase()} reviews and recommendations on LazyNoman. My honest takes and personal rankings.`} />
 	</head>
 	<body>
 		<Header />
@@ -61,7 +61,7 @@ const { categoryName, posts } = Astro.props;
             <header class="mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}</h1>
                 <p class="text-lg text-muted-foreground">
-                    Discover our collection of {categoryName.toLowerCase()} reviews and articles.
+                    Explore my collection of {categoryName.toLowerCase()} reviews and thoughts.
                 </p>
             </header>
 			

@@ -1,0 +1,86 @@
+---
+import { Badge } from "./ui/badge";
+import type { Novel } from "../lib/parseNovels";
+
+interface Props {
+  novel: Novel;
+}
+
+const { novel } = Astro.props;
+
+const statusColors: Record<string, string> = {
+  Reading: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+  Finished: "bg-green-500/10 text-green-500 border-green-500/20",
+  Dropped: "bg-red-500/10 text-red-500 border-red-500/20",
+  Paused: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
+  "To Read": "bg-slate-500/10 text-slate-500 border-slate-500/20",
+};
+
+const statusColor = statusColors[novel.status] || "bg-slate-500/10 text-slate-500";
+---
+
+<div class="bg-card border border-border rounded-2xl p-6 mb-8 shadow-sm">
+  <div class="flex flex-col md:flex-row gap-8">
+    {novel.coverUrl && (
+      <div class="w-full md:w-48 flex-shrink-0">
+        <img 
+          src={novel.coverUrl} 
+          alt={novel.name} 
+          class="w-full aspect-[2/3] object-cover rounded-xl shadow-md border border-border"
+        />
+      </div>
+    )}
+    
+    <div class="flex-grow space-y-4">
+      <div class="flex flex-wrap items-center gap-3">
+        <Badge variant="outline" class={`${statusColor} font-bold px-3 py-1`}>
+          {novel.status}
+        </Badge>
+        {novel.rating > 0 && (
+          <Badge variant="secondary" class="font-bold px-3 py-1">
+            ⭐ {novel.rating}/10
+          </Badge>
+        )}
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight">{novel.name}</h1>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-2 border-y border-border/50">
+        <div>
+          <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Read</p>
+          <p class="text-lg font-bold">{novel.readChapters} <span class="text-sm font-normal text-muted-foreground">Chs</span></p>
+        </div>
+        <div>
+          <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Total</p>
+          <p class="text-lg font-bold">{novel.totalChapters || '?'}</p>
+        </div>
+        <div>
+          <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Started</p>
+          <p class="text-sm font-bold">{novel.startDate || '-'}</p>
+        </div>
+        {novel.endDate && (
+          <div>
+            <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Finished</p>
+            <p class="text-sm font-bold">{novel.endDate}</p>
+          </div>
+        )}
+      </div>
+
+      {novel.genres.length > 0 && (
+        <div class="flex flex-wrap gap-2 pt-2">
+          {novel.genres.map(genre => (
+            <span class="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-md border border-border">
+              {genre}
+            </span>
+          ))}
+        </div>
+      )}
+      
+      {novel.pagesLeft && (
+        <p class="text-sm text-muted-foreground italic">
+          Note: {novel.pagesLeft}
+        </p>
+      )}
+    </div>
+  </div>
+</div>

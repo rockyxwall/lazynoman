@@ -1,0 +1,241 @@
+---
+import { Image } from "astro:assets";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
+import Comments from "../components/Comments.astro";
+import { Badge } from "../components/ui/badge";
+import "../styles/markdown.css";
+
+interface Props {
+  novel: any;
+  review?: any;
+}
+
+const { novel, review } = Astro.props;
+
+// Helper functions (same logic as NovelCard.tsx)
+const getProgress = (read: number, total: number) => {
+  if (!total || total === 0) return 0;
+  return Math.min(Math.round((read / total) * 100), 100);
+};
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return null;
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return null;
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '.');
+};
+
+const getInitials = (name: string) => {
+  const stopWords = ['of', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'with', 'from', 'and'];
+  const parts = name.split(/[^a-zA-Z0-9]+/).filter(w => w && !stopWords.includes(w.toLowerCase()));
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.substring(0, 2).toUpperCase();
+};
+
+const progress = getProgress(novel.read_chapters, novel.total_chapters);
+const initials = getInitials(novel.name);
+const startStr = formatDate(novel.start_date) || 'XXXX.XX';
+const endStr = formatDate(novel.end_date) || 'PRESENT';
+
+// Metadata from review if available, otherwise from novel
+const title = review?.data.title || novel.name;
+const description = review?.data.description || `Read my review and track progress for ${novel.name}.`;
+const heroImage = review?.data.heroImage || novel.cover_url;
+const pubDate = review?.data.pubDate;
+const updatedDate = review?.data.updatedDate;
+const category = review?.data.category || "novel";
+const tags = review?.data.tags || novel.genres;
+
+// Schema.org
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  name: title,
+  reviewBody: description,
+  datePublished: pubDate ? pubDate.toISOString() : undefined,
+  dateModified: updatedDate ? updatedDate.toISOString() : undefined,
+  author: {
+    "@type": "Person",
+    name: "lazyman",
+  },
+  itemReviewed: {
+    "@type": "Book",
+    name: novel.name,
+    author: review?.data.itemAuthor ? { "@type": "Person", name: review.data.itemAuthor } : undefined,
+  },
+  reviewRating: review?.data.rating
+    ? {
+        "@type": "Rating",
+        ratingValue: review.data.rating,
+        bestRating: "10",
+        worstRating: "1",
+      }
+    : undefined,
+};
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={heroImage}
+      ogType="article"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main class="mx-auto w-full max-w-4xl px-4 pt-12 pb-24 overflow-x-hidden">
+      <article class="space-y-12">
+        {/* ── Novel Info Header ── */}
+        <header class="flex flex-col md:flex-row gap-12 items-start">
+          <div class="w-full md:w-72 aspect-[3/4] bg-muted rounded-xl border border-border overflow-hidden flex-shrink-0 relative">
+            {novel.cover_url ? (
+              <img 
+                src={novel.cover_url} 
+                alt={novel.name} 
+                class="w-full h-full object-cover" 
+              />
+            ) : (
+              <div class="w-full h-full flex flex-col items-center justify-center gap-2 bg-background">
+                <div class="font-heading font-black text-9xl text-primary opacity-[0.1] select-none">
+                  {initials}
+                </div>
+                <div class="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase opacity-70">
+                  No cover available
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div class="flex-grow space-y-8 w-full">
+            <div class="space-y-4">
+              <div class="flex flex-wrap gap-2 items-center">
+                <span class="bg-primary text-primary-foreground font-mono text-[13px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+                  {novel.status}
+                </span>
+              </div>
+              <h1 class="novel-title italic uppercase text-5xl">
+                {novel.name}
+              </h1>
+            </div>
+
+            {/* Progress Section */}
+            <div class="space-y-4 max-w-xl">
+              <div class="progress flex flex-col gap-2">
+                <div class="bar h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    class="fill h-full bg-primary rounded-full transition-all duration-1000" 
+                    style={{ width: `${novel.total_chapters ? progress : (novel.read_chapters > 0 ? 33 : 0)}%` }}
+                  ></div>
+                </div>
+                <div class="prog-lbl font-mono text-[13px] flex justify-between text-muted-foreground uppercase tracking-widest">
+                  <span><strong>CH. {novel.read_chapters.toLocaleString()}</strong></span>
+                  {novel.total_chapters ? (
+                    <span>/ {novel.total_chapters.toLocaleString()}</span>
+                  ) : (
+                    <span class="opacity-40 lowercase text-[11px]">no total</span>
+                  )}
+                </div>
+              </div>
+
+              <div class="flex items-center gap-6">
+                <div class="dates flex flex-col items-center w-fit font-mono text-[11px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+                  <span>{startStr}</span>
+                  <div class="w-px h-3 bg-border my-1"></div>
+                  <span>{endStr}</span>
+                </div>
+
+                {novel.rating && (
+                  <>
+                    <div class="w-px h-8 bg-border"></div>
+                    <div class="flex flex-col items-center gap-1.5">
+                      <div class="font-mono text-sm font-bold leading-none">{novel.rating}</div>
+                      <div class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Rating</div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
+                <p class="text-[12px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Chapters Read</p>
+                <p class="text-4xl font-black italic tracking-tighter">{novel.read_chapters.toLocaleString()}</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
+                <p class="text-[12px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Total Chapters</p>
+                <p class="text-4xl font-black italic tracking-tighter text-muted-foreground/30">{novel.total_chapters ? novel.total_chapters.toLocaleString() : '???'}</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-4 border-t border-border">
+              {tags.map((tag: string) => (
+                <span class="text-[12px] font-bold font-mono uppercase tracking-[0.15em] text-muted-foreground/60">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </header>
+
+        {/* ── Review Content Wrapper ── */}
+        <div class="pt-16 border-t border-border space-y-12">
+          {review && (
+            <div class="space-y-6">
+              <h2 class="review-title">{title}</h2>
+              <div class="post-meta-row text-muted-foreground border-b border-border/50 pb-6">
+                <div class="post-dateline flex flex-wrap items-center gap-x-8 gap-y-3 text-[10px] tracking-[0.2em] font-bold uppercase font-mono">
+                  <span class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+                    <time datetime={pubDate.toISOString()}>
+                      <FormattedDate date={pubDate} />
+                    </time>
+                  </span>
+                  {updatedDate && (
+                    <span class="flex items-center gap-2">
+                      <span class="w-1.5 h-1.5 rounded-full bg-yellow-500/30"></span>
+                      <span>Updated <FormattedDate date={updatedDate} /></span>
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div class="markdown-body">
+            <slot />
+          </div>
+        </div>
+
+        {review && <Comments />}
+      </article>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .novel-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .review-title {
+    font-family: "Atkinson", sans-serif;
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+</style>

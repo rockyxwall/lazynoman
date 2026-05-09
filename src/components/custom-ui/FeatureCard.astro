@@ -7,7 +7,7 @@ interface Props {
 const { title, class: className } = Astro.props;
 ---
 
-<div class:list={["bg-muted/30 border border-border rounded-3xl p-8 md:p-12 relative overflow-hidden group", className]}>
+<div class:list={["bg-muted/30 border border-border rounded-xl p-8 md:p-12 relative overflow-hidden group", className]}>
   <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
   <h3 class="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-4 relative z-10">{title}</h3>
   <div class="text-lg md:text-xl leading-relaxed m-0 text-foreground/90 relative z-10">

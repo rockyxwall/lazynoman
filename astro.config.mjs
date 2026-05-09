@@ -7,6 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import partytown from '@astrojs/partytown';
 
+import dsv from '@rollup/plugin-dsv';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lazynoman.com',
@@ -24,7 +26,7 @@ export default defineConfig({
     imageService: 'compile'
   }),
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), dsv()],
     resolve: {
       dedupe: ['react', 'react-dom'],
     },
