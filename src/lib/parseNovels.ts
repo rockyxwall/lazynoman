@@ -1,79 +1,164 @@
+import { db } from './turso';
+
 export interface Novel {
+  id: number;
   name: string;
-  readChapters: number;
-  totalChapters: number;
-  startDate: string | null;
-  endDate: string | null;
-  rating: number;
-  status: string;
-  coverUrl: string | null;
-  pagesLeft: string | null;
-  genres: string[];
   slug: string;
+  cover_url: string | null;
+  synopsis: string | null;
+  author: string | null;
+  origin: string | null;
+  source_url: string | null;
+  read_chapters: number;
+  total_chapters: number;
+  pages_left: number | null;
+  start_date: string | null;
+  end_date: string | null;
+  rating: number | null;
+  status: 'Reading' | 'Finished' | 'Dropped' | 'Paused' | 'Plan to Read';
+  review_slug: string | null;
+  media_type: string;
+  genres: string[];
+  tags: string[];
+  created_at: string;
+  updated_at: string;
 }
 
-export function slugify(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+export interface Stats {
+  total_read: number;
+  total_finished: number;
+  total_dropped: number;
+  total_paused: number;
+  total_chapters: number;
+  avg_rating: number;
 }
 
-function parseGenres(raw: string): string[] {
-  if (!raw) return [];
-  return raw
-    .split(',')
-    .map((g) => g.replace(/\s*\(https?:\/\/[^)]+\)/g, '').trim())
-    .filter(Boolean);
+export async function getAllNovels(): Promise<Novel[]> {
+  const result = await db.execute(`
+    SELECT n.*, 
+           GROUP_CONCAT(DISTINCT g.name) as genre_list,
+           GROUP_CONCAT(DISTINCT t.name) as tag_list
+    FROM novels n
+    LEFT JOIN novel_genres ng ON n.id = ng.novel_id
+    LEFT JOIN genres g ON ng.genre_id = g.id
+    LEFT JOIN novel_tags nt ON n.id = nt.novel_id
+    LEFT JOIN tags t ON nt.tag_id = t.id
+    GROUP BY n.id
+    ORDER BY n.updated_at DESC
+  `);
+
+  return result.rows.map(row => mapRowToNovel(row));
 }
 
-/**
- * Modern, Easy Way:
- * We use Vite's import.meta.glob to load the CSV files.
- * This avoids all 'fs' path resolution issues in different environments.
- */
-export async function loadNovels(): Promise<Novel[]> {
-  // Get all CSV files in src/data
-  const csvFiles = import.meta.glob('../data/*.csv', { eager: true });
-  
-  const filePaths = Object.keys(csvFiles);
-  const novelsAllPath = filePaths.find(p => p.endsWith('_all.csv'));
-  const novelsPath = filePaths.find(p => !p.endsWith('_all.csv') && p.endsWith('.csv'));
-
-  if (!novelsPath) {
-    console.warn('[NovelTracker] Warning: No base CSV found in src/data');
-    return [];
-  }
-
-  // The @rollup/plugin-dsv returns an array of objects for the CSV data
-  const base = (csvFiles[novelsPath] as any).default || [];
-  const full = novelsAllPath ? ((csvFiles[novelsAllPath] as any).default || []) : [];
-  
-  if (!Array.isArray(base)) {
-    console.error('[NovelTracker] Error: Base CSV data is not an array', base);
-    return [];
-  }
-
-  const fullMap = Object.fromEntries(
-    Array.isArray(full) ? full.map((r: any) => [r.Name?.trim() || '', r]) : []
-  );
-
-  return base.map((row: any) => {
-    const name = row.Name || '';
-    const extra = fullMap[name.trim()] || {};
-
-    return {
-      name: name,
-      readChapters: Number(row['Read Chapters'] || extra['Read Chapters'] || 0),
-      totalChapters: Number(extra['Total Chapters'] || 0),
-      startDate: row['Start Date'] || extra['Start Date'] || null,
-      endDate: extra['End Date'] || null,
-      rating: Number(row.Rating || extra.Rating || 0),
-      status: row.Status || extra.Status || '',
-      coverUrl: extra['Cover URL'] || null,
-      pagesLeft: extra['Pages Left'] || null,
-      genres: parseGenres(extra.Genres || row.Genres || ''),
-      slug: slugify(name),
-    };
+export async function getNovelBySlug(slug: string): Promise<Novel | null> {
+  const result = await db.execute({
+    sql: `
+      SELECT n.*, 
+             GROUP_CONCAT(DISTINCT g.name) as genre_list,
+             GROUP_CONCAT(DISTINCT t.name) as tag_list
+      FROM novels n
+      LEFT JOIN novel_genres ng ON n.id = ng.novel_id
+      LEFT JOIN genres g ON ng.genre_id = g.id
+      LEFT JOIN novel_tags nt ON n.id = nt.novel_id
+      LEFT JOIN tags t ON nt.tag_id = t.id
+      WHERE n.slug = ?
+      GROUP BY n.id
+    `,
+    args: [slug]
   });
+
+  if (result.rows.length === 0) return null;
+  return mapRowToNovel(result.rows[0]);
+}
+
+export async function getNovelsByStatus(status: Novel['status']): Promise<Novel[]> {
+  const result = await db.execute({
+    sql: `
+      SELECT n.*, 
+             GROUP_CONCAT(DISTINCT g.name) as genre_list,
+             GROUP_CONCAT(DISTINCT t.name) as tag_list
+      FROM novels n
+      LEFT JOIN novel_genres ng ON n.id = ng.novel_id
+      LEFT JOIN genres g ON ng.genre_id = g.id
+      LEFT JOIN novel_tags nt ON n.id = nt.novel_id
+      LEFT JOIN tags t ON nt.tag_id = t.id
+      WHERE n.status = ?
+      GROUP BY n.id
+      ORDER BY n.updated_at DESC
+    `,
+    args: [status]
+  });
+
+  return result.rows.map(row => mapRowToNovel(row));
+}
+
+export async function getStats(): Promise<Stats> {
+  const result = await db.execute("SELECT * FROM stats_cache WHERE id = 1");
+  if (result.rows.length === 0) {
+    return {
+      total_read: 0,
+      total_finished: 0,
+      total_dropped: 0,
+      total_paused: 0,
+      total_chapters: 0,
+      avg_rating: 0
+    };
+  }
+  const row = result.rows[0];
+  return {
+    total_read: Number(row.total_read),
+    total_finished: Number(row.total_finished),
+    total_dropped: Number(row.total_dropped),
+    total_paused: Number(row.total_paused),
+    total_chapters: Number(row.total_chapters),
+    avg_rating: Number(row.avg_rating)
+  };
+}
+
+export async function getSimilarNovels(novelId: number, limit = 6): Promise<Novel[]> {
+  const result = await db.execute({
+    sql: `
+      SELECT n.*, 
+             GROUP_CONCAT(DISTINCT g.name) as genre_list,
+             GROUP_CONCAT(DISTINCT t.name) as tag_list
+      FROM novels n
+      INNER JOIN novel_embeddings e ON n.id = e.novel_id
+      LEFT JOIN novel_genres ng ON n.id = ng.novel_id
+      LEFT JOIN genres g ON ng.genre_id = g.id
+      LEFT JOIN novel_tags nt ON n.id = nt.novel_id
+      LEFT JOIN tags t ON nt.tag_id = t.id
+      WHERE n.id != ?
+      ORDER BY vector_distance_cos(e.embedding, (SELECT embedding FROM novel_embeddings WHERE novel_id = ?))
+      LIMIT ?
+    `,
+    args: [novelId, novelId, limit]
+  });
+
+  return result.rows.map(row => mapRowToNovel(row));
+}
+
+function mapRowToNovel(row: any): Novel {
+  return {
+    id: Number(row.id),
+    name: String(row.name),
+    slug: String(row.slug),
+    cover_url: row.cover_url ? String(row.cover_url) : null,
+    synopsis: row.synopsis ? String(row.synopsis) : null,
+    author: row.author ? String(row.author) : null,
+    origin: row.origin ? String(row.origin) : null,
+    source_url: row.source_url ? String(row.source_url) : null,
+    read_chapters: Number(row.read_chapters),
+    total_chapters: Number(row.total_chapters),
+    pages_left: row.pages_left !== null ? Number(row.pages_left) : null,
+    start_date: row.start_date ? String(row.start_date) : null,
+    end_date: row.end_date ? String(row.end_date) : null,
+    rating: row.rating !== null ? Number(row.rating) : null,
+    status: row.status as Novel['status'],
+    review_slug: row.review_slug ? String(row.review_slug) : null,
+    media_type: String(row.media_type),
+    genres: row.genre_list ? String(row.genre_list).split(',') : [],
+    tags: row.tag_list ? String(row.tag_list).split(',') : [],
+    created_at: String(row.created_at),
+    updated_at: String(row.updated_at)
+  };
 }

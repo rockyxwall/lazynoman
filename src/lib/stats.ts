@@ -1,81 +1,32 @@
-import type { Novel } from './parseNovels';
+import { db } from './turso';
 
-export interface Achievement {
-  label: string;
-  description: string;
-  unlocked: boolean;
-  icon: string;
-}
+export async function computeStats() {
+  const result = await db.execute(`
+    SELECT 
+      COUNT(*) as total_read,
+      SUM(CASE WHEN status = 'Finished' THEN 1 ELSE 0 END) as total_finished,
+      SUM(CASE WHEN status = 'Dropped' THEN 1 ELSE 0 END) as total_dropped,
+      SUM(CASE WHEN status = 'Paused' THEN 1 ELSE 0 END) as total_paused,
+      SUM(read_chapters) as total_chapters,
+      AVG(rating) as avg_rating
+    FROM novels
+  `);
 
-export interface Stats {
-  finishedCount: number;
-  readingCount: number;
-  droppedCount: number;
-  pausedCount: number;
-  totalChapters: number;
-  avgRating: string;
-  achievements: Achievement[];
-}
-
-export function computeStats(novels: Novel[]): Stats {
-  const finished = novels.filter((n) => n.status === 'Finished');
-  const reading = novels.filter((n) => n.status === 'Reading');
-  const dropped = novels.filter((n) => n.status === 'Dropped');
-  const paused = novels.filter((n) => n.status === 'Paused');
-
-  const totalChapters = novels.reduce((s, n) => s + n.readChapters, 0);
-  
-  const ratedNovels = novels.filter((n) => n.rating > 0);
-  const avgRating = ratedNovels.length > 0
-    ? (ratedNovels.reduce((s, n) => s + n.rating, 0) / ratedNovels.length).toFixed(1)
-    : '0.0';
-
-  const achievements: Achievement[] = [
-    { 
-      label: 'First Drop', 
-      description: 'Dropped your first novel. It happens.',
-      unlocked: dropped.length >= 1,
-      icon: '💀'
-    },
-    { 
-      label: 'Speed Dropper', 
-      description: 'Dropped 10 novels. You know what you like.',
-      unlocked: dropped.length >= 10,
-      icon: '⚡'
-    },
-    { 
-      label: 'Completionist', 
-      description: 'Finished 10 novels.',
-      unlocked: finished.length >= 10,
-      icon: '🏆'
-    },
-    { 
-      label: '1000 Chapters', 
-      description: 'Read a total of 1,000 chapters.',
-      unlocked: totalChapters >= 1000,
-      icon: '📖'
-    },
-    { 
-      label: '10,000 Chapters', 
-      description: 'Read a total of 10,000 chapters. Legend.',
-      unlocked: totalChapters >= 10000,
-      icon: '🔥'
-    },
-    { 
-      label: 'Hoarder', 
-      description: 'Have 5 novels on pause.',
-      unlocked: paused.length >= 5,
-      icon: '📦'
-    },
-  ];
-
-  return {
-    finishedCount: finished.length,
-    readingCount: reading.length,
-    droppedCount: dropped.length,
-    pausedCount: paused.length,
-    totalChapters,
-    avgRating,
-    achievements,
-  };
+  if (result.rows.length > 0) {
+    const stats = result.rows[0];
+    await db.execute({
+      sql: `
+        INSERT OR REPLACE INTO stats_cache (id, total_read, total_finished, total_dropped, total_paused, total_chapters, avg_rating, updated_at)
+        VALUES (1, ?, ?, ?, ?, ?, ?, datetime('now'))
+      `,
+      args: [
+        Number(stats.total_read),
+        Number(stats.total_finished),
+        Number(stats.total_dropped),
+        Number(stats.total_paused),
+        Number(stats.total_chapters),
+        stats.avg_rating !== null ? Number(stats.avg_rating) : 0
+      ]
+    });
+  }
 }
