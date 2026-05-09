@@ -124,29 +124,53 @@ export default function NovelCard({ novel, hasReview }: NovelCardProps) {
               </div>
 
               {bodyState === 'extended' && (
-                <div className="metadata grid grid-cols-[auto_1px_1fr] gap-x-4 pt-4 border-t border-border mt-4">
-                  {/* Column 1: Dates */}
-                  <div className="flex flex-col items-center font-mono text-[11px] tracking-widest text-muted-foreground/60 uppercase leading-none py-1">
-                    <span>{formatDate(novel.start_date) || 'XXXX.XX'}</span>
-                    <div className="w-px h-3 bg-border/50 my-1"></div>
-                    <span>{formatDate(novel.end_date) || 'PRESENT'}</span>
+                <div className="metadata grid grid-cols-[auto_1px_auto_1px_1fr] gap-x-4 pt-4 border-t border-border mt-4">
+                  {/* Column 1: Total Chapters */}
+                  <div className="flex flex-col items-center gap-1.5 py-1 min-w-[40px]">
+                    <div className="font-mono text-xs font-bold leading-none">
+                      {novel.total_chapters ? novel.total_chapters.toLocaleString() : novel.read_chapters.toLocaleString()}
+                    </div>
+                    <div className="w-px h-3 bg-border/50 my-0.5"></div>
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Total</div>
                   </div>
 
-                  {/* Column 2: Vertical Separator */}
+                  {/* Column 2: Separator */}
                   <div className="w-[1px] bg-border/50 self-stretch"></div>
 
-                  {/* Column 3: Stats (Centered Vertically) */}
-                  <div className="flex items-center gap-8 h-full">
+                  {/* Column 3: Dates (Start & End) */}
+                  <div className="flex flex-col items-center gap-1.5 py-1 min-w-[60px]">
+                    <div className="font-mono text-[10px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
+                      {formatDate(novel.start_date) || 'XXXX.XX'}
+                    </div>
+                    <div className="w-px h-3 bg-border/50 my-0.5"></div>
+                    <div className="font-mono text-[10px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
+                      {formatDate(novel.end_date) || 'PRESENT'}
+                    </div>
+                  </div>
+
+                  {/* Column 4: Separator */}
+                  <div className="w-[1px] bg-border/50 self-stretch"></div>
+
+                  {/* Column 5: Stats & Stars */}
+                  <div className="flex items-center gap-6 py-1 h-full overflow-hidden">
                     {novel.rating && (
-                      <div className="flex flex-col items-center w-16 gap-1.5">
-                        <div className="stat-val font-mono text-xs font-bold leading-none">{novel.rating}</div>
-                        <div className="stat-lbl font-mono text-[10px] uppercase tracking-widest text-muted-foreground leading-none">Rating</div>
+                      <div className="flex flex-col items-start gap-1.5 min-w-[80px] flex-1">
+                        <div className="flex items-center gap-2 w-full">
+                          <div className="font-mono text-xs font-bold leading-none">{novel.rating}</div>
+                          <div className="flex text-[10px] text-primary/40 tracking-tighter shrink-0">
+                            {'★'.repeat(Math.floor(novel.rating))}
+                            {'☆'.repeat(10 - Math.floor(novel.rating))}
+                          </div>
+                        </div>
+                        <div className="w-full h-[1px] bg-border/50 my-1"></div>
+                        <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Rating</div>
                       </div>
                     )}
                     {progress > 0 && (
-                      <div className="flex flex-col items-center w-16 gap-1.5">
-                        <div className="stat-val font-mono text-xs font-bold leading-none">{progress}%</div>
-                        <div className="stat-lbl font-mono text-[10px] uppercase tracking-widest text-muted-foreground leading-none">Done</div>
+                      <div className="flex flex-col items-center gap-1.5 min-w-[40px]">
+                        <div className="font-mono text-xs font-bold leading-none">{progress}</div>
+                        <div className="w-px h-3 bg-border/50 my-0.5"></div>
+                        <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Done</div>
                       </div>
                     )}
                   </div>
