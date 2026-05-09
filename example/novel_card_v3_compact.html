@@ -1,0 +1,186 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,700;1,700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500&display=swap');
+#r{--bg:oklch(1 0 0);--fg:oklch(0.145 0 0);--pr:oklch(0.205 0 0);--pr-fg:oklch(0.985 0 0);--mu:oklch(0.97 0 0);--mu-fg:oklch(0.556 0 0);--bd:oklch(0.922 0 0);--cd:oklch(1 0 0);background:var(--bg);padding:1rem;transition:background .2s}
+#r.dk{--bg:oklch(0.19 0 0);--fg:oklch(0.92 0 0);--cd:oklch(0.23 0 0);--pr:oklch(0.92 0 0);--pr-fg:oklch(0.19 0 0);--mu:oklch(0.28 0 0);--mu-fg:oklch(0.7 0 0);--bd:oklch(0.35 0 0)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.875rem}
+.lbl{font-family:'Geist Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu-fg)}
+.btn{font-family:'Geist Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .6rem;border:1px solid var(--bd);border-radius:.625rem;background:var(--mu);color:var(--fg);cursor:pointer}
+.btn:hover{background:var(--pr);color:var(--pr-fg)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.625rem}
+.cl{font-family:'Geist Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu-fg);margin:0 0 .3rem;display:flex;align-items:center;gap:.3rem}
+.cl::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* CARD: flex column, fixed height 240px */
+.c{background:var(--cd);border:.5px solid var(--bd);border-radius:.625rem;overflow:hidden;display:flex;flex-direction:column;height:240px;transition:border-color .15s}
+.c:hover{border-color:var(--pr)}
+
+/* COVER: flex 0 0 40% of card = 96px */
+.cv{flex:0 0 40%;overflow:hidden;position:relative;background:var(--mu)}
+.cv img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* no-image: initials placeholder */
+.cv-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.cv-init{font-family:'Atkinson Hyperlegible',sans-serif;font-weight:700;font-style:italic;font-size:3rem;line-height:1;letter-spacing:-.05em;color:var(--pr);opacity:.13;user-select:none}
+
+/* typographic cover (no img, has title) */
+.cv-ty{width:100%;height:100%;background:var(--pr);display:flex;flex-direction:column;justify-content:flex-end;padding:.5rem .625rem;box-sizing:border-box;overflow:hidden;position:relative}
+.cv-ty-bg{position:absolute;top:-.25rem;right:-.25rem;font-family:'Atkinson Hyperlegible',sans-serif;font-weight:700;font-style:italic;font-size:4rem;letter-spacing:-.05em;color:var(--pr-fg);opacity:.07;line-height:1;user-select:none;pointer-events:none}
+.cv-ty-t{font-family:'Atkinson Hyperlegible',sans-serif;font-weight:700;font-style:italic;font-size:.72rem;line-height:1.2;letter-spacing:-.03em;color:var(--pr-fg);text-transform:uppercase;position:relative;z-index:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* divider between cover and body */
+.div{height:.5px;background:var(--bd);flex-shrink:0}
+
+/* BODY: remaining 60%, flex column, no overflow */
+.bd{flex:1;padding:.5rem .625rem;display:flex;flex-direction:column;overflow:hidden;min-height:0;gap:.3rem}
+
+/* badges: single row, clip overflow with +N */
+.bgs{display:flex;gap:.25rem;align-items:center;flex-shrink:0;overflow:hidden;min-width:0}
+.bg{font-family:'Geist Mono',monospace;font-size:.52rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;padding:.12rem .4rem;border-radius:99px;white-space:nowrap;flex-shrink:0;line-height:1.5}
+.bg-s{background:var(--pr);color:var(--pr-fg)}
+.bg-o{border:.5px solid var(--bd);color:var(--mu-fg)}
+.bg-n{background:var(--mu);color:var(--mu-fg)}
+
+/* title: 2-line clamp, tight */
+.tt{font-family:'Atkinson Hyperlegible',sans-serif;font-weight:700;font-style:italic;font-size:.875rem;line-height:1.2;letter-spacing:-.04em;color:var(--fg);text-transform:uppercase;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex-shrink:0;margin:0}
+
+/* push bottom content down */
+.sp{flex:1;min-height:0}
+
+/* progress */
+.pg{flex-shrink:0}
+.bar{height:2px;background:var(--mu);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:var(--pr);border-radius:99px}
+.pr{font-family:'Geist Mono',monospace;font-size:.58rem;letter-spacing:.04em;display:flex;justify-content:space-between;color:var(--mu-fg);margin-top:.25rem}
+.pr strong{color:var(--fg);font-weight:500}
+
+/* date row */
+.dr{display:flex;align-items:center;gap:.3rem;font-family:'Geist Mono',monospace;font-size:.54rem;letter-spacing:.04em;color:var(--mu-fg);flex-shrink:0}
+.dl{flex:1;height:.5px;background:var(--bd)}
+
+/* stats */
+.st{display:flex;gap:.625rem;border-top:.5px solid var(--bd);padding-top:.3rem;flex-shrink:0}
+.sv{font-family:'Geist Mono',monospace;font-size:.7rem;font-weight:500;color:var(--fg);line-height:1.2}
+.sk{font-family:'Geist Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu-fg)}
+
+/* unread accent rule */
+.ru{width:1.25rem;height:2px;background:var(--pr);border-radius:99px;flex-shrink:0}
+.ul{font-family:'Geist Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu-fg);flex-shrink:0}
+</style>
+<h2 class="sr-only">Compact novel card — 240px fixed height, cover always 40%, four data states</h2>
+<div id="r">
+  <div class="top">
+    <span class="lbl">240px card · cover 40% · 4 states</span>
+    <button class="btn" onclick="document.getElementById('r').classList.toggle('dk')">Dark</button>
+  </div>
+  <div class="grid">
+
+    <div>
+      <div class="cl">Full data</div>
+      <div class="c">
+        <div class="cv">
+          <svg viewBox="0 0 160 96" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
+            <rect width="160" height="96" fill="oklch(0.145 0 0)"/>
+            <rect x="100" y="-8" width="100" height="112" fill="none" stroke="oklch(0.985 0 0)" stroke-width=".5" opacity=".1" rx="3"/>
+            <text x="9" y="35" font-family="'Atkinson Hyperlegible',sans-serif" font-weight="700" font-style="italic" font-size="20" fill="oklch(0.985 0 0)" letter-spacing="-.4">A Will</text>
+            <text x="9" y="57" font-family="'Atkinson Hyperlegible',sans-serif" font-weight="700" font-style="italic" font-size="20" fill="oklch(0.985 0 0)" letter-spacing="-.4">Eternal</text>
+            <text x="9" y="80" font-family="'Geist Mono',monospace" font-size="5.5" fill="oklch(0.985 0 0)" letter-spacing="2" opacity=".3">XIANXIA · VOL 7</text>
+            <rect x="9" y="86" width="28" height="1" fill="oklch(0.985 0 0)" opacity=".35" rx=".5"/>
+          </svg>
+        </div>
+        <div class="div"></div>
+        <div class="bd">
+          <div class="bgs">
+            <span class="bg bg-s">Reading</span>
+            <span class="bg bg-o">Xianxia</span>
+            <span class="bg bg-o">CN</span>
+          </div>
+          <p class="tt">A Will Eternal</p>
+          <div class="sp"></div>
+          <div class="pg">
+            <div class="bar"><div class="fill" style="width:71%"></div></div>
+            <div class="pr"><span><strong>Ch. 1,430</strong></span><span>/ 2,016</span></div>
+          </div>
+          <div class="dr"><span>2024.01</span><div class="dl"></div><span>Present</span></div>
+          <div class="st">
+            <div><div class="sv">4.8</div><div class="sk">Rating</div></div>
+            <div><div class="sv">71%</div><div class="sk">Done</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cl">Many badges</div>
+      <div class="c">
+        <div class="cv">
+          <div class="cv-ty">
+            <div class="cv-ty-bg">RE</div>
+            <div class="cv-ty-t">The Ruins of Eternity</div>
+          </div>
+        </div>
+        <div class="div"></div>
+        <div class="bd">
+          <div class="bgs">
+            <span class="bg bg-s">Done</span>
+            <span class="bg bg-o">Fantasy</span>
+            <span class="bg bg-o">KR</span>
+            <span class="bg bg-n">+3</span>
+          </div>
+          <p class="tt">The Ruins of Eternity</p>
+          <div class="sp"></div>
+          <div class="pg">
+            <div class="bar"><div class="fill" style="width:100%"></div></div>
+            <div class="pr"><span><strong>Ch. 342</strong></span><span>/ 342</span></div>
+          </div>
+          <div class="dr"><span>2023.06</span><div class="dl"></div><span>2024.02</span></div>
+          <div class="st">
+            <div><div class="sv">4.5</div><div class="sk">Rating</div></div>
+            <div><div class="sv">100%</div><div class="sk">Done</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cl">Ch. only</div>
+      <div class="c">
+        <div class="cv">
+          <div class="cv-ph"><div class="cv-init">SS</div></div>
+        </div>
+        <div class="div"></div>
+        <div class="bd">
+          <div class="bgs">
+            <span class="bg bg-s">Reading</span>
+          </div>
+          <p class="tt">Sovereign of the Stars</p>
+          <div class="sp"></div>
+          <div class="pg">
+            <div class="bar"><div class="fill" style="width:33%"></div></div>
+            <div class="pr"><span><strong>Ch. 88</strong></span><span style="opacity:.4;font-size:.5rem">no total</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cl">Unread</div>
+      <div class="c">
+        <div class="cv">
+          <div class="cv-ph"><div class="cv-init">IC</div></div>
+        </div>
+        <div class="div"></div>
+        <div class="bd">
+          <div class="bgs">
+            <span class="bg bg-o">Queued</span>
+          </div>
+          <p class="tt">Iron Chronicles</p>
+          <div class="ru"></div>
+          <div class="sp"></div>
+          <div class="ul">Not started · 0 ch.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
