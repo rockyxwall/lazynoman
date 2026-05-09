@@ -1,11 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { getAllNovels } from '../../lib/parseNovels';
-import { Badge } from '../../components/ui/badge';
+import InfoLayout from '../../layouts/InfoLayout.astro';
 
 export async function getStaticPaths() {
 	const novels = await getAllNovels();
@@ -19,88 +15,23 @@ const { novel } = Astro.props;
 
 // Try to find a matching review in content collections
 const allPosts = await getCollection('post');
-const review = allPosts.find(p => p.data.category === 'novel' && p.id.split('/').pop()?.replace('.mdx', '') === novel.review_slug);
+const review = allPosts.find(p => {
+	if (p.data.category !== 'novel') return false;
+	const postId = p.id.toLowerCase();
+	const novelSlug = novel.slug.toLowerCase();
+	return postId.includes(novelSlug) || novelSlug.includes(postId.split('/').pop() || '');
+});
 const { Content } = review ? await render(review) : { Content: null };
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`${novel.name} | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main class="max-w-4xl mx-auto px-4 py-12">
-			<article class="space-y-12">
-				{/* Novel Header */}
-				<header class="flex flex-col md:flex-row gap-8 items-start">
-					<div class="w-full md:w-64 aspect-[3/4] bg-muted rounded-3xl border border-border overflow-hidden shadow-2xl flex-shrink-0">
-						<img 
-                            src={novel.cover_url || '/img/placeholder.webp'} 
-                            alt={novel.name} 
-                            class="w-full h-full object-cover" 
-                        />
-					</div>
-
-					<div class="flex-grow space-y-6">
-						<div class="space-y-2">
-							<div class="flex flex-wrap gap-2 items-center">
-								<Badge variant="outline" class="font-black uppercase italic tracking-widest text-[10px]">
-									{novel.status}
-								</Badge>
-								{novel.rating && (
-									<span class="text-sm font-black text-yellow-500 flex items-center gap-1">
-										★ {novel.rating} / 10
-									</span>
-								)}
-								{novel.media_type && (
-									<Badge variant="secondary" class="font-bold uppercase text-[10px]">
-										{novel.media_type}
-									</Badge>
-								)}
-							</div>
-							<h1 class="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
-								{novel.name}
-							</h1>
-						</div>
-
-						<div class="grid grid-cols-2 gap-4">
-							<div class="p-4 bg-muted/50 rounded-2xl border border-border">
-								<p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Chapters Read</p>
-								<p class="text-2xl font-black">{novel.read_chapters}</p>
-							</div>
-							<div class="p-4 bg-muted/50 rounded-2xl border border-border">
-								<p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Total Chapters</p>
-								<p class="text-2xl font-black">{novel.total_chapters || '?'}</p>
-							</div>
-						</div>
-
-						<div class="flex flex-wrap gap-2">
-							{novel.genres.map(genre => (
-								<Badge variant="secondary" class="font-bold">#{genre}</Badge>
-							))}
-						</div>
-					</div>
-				</header>
-
-				{/* Review Content */}
-				{Content ? (
-					<section class="space-y-8 pt-12 border-t border-border">
-						<div class="flex items-center gap-4 mb-8">
-							<h2 class="text-2xl font-black italic uppercase tracking-widest">Personal Review</h2>
-							<div class="h-px flex-grow bg-border"></div>
-						</div>
-						<div class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-a:text-primary">
-							<Content />
-						</div>
-					</section>
-				) : (
-					<section class="p-8 rounded-3xl bg-muted/30 border border-border text-center space-y-4">
-						<p class="text-muted-foreground font-medium">No detailed review available yet for this title.</p>
-					</section>
-				)}
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+<InfoLayout novel={novel} review={review}>
+	{Content ? (
+		<div class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-a:text-primary">
+			<Content />
+		</div>
+	) : (
+		<section class="p-8 rounded-3xl bg-muted/30 border border-border text-center space-y-4">
+			<p class="text-muted-foreground font-medium">No detailed review available yet for this title.</p>
+		</section>
+	)}
+</InfoLayout>

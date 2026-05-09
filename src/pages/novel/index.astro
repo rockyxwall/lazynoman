@@ -4,9 +4,13 @@ import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { getAllNovels } from '../../lib/parseNovels';
-import { Badge } from '../../components/ui/badge';
+import NovelList from '../../components/NovelList';
+import { getCollection } from 'astro:content';
 
 const novels = await getAllNovels();
+const reviewedSlugs = (await getCollection('post'))
+	.filter(p => p.data.category === 'novel')
+	.map(p => p.id);
 const genres = [...new Set(novels.flatMap(n => n.genres))].sort();
 const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 ---
@@ -19,86 +23,7 @@ const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 	<body>
 		<Header />
 		<main class="max-w-6xl mx-auto px-4 py-12">
-			<header class="mb-12 space-y-4">
-				<h1 class="text-4xl md:text-5xl font-black tracking-tighter italic uppercase">Novel Tracker</h1>
-				<p class="text-xl text-muted-foreground font-medium max-w-2xl">
-					My personal library, synced live from Notion. Every chapter read, every rating given.
-				</p>
-			</header>
-
-			<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-				{/* Sidebar Filters */}
-				<aside class="space-y-8">
-					<div class="space-y-4">
-						<h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic">Status</h3>
-						<div class="flex flex-wrap lg:flex-col gap-2">
-							{statuses.map(status => (
-								<button class="px-4 py-2 rounded-xl border border-border bg-card text-sm font-bold hover:bg-muted transition-all text-left">
-									{status}
-								</button>
-							))}
-						</div>
-					</div>
-
-					<div class="space-y-4">
-						<h3 class="text-xs uppercase tracking-widest font-black text-muted-foreground italic">Genres</h3>
-						<div class="flex flex-wrap gap-2">
-							{genres.map(genre => (
-								<button class="px-3 py-1 rounded-lg border border-border bg-card text-[10px] font-bold hover:bg-muted transition-all">
-									#{genre}
-								</button>
-							))}
-						</div>
-					</div>
-				</aside>
-
-				{/* Main Content */}
-				<div class="lg:col-span-3 space-y-6">
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-						{novels.map(novel => (
-							<a href={`/novel/${novel.slug}`} class="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-primary/5 transition-all flex flex-col no-underline text-foreground">
-								<div class="p-6 flex gap-4 flex-grow">
-									<div class="w-20 h-28 bg-muted rounded-xl flex-shrink-0 flex items-center justify-center text-muted-foreground border border-border overflow-hidden">
-										<img 
-                                            src={novel.cover_url || '/img/placeholder.webp'} 
-                                            alt={novel.name} 
-                                            class="w-full h-full object-cover" 
-                                        />
-									</div>
-									<div class="space-y-2 min-w-0">
-										<div class="flex items-center gap-2">
-											<Badge variant="outline" class="text-[10px] uppercase font-black px-2 py-0.5 rounded-lg">
-												{novel.status}
-											</Badge>
-											{novel.rating && (
-												<span class="text-xs font-bold text-yellow-500 flex items-center gap-1">
-													★ {novel.rating}
-												</span>
-											)}
-										</div>
-										<h2 class="font-black text-lg leading-tight group-hover:text-primary transition-colors truncate">
-											{novel.name}
-										</h2>
-										<div class="flex flex-wrap gap-1">
-											{novel.genres.slice(0, 3).map(genre => (
-												<span class="text-[10px] font-bold text-muted-foreground">#{genre}</span>
-											))}
-										</div>
-									</div>
-								</div>
-								<div class="px-6 py-4 bg-muted/30 border-t border-border flex justify-between items-center">
-									<p class="text-xs font-bold">
-										<span class="text-muted-foreground">Chapters:</span> {novel.read_chapters}
-									</p>
-									<span class="text-xs font-black italic uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-										View Details →
-									</span>
-								</div>
-							</a>
-						))}
-					</div>
-				</div>
-			</div>
+			<NovelList client:load initialNovels={novels} genres={genres} statuses={statuses} reviewedSlugs={reviewedSlugs} />
 		</main>
 		<Footer />
 	</body>

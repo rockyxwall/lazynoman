@@ -15,7 +15,6 @@ const post = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.union([z.string(), image()]).optional(),
 			draft: z.boolean().optional().default(false),
-			by: z.string().optional(),
 			category: z.string().optional(),
 			tags: z.array(z.string()).optional(),
 			rating: z.number().min(1).max(10).optional(),
