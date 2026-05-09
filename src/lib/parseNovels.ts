@@ -31,6 +31,13 @@ export interface Stats {
   total_paused: number;
   total_chapters: number;
   avg_rating: number;
+  achievements: {
+    label: string;
+    icon: string;
+    unlocked: boolean;
+    description: string;
+    hint: string;
+  }[];
 }
 
 export async function getAllNovels(): Promise<Novel[]> {
@@ -94,25 +101,61 @@ export async function getNovelsByStatus(status: Novel['status']): Promise<Novel[
 
 export async function getStats(): Promise<Stats> {
   const result = await db.execute("SELECT * FROM stats_cache WHERE id = 1");
-  if (result.rows.length === 0) {
-    return {
-      total_read: 0,
-      total_finished: 0,
-      total_dropped: 0,
-      total_paused: 0,
-      total_chapters: 0,
-      avg_rating: 0
-    };
-  }
-  const row = result.rows[0];
-  return {
-    total_read: Number(row.total_read),
-    total_finished: Number(row.total_finished),
-    total_dropped: Number(row.total_dropped),
-    total_paused: Number(row.total_paused),
-    total_chapters: Number(row.total_chapters),
-    avg_rating: Number(row.avg_rating)
+  const baseStats = result.rows.length === 0 ? {
+    total_read: 0,
+    total_finished: 0,
+    total_dropped: 0,
+    total_paused: 0,
+    total_chapters: 0,
+    avg_rating: 0
+  } : {
+    total_read: Number(result.rows[0].total_read),
+    total_finished: Number(result.rows[0].total_finished),
+    total_dropped: Number(result.rows[0].total_dropped),
+    total_paused: Number(result.rows[0].total_paused),
+    total_chapters: Number(result.rows[0].total_chapters),
+    avg_rating: Number(result.rows[0].avg_rating)
   };
+
+  const achievements = [
+    {
+      label: "First Step",
+      icon: "🌱",
+      unlocked: baseStats.total_read > 0,
+      description: "Started your first novel!",
+      hint: "Start reading a novel"
+    },
+    {
+      label: "Finisher",
+      icon: "🏆",
+      unlocked: baseStats.total_finished > 0,
+      description: "Finished your first novel!",
+      hint: "Finish a novel"
+    },
+    {
+      label: "Thousand Club",
+      icon: "🔥",
+      unlocked: baseStats.total_chapters >= 1000,
+      description: "Read over 1,000 chapters!",
+      hint: "Read 1,000 chapters"
+    },
+    {
+      label: "Critics Choice",
+      icon: "⭐",
+      unlocked: baseStats.avg_rating >= 8,
+      description: "Maintained a high average rating!",
+      hint: "Rate novels highly"
+    },
+    {
+      label: "Dedicated",
+      icon: "📚",
+      unlocked: baseStats.total_finished >= 5,
+      description: "Finished 5 novels!",
+      hint: "Finish 5 novels"
+    }
+  ];
+
+  return { ...baseStats, achievements };
 }
 
 export async function getSimilarNovels(novelId: number, limit = 6): Promise<Novel[]> {

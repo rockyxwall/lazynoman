@@ -4,7 +4,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { getAllNovels } from '../../lib/fetchNovels';
+import { getAllNovels } from '../../lib/parseNovels';
 import { Badge } from '../../components/ui/badge';
 
 export async function getStaticPaths() {
@@ -19,7 +19,7 @@ const { novel } = Astro.props;
 
 // Try to find a matching review in content collections
 const allPosts = await getCollection('post');
-const review = allPosts.find(p => p.data.category === 'novel' && p.id.split('/').pop()?.replace('.mdx', '') === novel.reviewSlug);
+const review = allPosts.find(p => p.data.category === 'novel' && p.id.split('/').pop()?.replace('.mdx', '') === novel.review_slug);
 const { Content } = review ? await render(review) : { Content: null };
 ---
 
@@ -36,7 +36,7 @@ const { Content } = review ? await render(review) : { Content: null };
 				<header class="flex flex-col md:flex-row gap-8 items-start">
 					<div class="w-full md:w-64 aspect-[3/4] bg-muted rounded-3xl border border-border overflow-hidden shadow-2xl flex-shrink-0">
 						<img 
-                            src={novel.coverUrl || '/img/placeholder.webp'} 
+                            src={novel.cover_url || '/img/placeholder.webp'} 
                             alt={novel.name} 
                             class="w-full h-full object-cover" 
                         />
@@ -53,9 +53,9 @@ const { Content } = review ? await render(review) : { Content: null };
 										★ {novel.rating} / 10
 									</span>
 								)}
-								{novel.mediaType && (
+								{novel.media_type && (
 									<Badge variant="secondary" class="font-bold uppercase text-[10px]">
-										{novel.mediaType}
+										{novel.media_type}
 									</Badge>
 								)}
 							</div>
@@ -67,11 +67,11 @@ const { Content } = review ? await render(review) : { Content: null };
 						<div class="grid grid-cols-2 gap-4">
 							<div class="p-4 bg-muted/50 rounded-2xl border border-border">
 								<p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Chapters Read</p>
-								<p class="text-2xl font-black">{novel.readChapters}</p>
+								<p class="text-2xl font-black">{novel.read_chapters}</p>
 							</div>
 							<div class="p-4 bg-muted/50 rounded-2xl border border-border">
 								<p class="text-[10px] uppercase tracking-widest font-black text-muted-foreground mb-1 italic">Total Chapters</p>
-								<p class="text-2xl font-black">{novel.totalChapters || '?'}</p>
+								<p class="text-2xl font-black">{novel.total_chapters || '?'}</p>
 							</div>
 						</div>
 

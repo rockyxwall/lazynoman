@@ -5,13 +5,13 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { getAllNovels } from '../lib/fetchNovels';
-import { computeStats } from '../lib/stats';
+import { getAllNovels, getStats } from '../lib/parseNovels';
 import { Badge } from '../components/ui/badge';
 
 const novels = await getAllNovels();
-const stats = computeStats(novels);
+const stats = await getStats();
 const currentlyReading = novels.filter(n => n.status === 'Reading');
+
 
 const posts = (await getCollection('post'))
   .filter((post) => import.meta.env.DEV || !post.data.draft)
@@ -44,19 +44,19 @@ const posts = (await getCollection('post'))
 
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 						<div class="bg-card border border-border p-6 rounded-2xl text-center shadow-sm">
-							<p class="text-3xl md:text-4xl font-black text-primary mb-1">{stats.totalChapters.toLocaleString()}</p>
+							<p class="text-3xl md:text-4xl font-black text-primary mb-1">{(stats.total_chapters || 0).toLocaleString()}</p>
 							<p class="text-xs uppercase tracking-widest font-bold text-muted-foreground">Chapters Read</p>
 						</div>
 						<div class="bg-card border border-border p-6 rounded-2xl text-center shadow-sm">
-							<p class="text-3xl md:text-4xl font-black mb-1">{stats.totalFinished}</p>
+							<p class="text-3xl md:text-4xl font-black mb-1">{stats.total_finished || 0}</p>
 							<p class="text-xs uppercase tracking-widest font-bold text-muted-foreground">Finished</p>
 						</div>
 						<div class="bg-card border border-border p-6 rounded-2xl text-center shadow-sm">
-							<p class="text-3xl md:text-4xl font-black mb-1 text-red-500">{stats.totalDropped}</p>
+							<p class="text-3xl md:text-4xl font-black mb-1 text-red-500">{stats.total_dropped || 0}</p>
 							<p class="text-xs uppercase tracking-widest font-bold text-muted-foreground">Dropped</p>
 						</div>
 						<div class="bg-card border border-border p-6 rounded-2xl text-center shadow-sm">
-							<p class="text-3xl md:text-4xl font-black mb-1 text-yellow-500">{stats.avgRating.toFixed(1)}</p>
+							<p class="text-3xl md:text-4xl font-black mb-1 text-yellow-500">{(stats.avg_rating || 0).toFixed(1)}</p>
 							<p class="text-xs uppercase tracking-widest font-bold text-muted-foreground">Avg Rating</p>
 						</div>
 					</div>
@@ -93,7 +93,7 @@ const posts = (await getCollection('post'))
                                     <a href={`/novel/${novel.slug}`} class="flex items-center gap-4 p-4 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all no-underline group">
                                         <div class="w-16 h-20 bg-muted rounded-lg overflow-hidden flex-shrink-0 border border-border">
                                             <img 
-                                                src={novel.coverUrl || '/img/placeholder.webp'} 
+                                                src={novel.cover_url || '/img/placeholder.webp'} 
                                                 alt={novel.name} 
                                                 class="w-full h-full object-cover"
                                             />
@@ -101,8 +101,8 @@ const posts = (await getCollection('post'))
                                         <div class="flex-grow min-w-0">
                                             <h4 class="font-bold truncate group-hover:text-primary transition-colors">{novel.name}</h4>
                                             <p class="text-xs text-muted-foreground mt-1">
-                                                Chapter {novel.readChapters} 
-                                                {novel.totalChapters > 0 && ` / ${novel.totalChapters}`}
+                                                Chapter {novel.read_chapters} 
+                                                {novel.total_chapters > 0 && ` / ${novel.total_chapters}`}
                                             </p>
                                             <div class="flex gap-1 mt-2">
                                                 {novel.genres.slice(0, 2).map(g => (

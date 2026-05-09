@@ -3,7 +3,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { getAllNovels } from '../../lib/fetchNovels';
+import { getAllNovels } from '../../lib/parseNovels';
 import { Badge } from '../../components/ui/badge';
 
 const novels = await getAllNovels();
@@ -60,7 +60,7 @@ const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 								<div class="p-6 flex gap-4 flex-grow">
 									<div class="w-20 h-28 bg-muted rounded-xl flex-shrink-0 flex items-center justify-center text-muted-foreground border border-border overflow-hidden">
 										<img 
-                                            src={novel.coverUrl || '/img/placeholder.webp'} 
+                                            src={novel.cover_url || '/img/placeholder.webp'} 
                                             alt={novel.name} 
                                             class="w-full h-full object-cover" 
                                         />
@@ -88,7 +88,7 @@ const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 								</div>
 								<div class="px-6 py-4 bg-muted/30 border-t border-border flex justify-between items-center">
 									<p class="text-xs font-bold">
-										<span class="text-muted-foreground">Chapters:</span> {novel.readChapters}
+										<span class="text-muted-foreground">Chapters:</span> {novel.read_chapters}
 									</p>
 									<span class="text-xs font-black italic uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity">
 										View Details →
