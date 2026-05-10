@@ -4,6 +4,7 @@ import { getAllNovels } from '../../lib/parseNovels';
 import InfoLayout from '../../layouts/InfoLayout.astro';
 
 export async function getStaticPaths() {
+	// getStaticPaths runs at build time where import.meta.env is available
 	const novels = await getAllNovels();
 	return novels.map((novel) => ({
 		params: { slug: novel.slug },
@@ -11,7 +12,9 @@ export async function getStaticPaths() {
 	}));
 }
 
+const db = (Astro.locals as any).db;
 const { novel } = Astro.props;
+
 
 // Try to find a matching review in content collections
 const allPosts = await getCollection('post');
