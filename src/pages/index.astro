@@ -7,7 +7,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getAllNovels, getStats } from '../lib/parseNovels';
 import NovelCard from '../components/NovelCard';
 
-const db = (Astro.locals as any).db;
+const db = Astro.locals.db;
 const novels = await getAllNovels(db);
 const stats = await getStats(db);
 const currentlyReading = novels.filter(n => n.status === 'Reading');

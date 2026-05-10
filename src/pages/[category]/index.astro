@@ -15,10 +15,13 @@ import {
   BreadcrumbSeparator,
 } from "../../components/ui/breadcrumb";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const allPosts = await getCollection('post');
   const filteredPosts = allPosts.filter((post) => import.meta.env.DEV || !post.data.draft);
-  const categories = [...new Set(filteredPosts.map(post => post.id.split('/')[0]))];
+  const categories = [...new Set(filteredPosts.map(post => post.id.split('/')[0]))]
+    .filter(cat => cat !== 'novel');
   
   return categories.map(category => ({
     params: { category },

@@ -12,6 +12,7 @@ import dsv from '@rollup/plugin-dsv';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lazynoman.com',
+  output: 'server',
   integrations: [
     mdx(),
     sitemap(),

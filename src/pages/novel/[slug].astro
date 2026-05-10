@@ -1,20 +1,20 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { getAllNovels } from '../../lib/parseNovels';
+import { getNovelBySlug } from '../../lib/parseNovels';
 import InfoLayout from '../../layouts/InfoLayout.astro';
 
-export async function getStaticPaths() {
-	// getStaticPaths runs at build time where import.meta.env is available
-	const novels = await getAllNovels();
-	return novels.map((novel) => ({
-		params: { slug: novel.slug },
-		props: { novel },
-	}));
+const { slug } = Astro.params;
+const db = Astro.locals.db;
+
+if (!slug) {
+	return Astro.redirect('/404');
 }
 
-const db = (Astro.locals as any).db;
-const { novel } = Astro.props;
+const novel = await getNovelBySlug(slug, db);
 
+if (!novel) {
+	return Astro.redirect('/404');
+}
 
 // Try to find a matching review in content collections
 const allPosts = await getCollection('post');

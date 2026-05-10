@@ -7,7 +7,7 @@ import { getAllNovels } from '../../lib/parseNovels';
 import NovelList from '../../components/NovelList';
 import { getCollection } from 'astro:content';
 
-const db = (Astro.locals as any).db;
+const db = Astro.locals.db;
 const novels = await getAllNovels(db);
 const reviewedReviews = (await getCollection('post'))
 
