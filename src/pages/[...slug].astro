@@ -15,6 +15,11 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+
+if (slug !== undefined && slug.endsWith('-review')) {
+  return Astro.redirect(`/${slug.replace(/-review$/, '')}`, 301);
+}
+
 if (slug !== undefined && (slug.startsWith('@') || slug.startsWith('_'))) {
   return new Response(null, { status: 404 });
 }

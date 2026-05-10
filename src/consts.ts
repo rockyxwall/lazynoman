@@ -2,6 +2,6 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'LazyNoman';
-export const SITE_DESCRIPTION = 'Personal reviews and recommendations on novels, manga, and anime — honest takes, no fluff.';
+export const SITE_DESCRIPTION = 'My personal display site for how much time I have wasted in life.';
 export const SITE_SOCIAL_IMAGE = '/favicons/source/favicon-with-no-bg-opti.webp';
 export const WALINE_SERVER_URL = 'https://waline-two-eosin.vercel.app/';

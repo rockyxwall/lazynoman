@@ -277,7 +277,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
       </div>
 
       {/* Back to Top Component */}
-      <BackToTop client:load />
+      <BackToTop />
     </div>
   );
 }
