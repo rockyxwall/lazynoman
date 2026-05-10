@@ -6,6 +6,7 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import Comments from "../components/Comments.astro";
 import { Badge } from "../components/ui/badge";
+import BackToTop from "../components/BackToTop";
 import "../styles/markdown.css";
 
 interface Props {
@@ -223,6 +224,7 @@ const schema = {
     </main>
 
     <Footer />
+    <BackToTop client:load />
   </body>
 </html>
 

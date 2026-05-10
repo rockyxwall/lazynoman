@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import type { Novel } from '../lib/parseNovels';
 import NovelCard from './NovelCard';
+import BackToTop from './BackToTop';
 
 interface NovelListProps {
   initialNovels: Novel[];
@@ -8,8 +9,6 @@ interface NovelListProps {
   statuses: string[];
   reviewedReviews?: { id: string; heroImage?: string | any }[];
 }
-
-const ITEMS_PER_PAGE = 12;
 
 const PAGE_SIZE = 36;
 const LAZY_BATCH = 12;
@@ -26,19 +25,7 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
   
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  // ... (getReviewInfo remains same)
-  const getReviewInfo = (novelSlug: string) => {
-    const review = reviewedReviews.find(r => {
-      const postId = r.id.toLowerCase();
-      const slug = novelSlug.toLowerCase();
-      return postId.includes(slug) || slug.includes(postId.split('/').pop() || '');
-    });
-    return {
-      hasReview: !!review,
-      reviewCover: review?.heroImage
-    };
-  };
-
+  // Derived Pagination Data
   const filteredNovels = useMemo(() => {
     return initialNovels
       .filter((novel) => {
@@ -93,7 +80,6 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
 
   const displayedNovels = pagedNovels.slice(0, visibleCount);
 
-  // ... (toggleStatus, toggleGenre same)
   const toggleStatus = (status: string) => {
     setSelectedStatus(selectedStatus === status ? null : status);
   };
@@ -116,7 +102,6 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
         <aside className="space-y-8">
-          {/* ... existing filters ... */}
           <div className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Filters</h3>
@@ -278,7 +263,9 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
           )}
         </div>
       </div>
+
+      {/* Back to Top Component */}
+      <BackToTop client:load />
     </div>
   );
 }
-
