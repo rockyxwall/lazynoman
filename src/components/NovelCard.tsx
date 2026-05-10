@@ -51,10 +51,10 @@ export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardPr
       className="novel-card group no-underline block h-full relative"
     >
       {/* --- EXTERNAL CORNER GLOW ACCENTS (CONCENTRIC BENDS) --- */}
-      <div className="absolute -top-1 -left-1 w-5 h-5 border-t-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tl-[12px]"></div>
-      <div className="absolute -top-1 -right-1 w-5 h-5 border-t-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tr-[12px]"></div>
-      <div className="absolute -bottom-1 -left-1 w-5 h-5 border-b-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-bl-[12px]"></div>
-      <div className="absolute -bottom-1 -right-1 w-5 h-5 border-b-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-br-[12px]"></div>
+      <div className="absolute -top-1 -left-1 w-5 h-5 border-t-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tl-xl"></div>
+      <div className="absolute -top-1 -right-1 w-5 h-5 border-t-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tr-xl"></div>
+      <div className="absolute -bottom-1 -left-1 w-5 h-5 border-b-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-bl-xl"></div>
+      <div className="absolute -bottom-1 -right-1 w-5 h-5 border-b-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-br-xl"></div>
 
       <div className="nv bg-card border border-border rounded-xl p-4 flex flex-col h-full transition-all duration-300 hover:border-muted-foreground/50 hover:shadow-xl relative z-10 space-y-3">
         {/* --- UNIVERSAL MINIMALIST COVER AREA --- */}
@@ -110,7 +110,7 @@ export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardPr
               {bodyState === 'extended' && (
                 <div className="metadata grid grid-cols-[auto_1px_auto_1px_1fr] gap-x-3 pt-3 border-t border-border mt-auto">
                   {/* Column 1: Total Chapters */}
-                  <div className="flex flex-col items-center gap-1 py-1 min-w-[35px]">
+                  <div className="flex flex-col items-center gap-1 py-1 min-w-8.75">
                     <div className="font-mono text-[11px] font-bold leading-none">
                       {novel.total_chapters ? novel.total_chapters.toLocaleString() : novel.read_chapters.toLocaleString()}
                     </div>
@@ -119,10 +119,10 @@ export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardPr
                   </div>
 
                   {/* Column 2: Separator */}
-                  <div className="w-[1px] bg-border/50 self-stretch"></div>
+                  <div className="w-px bg-border/50 self-stretch"></div>
 
                   {/* Column 3: Dates (Start & End) */}
-                  <div className="flex flex-col items-center gap-1 py-1 min-w-[55px]">
+                  <div className="flex flex-col items-center gap-1 py-1 min-w-13.75">
                     <div className="font-mono text-[9px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
                       {formatDate(novel.start_date) || 'XXXX.XX'}
                     </div>
@@ -133,12 +133,12 @@ export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardPr
                   </div>
 
                   {/* Column 4: Separator */}
-                  <div className="w-[1px] bg-border/50 self-stretch"></div>
+                  <div className="w-px bg-border/50 self-stretch"></div>
 
                   {/* Column 5: Stats & Stars */}
                   <div className="flex items-center gap-4 py-1 h-full overflow-hidden">
                     {novel.rating && (
-                      <div className="flex flex-col items-start gap-1 min-w-[70px] flex-1">
+                      <div className="flex flex-col items-start gap-1 min-w-17.5 flex-1">
                         <div className="flex items-center gap-1.5 w-full">
                           <div className="font-mono text-[11px] font-bold leading-none">{novel.rating}</div>
                           <div className="flex text-[8px] text-primary/40 tracking-tighter shrink-0">
@@ -146,12 +146,12 @@ export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardPr
                             {'☆'.repeat(10 - Math.floor(novel.rating))}
                           </div>
                         </div>
-                        <div className="w-full h-[1px] bg-border/50 my-0.5"></div>
+                        <div className="w-full h-px bg-border/50 my-0.5"></div>
                         <div className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/60 leading-none">Rating</div>
                       </div>
                     )}
                     {progress > 0 && (
-                      <div className="flex flex-col items-center gap-1 py-1 min-w-[35px]">
+                      <div className="flex flex-col items-center gap-1 py-1 min-w-8.75">
                         <div className="font-mono text-[11px] font-bold leading-none">{progress}</div>
                         <div className="w-px h-2 bg-border/50 my-0.5"></div>
                         <div className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/60 leading-none">Done</div>

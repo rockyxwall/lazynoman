@@ -2,10 +2,55 @@ import { db as defaultDb } from './turso';
 import type { Client } from '@libsql/client';
 
 export interface Novel {
-  // ... (rest of interface remains unchanged)
+  id: number;
+  name: string;
+  slug: string;
+  cover_url: string | null;
+  synopsis: string | null;
+  author: string | null;
+  origin: string | null;
+  source_url: string | null;
+  read_chapters: number;
+  total_chapters: number;
+  pages_left: number | null;
+  start_date: string | null;
+  end_date: string | null;
+  rating: number | null;
+  status: string;
+  review_slug: string | null;
+  media_type: string;
+  genres: string[];
+  tags: string[];
+  created_at: string;
+  updated_at: string;
 }
 
-// ... (CategoryStats and Stats interfaces remain unchanged)
+export interface CategoryStats {
+  total_read: number;
+  total_finished: number;
+  total_dropped: number;
+  total_paused: number;
+  total_chapters: number;
+  avg_rating: number;
+}
+
+export interface Achievement {
+  label: string;
+  icon: string;
+  unlocked: boolean;
+  description: string;
+  hint: string;
+}
+
+export interface Stats {
+  novel: CategoryStats;
+  anime: CategoryStats;
+  manga: CategoryStats;
+  movie: CategoryStats;
+  game: CategoryStats;
+  achievements: Achievement[];
+}
+
 
 export async function getAllNovels(db: Client = defaultDb): Promise<Novel[]> {
   try {
