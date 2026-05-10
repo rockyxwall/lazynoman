@@ -6,6 +6,7 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import Comments from "../components/Comments.astro";
 import { Badge } from "../components/ui/badge";
+import BackToTop from "../components/BackToTop";
 import "../styles/markdown.css";
 
 interface Props {
@@ -96,9 +97,9 @@ const schema = {
         {/* ── Novel Info Header ── */}
         <header class="flex flex-col md:flex-row gap-12 items-start">
           <div class="w-full md:w-72 aspect-[3/4] bg-muted rounded-xl border border-border overflow-hidden flex-shrink-0 relative">
-            {novel.cover_url ? (
+            {(heroImage || novel.cover_url) ? (
               <img 
-                src={novel.cover_url} 
+                src={heroImage || novel.cover_url} 
                 alt={novel.name} 
                 class="w-full h-full object-cover" 
               />
@@ -126,52 +127,56 @@ const schema = {
               </h1>
             </div>
 
-            {/* Progress Section */}
-            <div class="space-y-4 max-w-xl">
-              <div class="progress flex flex-col gap-2">
-                <div class="bar h-1.5 bg-muted rounded-full overflow-hidden">
-                  <div 
-                    class="fill h-full bg-primary rounded-full transition-all duration-1000" 
-                    style={{ width: `${novel.total_chapters ? progress : (novel.read_chapters > 0 ? 33 : 0)}%` }}
-                  ></div>
+            {/* Metadata Grid (Matches NovelCard Design) */}
+            <div class="metadata grid grid-cols-[auto_1px_auto_1px_1fr] gap-x-6 pt-6 border-t border-border max-w-2xl">
+              {/* Column 1: Total Chapters */}
+              <div class="flex flex-col items-center gap-2 py-1 min-w-[60px]">
+                <div class="font-mono text-xl font-bold leading-none">
+                  {novel.total_chapters ? novel.total_chapters.toLocaleString() : novel.read_chapters.toLocaleString()}
                 </div>
-                <div class="prog-lbl font-mono text-[13px] flex justify-between text-muted-foreground uppercase tracking-widest">
-                  <span><strong>CH. {novel.read_chapters.toLocaleString()}</strong></span>
-                  {novel.total_chapters ? (
-                    <span>/ {novel.total_chapters.toLocaleString()}</span>
-                  ) : (
-                    <span class="opacity-40 lowercase text-[11px]">no total</span>
-                  )}
+                <div class="w-px h-4 bg-border/50 my-1"></div>
+                <div class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none font-bold">Total</div>
+              </div>
+
+              {/* Column 2: Separator */}
+              <div class="w-[1px] bg-border/50 self-stretch"></div>
+
+              {/* Column 3: Dates (Start & End) */}
+              <div class="flex flex-col items-center gap-2 py-1 min-w-[80px]">
+                <div class="font-mono text-[13px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
+                  {startStr}
+                </div>
+                <div class="w-px h-4 bg-border/50 my-1"></div>
+                <div class="font-mono text-[13px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
+                  {endStr}
                 </div>
               </div>
 
-              <div class="flex items-center gap-6">
-                <div class="dates flex flex-col items-center w-fit font-mono text-[11px] tracking-[0.15em] text-muted-foreground/60 uppercase">
-                  <span>{startStr}</span>
-                  <div class="w-px h-3 bg-border my-1"></div>
-                  <span>{endStr}</span>
-                </div>
+              {/* Column 4: Separator */}
+              <div class="w-[1px] bg-border/50 self-stretch"></div>
 
+              {/* Column 5: Stats & Stars */}
+              <div class="flex items-center gap-8 py-1 h-full">
                 {novel.rating && (
-                  <>
-                    <div class="w-px h-8 bg-border"></div>
-                    <div class="flex flex-col items-center gap-1.5">
-                      <div class="font-mono text-sm font-bold leading-none">{novel.rating}</div>
-                      <div class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Rating</div>
+                  <div class="flex flex-col items-start gap-2 min-w-[120px] flex-1">
+                    <div class="flex items-center gap-3 w-full">
+                      <div class="font-mono text-xl font-bold leading-none">{novel.rating}</div>
+                      <div class="flex text-[12px] text-primary/40 tracking-tighter shrink-0">
+                        {'★'.repeat(Math.floor(novel.rating))}
+                        {'☆'.repeat(10 - Math.floor(novel.rating))}
+                      </div>
                     </div>
-                  </>
+                    <div class="w-full h-[1px] bg-border/50 my-1"></div>
+                    <div class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none font-bold">Rating</div>
+                  </div>
                 )}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-6">
-              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
-                <p class="text-[12px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Chapters Read</p>
-                <p class="text-4xl font-black italic tracking-tighter">{novel.read_chapters.toLocaleString()}</p>
-              </div>
-              <div class="p-6 bg-card border border-border rounded-xl group hover:bg-muted transition-colors">
-                <p class="text-[12px] uppercase tracking-[0.2em] font-black text-muted-foreground mb-2 font-mono italic">Total Chapters</p>
-                <p class="text-4xl font-black italic tracking-tighter text-muted-foreground/30">{novel.total_chapters ? novel.total_chapters.toLocaleString() : '???'}</p>
+                {progress > 0 && (
+                  <div class="flex flex-col items-center gap-2 py-1 min-w-[60px]">
+                    <div class="font-mono text-xl font-bold leading-none">{progress}</div>
+                    <div class="w-px h-4 bg-border/50 my-1"></div>
+                    <div class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none font-bold">Done</div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -219,6 +224,7 @@ const schema = {
     </main>
 
     <Footer />
+    <BackToTop client:load />
   </body>
 </html>
 
