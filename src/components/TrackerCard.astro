@@ -13,73 +13,108 @@ const statusColors: Record<string, string> = {
   Finished: "bg-green-500/10 text-green-500 border-green-500/20",
   Dropped: "bg-red-500/10 text-red-500 border-red-500/20",
   Paused: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-  "To Read": "bg-slate-500/10 text-slate-500 border-slate-500/20",
+  "Plan to Read": "bg-slate-500/10 text-slate-500 border-slate-500/20",
 };
 
 const statusColor = statusColors[novel.status] || "bg-slate-500/10 text-slate-500";
+
+const getProgress = (read: number, total: number) => {
+  if (!total || total === 0) return 0;
+  return Math.min(Math.round((read / total) * 100), 100);
+};
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return null;
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return null;
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '.');
+};
+
+const progress = getProgress(novel.read_chapters, novel.total_chapters);
+const startStr = formatDate(novel.start_date) || 'XXXX.XX';
+const endStr = formatDate(novel.end_date) || 'PRESENT';
 ---
 
-<div class="bg-card border border-border rounded-2xl p-6 mb-8 shadow-sm">
+<div class="bg-card border border-border rounded-2xl p-6 mb-8 shadow-sm group hover:border-primary/30 transition-all">
   <div class="flex flex-col md:flex-row gap-8">
-    {novel.coverUrl && (
+    {novel.cover_url && (
       <div class="w-full md:w-48 flex-shrink-0">
         <img 
-          src={novel.coverUrl} 
+          src={novel.cover_url} 
           alt={novel.name} 
-          class="w-full aspect-[2/3] object-cover rounded-xl shadow-md border border-border"
+          class="w-full aspect-[2/3] object-cover rounded-xl shadow-md border border-border grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500"
         />
       </div>
     )}
     
-    <div class="flex-grow space-y-4">
-      <div class="flex flex-wrap items-center gap-3">
-        <Badge variant="outline" class={`${statusColor} font-bold px-3 py-1`}>
+    <div class="flex-grow space-y-6">
+      <div class="space-y-3">
+        <Badge variant="outline" class={`${statusColor} font-bold px-3 py-1 font-mono tracking-widest uppercase`}>
           {novel.status}
         </Badge>
-        {novel.rating > 0 && (
-          <Badge variant="secondary" class="font-bold px-3 py-1">
-            ⭐ {novel.rating}/10
-          </Badge>
-        )}
+        <h1 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter group-hover:text-primary transition-colors">{novel.name}</h1>
       </div>
 
-      <h1 class="text-3xl md:text-4xl font-bold tracking-tight">{novel.name}</h1>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-2 border-y border-border/50">
-        <div>
-          <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Read</p>
-          <p class="text-lg font-bold">{novel.readChapters} <span class="text-sm font-normal text-muted-foreground">Chs</span></p>
-        </div>
-        <div>
-          <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Total</p>
-          <p class="text-lg font-bold">{novel.totalChapters || '?'}</p>
-        </div>
-        <div>
-          <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Started</p>
-          <p class="text-sm font-bold">{novel.startDate || '-'}</p>
-        </div>
-        {novel.endDate && (
-          <div>
-            <p class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Finished</p>
-            <p class="text-sm font-bold">{novel.endDate}</p>
+      <div class="metadata grid grid-cols-[auto_1px_auto_1px_1fr] gap-x-6 py-4 border-y border-border/50">
+        {/* Column 1: Total Chapters */}
+        <div class="flex flex-col items-center gap-2 py-1 min-w-[50px]">
+          <div class="font-mono text-lg font-bold leading-none">
+            {novel.total_chapters ? novel.total_chapters.toLocaleString() : novel.read_chapters.toLocaleString()}
           </div>
-        )}
+          <div class="w-px h-3 bg-border/50 my-1"></div>
+          <div class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60 leading-none font-bold">Total</div>
+        </div>
+
+        {/* Column 2: Separator */}
+        <div class="w-[1px] bg-border/50 self-stretch"></div>
+
+        {/* Column 3: Dates (Start & End) */}
+        <div class="flex flex-col items-center gap-2 py-1 min-w-[70px]">
+          <div class="font-mono text-[11px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
+            {startStr}
+          </div>
+          <div class="w-px h-3 bg-border/50 my-1"></div>
+          <div class="font-mono text-[11px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
+            {endStr}
+          </div>
+        </div>
+
+        {/* Column 4: Separator */}
+        <div class="w-[1px] bg-border/50 self-stretch"></div>
+
+        {/* Column 5: Stats & Stars */}
+        <div class="flex items-center gap-8 py-1 h-full">
+          {novel.rating && (
+            <div class="flex flex-col items-start gap-2 min-w-[100px] flex-1">
+              <div class="flex items-center gap-2 w-full">
+                <div class="font-mono text-lg font-bold leading-none">{novel.rating}</div>
+                <div class="flex text-[10px] text-primary/40 tracking-tighter shrink-0">
+                  {'★'.repeat(Math.floor(novel.rating))}
+                  {'☆'.repeat(10 - Math.floor(novel.rating))}
+                </div>
+              </div>
+              <div class="w-full h-[1px] bg-border/50 my-1"></div>
+              <div class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60 leading-none font-bold">Rating</div>
+            </div>
+          )}
+          {progress > 0 && (
+            <div class="flex flex-col items-center gap-2 py-1 min-w-[50px]">
+              <div class="font-mono text-lg font-bold leading-none">{progress}</div>
+              <div class="w-px h-3 bg-border/50 my-1"></div>
+              <div class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60 leading-none font-bold">Done</div>
+            </div>
+          )}
+        </div>
       </div>
 
       {novel.genres.length > 0 && (
-        <div class="flex flex-wrap gap-2 pt-2">
+        <div class="flex flex-wrap gap-2">
           {novel.genres.map(genre => (
-            <span class="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-md border border-border">
-              {genre}
+            <span class="px-2 py-1 bg-muted text-muted-foreground font-mono text-[10px] font-bold tracking-widest uppercase rounded-md border border-border">
+              #{genre}
             </span>
           ))}
         </div>
-      )}
-      
-      {novel.pagesLeft && (
-        <p class="text-sm text-muted-foreground italic">
-          Note: {novel.pagesLeft}
-        </p>
       )}
     </div>
   </div>

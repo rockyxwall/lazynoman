@@ -12,7 +12,7 @@ interface NovelListProps {
 export default function NovelList({ initialNovels, genres, statuses, reviewedReviews = [] }: NovelListProps) {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-  const [showOnlyReviewed, setShowOnlyReviewed] = useState<boolean>(false);
+  const [showOnlyReviewed, setShowOnlyReviewed] = useState<boolean>(true);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
   const getReviewInfo = (novelSlug: string) => {
@@ -69,42 +69,42 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
         {/* Sidebar Filters */}
         <aside className="space-y-8">
           <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Special</h3>
+            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Sort By</h3>
+            
+            {/* Reviewed Toggle */}
             <button
               onClick={() => setShowOnlyReviewed(!showOnlyReviewed)}
-              className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
+              className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between mb-2 ${
                 showOnlyReviewed
                   ? 'bg-primary text-primary-foreground border-primary'
                   : 'border-border bg-card hover:bg-muted text-foreground'
               }`}
             >
-              <span>Reviewed Only</span>
+              <span>Reviewed</span>
               <span className={`w-2 h-2 rounded-full ${showOnlyReviewed ? 'bg-primary-foreground animate-pulse' : 'bg-muted-foreground/30'}`}></span>
             </button>
-          </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Sort By Start Date</h3>
-            <div className="flex gap-2">
+            {/* Date Sorting */}
+            <div className="flex flex-col gap-2">
               <button
                 onClick={() => setSortOrder('desc')}
-                className={`flex-1 px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all ${
+                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
                   sortOrder === 'desc'
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'border-border bg-card hover:bg-muted text-foreground'
                 }`}
               >
-                Newest
+                Recently Started
               </button>
               <button
                 onClick={() => setSortOrder('asc')}
-                className={`flex-1 px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all ${
+                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
                   sortOrder === 'asc'
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'border-border bg-card hover:bg-muted text-foreground'
                 }`}
               >
-                Oldest
+                Oldest Started
               </button>
             </div>
           </div>
