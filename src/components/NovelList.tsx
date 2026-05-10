@@ -68,90 +68,104 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
         <aside className="space-y-8">
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Sort By</h3>
-            
-            {/* Reviewed Toggle */}
-            <button
-              onClick={() => setShowOnlyReviewed(!showOnlyReviewed)}
-              className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between mb-2 ${
-                showOnlyReviewed
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'border-border bg-card hover:bg-muted text-foreground'
-              }`}
-            >
-              <span>Reviewed</span>
-              <span className={`w-2 h-2 rounded-full ${showOnlyReviewed ? 'bg-primary-foreground animate-pulse' : 'bg-muted-foreground/30'}`}></span>
-            </button>
-
-            {/* Date Sorting */}
-            <div className="flex flex-col gap-2">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Filters</h3>
+              
+              {/* Reviewed Toggle */}
               <button
-                onClick={() => setSortOrder('desc')}
-                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
-                  sortOrder === 'desc'
-                    ? 'bg-primary text-primary-foreground border-primary'
+                onClick={() => setShowOnlyReviewed(!showOnlyReviewed)}
+                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
+                  showOnlyReviewed
+                    ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm'
                     : 'border-border bg-card hover:bg-muted text-foreground'
                 }`}
               >
-                Recently Started
-              </button>
-              <button
-                onClick={() => setSortOrder('asc')}
-                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
-                  sortOrder === 'asc'
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'border-border bg-card hover:bg-muted text-foreground'
-                }`}
-              >
-                Oldest Started
+                <span>Reviewed</span>
+                <span className={`w-2 h-2 rounded-full ${showOnlyReviewed ? 'bg-primary animate-pulse' : 'bg-muted-foreground/30'}`}></span>
               </button>
             </div>
-          </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Status</h3>
-            <div className="flex flex-wrap lg:flex-col gap-2">
-              <button
-                onClick={() => setSelectedStatus(null)}
-                className={`px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
-                  selectedStatus === null
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'border-border bg-card hover:bg-muted text-foreground'
-                }`}
-              >
-                All
-              </button>
-              {statuses.map((status) => (
+            <div className="space-y-4">
+              <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Sort Order</h3>
+              <div className="p-1 bg-muted/50 rounded-xl border border-border flex gap-1">
                 <button
-                  key={status}
-                  onClick={() => toggleStatus(status)}
-                  className={`px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left ${
-                    selectedStatus === status
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : 'border-border bg-card hover:bg-muted text-foreground'
+                  onClick={() => setSortOrder('desc')}
+                  className={`flex-1 px-2 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest font-mono transition-all ${
+                    sortOrder === 'desc'
+                      ? 'bg-card text-foreground shadow-sm border border-border/50'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  {status}
+                  Recent
                 </button>
-              ))}
+                <button
+                  onClick={() => setSortOrder('asc')}
+                  className={`flex-1 px-2 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest font-mono transition-all ${
+                    sortOrder === 'asc'
+                      ? 'bg-card text-foreground shadow-sm border border-border/50'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  Oldest
+                </button>
+              </div>
             </div>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono">Genres</h3>
+            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Status</h3>
+            <div className="flex flex-col gap-1.5">
+              {/* All Statuses as a Primary Toggle */}
+              <button
+                onClick={() => setSelectedStatus(null)}
+                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
+                  selectedStatus === null
+                    ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm'
+                    : 'border-border bg-card hover:bg-muted text-foreground'
+                }`}
+              >
+                <span>All Statuses</span>
+                {selectedStatus === null && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>}
+              </button>
+
+              <div className="h-px bg-border/30 my-1 mx-2"></div>
+
+              {/* Individual Status List */}
+              <div className="flex flex-col gap-1.5">
+                {statuses.map((status) => (
+                  <button
+                    key={status}
+                    onClick={() => toggleStatus(status)}
+                    className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
+                      selectedStatus === status
+                        ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm'
+                        : 'border-border bg-card hover:bg-muted text-foreground'
+                    }`}
+                  >
+                    <span>{status}</span>
+                    {selectedStatus === status && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Genres</h3>
             <div className="flex flex-wrap gap-2">
               {genres.map((genre) => (
                 <button
                   key={genre}
                   onClick={() => toggleGenre(genre)}
-                  className={`px-3 py-1 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all ${
+                  className={`px-3 py-1 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all flex items-center gap-2 ${
                     selectedGenre === genre
-                      ? 'bg-primary text-primary-foreground border-primary'
+                      ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm'
                       : 'border-border bg-card hover:bg-muted text-foreground'
                   }`}
                 >
-                  #{genre}
+                  <span>#{genre}</span>
+                  {selectedGenre === genre && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>}
                 </button>
               ))}
             </div>
