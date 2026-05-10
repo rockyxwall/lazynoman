@@ -10,6 +10,11 @@ if (!slug) {
 	return Astro.rewrite('/404');
 }
 
+// Redirect old Google indexed review URLs to the novel's canonical URL
+if (slug.endsWith('-review')) {
+	return Astro.redirect(`/novel/${slug.replace(/-review$/, '')}`, 301);
+}
+
 const novel = await getNovelBySlug(slug, db);
 
 if (!novel) {
