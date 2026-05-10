@@ -7,13 +7,13 @@ const { slug } = Astro.params;
 const db = Astro.locals.db;
 
 if (!slug) {
-	return Astro.redirect('/404');
+	return Astro.rewrite('/404');
 }
 
 const novel = await getNovelBySlug(slug, db);
 
 if (!novel) {
-	return Astro.redirect('/404');
+	return Astro.rewrite('/404');
 }
 
 // Try to find a matching review in content collections
