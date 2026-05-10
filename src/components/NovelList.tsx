@@ -25,6 +25,18 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
   
   const loaderRef = useRef<HTMLDivElement>(null);
 
+  const getReviewInfo = (novelSlug: string) => {
+    const review = reviewedReviews.find(r => {
+      const postId = r.id.toLowerCase();
+      const slug = novelSlug.toLowerCase();
+      return postId.includes(slug) || slug.includes(postId.split('/').pop() || '');
+    });
+    return {
+      hasReview: !!review,
+      reviewCover: review?.heroImage
+    };
+  };
+
   // Derived Pagination Data
   const filteredNovels = useMemo(() => {
     return initialNovels
