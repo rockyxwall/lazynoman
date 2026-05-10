@@ -1,0 +1,49 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`404 - Not Found | ${SITE_TITLE}`} description="The page you are looking for does not exist." />
+	</head>
+	<body>
+		<Header />
+		
+		<main class="max-w-6xl mx-auto px-4 py-24 md:py-32 flex flex-col items-center justify-center text-center min-h-[60vh]">
+			<div class="space-y-8 relative group">
+				{/* Decorative Background Elements */}
+				<div class="absolute -inset-4 bg-primary/5 blur-3xl rounded-full z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+				<div class="relative z-10 space-y-6">
+					<h1 class="text-8xl md:text-[10rem] font-black tracking-tighter italic uppercase text-primary leading-none drop-shadow-sm">
+						404
+					</h1>
+					
+					<div class="space-y-2">
+						<h2 class="text-2xl md:text-4xl font-bold tracking-tight uppercase">
+							Chapter Not Found
+						</h2>
+						<p class="text-base md:text-lg text-muted-foreground max-w-md mx-auto font-mono text-sm">
+							Looks like this record doesn't exist in the archive, or the page has been moved.
+						</p>
+					</div>
+
+					<div class="pt-8">
+						<a 
+							href="/" 
+							class="inline-flex items-center justify-center rounded-lg text-sm font-black transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-8 uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] border border-primary/50"
+						>
+							Return Home
+						</a>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>
