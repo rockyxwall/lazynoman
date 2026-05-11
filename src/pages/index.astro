@@ -1,11 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import BaseHead from '../components/layout/BaseHead.astro';
+import Footer from '../components/layout/Footer.astro';
+import Header from '../components/layout/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getAllNovels, getStats } from '../lib/parseNovels';
-import NovelCard from '../components/NovelCard';
+import NovelCard from '../components/novel/NovelCard';
 
 const db = Astro.locals.db;
 const novels = await getAllNovels(db);

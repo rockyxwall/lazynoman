@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import type { Novel } from '../lib/parseNovels';
-import BackToTop from './BackToTop';
+import type { Novel } from '../../lib/parseNovels';
+import BackToTop from '../common/BackToTop';
 import { Search, ArrowUpDown, LayoutGrid, List as ListIcon } from 'lucide-react';
-import { NovelListView } from './custom-ui/NovelListView';
-import { NovelGridView } from './custom-ui/NovelGridView';
+import { NovelListView } from './NovelListView';
+import { NovelGridView } from './NovelGridView';
 
 interface NovelListProps {
   initialNovels: Novel[];
