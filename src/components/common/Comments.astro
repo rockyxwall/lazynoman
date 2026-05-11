@@ -1,13 +1,13 @@
 ---
 import { WALINE_SERVER_URL } from '../../consts';
+import '@waline/client/style';
 ---
 
 <div id="waline" class="mt-16 pt-8 border-t border-border" data-server-url={WALINE_SERVER_URL}></div>
 
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 
 <script>
-  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+  import { init } from '@waline/client/full';
 
   const initWaline = () => {
     const walineEl = document.querySelector('#waline');

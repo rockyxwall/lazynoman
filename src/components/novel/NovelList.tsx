@@ -32,15 +32,18 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
     };
   };
 
+  const baseFilteredNovels = useMemo(() => {
+    return initialNovels.filter((novel) => {
+      const genreMatch = !selectedGenre || novel.genres.includes(selectedGenre);
+      const reviewMatch = !showOnlyReviewed || getReviewInfo(novel.slug).hasReview;
+      const searchMatch = !searchQuery || novel.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return genreMatch && reviewMatch && searchMatch;
+    });
+  }, [initialNovels, selectedGenre, showOnlyReviewed, searchQuery]);
+
   const filteredNovels = useMemo(() => {
-    return initialNovels
-      .filter((novel) => {
-        const statusMatch = !selectedStatus || novel.status === selectedStatus;
-        const genreMatch = !selectedGenre || novel.genres.includes(selectedGenre);
-        const reviewMatch = !showOnlyReviewed || getReviewInfo(novel.slug).hasReview;
-        const searchMatch = !searchQuery || novel.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return statusMatch && genreMatch && reviewMatch && searchMatch;
-      })
+    return baseFilteredNovels
+      .filter((novel) => !selectedStatus || novel.status === selectedStatus)
       .sort((a, b) => {
         if (!a.start_date) return 1;
         if (!b.start_date) return -1;
@@ -50,18 +53,18 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
         if (isNaN(dateB)) return -1;
         return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
       });
-  }, [initialNovels, selectedStatus, selectedGenre, showOnlyReviewed, sortOrder, searchQuery]);
+  }, [baseFilteredNovels, selectedStatus, sortOrder]);
 
   const statusCounts = useMemo(() => {
-    const counts: Record<string, number> = { 'All': filteredNovels.length };
+    const counts: Record<string, number> = { 'All': baseFilteredNovels.length };
     statuses.forEach(s => counts[s] = 0);
-    filteredNovels.forEach(n => {
+    baseFilteredNovels.forEach(n => {
       if (counts[n.status] !== undefined) {
         counts[n.status]++;
       }
     });
     return counts;
-  }, [filteredNovels, statuses]);
+  }, [baseFilteredNovels, statuses]);
 
   const groupedNovels = useMemo(() => {
     const groups: Record<string, Novel[]> = {};
