@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Novel } from '../lib/parseNovels';
+import type { Novel } from '../../lib/parseNovels';
 
 interface NovelCardProps {
   novel: Novel;
