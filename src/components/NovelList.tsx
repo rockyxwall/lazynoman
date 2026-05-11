@@ -1,7 +1,9 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import type { Novel } from '../lib/parseNovels';
-import NovelCard from './NovelCard';
 import BackToTop from './BackToTop';
+import { Search, ArrowUpDown, LayoutGrid, List as ListIcon } from 'lucide-react';
+import { NovelListView } from './custom-ui/NovelListView';
+import { NovelGridView } from './custom-ui/NovelGridView';
 
 interface NovelListProps {
   initialNovels: Novel[];
@@ -10,20 +12,13 @@ interface NovelListProps {
   reviewedReviews?: { id: string; heroImage?: string | any }[];
 }
 
-const PAGE_SIZE = 36;
-const LAZY_BATCH = 12;
-
 export default function NovelList({ initialNovels, genres, statuses, reviewedReviews = [] }: NovelListProps) {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-  const [showOnlyReviewed, setShowOnlyReviewed] = useState<boolean>(true);
+  const [showOnlyReviewed, setShowOnlyReviewed] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
-  
-  // Pagination & Lazy States
-  const [currentPage, setCurrentPage] = useState(1);
-  const [visibleCount, setVisibleCount] = useState(LAZY_BATCH);
-  
-  const loaderRef = useRef<HTMLDivElement>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   const getReviewInfo = (novelSlug: string) => {
     const review = reviewedReviews.find(r => {
@@ -37,14 +32,14 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
     };
   };
 
-  // Derived Pagination Data
   const filteredNovels = useMemo(() => {
     return initialNovels
       .filter((novel) => {
         const statusMatch = !selectedStatus || novel.status === selectedStatus;
         const genreMatch = !selectedGenre || novel.genres.includes(selectedGenre);
         const reviewMatch = !showOnlyReviewed || getReviewInfo(novel.slug).hasReview;
-        return statusMatch && genreMatch && reviewMatch;
+        const searchMatch = !searchQuery || novel.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return statusMatch && genreMatch && reviewMatch && searchMatch;
       })
       .sort((a, b) => {
         if (!a.start_date) return 1;
@@ -55,229 +50,178 @@ export default function NovelList({ initialNovels, genres, statuses, reviewedRev
         if (isNaN(dateB)) return -1;
         return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
       });
-  }, [initialNovels, selectedStatus, selectedGenre, showOnlyReviewed, sortOrder]);
+  }, [initialNovels, selectedStatus, selectedGenre, showOnlyReviewed, sortOrder, searchQuery]);
 
-  // Derived Pagination Data
-  const totalPages = Math.ceil(filteredNovels.length / PAGE_SIZE);
-  const pagedNovels = useMemo(() => {
-    const start = (currentPage - 1) * PAGE_SIZE;
-    return filteredNovels.slice(start, start + PAGE_SIZE);
-  }, [filteredNovels, currentPage]);
+  const statusCounts = useMemo(() => {
+    const counts: Record<string, number> = { 'All': filteredNovels.length };
+    statuses.forEach(s => counts[s] = 0);
+    filteredNovels.forEach(n => {
+      if (counts[n.status] !== undefined) {
+        counts[n.status]++;
+      }
+    });
+    return counts;
+  }, [filteredNovels, statuses]);
 
-  // Reset states when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-    setVisibleCount(LAZY_BATCH);
-  }, [selectedStatus, selectedGenre, showOnlyReviewed, sortOrder]);
-
-  // Reset lazy load when page changes
-  useEffect(() => {
-    setVisibleCount(LAZY_BATCH);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentPage]);
-
-  // Intersection Observer for lazy reveal within a page
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && visibleCount < pagedNovels.length) {
-          setVisibleCount(prev => prev + LAZY_BATCH);
+  const groupedNovels = useMemo(() => {
+    const groups: Record<string, Novel[]> = {};
+    if (selectedStatus) {
+      groups[selectedStatus] = filteredNovels;
+    } else {
+      statuses.forEach(s => groups[s] = []);
+      filteredNovels.forEach(n => {
+        if (groups[n.status]) {
+          groups[n.status].push(n);
+        } else {
+          groups[n.status] = [n];
         }
-      },
-      { threshold: 0.1 }
-    );
-    if (loaderRef.current) observer.observe(loaderRef.current);
-    return () => observer.disconnect();
-  }, [visibleCount, pagedNovels.length]);
-
-  const displayedNovels = pagedNovels.slice(0, visibleCount);
-
-  const toggleStatus = (status: string) => {
-    setSelectedStatus(selectedStatus === status ? null : status);
-  };
-
-  const toggleGenre = (genre: string) => {
-    setSelectedGenre(selectedGenre === genre ? null : genre);
-  };
+      });
+    }
+    return groups;
+  }, [filteredNovels, selectedStatus, statuses]);
 
   return (
-    <div className="space-y-12">
-      <header className="space-y-4">
-        <h1 className="text-4xl md:text-5xl font-black tracking-tighter italic uppercase">
-          Novels ({filteredNovels.length})
-        </h1>
-        <p className="text-xl text-muted-foreground font-medium max-w-2xl">
-          A list of all the novels I've read and where I am in each story.
-        </p>
-      </header>
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Sidebar Filters */}
-        <aside className="space-y-8">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Filters</h3>
-              <button
-                onClick={() => setShowOnlyReviewed(!showOnlyReviewed)}
-                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
-                  showOnlyReviewed ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm' : 'border-border bg-card hover:bg-muted text-foreground'
-                }`}
-              >
-                <span>Reviewed</span>
-                <span className={`w-2 h-2 rounded-full ${showOnlyReviewed ? 'bg-primary animate-pulse' : 'bg-muted-foreground/30'}`}></span>
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Sort Order</h3>
-              <div className="p-1 bg-muted/50 rounded-xl border border-border flex gap-1">
-                <button
-                  onClick={() => setSortOrder('desc')}
-                  className={`flex-1 px-2 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest font-mono transition-all ${
-                    sortOrder === 'desc' ? 'bg-card text-foreground shadow-sm border border-border/50' : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >Recent</button>
-                <button
-                  onClick={() => setSortOrder('asc')}
-                  className={`flex-1 px-2 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest font-mono transition-all ${
-                    sortOrder === 'asc' ? 'bg-card text-foreground shadow-sm border border-border/50' : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >Oldest</button>
-              </div>
-            </div>
+    <div className="space-y-8">
+      <div className="flex flex-col lg:flex-row gap-8 items-start">
+        {/* Sidebar */}
+        <div className="w-full lg:w-[240px] shrink-0 space-y-8 font-sans">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-2.5 w-4 h-4 text-muted-foreground" />
+            <input 
+              type="text" 
+              placeholder="Filter" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-card border border-border/50 text-foreground rounded-lg py-2 pl-9 pr-3 outline-none focus:ring-1 focus:ring-primary placeholder:text-muted-foreground text-[13px]"
+            />
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Status</h3>
-            <div className="flex flex-col gap-1.5">
-              <button
-                onClick={() => setSelectedStatus(null)}
-                className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
-                  selectedStatus === null ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm' : 'border-border bg-card hover:bg-muted text-foreground'
-                }`}
-              >
-                <span>All Statuses</span>
-                {selectedStatus === null && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>}
-              </button>
-              <div className="h-px bg-border/30 my-1 mx-2"></div>
-              <div className="flex flex-col gap-1.5">
-                {statuses.map((status) => (
-                  <button
-                    key={status}
-                    onClick={() => toggleStatus(status)}
-                    className={`w-full px-4 py-2 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all text-left flex items-center justify-between ${
-                      selectedStatus === status ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm' : 'border-border bg-card hover:bg-muted text-foreground'
-                    }`}
+          {/* Lists */}
+          <div>
+            <h3 className="mb-3 text-[13px] font-semibold text-muted-foreground">Lists</h3>
+            <ul className="space-y-1">
+              <li>
+                <button 
+                  onClick={() => setSelectedStatus(null)}
+                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors group ${selectedStatus === null ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                >
+                  <span>All</span>
+                  <span className={`text-[12px] font-medium ${selectedStatus === null ? 'text-secondary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>{statusCounts['All']}</span>
+                </button>
+              </li>
+              {statuses.map(status => (
+                <li key={status}>
+                  <button 
+                    onClick={() => setSelectedStatus(status)}
+                    className={`w-full flex items-center justify-between px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors group ${selectedStatus === status ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                   >
                     <span>{status}</span>
-                    {selectedStatus === status && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>}
+                    <span className={`text-[12px] font-medium ${selectedStatus === status ? 'text-secondary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>{statusCounts[status]}</span>
                   </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest font-black text-muted-foreground italic font-mono border-b border-border/50 pb-2">Genres</h3>
-            <div className="flex flex-wrap gap-2">
-              {genres.map((genre) => (
-                <button
-                  key={genre}
-                  onClick={() => toggleGenre(genre)}
-                  className={`px-3 py-1 rounded-lg border text-[13px] font-bold uppercase tracking-widest font-mono transition-all flex items-center gap-2 ${
-                    selectedGenre === genre ? 'bg-secondary text-secondary-foreground border-border/50 shadow-sm' : 'border-border bg-card hover:bg-muted text-foreground'
-                  }`}
-                >
-                  <span>#{genre}</span>
-                  {selectedGenre === genre && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>}
-                </button>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
-          {(selectedStatus || selectedGenre) && (
-            <button
-              onClick={() => { setSelectedStatus(null); setSelectedGenre(null); }}
-              className="text-[12px] font-bold uppercase tracking-widest font-mono text-muted-foreground hover:text-primary transition-colors underline underline-offset-4"
-            >Clear Filters</button>
-          )}
-        </aside>
-
-        {/* Main Content */}
-        <div className="lg:col-span-3 space-y-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 min-h-[400px]">
-            {displayedNovels.length > 0 ? (
-              displayedNovels.map((novel) => {
-                const { hasReview, reviewCover } = getReviewInfo(novel.slug);
-                return (
-                  <NovelCard 
-                    key={novel.id} 
-                    novel={novel} 
-                    hasReview={hasReview}
-                    reviewCover={reviewCover}
-                  />
-                );
-              })
-            ) : (
-              <div className="col-span-full py-12 text-center space-y-4">
-                <p className="text-muted-foreground font-black italic uppercase tracking-tighter text-2xl">No novels found matching these filters.</p>
-                <button
-                  onClick={() => { setSelectedStatus(null); setSelectedGenre(null); }}
-                  className="px-6 py-2 bg-primary text-primary-foreground rounded-xl font-black italic uppercase tracking-widest hover:opacity-90 transition-opacity"
-                >Clear Filters</button>
-              </div>
-            )}
-          </div>
-
-          {/* Lazy Loader Trigger within a page */}
-          {visibleCount < pagedNovels.length && (
-            <div ref={loaderRef} className="py-4 flex justify-center">
-              <div className="flex gap-1.5 items-center opacity-50">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce"></div>
-              </div>
-            </div>
-          )}
-
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex flex-col items-center gap-6 pt-8 border-t border-border/50">
-              <div className="flex items-center gap-2">
-                <button
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(p => p - 1)}
-                  className="px-4 py-2 rounded-lg border border-border bg-card font-mono text-[12px] font-bold uppercase tracking-widest transition-all hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
-                >Prev</button>
-                
-                <div className="flex items-center gap-1 px-4">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
+          {/* Filters */}
+          <div>
+            <h3 className="mb-3 text-[13px] font-semibold text-muted-foreground">Filters</h3>
+            <div className="space-y-2">
+              <button 
+                onClick={() => setShowOnlyReviewed(!showOnlyReviewed)}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-[13px] font-medium transition-colors ${showOnlyReviewed ? 'bg-secondary text-secondary-foreground' : 'bg-card border border-border/50 text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+              >
+                <span>Reviewed</span>
+                {showOnlyReviewed && <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></div>}
+              </button>
+              
+              <div className="pt-2">
+                <h4 className="text-[11px] uppercase text-muted-foreground mb-2 font-semibold">Genres</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {genres.map(genre => (
                     <button
-                      key={num}
-                      onClick={() => setCurrentPage(num)}
-                      className={`w-10 h-10 rounded-lg flex items-center justify-center font-mono text-sm font-bold transition-all ${
-                        currentPage === num ? 'bg-secondary text-secondary-foreground border border-border shadow-sm' : 'text-muted-foreground hover:bg-muted'
-                      }`}
-                    >{num}</button>
+                      key={genre}
+                      onClick={() => setSelectedGenre(selectedGenre === genre ? null : genre)}
+                      className={`px-2 py-1 text-[11px] rounded-md font-medium transition-colors ${selectedGenre === genre ? 'bg-primary text-primary-foreground' : 'bg-card border border-border/50 text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                    >
+                      {genre}
+                    </button>
                   ))}
                 </div>
-
-                <button
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage(p => p + 1)}
-                  className="px-4 py-2 rounded-lg border border-border bg-card font-mono text-[12px] font-bold uppercase tracking-widest transition-all hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
-                >Next</button>
               </div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">
-                Page {currentPage} of {totalPages}
-              </p>
+            </div>
+          </div>
+
+          {/* Sort */}
+          <div>
+            <h3 className="mb-3 text-[13px] font-semibold text-muted-foreground">Sort Order</h3>
+            <button 
+              onClick={() => setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc')}
+              className="w-full flex items-center justify-between px-3 py-2 bg-card border border-border/50 rounded-md text-[13px] font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            >
+              <span>{sortOrder === 'desc' ? 'Last Added' : 'Oldest First'}</span>
+              <ArrowUpDown className="w-4 h-4" />
+            </button>
+          </div>
+          
+          {(selectedStatus || selectedGenre || searchQuery || showOnlyReviewed) && (
+            <button
+              onClick={() => { setSelectedStatus(null); setSelectedGenre(null); setSearchQuery(''); setShowOnlyReviewed(false); }}
+              className="text-[12px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors underline underline-offset-4"
+            >Clear All Filters</button>
+          )}
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 space-y-6 min-w-0 w-full">
+          {/* View Toggles */}
+          {filteredNovels.length > 0 && (
+            <div className="flex justify-end gap-2 mb-2">
+              <button 
+                onClick={() => setViewMode('list')}
+                className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+              >
+                <ListIcon className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={() => setViewMode('grid')}
+                className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+              >
+                <LayoutGrid className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+
+          <div className="space-y-10">
+            {Object.entries(groupedNovels).map(([status, novels]) => {
+              if (novels.length === 0) return null;
+              return (
+                <div key={status} className="space-y-4">
+                  <h2 className="text-[1.15rem] font-semibold tracking-tight text-foreground">{status}</h2>
+                  {viewMode === 'list' ? (
+                    <NovelListView novels={novels} getReviewInfo={getReviewInfo} />
+                  ) : (
+                    <NovelGridView novels={novels} getReviewInfo={getReviewInfo} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          
+          {filteredNovels.length === 0 && (
+            <div className="py-12 text-center space-y-4">
+              <p className="text-muted-foreground font-black italic uppercase tracking-tighter text-2xl">No items found matching these filters.</p>
+              <button
+                onClick={() => { setSelectedStatus(null); setSelectedGenre(null); setSearchQuery(''); setShowOnlyReviewed(false); }}
+                className="px-6 py-2 bg-primary text-primary-foreground rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-colors"
+              >Clear Filters</button>
             </div>
           )}
         </div>
       </div>
-
-      {/* Back to Top Component */}
       <BackToTop />
     </div>
   );
 }
+
