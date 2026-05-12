@@ -58,9 +58,9 @@ const postUrl = getPostUrl(post.id);
 				</span>
 			</div>
 		</div>
-        <h3 class="text-xl font-bold group-hover:text-primary transition-colors leading-tight">
+        <h3 class="text-xl font-bold group-hover:text-primary transition-colors leading-tight line-clamp-2">
             <a href={postUrl} class="no-underline text-foreground block before:absolute before:inset-0">
-                {post.id.split('/').pop()?.replace(/\.[^/.]+$/, "").replace(/-/g, ' ')}
+                {post.data.title}
             </a>
         </h3>
 		<p class="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
