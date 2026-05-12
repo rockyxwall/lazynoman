@@ -3,87 +3,84 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../../components/layout/BaseHead.astro';
 import Footer from '../../components/layout/Footer.astro';
 import Header from '../../components/layout/Header.astro';
-import PostCard from '../../components/blog/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getStats, getAllNovels } from '../../lib/parseNovels';
+import CategoryStats from '../../components/CategoryStats.astro';
+import CategoryView from '../../components/common/CategoryView';
+import PostCard from '../../components/blog/PostCard.astro';
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "../../components/ui/breadcrumb";
+const { category } = Astro.params;
 
-export const prerender = true;
+const validCategories = ['novel', 'anime', 'manga', 'movie', 'game'] as const;
+type ValidCategory = typeof validCategories[number];
 
-export async function getStaticPaths() {
-  const allPosts = await getCollection('post');
-  const filteredPosts = allPosts.filter((post) => import.meta.env.DEV || !post.data.draft);
-  const categories = [...new Set(filteredPosts.map(post => post.id.split('/')[0]))]
-    .filter(cat => cat !== 'novel');
-  
-  return categories.map(category => ({
-    params: { category },
-    props: { 
-      categoryName: category.charAt(0).toUpperCase() + category.slice(1),
-      posts: filteredPosts
-        .filter(post => post.id.startsWith(category + '/'))
-        .sort((a, b) => {
-          const aDate = a.data.updatedDate ?? a.data.pubDate;
-          const bDate = b.data.updatedDate ?? b.data.pubDate;
-          return bDate.valueOf() - aDate.valueOf();
-        })
-    }
-  }));
+if (!category || !validCategories.includes(category as ValidCategory)) {
+    return Astro.rewrite('/404');
 }
 
-const { categoryName, posts } = Astro.props;
+const db = Astro.locals.db;
+const statsData = await getStats(db);
+const categoryStats = statsData[category as ValidCategory];
+
+const categoryPosts = (await getCollection('post'))
+  .filter((p) => p.data.category === category)
+  .sort((a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf());
+
+const categoryItems = await getAllNovels(db, category);
+
+const unitLabels: Record<string, string> = {
+  novel: "Chapters",
+  manga: "Chapters",
+  anime: "Episodes",
+  movie: "Movies",
+  game: "Games"
+};
+
+const stats = {
+  completed: categoryStats.total_finished,
+  total: categoryStats.total_read,
+  units: categoryStats.total_chapters,
+  unitLabel: unitLabels[category] || "Units",
+  avgRating: categoryStats.avg_rating,
+  reviewCount: categoryPosts.length,
+};
+
+const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
+
+const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`${categoryName} | ${SITE_TITLE}`} description={`Browse all my ${categoryName.toLowerCase()} reviews and recommendations on LazyNoman. My honest takes and personal rankings.`} />
+		<BaseHead title={`${categoryName} | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
-		<main>
-            <Breadcrumb className="mb-8">
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>{categoryName}</BreadcrumbPage>
-                    </BreadcrumbItem>
-                </BreadcrumbList>
-            </Breadcrumb>
+		<main class="max-w-4xl mx-auto px-4 py-10">
+			<!-- Page header -->
+			<div class="mb-6">
+				<h1 class="text-3xl font-bold mb-1 uppercase tracking-tight">{categoryName}</h1>
+				<p class="text-neutral-500 dark:text-neutral-400">My {category === 'anime' ? 'watch' : 'reading'} history, stats, and honest reviews.</p>
+			</div>
 
-            <header class="mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}</h1>
-                <p class="text-lg text-muted-foreground">
-                    Explore my collection of {categoryName.toLowerCase()} reviews and thoughts.
-                </p>
-            </header>
-			
-			<section>
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{
-						posts.map((post) => (
-							<PostCard post={post} />
-						))
-					}
-				</div>
-                
-                {posts.length === 0 && (
-                    <div class="py-20 text-center">
-                        <p class="text-xl text-muted-foreground">No posts found in this category.</p>
-                        <a href="/" class="mt-4 inline-block text-primary font-bold hover:underline">&larr; Back to Home</a>
+			<!-- Stats banner -->
+			<CategoryStats {...stats} />
+
+			<!-- Category View (Tabs, Search, Grid/List) -->
+			<CategoryView 
+				client:load 
+				category={category} 
+				reviews={categoryPosts} 
+				items={categoryItems} 
+				statuses={statuses} 
+			>
+                {categoryPosts.map(post => (
+                    <div slot="reviewsSlot" data-search-title={post.data.title}>
+                        <PostCard post={post} />
                     </div>
-                )}
-			</section>
+                ))}
+            </CategoryView>
 		</main>
 		<Footer />
 	</body>
