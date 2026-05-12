@@ -3,8 +3,8 @@
   -webkit-text-size-adjust: 100%;
   margin: 0;
   color: var(--p-fg);
-  /* Inter is rated highest for screen readability and accessibility */
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Atkinson Hyperlegible is used for reading comfort */
+  font-family: var(--font-reading);
   /* Industry standard: 18px base for desktop, 16px for mobile */
   font-size: clamp(1rem, 0.4vw + 0.925rem, 1.125rem);
   line-height: 1.7;
