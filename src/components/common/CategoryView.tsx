@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import type { Novel } from '../../lib/parseNovels';
 import { NovelListView } from '../novel/NovelListView';
 import { NovelGridView } from '../novel/NovelGridView';
+import NovelCard from '../novel/NovelCard';
 import { Search, LayoutGrid, List as ListIcon } from 'lucide-react';
 
 interface CategoryViewProps {
@@ -16,6 +17,14 @@ export default function CategoryView({ category, reviews, items, statuses }: Cat
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
+  const getNovelForItem = (review: any): Novel | null => {
+    return items.find(item => {
+      const postId = review.id.toLowerCase();
+      const slug = item.slug.toLowerCase();
+      return postId.includes(slug) || slug.includes(postId.split('/').pop() || '');
+    }) || null;
+  };
 
   const getReviewInfo = (itemSlug: string) => {
     const review = reviews.find(r => {
@@ -132,36 +141,37 @@ export default function CategoryView({ category, reviews, items, statuses }: Cat
                 No reviews found matching your search.
               </div>
             ) : (
-              filteredReviews.map((post) => (
-                <a
-                  key={post.id}
-                  href={`/${post.id}/`}
-                  className="group rounded-xl border border-neutral-200 dark:border-neutral-700/50 overflow-hidden flex flex-col hover:border-primary/50 transition-colors bg-card shadow-sm"
-                >
-                  {post.data.heroImage && (
-                    <img
-                      src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src}
-                      alt={post.data.title}
-                      className="w-full h-40 object-cover"
-                      loading="lazy"
-                    />
-                  )}
-                  <div className="p-4 flex flex-col flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">{category}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(post.data.updatedDate ?? post.data.pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                      </span>
-                    </div>
-                    <p className="font-semibold text-sm leading-snug mb-1 group-hover:text-primary transition-colors">
-                      {post.data.title}
-                    </p>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mt-auto pt-2">
-                      {post.data.description}
-                    </p>
-                  </div>
-                </a>
-              ))
+              filteredReviews.map((post) => {
+                const novel = getNovelForItem(post);
+                const reviewProps = {
+                  hasReview: true,
+                  reviewCover: post.data.heroImage,
+                  reviewDescription: post.data.description,
+                  reviewPublishDate: post.data.pubDate?.toISOString(),
+                  reviewUpdateDate: post.data.updatedDate?.toISOString(),
+                  tags: post.data.tags,
+                };
+
+                if (novel) {
+                  return <NovelCard key={post.id} novel={novel} {...reviewProps} />;
+                }
+                
+                // Fallback for posts without a database entry
+                const mockNovel: Novel = {
+                  id: 0,
+                  name: post.data.title,
+                  slug: post.id.split('/').pop() || '',
+                  media_type: category,
+                  status: 'Reviewed',
+                  read_chapters: 0,
+                  total_chapters: 0,
+                  rating: post.data.rating || null,
+                  cover_url: typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage?.src || null,
+                  synopsis: post.data.description || null,
+                  author: null, origin: null, source_url: null, pages_left: null, start_date: null, end_date: null, review_slug: null, genres: [], tags: [], created_at: '', updated_at: ''
+                };
+                return <NovelCard key={post.id} novel={mockNovel} {...reviewProps} />;
+              })
             )}
           </div>
         )}
