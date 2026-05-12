@@ -1,0 +1,45 @@
+---
+export interface Props {
+  completed: number;
+  total: number;
+  units: number;
+  unitLabel: string; // "Chapters" | "Episodes" | "Volumes"
+  avgRating: number;
+  reviewCount: number;
+}
+
+const { completed, total, units, unitLabel, avgRating, reviewCount } = Astro.props;
+
+const stats = [
+  {
+    label: "Completed",
+    value: completed,
+    sub: `of ${total.toLocaleString()} tracked`,
+  },
+  {
+    label: unitLabel + " read",
+    value: units.toLocaleString(),
+    sub: "all time",
+  },
+  {
+    label: "Avg rating",
+    value: avgRating.toFixed(1),
+    sub: "across reviewed",
+  },
+  {
+    label: "Reviews",
+    value: reviewCount,
+    sub: "published",
+  },
+];
+---
+
+<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-8">
+  {stats.map((s) => (
+    <div class="rounded-lg bg-neutral-100 dark:bg-neutral-800/60 px-4 py-3 border border-neutral-200 dark:border-neutral-700/50">
+      <p class="text-xs text-neutral-500 dark:text-neutral-400 mb-1">{s.label}</p>
+      <p class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 leading-none">{s.value}</p>
+      <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1">{s.sub}</p>
+    </div>
+  ))}
+</div>

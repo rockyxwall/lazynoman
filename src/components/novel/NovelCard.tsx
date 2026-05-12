@@ -5,165 +5,261 @@ interface NovelCardProps {
   novel: Novel;
   hasReview?: boolean;
   reviewCover?: string | any;
+  // --- Review-specific props ---
+  reviewDescription?: string;
+  reviewPublishDate?: string;
+  reviewUpdateDate?: string;
+  tags?: string[];
 }
 
-export default function NovelCard({ novel, hasReview, reviewCover }: NovelCardProps) {
+export default function NovelCard({
+  novel,
+  hasReview,
+  reviewCover,
+  reviewDescription,
+  reviewPublishDate,
+  reviewUpdateDate,
+  tags,
+}: NovelCardProps) {
+
   const getProgress = (read: number, total: number) => {
-    if (!total || total === 0) return 0;
+    if (!total || total === 0) return null;
     return Math.min(Math.round((read / total) * 100), 100);
   };
 
-  const formatDate = (dateStr: string | null) => {
+  const formatDate = (dateStr: string | null | undefined) => {
     if (!dateStr) return null;
     const date = new Date(dateStr);
     if (isNaN(date.getTime())) return null;
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '.');
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+  };
+
+  const formatShortDate = (dateStr: string | null | undefined) => {
+    if (!dateStr) return null;
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return null;
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
   };
 
   const getInitials = (name: string) => {
-    // Filter out common stop words to get meaningful initials (e.g. Sovereign of the Stars -> SS)
     const stopWords = ['of', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'with', 'from', 'and'];
     const parts = name.split(/[^a-zA-Z0-9]+/).filter(w => w && !stopWords.includes(w.toLowerCase()));
-    
-    if (parts.length >= 2) {
-      return (parts[0][0] + parts[1][0]).toUpperCase();
-    }
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
     return name.substring(0, 2).toUpperCase();
   };
 
-  const progress = getProgress(novel.read_chapters, novel.total_chapters);
-  const displayCover = novel.cover_url || reviewCover;
-  const hasCover = !!displayCover;
-  const isNotStarted = novel.read_chapters === 0;
-  const hasExtendedMetadata = !!(novel.rating || novel.start_date);
+  const renderStars = (rating: number) => {
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5;
+    const empty = 10 - full - (half ? 1 : 0);
+    return (
+      <span className="inline-flex items-center gap-px text-primary">
+        {'★'.repeat(full)}
+        {half && <span className="opacity-50">★</span>}
+        <span className="text-primary/20">{'★'.repeat(empty)}</span>
+      </span>
+    );
+  };
 
-  // Body State logic
-  let bodyState: 'extended' | 'basic' | 'unread' = 'basic';
-  if (isNotStarted) {
-    bodyState = 'unread';
-  } else if (hasExtendedMetadata) {
-    bodyState = 'extended';
-  }
+  const progress       = getProgress(novel.read_chapters, novel.total_chapters);
+  const displayCover   = novel.cover_url || reviewCover;
+  const hasCover       = !!displayCover;
+  const isNotStarted   = novel.read_chapters === 0;
+  const mediaUnit      = novel.media_type === 'anime' ? 'ep' : 'ch';
 
   return (
-    <a
-      href={`/novel/${novel.slug}`}
-      className="novel-card group no-underline block h-full relative"
-    >
-      {/* --- EXTERNAL CORNER GLOW ACCENTS (CONCENTRIC BENDS) --- */}
-      <div className="absolute -top-1 -left-1 w-5 h-5 border-t-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tl-xl"></div>
-      <div className="absolute -top-1 -right-1 w-5 h-5 border-t-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-tr-xl"></div>
-      <div className="absolute -bottom-1 -left-1 w-5 h-5 border-b-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-bl-xl"></div>
-      <div className="absolute -bottom-1 -right-1 w-5 h-5 border-b-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 blur-[1px] rounded-br-xl"></div>
+    <div className="novel-card block h-full relative outline-none">
+      <div className="nv bg-card border border-border rounded-xl overflow-hidden flex flex-col h-full relative z-10">
 
-      <div className="nv bg-card border border-border rounded-xl p-4 flex flex-col h-full transition-all duration-300 hover:border-muted-foreground/50 hover:shadow-xl relative z-10 space-y-3">
-        {/* --- UNIVERSAL MINIMALIST COVER AREA --- */}
-        <div className="cover w-full aspect-video overflow-hidden shrink-0 relative rounded-lg border border-border/50 bg-muted/30">
+        {/* ── COVER ─────────────────────────────────────────── */}
+        <div className="cover w-full aspect-video overflow-hidden shrink-0 relative bg-muted/30">
           {hasCover ? (
             <img
               src={displayCover || ''}
               alt={novel.name}
-              className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover grayscale-[0.15] group-hover:grayscale-0 transition-all duration-500 group-hover:scale-[1.03]"
             />
           ) : (
-            <div className="cover-placeholder w-full h-full flex flex-col items-center justify-center gap-1 relative overflow-hidden">
-              <div className="cover-placeholder-init font-heading font-black text-6xl text-primary opacity-[0.15] select-none">
+            <div className="w-full h-full flex flex-col items-center justify-center gap-1 relative overflow-hidden">
+              <span className="font-heading font-black text-6xl text-primary opacity-[0.12] select-none">
                 {getInitials(novel.name)}
-              </div>
-              <div className="cover-placeholder-line font-mono text-[8px] tracking-[0.15em] text-muted-foreground uppercase opacity-70">
-                No cover available
-              </div>
+              </span>
+              <span className="font-mono text-[8px] tracking-[0.18em] text-muted-foreground uppercase opacity-50">
+                No cover
+              </span>
             </div>
           )}
+
+          {/* Status pill — overlaid bottom-left on cover */}
+          <div className="absolute bottom-2 left-2 flex gap-1.5 flex-wrap">
+            <span className="bg-primary text-primary-foreground font-mono text-[9px] font-bold tracking-widest px-2 py-0.5 rounded uppercase leading-none shadow-md">
+              {novel.status}
+            </span>
+            {hasReview && (
+              <span className="bg-card/90 text-foreground border border-border/80 backdrop-blur font-mono text-[9px] font-bold tracking-widest px-2 py-0.5 rounded uppercase leading-none shadow-md">
+                Review
+              </span>
+            )}
+          </div>
         </div>
 
-        {/* --- DATA-DRIVEN BODY --- */}
-        <div className={`body flex flex-col space-y-2 flex-1 ${bodyState === 'unread' ? 'justify-between' : ''}`}>
-          
-          {/* Header (All States) */}
-          <div className="space-y-2">
-            <div className="badges flex gap-2 flex-wrap items-center">
-              <span className="badge-solid bg-primary text-primary-foreground font-mono text-[10px] font-bold tracking-widest px-2 py-0.5 rounded uppercase leading-none">
-                {novel.status}
-              </span>
-              {hasReview && (
-                <span className="badge-review bg-secondary text-secondary-foreground border border-border font-mono text-[10px] font-bold tracking-widest px-2 py-0.5 rounded uppercase leading-none">
-                  Review
+        {/* ── BODY ──────────────────────────────────────────── */}
+        <div className="flex flex-col flex-1 p-4 space-y-3">
+
+          {/* Title */}
+          <div className="flex items-start justify-between gap-2">
+            <h2 className="font-heading font-bold text-xl leading-tight tracking-tight uppercase group-hover:text-primary transition-colors line-clamp-2">
+              {novel.name}
+            </h2>
+            {hasReview && (
+              <a 
+                href={`/${novel.slug}`}
+                className="shrink-0 flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all shadow-sm"
+                title="Read Review"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </a>
+            )}
+          </div>
+
+          {/* Tags */}
+          {tags && tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {tags.slice(0, 5).map(tag => (
+                <span
+                  key={tag}
+                  className="font-mono text-[9px] tracking-wider uppercase bg-muted/60 text-muted-foreground border border-border/60 px-2 py-0.5 rounded-full leading-none"
+                >
+                  {tag}
+                </span>
+              ))}
+              {tags.length > 5 && (
+                <span className="font-mono text-[9px] tracking-wider text-muted-foreground/60 px-1 leading-none self-center">
+                  +{tags.length - 5}
                 </span>
               )}
             </div>
+          )}
 
-            <h2 className={`title font-heading font-bold leading-tight tracking-tight group-hover:text-primary transition-colors uppercase ${bodyState === 'unread' ? 'text-2xl' : 'text-xl'}`}>
-              {novel.name}
-            </h2>
-          </div>
+          {/* ── READING STATS SECTION ── */}
+          {!isNotStarted ? (
+            <div className="rounded-lg border border-border/60 bg-muted/20 divide-y divide-border/40">
 
-          {/* Conditional Content */}
-          {bodyState === 'unread' ? (
-            /* State: Unread */
-            <p className="not-started font-mono text-[11px] tracking-widest text-muted-foreground uppercase">
-              Not started · 0 chapters read
-            </p>
+              {/* Progress bar row */}
+              <div className="px-3 py-2 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">Progress</span>
+                  {progress !== null && (
+                    <span className="font-mono text-[10px] font-bold text-primary">{progress}%</span>
+                  )}
+                </div>
+                
+                {progress !== null && (
+                  <div className="w-full h-1 bg-border/60 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-primary rounded-full transition-all duration-500"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[9px] text-muted-foreground/70">
+                    {novel.read_chapters.toLocaleString()} {mediaUnit} read
+                  </span>
+                  {novel.total_chapters > 0 && (
+                    <span className="font-mono text-[9px] text-muted-foreground/70">
+                      {novel.total_chapters.toLocaleString()} total
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Rating + Dates row */}
+              <div className="grid grid-cols-3 divide-x divide-border/40">
+                {/* Rating */}
+                {novel.rating ? (
+                  <div className="px-3 py-2 flex flex-col gap-1 items-center">
+                    <span className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/70">Rating</span>
+                    <span className="font-mono text-sm font-bold leading-none">{novel.rating}<span className="text-[9px] text-muted-foreground">/10</span></span>
+                    <span className="text-[7px] leading-none">{renderStars(novel.rating)}</span>
+                  </div>
+                ) : (
+                  <div className="px-3 py-2 flex flex-col gap-1 items-center justify-center">
+                    <span className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/40">Rating</span>
+                    <span className="font-mono text-[10px] text-muted-foreground/30">—</span>
+                  </div>
+                )}
+
+                {/* Start date */}
+                <div className="px-3 py-2 flex flex-col gap-1 items-center">
+                  <span className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/70">Started</span>
+                  <span className="font-mono text-[10px] font-bold leading-none text-center">
+                    {formatDate(novel.start_date) ?? <span className="text-muted-foreground/30">—</span>}
+                  </span>
+                </div>
+
+                {/* End date */}
+                <div className="px-3 py-2 flex flex-col gap-1 items-center">
+                  <span className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/70">Finished</span>
+                  <span className="font-mono text-[10px] font-bold leading-none text-center">
+                    {novel.end_date
+                      ? formatDate(novel.end_date)
+                      : <span className="text-primary/60 text-[8px] tracking-widest">Ongoing</span>
+                    }
+                  </span>
+                </div>
+              </div>
+            </div>
           ) : (
-            /* State: Tracker (Basic or Extended) */
-            <div className="flex-1 flex flex-col space-y-4">
-              {bodyState === 'extended' && (
-                <div className="metadata grid grid-cols-[auto_1px_auto_1px_1fr] gap-x-3 pt-3 border-t border-border mt-auto">
-                  {/* Column 1: Total Chapters */}
-                  <div className="flex flex-col items-center gap-1 py-1 min-w-8.75">
-                    <div className="font-mono text-[11px] font-bold leading-none">
-                      {novel.total_chapters ? novel.total_chapters.toLocaleString() : novel.read_chapters.toLocaleString()}
-                    </div>
-                    <div className="w-px h-2 bg-border/50 my-0.5"></div>
-                    <div className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/60 leading-none">Total</div>
-                  </div>
+            /* Not started state */
+            <p className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase">
+              Not started · 0 {mediaUnit} read
+            </p>
+          )}
 
-                  {/* Column 2: Separator */}
-                  <div className="w-px bg-border/50 self-stretch"></div>
+          {/* ── REVIEW SECTION ── */}
+          {hasReview && (reviewDescription || reviewPublishDate || reviewUpdateDate) && (
+            <div className="border-t border-border/50 pt-3 space-y-2 mt-auto">
 
-                  {/* Column 3: Dates (Start & End) */}
-                  <div className="flex flex-col items-center gap-1 py-1 min-w-13.75">
-                    <div className="font-mono text-[9px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
-                      {formatDate(novel.start_date) || 'XXXX.XX'}
-                    </div>
-                    <div className="w-px h-2 bg-border/50 my-0.5"></div>
-                    <div className="font-mono text-[9px] font-bold tracking-widest uppercase leading-none text-muted-foreground/80">
-                      {formatDate(novel.end_date) || 'PRESENT'}
-                    </div>
-                  </div>
+              {/* Review label */}
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-primary font-bold">My Review</span>
+                <div className="flex-1 h-px bg-primary/20" />
+              </div>
 
-                  {/* Column 4: Separator */}
-                  <div className="w-px bg-border/50 self-stretch"></div>
+              {/* Description excerpt */}
+              {reviewDescription && (
+                <p className="text-[12px] leading-relaxed text-muted-foreground line-clamp-3 font-sans">
+                  {reviewDescription}
+                </p>
+              )}
 
-                  {/* Column 5: Stats & Stars */}
-                  <div className="flex items-center gap-4 py-1 h-full overflow-hidden">
-                    {novel.rating && (
-                      <div className="flex flex-col items-start gap-1 min-w-17.5 flex-1">
-                        <div className="flex items-center gap-1.5 w-full">
-                          <div className="font-mono text-[11px] font-bold leading-none">{novel.rating}</div>
-                          <div className="flex text-[8px] text-primary/40 tracking-tighter shrink-0">
-                            {'★'.repeat(Math.floor(novel.rating))}
-                            {'☆'.repeat(10 - Math.floor(novel.rating))}
-                          </div>
-                        </div>
-                        <div className="w-full h-px bg-border/50 my-0.5"></div>
-                        <div className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/60 leading-none">Rating</div>
-                      </div>
-                    )}
-                    {progress > 0 && (
-                      <div className="flex flex-col items-center gap-1 py-1 min-w-8.75">
-                        <div className="font-mono text-[11px] font-bold leading-none">{progress}</div>
-                        <div className="w-px h-2 bg-border/50 my-0.5"></div>
-                        <div className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground/60 leading-none">Done</div>
-                      </div>
-                    )}
-                  </div>
+              {/* Publish / Update dates */}
+              {(reviewPublishDate || reviewUpdateDate) && (
+                <div className="flex items-center gap-3 pt-1">
+                  {reviewPublishDate && (
+                    <span className="font-mono text-[9px] text-muted-foreground/60 flex items-center gap-1">
+                      <svg className="w-2.5 h-2.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      Published {formatShortDate(reviewPublishDate)}
+                    </span>
+                  )}
+                  {reviewUpdateDate && (
+                    <span className="font-mono text-[9px] text-muted-foreground/60 flex items-center gap-1">
+                      <svg className="w-2.5 h-2.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      Updated {formatShortDate(reviewUpdateDate)}
+                    </span>
+                  )}
                 </div>
               )}
             </div>
           )}
         </div>
       </div>
-    </a>
+    </div>
   );
 }

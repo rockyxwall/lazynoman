@@ -24,10 +24,18 @@ export function NovelListView({ novels, getReviewInfo }: NovelListViewProps) {
             return (
               <tr key={novel.id} className="hover:bg-muted/30 transition-colors group">
                 <td className="px-4 py-3 flex items-center gap-3 max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">
-                  <a href={`/novel/${novel.slug}`} className="font-medium text-foreground group-hover:text-primary transition-colors truncate block">
+                  <span className="font-medium text-foreground truncate block">
                     {novel.name}
-                  </a>
-                  {hasReview && <span className="shrink-0 inline-flex w-1.5 h-1.5 rounded-full bg-primary" title="Has Review"></span>}
+                  </span>
+                  {hasReview && (
+                    <a 
+                      href={`/${novel.slug}`}
+                      className="shrink-0 inline-flex items-center justify-center w-5 h-5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors" 
+                      title="Read Review"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    </a>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-center font-medium text-muted-foreground">{novel.rating ? novel.rating : '-'}</td>
                 <td className="px-4 py-3 text-center text-muted-foreground">

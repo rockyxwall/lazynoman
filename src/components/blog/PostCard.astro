@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../common/FormattedDate.astro';
+import { getPostUrl } from '@/lib/utils';
 
 interface Props {
 	post: CollectionEntry<'post'>;
@@ -15,6 +16,7 @@ const getCategory = (postId: string) => {
 };
 
 const category = getCategory(post.id);
+const postUrl = getPostUrl(post.id);
 ---
 
 <article class="group relative flex flex-col space-y-3 p-4 rounded-xl border border-border bg-card hover:border-muted-foreground/50 hover:shadow-xl transition-all">
@@ -56,11 +58,11 @@ const category = getCategory(post.id);
 				</span>
 			</div>
 		</div>
-		<h3 class="text-xl font-bold group-hover:text-primary transition-colors leading-tight">
-			<a href={`/${post.id}/`} class="no-underline text-foreground block before:absolute before:inset-0">
-				{post.data.title}
-			</a>
-		</h3>
+        <h3 class="text-xl font-bold group-hover:text-primary transition-colors leading-tight line-clamp-2">
+            <a href={postUrl} class="no-underline text-foreground block before:absolute before:inset-0">
+                {post.data.title}
+            </a>
+        </h3>
 		<p class="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
 			{post.data.description}
 		</p>

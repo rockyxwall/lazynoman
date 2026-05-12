@@ -7,18 +7,14 @@ export const prerender = true;
 export async function getStaticPaths() {
 	const posts = await getCollection('post');
 	return posts
-		.filter((post) => (import.meta.env.DEV || !post.data.draft) && !post.id.startsWith('novel/'))
+		.filter((post) => import.meta.env.DEV || !post.data.draft)
 		.map((post) => ({
-			params: { slug: post.id },
+			params: { slug: post.id.replace(/\.[^/.]+$/, "") },
 			props: post,
 		}));
 }
 
 const { slug } = Astro.params;
-
-if (slug !== undefined && slug.endsWith('-review')) {
-  return Astro.redirect(`/${slug.replace(/-review$/, '')}`, 301);
-}
 
 if (slug !== undefined && (slug.startsWith('@') || slug.startsWith('_'))) {
   return new Response(null, { status: 404 });

@@ -12,9 +12,8 @@ export function NovelGridView({ novels, getReviewInfo }: NovelGridViewProps) {
       {novels.map(novel => {
         const { hasReview } = getReviewInfo(novel.slug);
         return (
-          <a 
+          <div 
             key={novel.id} 
-            href={`/novel/${novel.slug}`}
             className="group relative flex flex-col aspect-[1/1.4] rounded-md overflow-hidden bg-muted shadow-sm"
           >
             {/* Image */}
@@ -31,9 +30,15 @@ export function NovelGridView({ novels, getReviewInfo }: NovelGridViewProps) {
               </div>
             )}
 
-            {/* Review Badge */}
+            {/* Review Badge/Link */}
             {hasReview && (
-              <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary shadow-sm" title="Has Review"></div>
+              <a 
+                href={`/${novel.slug}`}
+                className="absolute top-2 right-2 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-md z-10 hover:scale-110 transition-transform"
+                title="Read Review"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </a>
             )}
 
             {/* Bottom Gradient Overlay */}
@@ -54,7 +59,7 @@ export function NovelGridView({ novels, getReviewInfo }: NovelGridViewProps) {
                 </div>
               </div>
             </div>
-          </a>
+          </div>
         );
       })}
     </div>

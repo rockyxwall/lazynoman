@@ -17,17 +17,12 @@ export const GET: APIRoute = async (context) => {
     urls.push(`${siteUrl.href}${cat}/`);
   });
 
-  // 3. Add all database novels
-  const novels = await getAllNovels(db);
-  novels.forEach((novel) => {
-    urls.push(`${siteUrl.href}novel/${novel.slug}/`);
-  });
-
-  // 4. Add all markdown posts (excluding drafted or 'novel/' paths which are now redirected)
+  // 3. Add all markdown posts (excluding drafted)
   const posts = await getCollection('post');
   posts.forEach((post) => {
-    if (!post.data.draft && !post.id.startsWith('novel/')) {
-      urls.push(`${siteUrl.href}${post.id}/`);
+    if (!post.data.draft) {
+      const slug = (post.id.split('/').pop()?.replace(/\.[^/.]+$/, "") || "");
+      urls.push(`${siteUrl.href}${slug}`);
     }
   });
 

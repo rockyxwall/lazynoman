@@ -20,9 +20,10 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
   --font-mono: 'Geist Mono', monospace;
-  --font-heading: 'Atkinson', sans-serif;
+  --font-heading: 'Geist', sans-serif;
+  --font-reading: 'Atkinson', sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
