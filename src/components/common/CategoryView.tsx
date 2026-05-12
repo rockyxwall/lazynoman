@@ -10,13 +10,45 @@ interface CategoryViewProps {
   reviews: any[];
   items: Novel[];
   statuses: string[];
+  reviewsSlot?: React.ReactNode;
 }
 
-export default function CategoryView({ category, reviews, items, statuses }: CategoryViewProps) {
+export default function CategoryView({ category, reviews, items, statuses, reviewsSlot }: CategoryViewProps) {
   const [activeTab, setActiveTab] = useState('Reviews');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
+  const reviewsRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (reviewsRef.current) {
+      const cards = reviewsRef.current.querySelectorAll('[data-search-title]');
+      let visibleCount = 0;
+      cards.forEach((card: any) => {
+        const title = card.getAttribute('data-search-title')?.toLowerCase() || '';
+        if (title.includes(searchQuery.toLowerCase())) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Handle "No reviews found" for slot
+      const noResultsMsg = reviewsRef.current.querySelector('.no-results-msg');
+      if (visibleCount === 0 && cards.length > 0) {
+        if (!noResultsMsg) {
+          const msg = document.createElement('div');
+          msg.className = 'no-results-msg col-span-full py-20 text-center text-muted-foreground';
+          msg.innerText = 'No reviews found matching your search.';
+          reviewsRef.current.appendChild(msg);
+        }
+      } else if (noResultsMsg) {
+        noResultsMsg.remove();
+      }
+    }
+  }, [searchQuery, activeTab]);
 
   const getNovelForItem = (review: any): Novel | null => {
     return items.find(item => {
@@ -135,43 +167,47 @@ export default function CategoryView({ category, reviews, items, statuses }: Cat
       {/* Content */}
       <div className="min-h-[400px]">
         {activeTab === 'Reviews' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {filteredReviews.length === 0 ? (
-              <div className="col-span-full py-20 text-center text-muted-foreground">
-                No reviews found matching your search.
-              </div>
+          <div ref={reviewsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {reviewsSlot ? (
+              reviewsSlot
             ) : (
-              filteredReviews.map((post) => {
-                const novel = getNovelForItem(post);
-                const reviewProps = {
-                  hasReview: true,
-                  reviewCover: post.data.heroImage,
-                  reviewDescription: post.data.description,
-                  reviewPublishDate: post.data.pubDate?.toISOString(),
-                  reviewUpdateDate: post.data.updatedDate?.toISOString(),
-                  tags: post.data.tags,
-                };
+              filteredReviews.length === 0 ? (
+                <div className="col-span-full py-20 text-center text-muted-foreground">
+                  No reviews found matching your search.
+                </div>
+              ) : (
+                filteredReviews.map((post) => {
+                  const novel = getNovelForItem(post);
+                  const reviewProps = {
+                    hasReview: true,
+                    reviewCover: post.data.heroImage,
+                    reviewDescription: post.data.description,
+                    reviewPublishDate: post.data.pubDate?.toISOString(),
+                    reviewUpdateDate: post.data.updatedDate?.toISOString(),
+                    tags: post.data.tags,
+                  };
 
-                if (novel) {
-                  return <NovelCard key={post.id} novel={novel} {...reviewProps} />;
-                }
-                
-                // Fallback for posts without a database entry
-                const mockNovel: Novel = {
-                  id: 0,
-                  name: post.data.title,
-                  slug: post.id.split('/').pop() || '',
-                  media_type: category,
-                  status: 'Reviewed',
-                  read_chapters: 0,
-                  total_chapters: 0,
-                  rating: post.data.rating || null,
-                  cover_url: typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage?.src || null,
-                  synopsis: post.data.description || null,
-                  author: null, origin: null, source_url: null, pages_left: null, start_date: null, end_date: null, review_slug: null, genres: [], tags: [], created_at: '', updated_at: ''
-                };
-                return <NovelCard key={post.id} novel={mockNovel} {...reviewProps} />;
-              })
+                  if (novel) {
+                    return <NovelCard key={post.id} novel={novel} {...reviewProps} />;
+                  }
+                  
+                  // Fallback for posts without a database entry
+                  const mockNovel: Novel = {
+                    id: 0,
+                    name: post.data.title,
+                    slug: post.id.split('/').pop() || '',
+                    media_type: category,
+                    status: 'Reviewed',
+                    read_chapters: 0,
+                    total_chapters: 0,
+                    rating: post.data.rating || null,
+                    cover_url: typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage?.src || null,
+                    synopsis: post.data.description || null,
+                    author: null, origin: null, source_url: null, pages_left: null, start_date: null, end_date: null, review_slug: null, genres: [], tags: [], created_at: '', updated_at: ''
+                  };
+                  return <NovelCard key={post.id} novel={mockNovel} {...reviewProps} />;
+                })
+              )
             )}
           </div>
         )}

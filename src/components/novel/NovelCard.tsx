@@ -67,10 +67,13 @@ export default function NovelCard({
   const isNotStarted   = novel.read_chapters === 0;
   const mediaUnit      = novel.media_type === 'anime' ? 'ep' : 'ch';
 
+  const CardWrapper = hasReview ? 'a' : 'div';
+  const wrapperProps = hasReview ? { href: `/${novel.media_type || 'novel'}/${novel.slug}` } : {};
+
   return (
-    <a
-      href={`/${novel.media_type || 'novel'}/${novel.slug}`}
-      className="novel-card group no-underline block h-full relative outline-none focus-visible:ring-2 focus-visible:ring-primary"
+    <CardWrapper
+      {...wrapperProps}
+      className={`novel-card group block h-full relative outline-none focus-visible:ring-2 focus-visible:ring-primary ${hasReview ? 'cursor-pointer' : 'cursor-default'}`}
     >
       {/* Corner accent lines */}
       {['tl','tr','bl','br'].map(pos => (
@@ -267,6 +270,6 @@ export default function NovelCard({
           )}
         </div>
       </div>
-    </a>
+    </CardWrapper>
   );
 }

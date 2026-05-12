@@ -7,6 +7,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { getStats, getAllNovels } from '../../lib/parseNovels';
 import CategoryStats from '../../components/CategoryStats.astro';
 import CategoryView from '../../components/common/CategoryView';
+import PostCard from '../../components/blog/PostCard.astro';
 
 const db = Astro.locals.db;
 const statsData = await getStats(db);
@@ -54,7 +55,13 @@ const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 				reviews={novelPosts} 
 				items={novelItems} 
 				statuses={statuses} 
-			/>
+			>
+                {novelPosts.map(post => (
+                    <div slot="reviewsSlot" data-search-title={post.data.title}>
+                        <PostCard post={post} />
+                    </div>
+                ))}
+            </CategoryView>
 		</main>
 		<Footer />
 	</body>
