@@ -52,9 +52,9 @@ export interface Stats {
 }
 
 
-export async function getAllNovels(db: Client = defaultDb): Promise<Novel[]> {
+export async function getAllNovels(db: Client = defaultDb, mediaType?: string): Promise<Novel[]> {
   try {
-    const result = await db.execute(`
+    let sql = `
       SELECT n.*, 
              GROUP_CONCAT(DISTINCT g.name) as genre_list,
              GROUP_CONCAT(DISTINCT t.name) as tag_list
@@ -63,9 +63,15 @@ export async function getAllNovels(db: Client = defaultDb): Promise<Novel[]> {
       LEFT JOIN genres g ON ng.genre_id = g.id
       LEFT JOIN novel_tags nt ON n.id = nt.novel_id
       LEFT JOIN tags t ON nt.tag_id = t.id
-      GROUP BY n.id
-      ORDER BY n.updated_at DESC
-    `);
+    `;
+    const args: any[] = [];
+    if (mediaType) {
+      sql += ` WHERE n.media_type = ? `;
+      args.push(mediaType);
+    }
+    sql += ` GROUP BY n.id ORDER BY n.updated_at DESC `;
+
+    const result = await db.execute({ sql, args });
 
     return result.rows.map(row => mapRowToNovel(row));
   } catch (e) {

@@ -1,0 +1,203 @@
+import React, { useState, useMemo } from 'react';
+import type { Novel } from '../../lib/parseNovels';
+import { NovelListView } from '../novel/NovelListView';
+import { NovelGridView } from '../novel/NovelGridView';
+import { Search, LayoutGrid, List as ListIcon } from 'lucide-react';
+
+interface CategoryViewProps {
+  category: string;
+  reviews: any[];
+  items: Novel[];
+  statuses: string[];
+}
+
+export default function CategoryView({ category, reviews, items, statuses }: CategoryViewProps) {
+  const [activeTab, setActiveTab] = useState('Reviews');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
+  const getReviewInfo = (itemSlug: string) => {
+    const review = reviews.find(r => {
+      const postId = r.id.toLowerCase();
+      const slug = itemSlug.toLowerCase();
+      return postId.includes(slug) || slug.includes(postId.split('/').pop() || '');
+    });
+    return {
+      hasReview: !!review,
+      reviewCover: review?.data?.heroImage
+    };
+  };
+
+  const filteredItems = useMemo(() => {
+    return items.filter(item => {
+      const searchMatch = !searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const statusMatch = !selectedStatus || item.status === selectedStatus;
+      return searchMatch && statusMatch;
+    });
+  }, [items, searchQuery, selectedStatus]);
+
+  const rankedItems = useMemo(() => {
+    return [...items]
+      .filter(item => item.rating !== null)
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  }, [items]);
+
+  const filteredReviews = useMemo(() => {
+    return reviews.filter(post => 
+      !searchQuery || post.data.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [reviews, searchQuery]);
+
+  return (
+    <div className="space-y-6">
+      {/* Tab bar */}
+      <div className="flex border-b border-neutral-200 dark:border-neutral-700 mb-8 gap-1">
+        {["Reviews", "Reading list", "Rankings"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 text-sm -mb-px transition-colors ${
+              activeTab === tab
+                ? "border-b-2 border-primary font-medium text-foreground"
+                : "text-muted-foreground border-b-2 border-transparent hover:text-foreground"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Controls */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder={`Search ${activeTab.toLowerCase()}...`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-card border border-border/50 rounded-lg py-2 pl-9 pr-3 outline-none focus:ring-1 focus:ring-primary text-sm"
+          />
+        </div>
+
+        {activeTab === 'Reading list' && (
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedStatus(null)}
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                selectedStatus === null ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              }`}
+            >
+              All
+            </button>
+            {statuses.map(status => (
+              <button
+                key={status}
+                onClick={() => setSelectedStatus(status)}
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                  selectedStatus === status ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {(activeTab === 'Reading list' || activeTab === 'Rankings') && (
+          <div className="flex gap-2">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+            >
+              <ListIcon className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+            >
+              <LayoutGrid className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="min-h-[400px]">
+        {activeTab === 'Reviews' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {filteredReviews.length === 0 ? (
+              <div className="col-span-full py-20 text-center text-muted-foreground">
+                No reviews found matching your search.
+              </div>
+            ) : (
+              filteredReviews.map((post) => (
+                <a
+                  key={post.id}
+                  href={`/${post.id}/`}
+                  className="group rounded-xl border border-neutral-200 dark:border-neutral-700/50 overflow-hidden flex flex-col hover:border-primary/50 transition-colors bg-card shadow-sm"
+                >
+                  {post.data.heroImage && (
+                    <img
+                      src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src}
+                      alt={post.data.title}
+                      className="w-full h-40 object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                  <div className="p-4 flex flex-col flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">{category}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(post.data.updatedDate ?? post.data.pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                      </span>
+                    </div>
+                    <p className="font-semibold text-sm leading-snug mb-1 group-hover:text-primary transition-colors">
+                      {post.data.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground line-clamp-2 mt-auto pt-2">
+                      {post.data.description}
+                    </p>
+                  </div>
+                </a>
+              ))
+            )}
+          </div>
+        )}
+
+        {activeTab === 'Reading list' && (
+          <div className="space-y-6">
+            {filteredItems.length === 0 ? (
+              <div className="py-20 text-center text-muted-foreground">
+                No items found matching your filters.
+              </div>
+            ) : (
+              viewMode === 'list' ? (
+                <NovelListView novels={filteredItems} getReviewInfo={getReviewInfo} />
+              ) : (
+                <NovelGridView novels={filteredItems} getReviewInfo={getReviewInfo} />
+              )
+            )}
+          </div>
+        )}
+
+        {activeTab === 'Rankings' && (
+          <div className="space-y-6">
+            {rankedItems.length === 0 ? (
+              <div className="py-20 text-center text-muted-foreground">
+                No items with ratings found.
+              </div>
+            ) : (
+              viewMode === 'list' ? (
+                <NovelListView novels={rankedItems} getReviewInfo={getReviewInfo} />
+              ) : (
+                <NovelGridView novels={rankedItems} getReviewInfo={getReviewInfo} />
+              )
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
