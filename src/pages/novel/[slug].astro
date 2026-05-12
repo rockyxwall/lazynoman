@@ -3,17 +3,14 @@ import { getCollection, render } from 'astro:content';
 import { getNovelBySlug } from '../../lib/parseNovels';
 import PostLayout from '../../layouts/PostLayout.astro';
 
-const { slug } = Astro.params;
+const { slug: rawSlug } = Astro.params;
 const db = Astro.locals.db;
 
-if (!slug) {
+if (!rawSlug) {
 	return Astro.rewrite('/404');
 }
 
-// Redirect old Google indexed review URLs to the novel's canonical URL
-if (slug.endsWith('-review')) {
-	return Astro.redirect(`/novel/${slug.replace(/-review$/, '')}`, 301);
-}
+const slug = rawSlug.endsWith('-review') ? rawSlug.replace(/-review$/, '') : rawSlug;
 
 const novel = await getNovelBySlug(slug, db);
 

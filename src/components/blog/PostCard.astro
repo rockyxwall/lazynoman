@@ -56,11 +56,11 @@ const category = getCategory(post.id);
 				</span>
 			</div>
 		</div>
-		<h3 class="text-xl font-bold group-hover:text-primary transition-colors leading-tight">
-			<a href={`/${post.id.replace(/\.[^/.]+$/, "")}/`} class="no-underline text-foreground block before:absolute before:inset-0">
-				{post.data.title}
-			</a>
-		</h3>
+        <h3 class="text-xl font-bold group-hover:text-primary transition-colors leading-tight">
+            <a href={`/${post.id.split('/').pop()?.replace(/\.[^/.]+$/, "")}`} class="no-underline text-foreground block before:absolute before:inset-0">
+                {post.id.split('/').pop()?.replace(/\.[^/.]+$/, "").replace(/-/g, ' ')}
+            </a>
+        </h3>
 		<p class="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
 			{post.data.description}
 		</p>

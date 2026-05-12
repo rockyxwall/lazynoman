@@ -67,30 +67,9 @@ export default function NovelCard({
   const isNotStarted   = novel.read_chapters === 0;
   const mediaUnit      = novel.media_type === 'anime' ? 'ep' : 'ch';
 
-  const CardWrapper = hasReview ? 'a' : 'div';
-  const wrapperProps = hasReview ? { href: `/${novel.media_type || 'novel'}/${novel.slug}` } : {};
-
   return (
-    <CardWrapper
-      {...wrapperProps}
-      className={`novel-card group block h-full relative outline-none focus-visible:ring-2 focus-visible:ring-primary ${hasReview ? 'cursor-pointer' : 'cursor-default'}`}
-    >
-      {/* Corner accent lines */}
-      {['tl','tr','bl','br'].map(pos => (
-        <div
-          key={pos}
-          className={`
-            absolute w-5 h-5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-0 rounded-${pos === 'tl' ? 'tl' : pos === 'tr' ? 'tr' : pos === 'bl' ? 'bl' : 'br'}-xl
-            ${pos === 'tl' ? '-top-1 -left-1 border-t-2 border-l-2' : ''}
-            ${pos === 'tr' ? '-top-1 -right-1 border-t-2 border-r-2' : ''}
-            ${pos === 'bl' ? '-bottom-1 -left-1 border-b-2 border-l-2' : ''}
-            ${pos === 'br' ? '-bottom-1 -right-1 border-b-2 border-r-2' : ''}
-            border-primary blur-[1px]
-          `}
-        />
-      ))}
-
-      <div className="nv bg-card border border-border rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-muted-foreground/50 hover:shadow-xl relative z-10">
+    <div className="novel-card block h-full relative outline-none">
+      <div className="nv bg-card border border-border rounded-xl overflow-hidden flex flex-col h-full relative z-10">
 
         {/* ── COVER ─────────────────────────────────────────── */}
         <div className="cover w-full aspect-video overflow-hidden shrink-0 relative bg-muted/30">
@@ -128,9 +107,20 @@ export default function NovelCard({
         <div className="flex flex-col flex-1 p-4 space-y-3">
 
           {/* Title */}
-          <h2 className="font-heading font-bold text-xl leading-tight tracking-tight uppercase group-hover:text-primary transition-colors line-clamp-2">
-            {novel.name}
-          </h2>
+          <div className="flex items-start justify-between gap-2">
+            <h2 className="font-heading font-bold text-xl leading-tight tracking-tight uppercase group-hover:text-primary transition-colors line-clamp-2">
+              {novel.name}
+            </h2>
+            {hasReview && (
+              <a 
+                href={`/${novel.slug}`}
+                className="shrink-0 flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all shadow-sm"
+                title="Read Review"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </a>
+            )}
+          </div>
 
           {/* Tags */}
           {tags && tags.length > 0 && (
@@ -270,6 +260,6 @@ export default function NovelCard({
           )}
         </div>
       </div>
-    </CardWrapper>
+    </div>
   );
 }
