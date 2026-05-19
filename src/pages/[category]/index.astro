@@ -8,6 +8,7 @@ import { getStats, getAllNovels } from '../../lib/parseNovels';
 import CategoryStats from '../../components/CategoryStats.astro';
 import CategoryView from '../../components/common/CategoryView';
 import PostCard from '../../components/blog/PostCard.astro';
+import anilistData from '../../data/anilist.json';
 
 const { category } = Astro.params;
 
@@ -48,6 +49,15 @@ const stats = {
 const statuses = ['Reading', 'Finished', 'Paused', 'Dropped', 'Plan to Read'];
 
 const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+
+// Calculate "Time Wasted"
+let timeWasted = "";
+if (category === 'anime' || category === 'movie') {
+    const days = (anilistData.anime.minutesWatched / 1440).toFixed(1);
+    timeWasted = `${days} days`;
+} else if (category === 'manga') {
+    timeWasted = `${anilistData.manga.chaptersRead.toLocaleString()} chapters`;
+}
 ---
 
 <!doctype html>
@@ -67,6 +77,16 @@ const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
 			<!-- Stats banner -->
 			<CategoryStats {...stats} />
 
+            {timeWasted && (
+                <div class="my-8 bg-muted/30 border border-border/50 rounded-2xl p-8 text-center space-y-2">
+                    <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground font-medium">You have spent</p>
+                    <p class="text-4xl md:text-5xl font-black text-primary tracking-tight">{timeWasted}</p>
+                    <p class="text-xs text-muted-foreground font-medium italic">
+                        {category === 'anime' || category === 'movie' ? "watching anime — time you'll never get back." : "reading manga — a lifetime of pages."}
+                    </p>
+                </div>
+            )}
+
 			<!-- Category View (Tabs, Search, Grid/List) -->
 			<CategoryView 
 				client:load 
@@ -74,6 +94,7 @@ const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
 				reviews={categoryPosts} 
 				items={categoryItems} 
 				statuses={statuses} 
+                anilistStats={(anilistData as any)[category === 'movie' ? 'anime' : (category || '')]}
 			>
                 {categoryPosts.map(post => (
                     <div slot="reviewsSlot" data-search-title={post.data.title}>

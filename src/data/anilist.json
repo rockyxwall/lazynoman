@@ -1,0 +1,540 @@
+{
+  "lastUpdated": "2026-05-19T16:36:55.908Z",
+  "username": "rockyxwall",
+  "anime": {
+    "count": 380,
+    "episodesWatched": 6675,
+    "minutesWatched": 157844,
+    "meanScore": 64.88,
+    "scores": [
+      {
+        "score": 7,
+        "count": 55
+      },
+      {
+        "score": 6,
+        "count": 40
+      },
+      {
+        "score": 8,
+        "count": 35
+      },
+      {
+        "score": 4,
+        "count": 32
+      },
+      {
+        "score": 9,
+        "count": 29
+      },
+      {
+        "score": 10,
+        "count": 29
+      },
+      {
+        "score": 5,
+        "count": 15
+      },
+      {
+        "score": 3,
+        "count": 14
+      },
+      {
+        "score": 2,
+        "count": 14
+      },
+      {
+        "score": 1,
+        "count": 6
+      }
+    ],
+    "statuses": [
+      {
+        "status": "COMPLETED",
+        "count": 288
+      },
+      {
+        "status": "PLANNING",
+        "count": 150
+      },
+      {
+        "status": "DROPPED",
+        "count": 78
+      },
+      {
+        "status": "CURRENT",
+        "count": 13
+      }
+    ],
+    "genres": [
+      {
+        "genre": "Comedy",
+        "count": 223
+      },
+      {
+        "genre": "Action",
+        "count": 165
+      },
+      {
+        "genre": "Fantasy",
+        "count": 187
+      },
+      {
+        "genre": "Adventure",
+        "count": 131
+      },
+      {
+        "genre": "Drama",
+        "count": 76
+      },
+      {
+        "genre": "Supernatural",
+        "count": 62
+      },
+      {
+        "genre": "Romance",
+        "count": 160
+      },
+      {
+        "genre": "Slice of Life",
+        "count": 99
+      },
+      {
+        "genre": "Ecchi",
+        "count": 72
+      },
+      {
+        "genre": "Sci-Fi",
+        "count": 28
+      },
+      {
+        "genre": "Psychological",
+        "count": 23
+      },
+      {
+        "genre": "Mystery",
+        "count": 19
+      },
+      {
+        "genre": "Thriller",
+        "count": 5
+      },
+      {
+        "genre": "Horror",
+        "count": 5
+      },
+      {
+        "genre": "Hentai",
+        "count": 20
+      },
+      {
+        "genre": "Mecha",
+        "count": 7
+      },
+      {
+        "genre": "Sports",
+        "count": 3
+      }
+    ],
+    "formats": [
+      {
+        "format": "TV",
+        "count": 265
+      },
+      {
+        "format": "MOVIE",
+        "count": 48
+      },
+      {
+        "format": "OVA",
+        "count": 31
+      },
+      {
+        "format": "ONA",
+        "count": 24
+      },
+      {
+        "format": "TV_SHORT",
+        "count": 11
+      }
+    ],
+    "releaseYears": [
+      {
+        "releaseYear": 2022,
+        "count": 50
+      },
+      {
+        "releaseYear": 2021,
+        "count": 41
+      },
+      {
+        "releaseYear": 2023,
+        "count": 40
+      },
+      {
+        "releaseYear": 2019,
+        "count": 30
+      },
+      {
+        "releaseYear": 2014,
+        "count": 28
+      },
+      {
+        "releaseYear": 2020,
+        "count": 25
+      },
+      {
+        "releaseYear": 2015,
+        "count": 22
+      },
+      {
+        "releaseYear": 2016,
+        "count": 20
+      },
+      {
+        "releaseYear": 2017,
+        "count": 17
+      },
+      {
+        "releaseYear": 2018,
+        "count": 17
+      },
+      {
+        "releaseYear": 2013,
+        "count": 12
+      },
+      {
+        "releaseYear": 2012,
+        "count": 9
+      },
+      {
+        "releaseYear": 2024,
+        "count": 9
+      },
+      {
+        "releaseYear": 2010,
+        "count": 8
+      },
+      {
+        "releaseYear": 2009,
+        "count": 5
+      },
+      {
+        "releaseYear": 2008,
+        "count": 5
+      },
+      {
+        "releaseYear": 2011,
+        "count": 5
+      },
+      {
+        "releaseYear": 2006,
+        "count": 4
+      },
+      {
+        "releaseYear": 2002,
+        "count": 3
+      },
+      {
+        "releaseYear": 1999,
+        "count": 3
+      },
+      {
+        "releaseYear": 2001,
+        "count": 3
+      },
+      {
+        "releaseYear": 2007,
+        "count": 2
+      },
+      {
+        "releaseYear": 1992,
+        "count": 2
+      },
+      {
+        "releaseYear": 1988,
+        "count": 1
+      },
+      {
+        "releaseYear": 2003,
+        "count": 1
+      },
+      {
+        "releaseYear": 1998,
+        "count": 1
+      },
+      {
+        "releaseYear": 1997,
+        "count": 1
+      },
+      {
+        "releaseYear": 1996,
+        "count": 1
+      },
+      {
+        "releaseYear": 1995,
+        "count": 1
+      },
+      {
+        "releaseYear": 1994,
+        "count": 1
+      },
+      {
+        "releaseYear": 1993,
+        "count": 1
+      },
+      {
+        "releaseYear": 1983,
+        "count": 1
+      },
+      {
+        "releaseYear": 1987,
+        "count": 1
+      },
+      {
+        "releaseYear": 1985,
+        "count": 1
+      },
+      {
+        "releaseYear": 1982,
+        "count": 1
+      },
+      {
+        "releaseYear": 1980,
+        "count": 1
+      },
+      {
+        "releaseYear": 1981,
+        "count": 1
+      },
+      {
+        "releaseYear": 1991,
+        "count": 1
+      },
+      {
+        "releaseYear": 1990,
+        "count": 1
+      },
+      {
+        "releaseYear": 2004,
+        "count": 1
+      },
+      {
+        "releaseYear": 1986,
+        "count": 1
+      },
+      {
+        "releaseYear": 1989,
+        "count": 1
+      },
+      {
+        "releaseYear": 2025,
+        "count": 1
+      }
+    ]
+  },
+  "manga": {
+    "count": 350,
+    "chaptersRead": 14653,
+    "volumesRead": 134,
+    "meanScore": 70,
+    "scores": [
+      {
+        "score": 7,
+        "count": 23
+      },
+      {
+        "score": 8,
+        "count": 19
+      },
+      {
+        "score": 6,
+        "count": 8
+      },
+      {
+        "score": 9,
+        "count": 7
+      },
+      {
+        "score": 5,
+        "count": 6
+      },
+      {
+        "score": 4,
+        "count": 4
+      },
+      {
+        "score": 10,
+        "count": 3
+      },
+      {
+        "score": 1,
+        "count": 1
+      },
+      {
+        "score": 2,
+        "count": 1
+      }
+    ],
+    "statuses": [
+      {
+        "status": "DROPPED",
+        "count": 242
+      },
+      {
+        "status": "PLANNING",
+        "count": 177
+      },
+      {
+        "status": "CURRENT",
+        "count": 56
+      },
+      {
+        "status": "COMPLETED",
+        "count": 31
+      },
+      {
+        "status": "PAUSED",
+        "count": 19
+      }
+    ],
+    "genres": [
+      {
+        "genre": "Fantasy",
+        "count": 249
+      },
+      {
+        "genre": "Action",
+        "count": 230
+      },
+      {
+        "genre": "Adventure",
+        "count": 153
+      },
+      {
+        "genre": "Comedy",
+        "count": 91
+      },
+      {
+        "genre": "Drama",
+        "count": 111
+      },
+      {
+        "genre": "Romance",
+        "count": 98
+      },
+      {
+        "genre": "Hentai",
+        "count": 84
+      },
+      {
+        "genre": "Supernatural",
+        "count": 36
+      },
+      {
+        "genre": "Ecchi",
+        "count": 31
+      },
+      {
+        "genre": "Slice of Life",
+        "count": 23
+      },
+      {
+        "genre": "Sci-Fi",
+        "count": 9
+      },
+      {
+        "genre": "Psychological",
+        "count": 3
+      },
+      {
+        "genre": "Sports",
+        "count": 2
+      },
+      {
+        "genre": "Thriller",
+        "count": 2
+      },
+      {
+        "genre": "Horror",
+        "count": 1
+      },
+      {
+        "genre": "Mystery",
+        "count": 1
+      }
+    ],
+    "formats": [
+      {
+        "format": "MANGA",
+        "count": 347
+      }
+    ],
+    "releaseYears": [
+      {
+        "releaseYear": 2022,
+        "count": 70
+      },
+      {
+        "releaseYear": 2021,
+        "count": 69
+      },
+      {
+        "releaseYear": 2020,
+        "count": 57
+      },
+      {
+        "releaseYear": 2023,
+        "count": 48
+      },
+      {
+        "releaseYear": 2019,
+        "count": 30
+      },
+      {
+        "releaseYear": 2018,
+        "count": 18
+      },
+      {
+        "releaseYear": 2017,
+        "count": 17
+      },
+      {
+        "releaseYear": 2024,
+        "count": 11
+      },
+      {
+        "releaseYear": 2016,
+        "count": 10
+      },
+      {
+        "releaseYear": 2015,
+        "count": 9
+      },
+      {
+        "releaseYear": 2013,
+        "count": 4
+      },
+      {
+        "releaseYear": 2007,
+        "count": 1
+      },
+      {
+        "releaseYear": 2012,
+        "count": 1
+      },
+      {
+        "releaseYear": 2014,
+        "count": 1
+      },
+      {
+        "releaseYear": 2009,
+        "count": 1
+      },
+      {
+        "releaseYear": 2025,
+        "count": 1
+      }
+    ]
+  }
+}

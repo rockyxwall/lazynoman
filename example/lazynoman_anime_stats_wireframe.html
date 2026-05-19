@@ -1,0 +1,310 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);}
+.wf{padding:1rem 0;max-width:680px;}
+.anno{font-size:11px;color:var(--color-text-secondary);font-style:italic;margin-top:4px;line-height:1.4;}
+.label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.section-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.box{background:var(--color-background-secondary);border:1px dashed var(--color-border-secondary);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--color-text-tertiary);font-size:12px;text-align:center;padding:8px;}
+.row{display:grid;gap:8px;margin-bottom:8px;}
+.r1{grid-template-columns:1fr;}
+.r2{grid-template-columns:1fr 1fr;}
+.r3{grid-template-columns:1fr 1fr 1fr;}
+.r4{grid-template-columns:repeat(4,1fr);}
+.sep{border-top:1px solid var(--color-border-tertiary);margin:16px 0;padding-top:16px;}
+.badge{display:inline-block;background:var(--color-background-secondary);border:1px dashed var(--color-border-secondary);border-radius:4px;font-size:11px;padding:3px 8px;margin-right:4px;margin-bottom:4px;color:var(--color-text-secondary);}
+.tag-new{background:#E6F1FB;color:#0C447C;font-size:10px;padding:2px 6px;border-radius:3px;font-weight:500;margin-left:6px;border:none;}
+.section-block{margin-bottom:20px;}
+.nav-mock{display:flex;gap:0;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:12px;}
+.nav-tab{font-size:12px;padding:6px 14px;border-bottom:2px solid transparent;color:var(--color-text-secondary);}
+.nav-tab.active{border-bottom:2px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500;}
+.callout{background:var(--color-background-secondary);border-left:3px solid #7F77DD;padding:8px 12px;border-radius:0 4px 4px 0;margin-top:6px;}
+.callout p{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
+.page-section{border:1px solid var(--color-border-tertiary);border-radius:8px;padding:12px;margin-bottom:12px;}
+.ps-header{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.hint{display:inline-block;background:#EEEDFE;color:#3C3489;font-size:10px;padding:2px 6px;border-radius:3px;font-weight:500;}
+.hint-warn{background:#FAEEDA;color:#633806;}
+.hint-green{background:#EAF3DE;color:#27500A;}
+.arrow-note{display:flex;align-items:flex-start;gap:6px;margin-top:4px;}
+.arrow-note::before{content:"→";color:#7F77DD;font-size:12px;flex-shrink:0;margin-top:1px;}
+.arrow-note p{font-size:11px;color:var(--color-text-secondary);line-height:1.4;}
+</style>
+
+<div class="wf">
+<h2 class="sr-only">LazyNoman anime stats page wireframe with annotations</h2>
+
+<div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--color-border-tertiary);">
+  Wireframe — <code style="font-size:11px;">/anime</code> page · also applies to <code style="font-size:11px;">/manga</code> and <code style="font-size:11px;">/movie</code>
+</div>
+
+<div class="page-section">
+  <div class="ps-header">① page header <span class="hint">keep existing</span></div>
+  <div class="row r1" style="margin-bottom:6px;">
+    <div class="box" style="height:48px;">Top nav — Home · Novel · Manga · Anime · Movie · Games</div>
+  </div>
+  <div class="row r1">
+    <div class="box" style="height:64px;flex-direction:column;gap:4px;">
+      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary);">Anime</span>
+      <span style="font-size:11px;">My watch history, stats, and honest reviews.</span>
+    </div>
+  </div>
+  <div class="anno">Already exists. Keep as-is.</div>
+</div>
+
+<div class="page-section">
+  <div class="ps-header">② summary metric cards <span class="hint">keep existing</span></div>
+  <div class="row r4" style="margin-bottom:6px;">
+    <div class="box" style="height:56px;flex-direction:column;gap:2px;">
+      <span style="font-size:11px;color:var(--color-text-secondary);">Completed</span>
+      <span style="font-size:16px;font-weight:500;">142 / 310</span>
+    </div>
+    <div class="box" style="height:56px;flex-direction:column;gap:2px;">
+      <span style="font-size:11px;color:var(--color-text-secondary);">Episodes</span>
+      <span style="font-size:16px;font-weight:500;">4,821</span>
+    </div>
+    <div class="box" style="height:56px;flex-direction:column;gap:2px;">
+      <span style="font-size:11px;color:var(--color-text-secondary);">Avg rating</span>
+      <span style="font-size:16px;font-weight:500;">7.4</span>
+    </div>
+    <div class="box" style="height:56px;flex-direction:column;gap:2px;">
+      <span style="font-size:11px;color:var(--color-text-secondary);">Reviews</span>
+      <span style="font-size:16px;font-weight:500;">12</span>
+    </div>
+  </div>
+  <div class="anno">Already exists. No changes. Uses real data from AniList stats object.</div>
+</div>
+
+<div class="page-section" style="border-color:#7F77DD;">
+  <div class="ps-header">③ "time wasted" hero banner <span class="hint" style="background:#EEEDFE;color:#3C3489;">NEW — high impact</span></div>
+  <div class="row r1" style="margin-bottom:6px;">
+    <div class="box" style="height:80px;flex-direction:column;gap:6px;border-color:#AFA9EC;">
+      <span style="font-size:11px;color:var(--color-text-secondary);">You have spent</span>
+      <span style="font-size:28px;font-weight:500;color:var(--color-text-primary);">47.3 days</span>
+      <span style="font-size:11px;color:var(--color-text-secondary);">watching anime — time you'll never get back.</span>
+    </div>
+  </div>
+  <div class="callout">
+    <p><strong>Why:</strong> Matches the site's own tagline "how much time I have wasted in life." This is the emotional hook — the most shareable number. AniList returns <code>minutesWatched</code>, convert to days client-side. Full width, centered, slightly larger than the metric cards above.</p>
+  </div>
+  <div class="arrow-note"><p>Place this between the 4 metric cards and the tabs. It bridges the summary and the detail.</p></div>
+</div>
+
+<div class="page-section">
+  <div class="ps-header">④ tab bar <span class="hint">modified — add Stats tab</span></div>
+  <div class="nav-mock">
+    <div class="nav-tab active">Stats <span class="tag-new">new</span></div>
+    <div class="nav-tab">Reviews</div>
+    <div class="nav-tab">Watch list</div>
+    <div class="nav-tab">Rankings</div>
+  </div>
+  <div class="anno">Stats tab is the default/first tab. All chart content lives here. Other tabs unchanged.</div>
+  <div class="arrow-note"><p>Default to Stats tab open since that's the main new content. Switching tabs does not re-fetch — all data is baked in at build time.</p></div>
+</div>
+
+<div class="page-section" style="border-color:#7F77DD;">
+  <div class="ps-header">⑤ stats tab content — row A: score + status</div>
+  <div class="row r2" style="margin-bottom:6px;">
+    <div>
+      <div class="label">Score distribution</div>
+      <div class="box" style="height:160px;flex-direction:column;gap:4px;align-items:flex-start;padding:10px;">
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:14px;">10</span>
+          <div style="height:8px;background:var(--color-border-secondary);border-radius:2px;width:80%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">12</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:14px;">9</span>
+          <div style="height:8px;background:var(--color-border-secondary);border-radius:2px;width:50%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">8</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:14px;">8</span>
+          <div style="height:8px;background:var(--color-border-secondary);border-radius:2px;width:65%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">22</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:14px;">7</span>
+          <div style="height:8px;background:var(--color-border-secondary);border-radius:2px;width:90%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">38</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:14px;">6</span>
+          <div style="height:8px;background:var(--color-border-secondary);border-radius:2px;width:40%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">14</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:14px;">5</span>
+          <div style="height:8px;background:var(--color-border-secondary);border-radius:2px;width:20%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">6</span>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:4px;">scores 1-4 omitted if count = 0</div>
+      </div>
+      <div class="anno">Horizontal bar chart. Score (1–10) on Y axis, count on X. Bars colored with a single accent. AniList field: <code>scores[]</code> in statistics object.</div>
+    </div>
+    <div>
+      <div class="label">Watch status</div>
+      <div class="box" style="height:160px;flex-direction:column;gap:8px;">
+        <div style="font-size:11px;color:var(--color-text-secondary);">[ Donut chart ]</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;">
+          <span class="badge">✓ Completed 142</span>
+          <span class="badge">▶ Watching 8</span>
+          <span class="badge">⏸ Paused 12</span>
+          <span class="badge">✕ Dropped 18</span>
+          <span class="badge">◻ Planning 130</span>
+        </div>
+      </div>
+      <div class="anno">Donut/ring chart. 5 segments, each a different color. Legend below with count. AniList field: <code>statuses[]</code> in statistics.</div>
+    </div>
+  </div>
+  <div class="callout">
+    <p><strong>Why this pair:</strong> Score dist = reveals your personality (harsh critic vs generous rater). Status = honest accountability — how much of what you started did you actually finish? Both are conversation-starters. Side-by-side keeps them scannable.</p>
+  </div>
+</div>
+
+<div class="page-section" style="border-color:#7F77DD;">
+  <div class="ps-header">⑥ stats tab content — row B: genres</div>
+  <div class="row r1" style="margin-bottom:6px;">
+    <div>
+      <div class="label">Top genres</div>
+      <div class="box" style="height:130px;flex-direction:column;gap:4px;align-items:flex-start;padding:10px;">
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:60px;">Action</span>
+          <div style="height:10px;background:var(--color-border-secondary);border-radius:2px;width:75%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">54</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:60px;">Fantasy</span>
+          <div style="height:10px;background:var(--color-border-secondary);border-radius:2px;width:55%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">38</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:60px;">Adventure</span>
+          <div style="height:10px;background:var(--color-border-secondary);border-radius:2px;width:48%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">31</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:60px;">Comedy</span>
+          <div style="height:10px;background:var(--color-border-secondary);border-radius:2px;width:35%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">24</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;width:100%;">
+          <span style="font-size:10px;color:var(--color-text-secondary);width:60px;">Sci-Fi</span>
+          <div style="height:10px;background:var(--color-border-secondary);border-radius:2px;width:22%;"></div>
+          <span style="font-size:10px;color:var(--color-text-secondary);">15</span>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:2px;">top 10 genres shown, sorted descending</div>
+      </div>
+      <div class="anno">Full-width horizontal bar. Genre name left, bar, count right. Show top 10 sorted by count. AniList field: <code>genres[]</code> in statistics.</div>
+    </div>
+  </div>
+  <div class="callout">
+    <p><strong>Why full width:</strong> Genre names are long strings — they need horizontal space for the label. This chart is the "identity reveal" — visitors immediately see what kind of anime fan you are. It's the most likely section to get a reaction.</p>
+  </div>
+</div>
+
+<div class="page-section" style="border-color:#7F77DD;">
+  <div class="ps-header">⑦ stats tab content — row C: activity over time + format</div>
+  <div class="row r2" style="margin-bottom:6px;">
+    <div>
+      <div class="label">Activity by year</div>
+      <div class="box" style="height:120px;flex-direction:column;gap:2px;align-items:flex-end;justify-content:flex-end;padding:8px;">
+        <div style="display:flex;align-items:flex-end;gap:4px;height:80px;width:100%;">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="height:20px;width:100%;background:var(--color-border-secondary);border-radius:2px 2px 0 0;"></div>
+            <span style="font-size:9px;color:var(--color-text-tertiary);">2021</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="height:50px;width:100%;background:var(--color-border-secondary);border-radius:2px 2px 0 0;"></div>
+            <span style="font-size:9px;color:var(--color-text-tertiary);">2022</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="height:35px;width:100%;background:var(--color-border-secondary);border-radius:2px 2px 0 0;"></div>
+            <span style="font-size:9px;color:var(--color-text-tertiary);">2023</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="height:70px;width:100%;background:var(--color-border-secondary);border-radius:2px 2px 0 0;"></div>
+            <span style="font-size:9px;color:var(--color-text-tertiary);">2024</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="height:45px;width:100%;background:var(--color-border-secondary);border-radius:2px 2px 0 0;"></div>
+            <span style="font-size:9px;color:var(--color-text-tertiary);">2025</span>
+          </div>
+        </div>
+      </div>
+      <div class="anno">Vertical bar chart. X = year, Y = titles completed that year. AniList field: <code>releaseYears[]</code> or <code>watchYears[]</code> in statistics.</div>
+    </div>
+    <div>
+      <div class="label">Format breakdown</div>
+      <div class="box" style="height:120px;flex-direction:column;gap:6px;">
+        <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;">
+          <span class="badge" style="font-size:12px;">TV · 98</span>
+          <span class="badge" style="font-size:12px;">Movie · 22</span>
+          <span class="badge" style="font-size:12px;">OVA · 14</span>
+          <span class="badge" style="font-size:12px;">ONA · 6</span>
+          <span class="badge" style="font-size:12px;">Special · 4</span>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);">sized by count — bigger badge = more watched</div>
+      </div>
+      <div class="anno">Bubble-sized badges or small horizontal bars. Format types: TV, Movie, OVA, ONA, Special, Music. AniList field: <code>formats[]</code> in statistics.</div>
+    </div>
+  </div>
+  <div class="callout">
+    <p><strong>Why activity by year:</strong> Personal timeline creates an emotional story — "wow I watched 70 shows in 2022." Satisfies the narrative need. Format breakdown is lower priority but shows if you're a TV-only watcher or branch into movies/OVAs.</p>
+  </div>
+</div>
+
+<div class="page-section">
+  <div class="ps-header">⑧ footer note <span class="hint hint-warn">important</span></div>
+  <div class="box" style="height:36px;">
+    <span style="font-size:11px;color:var(--color-text-secondary);">Stats synced monthly from AniList · Last updated: Jan 1, 2026</span>
+  </div>
+  <div class="anno">Small muted text at bottom of stats tab. Tells visitors data is not real-time. Build-time variable injects the last sync date.</div>
+</div>
+
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--color-border-tertiary);">
+  <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;">Adaptation guide for each page</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+    <div style="background:var(--color-background-secondary);border-radius:6px;padding:10px;">
+      <div style="font-size:11px;font-weight:500;margin-bottom:6px;">/anime</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);line-height:1.6;">
+        • Time wasted = days<br>
+        • Unit label = Episodes<br>
+        • Show: format breakdown<br>
+        • All 7 sections apply
+      </div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:6px;padding:10px;">
+      <div style="font-size:11px;font-weight:500;margin-bottom:6px;">/manga</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);line-height:1.6;">
+        • Time wasted = chapters<br>
+        • Unit label = Chapters read<br>
+        • Skip format breakdown<br>
+        • Keep other 6 sections
+      </div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:6px;padding:10px;">
+      <div style="font-size:11px;font-weight:500;margin-bottom:6px;">/movie</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);line-height:1.6;">
+        • Time wasted = hours<br>
+        • Unit label = Movies watched<br>
+        • Skip format + activity<br>
+        • Score + status + genres
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:16px;padding:10px 12px;background:var(--color-background-secondary);border-radius:6px;">
+  <div style="font-size:11px;font-weight:500;margin-bottom:6px;">AniList GraphQL fields to fetch</div>
+  <div style="font-size:10px;color:var(--color-text-secondary);line-height:1.9;font-family:var(--font-mono);">
+    statistics.anime { count · episodesWatched · minutesWatched · meanScore }<br>
+    statistics.anime.scores[] { score · count · meanScore }<br>
+    statistics.anime.statuses[] { status · count }<br>
+    statistics.anime.genres[] { genre · count · meanScore }<br>
+    statistics.anime.formats[] { format · count }<br>
+    statistics.anime.releaseYears[] { releaseYear · count }<br>
+    statistics.manga.chaptersRead · volumesRead · meanScore
+  </div>
+</div>
+</div>

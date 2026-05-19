@@ -3,6 +3,7 @@ import type { Novel } from '../../lib/parseNovels';
 import { NovelListView } from '../novel/NovelListView';
 import { NovelGridView } from '../novel/NovelGridView';
 import NovelCard from '../novel/NovelCard';
+import StatsTab from '../layout/StatsTab';
 import { Search, LayoutGrid, List as ListIcon } from 'lucide-react';
 
 interface CategoryViewProps {
@@ -11,13 +12,22 @@ interface CategoryViewProps {
   items: Novel[];
   statuses: string[];
   reviewsSlot?: React.ReactNode;
+  anilistStats?: any;
 }
 
-export default function CategoryView({ category, reviews, items, statuses, reviewsSlot }: CategoryViewProps) {
-  const [activeTab, setActiveTab] = useState('Reviews');
+export default function CategoryView({ category, reviews, items, statuses, reviewsSlot, anilistStats }: CategoryViewProps) {
+  const isNovel = category === 'novel';
+  const hasStats = !!anilistStats;
+  const [activeTab, setActiveTab] = useState(hasStats ? 'Stats' : 'Reviews');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
+  const tabs = useMemo(() => {
+    const base = isNovel ? ["Reviews", "Reading list", "Rankings"] : ["Stats", "Reviews", "Watch list", "Rankings"];
+    if (category === 'manga') base[2] = "Reading list";
+    return base;
+  }, [category, isNovel]);
 
   const reviewsRef = React.useRef<HTMLDivElement>(null);
 
@@ -94,7 +104,7 @@ export default function CategoryView({ category, reviews, items, statuses, revie
     <div className="space-y-6">
       {/* Tab bar */}
       <div className="flex border-b border-neutral-200 dark:border-neutral-700 mb-8 gap-1">
-        {["Reviews", "Reading list", "Rankings"].map((tab) => (
+        {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -104,68 +114,75 @@ export default function CategoryView({ category, reviews, items, statuses, revie
                 : "text-muted-foreground border-b-2 border-transparent hover:text-foreground"
             }`}
           >
+            {tab === "Stats" && <span className="mr-1 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-blue-600 rounded-sm scale-90 uppercase">New</span>}
             {tab}
           </button>
         ))}
       </div>
 
       {/* Controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder={`Search ${activeTab.toLowerCase()}...`}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-card border border-border/50 rounded-lg py-2 pl-9 pr-3 outline-none focus:ring-1 focus:ring-primary text-sm"
-          />
-        </div>
+      {activeTab !== 'Stats' && (
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder={`Search ${activeTab.toLowerCase()}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-card border border-border/50 rounded-lg py-2 pl-9 pr-3 outline-none focus:ring-1 focus:ring-primary text-sm"
+            />
+          </div>
 
-        {activeTab === 'Reading list' && (
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setSelectedStatus(null)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                selectedStatus === null ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
-              }`}
-            >
-              All
-            </button>
-            {statuses.map(status => (
+          {(activeTab === 'Reading list' || activeTab === 'Watch list' || activeTab === 'Rankings') && (
+            <div className="flex flex-wrap gap-2">
               <button
-                key={status}
-                onClick={() => setSelectedStatus(status)}
+                onClick={() => setSelectedStatus(null)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                  selectedStatus === status ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  selectedStatus === null ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
                 }`}
               >
-                {status}
+                All
               </button>
-            ))}
-          </div>
-        )}
+              {statuses.map(status => (
+                <button
+                  key={status}
+                  onClick={() => setSelectedStatus(status)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                    selectedStatus === status ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {status}
+                </button>
+              ))}
+            </div>
+          )}
 
-        {(activeTab === 'Reading list' || activeTab === 'Rankings') && (
-          <div className="flex gap-2">
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
-            >
-              <ListIcon className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
-            >
-              <LayoutGrid className="w-5 h-5" />
-            </button>
-          </div>
-        )}
-      </div>
+          {(activeTab === 'Reading list' || activeTab === 'Watch list' || activeTab === 'Rankings') && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+              >
+                <ListIcon className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
+              >
+                <LayoutGrid className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Content */}
       <div className="min-h-[400px]">
+        {activeTab === 'Stats' && anilistStats && (
+          <StatsTab category={category} stats={anilistStats} />
+        )}
+
         {activeTab === 'Reviews' && (
           <div ref={reviewsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {reviewsSlot ? (
@@ -212,7 +229,7 @@ export default function CategoryView({ category, reviews, items, statuses, revie
           </div>
         )}
 
-        {activeTab === 'Reading list' && (
+        {(activeTab === 'Reading list' || activeTab === 'Watch list') && (
           <div className="space-y-6">
             {filteredItems.length === 0 ? (
               <div className="py-20 text-center text-muted-foreground">
