@@ -7,9 +7,23 @@ export interface Props {
   unitAction?: string; // "read" | "watched" | "played"
   avgRating: number;
   reviewCount: number;
+  minutesWatched?: number;
 }
 
-const { completed, total, units, unitLabel, unitAction = "read", avgRating, reviewCount } = Astro.props;
+const { completed, total, units, unitLabel, unitAction = "read", avgRating, reviewCount, minutesWatched } = Astro.props;
+
+function formatMinutes(minutes: number) {
+  const days = Math.floor(minutes / (24 * 60));
+  const hours = Math.floor((minutes % (24 * 60)) / 60);
+  const mins = minutes % 60;
+  
+  const parts = [];
+  if (days > 0) parts.push(`${days}d`);
+  if (hours > 0) parts.push(`${hours}h`);
+  if (mins > 0 || parts.length === 0) parts.push(`${mins}m`);
+  
+  return parts.join(' ');
+}
 
 const stats = [
   {
@@ -33,13 +47,27 @@ const stats = [
     sub: "published",
   },
 ];
+
+if (minutesWatched) {
+  stats.splice(2, 0, {
+    label: "Time watched",
+    value: formatMinutes(minutesWatched),
+    sub: "total duration",
+  });
+}
 ---
 
-<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-8">
+<div class:list={[
+  "grid gap-3 mb-8",
+  minutesWatched ? "grid-cols-2 md:grid-cols-5" : "grid-cols-2 sm:grid-cols-4"
+]}>
   {stats.map((s) => (
     <div class="rounded-lg bg-neutral-100 dark:bg-neutral-800/60 px-4 py-3 border border-neutral-200 dark:border-neutral-700/50">
       <p class="text-xs text-neutral-500 dark:text-neutral-400 mb-1">{s.label}</p>
-      <p class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 leading-none">{s.value}</p>
+      <p class:list={[
+        "font-semibold text-neutral-900 dark:text-neutral-100 leading-none",
+        s.value.toString().length > 10 ? "text-xl" : "text-2xl"
+      ]}>{s.value}</p>
       <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1">{s.sub}</p>
     </div>
   ))}

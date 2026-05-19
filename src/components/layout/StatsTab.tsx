@@ -116,8 +116,54 @@ export default function StatsTab({ category, stats }: StatsTabProps) {
       fill: `var(--chart-${(index % 5) + 1})`
     }));
 
+  const formatTime = (minutes: number) => {
+    const days = Math.floor(minutes / (24 * 60));
+    const hours = Math.floor((minutes % (24 * 60)) / 60);
+    const mins = minutes % 60;
+    return { days, hours, mins };
+  };
+
+  const time = stats.minutesWatched ? formatTime(stats.minutesWatched) : null;
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
+      {/* Time Stats (Only for Anime) */}
+      {isAnime && time && (
+        <Card className="bg-primary/5 border-primary/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Total Time Watched
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="space-y-1">
+                <p className="text-4xl font-black italic tracking-tighter text-primary">{time.days}</p>
+                <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60 font-mono">Days</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-4xl font-black italic tracking-tighter text-primary">{time.hours}</p>
+                <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60 font-mono">Hours</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-4xl font-black italic tracking-tighter text-primary">{time.mins}</p>
+                <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60 font-mono">Minutes</p>
+              </div>
+            </div>
+            <div className="mt-6 h-1.5 w-full bg-primary/10 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-primary transition-all duration-1000 ease-out" 
+                style={{ width: '100%' }}
+              />
+            </div>
+            <p className="mt-2 text-[10px] text-center text-muted-foreground font-mono uppercase tracking-tighter opacity-50">
+              Equivalent to {((stats.minutesWatched || 0) / 60 / 24 / 30).toFixed(1)} months of continuous watching
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Row 1: Score Distribution + Status Donut */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Score Distribution */}
