@@ -26,7 +26,7 @@ export function ReviewsDropdown({ categories }: ReviewsDropdownProps) {
           <ChevronDown className="ml-1 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="min-w-[120px]">
+      <DropdownMenuContent align="center" className="min-w-30">
         {categories.map((category) => (
           <DropdownMenuItem key={category.href} asChild>
             <a
