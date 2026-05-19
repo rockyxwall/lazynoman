@@ -31,7 +31,6 @@ const categoryPosts = posts
 
 const db = Astro.locals.db || dbStatic;
 const statsData = await getStats(db);
-const categoryStats = (statsData as any)[category] || { total_finished: 0, total_read: 0, total_chapters: 0, avg_rating: 0 };
 const categoryItems = await getAllNovels(db, category);
 
 const unitLabels: Record<string, string> = {
@@ -56,27 +55,32 @@ let total = 0;
 let units = 0;
 let avgRating = 0;
 
-if (categoryStats) {
-  completed = categoryStats.total_finished;
-  total = categoryStats.total_read;
-  units = categoryStats.total_chapters;
-  avgRating = categoryStats.avg_rating;
-} else if (category === 'anime') {
+const lowerCategory = category.toLowerCase();
+
+if (lowerCategory === 'anime') {
   completed = anilistData.anime.statuses.find(s => s.status === 'COMPLETED')?.count || 0;
   total = anilistData.anime.count;
   units = anilistData.anime.episodesWatched;
   avgRating = anilistData.anime.meanScore / 10;
-} else if (category === 'manga') {
+} else if (lowerCategory === 'manga') {
   completed = anilistData.manga.statuses.find(s => s.status === 'COMPLETED')?.count || 0;
   total = anilistData.manga.count;
   units = anilistData.manga.chaptersRead;
   avgRating = anilistData.manga.meanScore / 10;
-} else if (category === 'movie') {
+} else if (lowerCategory === 'movie') {
   const movieCount = anilistData.anime.formats.find(f => f.format === 'MOVIE')?.count || 0;
-  completed = movieCount; // Approximate
+  completed = movieCount;
   total = movieCount;
   units = movieCount;
   avgRating = anilistData.anime.meanScore / 10;
+} else {
+  const categoryStats = (statsData as any)[lowerCategory];
+  if (categoryStats) {
+    completed = categoryStats.total_finished;
+    total = categoryStats.total_read;
+    units = categoryStats.total_chapters;
+    avgRating = categoryStats.avg_rating;
+  }
 }
 
 // Override avgRating with review average if available

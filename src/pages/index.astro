@@ -48,27 +48,27 @@ const categoryStats = categories.map(cat => {
   let units = 0;
   let avgRating = 0;
 
-  const catPosts = allPosts.filter(p => p.data.category === cat.id);
-  const reviewsWithRating = catPosts.filter(p => p.data.rating !== undefined);
+  const catId = cat.id.toLowerCase();
+  const catPosts = allPosts.filter(p => p.data.category?.toLowerCase() === catId);
 
-  if (cat.id === 'anime') {
+  if (catId === 'anime') {
     completed = anilistData.anime.statuses.find(s => s.status === 'COMPLETED')?.count || 0;
     total = anilistData.anime.count;
     units = anilistData.anime.episodesWatched;
     avgRating = anilistData.anime.meanScore / 10;
-  } else if (cat.id === 'manga') {
+  } else if (catId === 'manga') {
     completed = anilistData.manga.statuses.find(s => s.status === 'COMPLETED')?.count || 0;
     total = anilistData.manga.count;
     units = anilistData.manga.chaptersRead;
     avgRating = anilistData.manga.meanScore / 10;
-  } else if (cat.id === 'movie') {
+  } else if (catId === 'movie') {
     const movieCount = anilistData.anime.formats.find(f => f.format === 'MOVIE')?.count || 0;
     completed = movieCount;
     total = movieCount;
     units = movieCount;
     avgRating = anilistData.anime.meanScore / 10;
   } else {
-    const dbCatStats = (dbStats as any)[cat.id];
+    const dbCatStats = (dbStats as any)[catId];
     if (dbCatStats) {
       completed = dbCatStats.total_finished;
       total = dbCatStats.total_read;
