@@ -20,6 +20,7 @@ const post = defineCollection({
 			rating: z.number().min(1).max(10).optional(),
 			itemAuthor: z.string().optional(),
 			officialTitle: z.string().optional(),
+			by: z.string().optional(),
 		}),
 });
 

@@ -49,7 +49,7 @@ const endStr = formatDate(novel.end_date) || 'PRESENT';
     
     <div class="flex-grow space-y-6">
       <div class="space-y-3">
-        <Badge variant="outline" class={`${statusColor} font-bold px-3 py-1 font-mono tracking-widest uppercase`}>
+        <Badge variant="outline" className={`${statusColor} font-bold px-3 py-1 font-mono tracking-widest uppercase`}>
           {novel.status}
         </Badge>
         <h1 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter group-hover:text-primary transition-colors">{novel.name}</h1>
