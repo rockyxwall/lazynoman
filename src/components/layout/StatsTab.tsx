@@ -110,9 +110,10 @@ export default function StatsTab({ category, stats }: StatsTabProps) {
   // Format Breakdown
   const formatData = [...stats.formats]
     .sort((a, b) => b.count - a.count)
-    .map(f => ({
+    .map((f, index) => ({
       format: f.format,
       count: f.count,
+      fill: `var(--chart-${(index % 5) + 1})`
     }));
 
   return (
@@ -136,7 +137,7 @@ export default function StatsTab({ category, stats }: StatsTabProps) {
                   axisLine={false}
                 />
                 <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-                <Bar dataKey="count" fill="var(--color-count)" radius={4} />
+                <Bar dataKey="count" fill="var(--chart-1)" radius={4} stroke="none" />
               </BarChart>
             </ChartContainer>
           </CardContent>
@@ -230,7 +231,7 @@ export default function StatsTab({ category, stats }: StatsTabProps) {
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="count" fill="var(--color-count)" radius={5}>
+              <Bar dataKey="count" fill="var(--chart-2)" radius={5} stroke="none">
                 <LabelList
                   dataKey="genre"
                   position="insideLeft"
@@ -280,9 +281,10 @@ export default function StatsTab({ category, stats }: StatsTabProps) {
                 <Area
                   dataKey="count"
                   type="natural"
-                  fill="var(--color-count)"
+                  fill="var(--chart-3)"
                   fillOpacity={0.4}
-                  stroke="var(--color-count)"
+                  stroke="var(--chart-3)"
+                  strokeWidth={0}
                   stackId="a"
                 />
               </AreaChart>
@@ -306,7 +308,7 @@ export default function StatsTab({ category, stats }: StatsTabProps) {
                   axisLine={false}
                 />
                 <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-                <Bar dataKey="count" radius={4} fill="var(--color-count)" />
+                <Bar dataKey="count" radius={4} stroke="none" />
               </BarChart>
             </ChartContainer>
           </CardContent>

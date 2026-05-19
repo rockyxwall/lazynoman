@@ -112,6 +112,13 @@
     --chart-5: oklch(0.645 0.246 16.439);
   }
 
+  .recharts-wrapper, 
+  .recharts-surface, 
+  .recharts-sector, 
+  .recharts-layer {
+    outline: none !important;
+  }
+
   * {
     @apply border-border;
   }

@@ -4,11 +4,12 @@ export interface Props {
   total: number;
   units: number;
   unitLabel: string; // "Chapters" | "Episodes" | "Volumes"
+  unitAction?: string; // "read" | "watched" | "played"
   avgRating: number;
   reviewCount: number;
 }
 
-const { completed, total, units, unitLabel, avgRating, reviewCount } = Astro.props;
+const { completed, total, units, unitLabel, unitAction = "read", avgRating, reviewCount } = Astro.props;
 
 const stats = [
   {
@@ -17,7 +18,7 @@ const stats = [
     sub: `of ${total.toLocaleString()} tracked`,
   },
   {
-    label: unitLabel + " read",
+    label: `${unitLabel} ${unitAction}`,
     value: units.toLocaleString(),
     sub: "all time",
   },
