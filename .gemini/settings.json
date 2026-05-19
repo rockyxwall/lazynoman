@@ -2,6 +2,10 @@
   "mcpServers": {
     "Astro docs": {
       "httpUrl": "https://mcp.docs.astro.build/mcp"
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
     }
   }
 }
