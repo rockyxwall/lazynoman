@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { getPostUrl } from '../lib/utils';
 
+import { getCategories } from '../lib/categories';
+
 export const GET: APIRoute = async (context) => {
   const siteUrl = context.url.origin.endsWith('/') ? context.url.origin : `${context.url.origin}/`;
   
@@ -11,7 +13,7 @@ export const GET: APIRoute = async (context) => {
   urls.push(siteUrl);
 
   // 2. Add category indices
-  const categories = ['novel', 'anime', 'manga', 'movie', 'game'];
+  const categories = getCategories();
   categories.forEach((cat) => {
     urls.push(`${siteUrl}${cat}`);
   });

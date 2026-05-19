@@ -9,24 +9,29 @@ import CategoryStats from '../../components/CategoryStats.astro';
 import CategoryView from '../../components/common/CategoryView';
 import PostCard from '../../components/blog/PostCard.astro';
 import anilistData from '../../data/anilist.json';
+import { db as dbStatic } from '../../lib/turso';
+
+import { getCategories } from '../../lib/categories';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const categories = getCategories();
+  return categories.map(category => ({
+    params: { category },
+  }));
+}
 
 const { category } = Astro.params;
 
-const validCategories = ['novel', 'anime', 'manga', 'movie', 'game'] as const;
-type ValidCategory = typeof validCategories[number];
-
-if (!category || !validCategories.includes(category as ValidCategory)) {
-    return Astro.rewrite('/404');
-}
-
-const db = Astro.locals.db;
-const statsData = await getStats(db);
-const categoryStats = statsData[category as ValidCategory];
-
-const categoryPosts = (await getCollection('post'))
+const posts = await getCollection('post');
+const categoryPosts = posts
   .filter((p) => p.data.category === category)
   .sort((a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf());
 
+const db = Astro.locals.db || dbStatic;
+const statsData = await getStats(db);
+const categoryStats = (statsData as any)[category] || { total_finished: 0, total_read: 0, total_chapters: 0, avg_rating: 0 };
 const categoryItems = await getAllNovels(db, category);
 
 const unitLabels: Record<string, string> = {
@@ -51,7 +56,7 @@ let total = 0;
 let units = 0;
 let avgRating = 0;
 
-if (category === 'novel') {
+if (categoryStats) {
   completed = categoryStats.total_finished;
   total = categoryStats.total_read;
   units = categoryStats.total_chapters;

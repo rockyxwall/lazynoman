@@ -2,6 +2,9 @@
 import { SITE_TITLE } from '../../consts';
 import { ModeToggle } from '@/components/common/ModeToggle';
 import { ReviewsDropdown } from './ReviewsDropdown';
+import { getCategoryMetadata } from '../../lib/categories';
+
+const categories = getCategoryMetadata();
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
@@ -17,7 +20,7 @@ import { ReviewsDropdown } from './ReviewsDropdown';
 
 		{/* Right: Actions */}
 		<div class="flex items-center gap-2 shrink-0">
-			<ReviewsDropdown client:load />
+			<ReviewsDropdown categories={categories} client:load />
 			<ModeToggle client:only="react" />
 		</div>
 	</nav>

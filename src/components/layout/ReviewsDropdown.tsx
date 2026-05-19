@@ -8,15 +8,16 @@ import {
 import { Button } from "@/components/ui/button"
 import { ChevronDown } from "lucide-react"
 
-const categories = [
-  { name: "Novel", href: "/novel" },
-  { name: "Manga", href: "/manga" },
-  { name: "Anime", href: "/anime" },
-  { name: "Movie", href: "/movie" },
-  { name: "Games", href: "/game" },
-]
+interface Category {
+  name: string;
+  href: string;
+}
 
-export function ReviewsDropdown() {
+interface ReviewsDropdownProps {
+  categories: Category[];
+}
+
+export function ReviewsDropdown({ categories }: ReviewsDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
