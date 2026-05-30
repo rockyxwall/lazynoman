@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
@@ -27,6 +28,17 @@ export async function getStaticPaths() {
 
 const { categoryName, posts } = Astro.props;
 const { category } = Astro.params;
+
+// Resolve the optimized image URL for each hero image so the React PostCard
+// receives the emitted asset URL (not the raw, un-emitted source path).
+const cards = await Promise.all(
+  posts.map(async (post) => ({
+    post,
+    heroSrc: post.data.heroImage
+      ? (await getImage({ src: post.data.heroImage })).src
+      : undefined,
+  }))
+);
 ---
 
 <!doctype html>
@@ -46,11 +58,11 @@ const { category } = Astro.params;
 
       <section>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts.map((post) => (
+          {cards.map(({ post, heroSrc }) => (
             <PostCard
               client:load
               post={post}
-              heroSrc={post.data.heroImage?.src}
+              heroSrc={heroSrc}
               heroAlt={post.data.title}
             />
           ))}
