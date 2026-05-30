@@ -1,0 +1,160 @@
+---
+/**
+ * TableOfContents Component
+ * Automatically generates a table of contents from h2 and h3 headings
+ * in the post content. Extracts headings from the rendered markdown body.
+ */
+---
+
+<div id="toc-container"></div>
+
+<script>
+  // Extract headings from the markdown body
+  function generateTableOfContents() {
+    const markdownBody = document.querySelector('.markdown-body');
+    if (!markdownBody) return;
+
+    const headingElements = Array.from(markdownBody.querySelectorAll('h2, h3, h4'));
+    if (headingElements.length === 0) return;
+
+    // Process headings and assign IDs
+    const headings = headingElements.map((heading) => {
+      const depth = parseInt(heading.tagName[1]);
+      const text = heading.textContent || '';
+      const slug = heading.id || text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+      
+      // Ensure heading has an ID for linking
+      if (!heading.id) {
+        heading.id = slug;
+      }
+      
+      return { depth, text, slug };
+    });
+
+    // Create TOC HTML
+    const tocContainer = document.getElementById('toc-container');
+    if (!tocContainer) return;
+
+    const nav = document.createElement('nav');
+    nav.className = 'toc-container mb-8 p-4 rounded-lg border border-border/50 bg-secondary/30';
+    
+    const header = document.createElement('div');
+    header.className = 'toc-header font-semibold text-sm mb-3 uppercase tracking-wider opacity-70';
+    header.textContent = 'Table of Contents';
+    
+    nav.appendChild(header);
+
+    // Build nested structure using a stack-based approach
+    const ul = document.createElement('ul');
+    ul.className = 'toc-list space-y-1 text-sm';
+    
+    const stack: Array<{ depth: number; list: HTMLUListElement }> = [{ depth: 1, list: ul }];
+
+    headings.forEach((heading) => {
+      const li = document.createElement('li');
+      li.className = `toc-item toc-depth-${heading.depth}`;
+      
+      const a = document.createElement('a');
+      a.href = `#${heading.slug}`;
+      a.className = 'toc-link hover:text-primary transition-colors';
+      a.textContent = heading.text;
+      
+      li.appendChild(a);
+
+      // Pop stack until we find the right parent depth
+      while (stack.length > 1 && stack[stack.length - 1].depth >= heading.depth) {
+        stack.pop();
+      }
+
+      const parent = stack[stack.length - 1];
+
+      // If we need to go deeper, create nested lists
+      if (heading.depth > parent.depth + 1) {
+        let currentList = parent.list;
+        for (let d = parent.depth + 1; d < heading.depth; d++) {
+          const newUl = document.createElement('ul');
+          newUl.className = 'toc-list space-y-1 text-sm';
+          
+          const dummyLi = document.createElement('li');
+          dummyLi.appendChild(newUl);
+          currentList.appendChild(dummyLi);
+          
+          currentList = newUl;
+          stack.push({ depth: d, list: currentList });
+        }
+        currentList.appendChild(li);
+        stack.push({ depth: heading.depth, list: currentList });
+      } else if (heading.depth === parent.depth + 1) {
+        // Create a new nested list under the last item of parent
+        const newUl = document.createElement('ul');
+        newUl.className = 'toc-list space-y-1 text-sm';
+        newUl.appendChild(li);
+        
+        const lastLi = parent.list.lastElementChild;
+        if (lastLi) {
+          lastLi.appendChild(newUl);
+        } else {
+          parent.list.appendChild(li);
+        }
+        
+        stack.push({ depth: heading.depth, list: newUl });
+      } else {
+        // Same level, just append to parent list
+        parent.list.appendChild(li);
+      }
+    });
+    
+    nav.appendChild(ul);
+    tocContainer.appendChild(nav);
+  }
+
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', generateTableOfContents);
+  } else {
+    generateTableOfContents();
+  }
+
+  // Also handle Astro view transitions
+  document.addEventListener('astro:after-swap', generateTableOfContents);
+</script>
+
+<style>
+  .toc-container {
+    background: var(--p-secondary);
+    border-color: var(--p-border);
+  }
+
+  .toc-header {
+    color: var(--p-muted);
+  }
+
+  .toc-link {
+    color: var(--p-fg);
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 0;
+  }
+
+  .toc-link:hover {
+    color: var(--p-primary);
+  }
+
+  .toc-depth-2 {
+    margin-left: 0;
+  }
+
+  .toc-depth-3 {
+    margin-left: 1rem;
+    opacity: 0.85;
+  }
+
+  .toc-depth-4 {
+    margin-left: 2rem;
+    opacity: 0.7;
+  }
+</style>
