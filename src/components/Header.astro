@@ -1,7 +1,12 @@
 ---
 import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
+import { Nav } from '@/components/Nav';
 import { ModeToggle } from '@/components/ModeToggle';
+
+const navLinks = [
+	{ href: '/novel', label: 'Novel' },
+	{ href: '/about', label: 'About' }
+];
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm shadow-sm">
@@ -14,8 +19,7 @@ import { ModeToggle } from '@/components/ModeToggle';
 			</h2>
 		</div>
 		<div class="flex items-center gap-1 sm:gap-4 h-full">
-			<HeaderLink href="/novel">Novel</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<Nav client:load links={navLinks} currentPath={Astro.url.pathname} />
 			<div class="ml-1 sm:ml-2 flex items-center h-full">
 				<ModeToggle client:load />
 			</div>
