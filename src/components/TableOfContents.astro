@@ -1,160 +1,306 @@
 ---
 /**
  * TableOfContents Component
- * Automatically generates a table of contents from h2 and h3 headings
- * in the post content. Extracts headings from the rendered markdown body.
+ * Renders a table of contents from the post's headings (h2–h4) at build time,
+ * so the scoped styles apply correctly. A small client script handles the
+ * collapse toggle and scroll-spy active highlighting.
  */
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings?: MarkdownHeading[];
+}
+
+const { headings = [] } = Astro.props;
+
+// Only show h2–h4 in the contents.
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+
+// A single heading doesn't warrant a contents panel.
+const show = tocHeadings.length >= 2;
 ---
 
-<div id="toc-container"></div>
+{
+  show && (
+    <nav class="toc" aria-label="Table of contents">
+      <details class="toc__details">
+        <summary class="toc__summary">
+          <span class="toc__heading">
+            <svg
+              class="toc__icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="8" x2="21" y1="6" y2="6" />
+              <line x1="8" x2="21" y1="12" y2="12" />
+              <line x1="8" x2="21" y1="18" y2="18" />
+              <line x1="3" x2="3.01" y1="6" y2="6" />
+              <line x1="3" x2="3.01" y1="12" y2="12" />
+              <line x1="3" x2="3.01" y1="18" y2="18" />
+            </svg>
+            <span>Contents</span>
+          </span>
+          <svg
+            class="toc__chevron"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </summary>
+
+        <ul class="toc__list">
+          {tocHeadings.map((heading) => (
+            <li class="toc__item" data-depth={heading.depth}>
+              <a class="toc__link" href={`#${heading.slug}`} data-target={heading.slug}>
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </nav>
+  )
+}
 
 <script>
-  // Extract headings from the markdown body
-  function generateTableOfContents() {
-    const markdownBody = document.querySelector('.markdown-body');
-    if (!markdownBody) return;
+  // Offset matching the sticky header height (h-16 = 4rem) plus breathing room.
+  const SCROLL_OFFSET = 96;
 
-    const headingElements = Array.from(markdownBody.querySelectorAll('h2, h3, h4'));
-    if (headingElements.length === 0) return;
+  let cleanup: (() => void) | null = null;
 
-    // Process headings and assign IDs
-    const headings = headingElements.map((heading) => {
-      const depth = parseInt(heading.tagName[1]);
-      const text = heading.textContent || '';
-      const slug = heading.id || text
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-');
-      
-      // Ensure heading has an ID for linking
-      if (!heading.id) {
-        heading.id = slug;
+  function initTableOfContents() {
+    cleanup?.();
+    cleanup = null;
+
+    const nav = document.querySelector<HTMLElement>('.toc');
+    if (!nav) return;
+
+    const links = Array.from(
+      nav.querySelectorAll<HTMLAnchorElement>('.toc__link')
+    );
+    if (links.length === 0) return;
+
+    // Resolve each link to its target heading element.
+    const entries = links
+      .map((link) => {
+        const id = link.dataset.target;
+        const el = id ? document.getElementById(id) : null;
+        return el ? { link, el } : null;
+      })
+      .filter((e): e is { link: HTMLAnchorElement; el: HTMLElement } => e !== null);
+
+    if (entries.length === 0) return;
+
+    let activeLink: HTMLAnchorElement | null = null;
+    const setActive = (link: HTMLAnchorElement | null) => {
+      if (link === activeLink) return;
+      if (activeLink) {
+        activeLink.classList.remove('is-active');
+        activeLink.removeAttribute('aria-current');
       }
-      
-      return { depth, text, slug };
-    });
-
-    // Create TOC HTML
-    const tocContainer = document.getElementById('toc-container');
-    if (!tocContainer) return;
-
-    const nav = document.createElement('nav');
-    nav.className = 'toc-container mb-8 p-4 rounded-lg border border-border/50 bg-secondary/30';
-    
-    const header = document.createElement('div');
-    header.className = 'toc-header font-semibold text-sm mb-3 uppercase tracking-wider opacity-70';
-    header.textContent = 'Table of Contents';
-    
-    nav.appendChild(header);
-
-    // Build nested structure using a stack-based approach
-    const ul = document.createElement('ul');
-    ul.className = 'toc-list space-y-1 text-sm';
-    
-    const stack: Array<{ depth: number; list: HTMLUListElement }> = [{ depth: 1, list: ul }];
-
-    headings.forEach((heading) => {
-      const li = document.createElement('li');
-      li.className = `toc-item toc-depth-${heading.depth}`;
-      
-      const a = document.createElement('a');
-      a.href = `#${heading.slug}`;
-      a.className = 'toc-link hover:text-primary transition-colors';
-      a.textContent = heading.text;
-      
-      li.appendChild(a);
-
-      // Pop stack until we find the right parent depth
-      while (stack.length > 1 && stack[stack.length - 1].depth >= heading.depth) {
-        stack.pop();
+      activeLink = link;
+      if (link) {
+        link.classList.add('is-active');
+        link.setAttribute('aria-current', 'true');
       }
+    };
 
-      const parent = stack[stack.length - 1];
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
 
-      // If we need to go deeper, create nested lists
-      if (heading.depth > parent.depth + 1) {
-        let currentList = parent.list;
-        for (let d = parent.depth + 1; d < heading.depth; d++) {
-          const newUl = document.createElement('ul');
-          newUl.className = 'toc-list space-y-1 text-sm';
-          
-          const dummyLi = document.createElement('li');
-          dummyLi.appendChild(newUl);
-          currentList.appendChild(dummyLi);
-          
-          currentList = newUl;
-          stack.push({ depth: d, list: currentList });
+        // No active link until a heading has scrolled past the offset.
+        let current: HTMLAnchorElement | null = null;
+        for (const entry of entries) {
+          if (entry.el.getBoundingClientRect().top - SCROLL_OFFSET <= 0) {
+            current = entry.link;
+          } else {
+            break;
+          }
         }
-        currentList.appendChild(li);
-        stack.push({ depth: heading.depth, list: currentList });
-      } else if (heading.depth === parent.depth + 1) {
-        // Create a new nested list under the last item of parent
-        const newUl = document.createElement('ul');
-        newUl.className = 'toc-list space-y-1 text-sm';
-        newUl.appendChild(li);
-        
-        const lastLi = parent.list.lastElementChild;
-        if (lastLi) {
-          lastLi.appendChild(newUl);
-        } else {
-          parent.list.appendChild(li);
-        }
-        
-        stack.push({ depth: heading.depth, list: newUl });
-      } else {
-        // Same level, just append to parent list
-        parent.list.appendChild(li);
-      }
-    });
-    
-    nav.appendChild(ul);
-    tocContainer.appendChild(nav);
+
+        // Snap to the last entry once we reach the bottom of the page.
+        const atBottom =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 2;
+        if (atBottom) current = entries[entries.length - 1].link;
+
+        setActive(current);
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+
+    cleanup = () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }
 
-  // Run when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', generateTableOfContents);
+    document.addEventListener('DOMContentLoaded', initTableOfContents);
   } else {
-    generateTableOfContents();
+    initTableOfContents();
   }
 
-  // Also handle Astro view transitions
-  document.addEventListener('astro:after-swap', generateTableOfContents);
+  // Astro view transitions.
+  document.addEventListener('astro:page-load', initTableOfContents);
+  document.addEventListener('astro:before-swap', () => cleanup?.());
 </script>
 
+<style is:global>
+  /* Keep clicked headings clear of the sticky header. */
+  .markdown-body :is(h2, h3, h4) {
+    scroll-margin-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+</style>
+
 <style>
-  .toc-container {
-    background: var(--p-secondary);
-    border-color: var(--p-border);
+  .toc {
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
   }
 
-  .toc-header {
-    color: var(--p-muted);
+  .toc__details {
+    width: 100%;
   }
 
-  .toc-link {
-    color: var(--p-fg);
-    text-decoration: none;
+  .toc__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .toc__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc__summary:hover {
+    background: color-mix(in oklab, var(--foreground) 5%, transparent);
+  }
+
+  .toc__summary:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+
+  .toc__heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Atkinson', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--foreground);
+  }
+
+  .toc__icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    opacity: 0.75;
+  }
+
+  .toc__chevron {
+    width: 1.05rem;
+    height: 1.05rem;
+    flex-shrink: 0;
+    color: var(--muted-foreground);
+    transition: transform 0.25s ease;
+  }
+
+  .toc__details[open] .toc__chevron {
+    transform: rotate(180deg);
+  }
+
+  .toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0.6rem 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .toc__item {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toc__link {
     display: block;
-    padding: 0.25rem 0;
+    padding: 0.32rem 0.75rem;
+    margin: 0.06rem 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    border-radius: 0 0.4rem 0.4rem 0;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
   }
 
-  .toc-link:hover {
-    color: var(--p-primary);
+  .toc__link:hover {
+    color: var(--foreground);
+    background: color-mix(in oklab, var(--foreground) 6%, transparent);
   }
 
-  .toc-depth-2 {
-    margin-left: 0;
+  .toc__link.is-active {
+    color: var(--foreground);
+    font-weight: 600;
+    border-left-color: var(--primary);
+    background: color-mix(in oklab, var(--foreground) 8%, transparent);
   }
 
-  .toc-depth-3 {
-    margin-left: 1rem;
-    opacity: 0.85;
+  .toc__item[data-depth='2'] .toc__link {
+    padding-left: 0.75rem;
   }
 
-  .toc-depth-4 {
-    margin-left: 2rem;
-    opacity: 0.7;
+  .toc__item[data-depth='3'] .toc__link {
+    padding-left: 1.7rem;
+    font-size: 0.825rem;
+  }
+
+  .toc__item[data-depth='4'] .toc__link {
+    padding-left: 2.65rem;
+    font-size: 0.8rem;
   }
 </style>
