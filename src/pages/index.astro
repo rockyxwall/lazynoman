@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import PostCard from '../components/PostCard.astro';
+import PostCard from '../components/PostCard';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('post'))
@@ -51,7 +51,12 @@ const posts = (await getCollection('post'))
 
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 					{posts.map((post) => (
-						<PostCard post={post} />
+						<PostCard
+							client:load
+							post={post}
+							heroSrc={post.data.heroImage?.src}
+							heroAlt={post.data.title}
+						/>
 					))}
 				</div>
 			</section>
