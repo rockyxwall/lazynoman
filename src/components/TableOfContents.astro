@@ -1,7 +1,7 @@
 ---
 /**
  * TableOfContents Component
- * Renders a table of contents from the post's headings (h2–h4) at build time,
+ * Renders a table of contents from the post's headings (h1–h3) at build time,
  * so the scoped styles apply correctly. A small client script handles the
  * collapse toggle and scroll-spy active highlighting.
  */
@@ -13,8 +13,7 @@ interface Props {
 
 const { headings = [] } = Astro.props;
 
-// Only show h2–h4 in the contents.
-const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
 
 // A single heading doesn't warrant a contents panel.
 const show = tocHeadings.length >= 2;
@@ -290,16 +289,16 @@ const show = tocHeadings.length >= 2;
     background: color-mix(in oklab, var(--foreground) 8%, transparent);
   }
 
-  .toc__item[data-depth='2'] .toc__link {
+  .toc__item[data-depth='1'] .toc__link {
     padding-left: 0.75rem;
   }
 
-  .toc__item[data-depth='3'] .toc__link {
+  .toc__item[data-depth='2'] .toc__link {
     padding-left: 1.7rem;
     font-size: 0.825rem;
   }
 
-  .toc__item[data-depth='4'] .toc__link {
+  .toc__item[data-depth='3'] .toc__link {
     padding-left: 2.65rem;
     font-size: 0.8rem;
   }
