@@ -39,9 +39,9 @@ const defaultProps: Footer2Props = {
       ],
     },
   ],
-  copyright: "\u00a9 2026 LazyNoman. All rights reserved.",
+  copyright: "\u00a9 2026 lazynoman. All rights reserved.",
   legalLinks: [
-    { name: "Privacy Policy", href: "#" },
+    { name: "Privacy Policy", href: "/privacy" },
   ],
 }
 
@@ -64,7 +64,7 @@ const Footer2 = (props: Props) => {
               href="/"
               className="text-lg font-heading font-bold tracking-tight no-underline"
             >
-              LazyNoman
+              lazynoman
             </a>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               {description}
