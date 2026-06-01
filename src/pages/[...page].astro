@@ -5,6 +5,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import PostCard from '../components/PostCard';
+import RecentPosts from '../components/RecentPosts.astro';
 import { PaginationBar } from '@/components/ui/pagination';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
@@ -19,11 +20,10 @@ export async function getStaticPaths({ paginate }) {
 
   return paginate(allPosts, {
     pageSize: ITEMS_PER_PAGE,
-    props: { allPosts },
   });
 }
 
-const { page, allPosts } = Astro.props;
+const { page } = Astro.props;
 
 const cards = await Promise.all(
   page.data.map(async (post) => ({
@@ -34,7 +34,7 @@ const cards = await Promise.all(
   }))
 );
 
-const recent = allPosts.slice(0, 8);
+
 ---
 
 <!doctype html>
@@ -81,46 +81,14 @@ const recent = allPosts.slice(0, 8);
 
           <!-- RECENT (mobile) -->
           <div class="block lg:hidden mt-8">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4 pb-2 border-b" style="border-color:var(--border)">Recent Posts</h3>
-            <div class="divide-y divide-border">
-              {recent.map((post) => {
-                const date = post.data.updatedDate ?? post.data.pubDate
-                const formatted = date.toLocaleDateString('en-US', {
-                  year: 'numeric', month: 'short', day: 'numeric',
-                })
-                return (
-                  <div class="py-3">
-                    <a href={`/${post.id}/`} class="group block no-underline">
-                      <time class="block text-xs text-muted-foreground">{formatted}</time>
-                      <span class="block text-sm font-medium leading-snug mt-0.5 transition-colors group-hover:text-primary">{post.data.title}</span>
-                    </a>
-                  </div>
-                )
-              })}
-            </div>
+            <RecentPosts />
           </div>
         </div>
 
         <!-- RIGHT: Recent sidebar (desktop) -->
         <aside class="hidden lg:block w-72 shrink-0">
           <div class="sticky top-24">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4 pb-2 border-b" style="border-color:var(--border)">Recent Posts</h3>
-            <div class="divide-y divide-border">
-              {recent.map((post) => {
-                const date = post.data.updatedDate ?? post.data.pubDate
-                const formatted = date.toLocaleDateString('en-US', {
-                  year: 'numeric', month: 'short', day: 'numeric',
-                })
-                return (
-                  <div class="py-3">
-                    <a href={`/${post.id}/`} class="group block no-underline">
-                      <time class="block text-xs text-muted-foreground">{formatted}</time>
-                      <span class="block text-sm font-medium leading-snug mt-0.5 transition-colors group-hover:text-primary">{post.data.title}</span>
-                    </a>
-                  </div>
-                )
-              })}
-            </div>
+            <RecentPosts />
           </div>
         </aside>
       </div>

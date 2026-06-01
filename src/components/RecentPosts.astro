@@ -15,19 +15,12 @@ const recentPosts = (await getCollection('post'))
     Recent Posts
   </h3>
   <div class="divide-y divide-border">
-    {recentPosts.map((post) => {
-      const date = post.data.updatedDate ?? post.data.pubDate
-      const formatted = date.toLocaleDateString('en-US', {
-        year: 'numeric', month: 'short', day: 'numeric',
-      })
-      return (
-        <div class="py-3">
-          <a href={`/${post.id}/`} class="group block no-underline">
-            <time class="block text-xs text-muted-foreground">{formatted}</time>
-            <span class="block text-sm font-medium leading-snug mt-0.5 transition-colors group-hover:text-primary">{post.data.title}</span>
-          </a>
-        </div>
-      )
-    })}
+    {recentPosts.map((post) => (
+      <div class="py-3">
+        <a href={`/${post.id}/`} class="group block no-underline">
+          <span class="block text-sm font-medium leading-snug transition-colors group-hover:text-primary">{post.data.title}</span>
+        </a>
+      </div>
+    ))}
   </div>
 </div>
