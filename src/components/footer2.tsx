@@ -21,7 +21,7 @@ interface Footer2Props {
 type Props = Partial<Footer2Props>
 
 const defaultProps: Footer2Props = {
-  description: "Personal novel reviews and recommendations \u2014 honest takes, no fluff.",
+  description: "Personal novel reviews and recommendations.",
   sections: [
     {
       title: "Explore",
