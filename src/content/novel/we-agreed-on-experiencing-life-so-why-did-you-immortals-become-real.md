@@ -1,11 +1,12 @@
 ---
-title: We Agreed On Experiencing Life, So Why Did You Immortals Become Real?
+title: We Agreed On Experiencing Life, So Why Did You Immortals Become Real? On Hold
 description: "A transmigrator lives 100 past lives, saving a girl each time —
   unaware they're all real and searching for him. Strong concept, repetitive
   midpoint."
 pubDate: 2026-06-01T05:40:00.000Z
 updatedDate: 2026-06-01T05:40:00.000Z
-heroImage: ""
+heroImage: "../../assets/img/novel/we-agreed-on-experiencing-life-so-why-did-yo\
+  u-immortals-become-real.jpg"
 category: "novel"
 tags:
   - cheat
