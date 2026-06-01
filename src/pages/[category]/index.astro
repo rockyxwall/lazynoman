@@ -48,7 +48,7 @@ const cards = await Promise.all(
   </head>
   <body>
     <Header />
-    <main>
+    <main style="max-width:1152px;margin:0 auto;padding-left:24px;padding-right:24px" class="grow pt-8 pb-24">
       <header class="mb-12">
         <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}</h1>
         <p class="text-lg text-muted-foreground">
@@ -57,7 +57,7 @@ const cards = await Promise.all(
       </header>
 
       <section>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {cards.map(({ post, heroSrc }) => (
             <PostCard
               client:load

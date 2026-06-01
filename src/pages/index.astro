@@ -7,18 +7,18 @@ import Header from '../components/Header.astro';
 import PostCard from '../components/PostCard';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const posts = (await getCollection('post'))
+const allPosts = (await getCollection('post'))
   .sort((a, b) => {
     const aDate = a.data.updatedDate ?? a.data.pubDate;
     const bDate = b.data.updatedDate ?? b.data.pubDate;
     return bDate.valueOf() - aDate.valueOf();
-  })
-  .slice(0, 4);
+  });
 
-// Resolve the optimized image URL for each hero image so the React PostCard
-// receives the emitted asset URL (not the raw, un-emitted source path).
+const popular = allPosts.slice(0, 8);
+const recent = allPosts.slice(0, 8);
+
 const cards = await Promise.all(
-  posts.map(async (post) => ({
+  popular.map(async (post) => ({
     post,
     heroSrc: post.data.heroImage
       ? (await getImage({ src: post.data.heroImage })).src
@@ -29,62 +29,94 @@ const cards = await Promise.all(
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WC6RL4N6"
-		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-		<Header />
-		
-		<main>
-			{/* Hero Section */}
-			<section class="py-12 md:py-20 mb-12 border-b border-border">
-				<div class="max-w-4xl mx-auto text-center space-y-6">
-					<h1 class="text-4xl md:text-7xl font-bold tracking-tight">
-						Welcome to <span class="text-primary">{SITE_TITLE}</span>
-					</h1>
-					<p class="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-						In-depth <span class="font-semibold text-foreground underline decoration-primary decoration-2 underline-offset-4">novel reviews</span> — honest takes, no fluff.
-					</p>
-					<div class="flex flex-wrap justify-center gap-4 pt-4">
-						<a href="/novel" class="px-8 py-3 bg-primary text-primary-foreground font-bold rounded-lg shadow-lg hover:opacity-90 transition-all no-underline">Browse Novels</a>
-					</div>
-				</div>
-			</section>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WC6RL4N6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <Header />
 
-			{/* Recent Updates */}
-			<section class="max-w-4xl mx-auto">
-				<div class="mb-8">
-					<h2 class="text-3xl font-bold">Recent Updates</h2>
-				</div>
+    <main style="max-width:1152px;margin:0 auto;padding-left:24px;padding-right:24px" class="grow pt-8 pb-24">
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <!-- LEFT -->
+        <div class="min-w-0 flex-1">
+          <section>
+            <div class="flex items-center justify-between mb-8">
+              <h2 class="text-3xl font-bold tracking-tight">Popular</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {cards.map(({ post, heroSrc }) => (
+                <PostCard
+                  client:load
+                  post={post}
+                  heroSrc={heroSrc}
+                  heroAlt={post.data.title}
+                />
+              ))}
+            </div>
+          </section>
 
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{cards.map(({ post, heroSrc }) => (
-						<PostCard
-							client:load
-							post={post}
-							heroSrc={heroSrc}
-							heroAlt={post.data.title}
-						/>
-					))}
-				</div>
-			</section>
+          <!-- PAGINATION -->
+          <nav class="flex items-center justify-center gap-4 pt-8 mt-8 border-t" style="border-color:var(--border)">
+            <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border text-sm font-semibold text-muted-foreground no-underline" style="border-color:var(--border)">&larr; Prev</a>
+            <div class="flex items-center gap-2">
+              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold text-primary bg-card border no-underline" style="border-color:var(--border)">1</a>
+              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-semibold text-muted-foreground no-underline">2</a>
+              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-semibold text-muted-foreground no-underline">3</a>
+              <span class="text-sm text-muted-foreground">&hellip;</span>
+              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-semibold text-muted-foreground no-underline">2</a>
+            </div>
+            <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border text-sm font-semibold text-muted-foreground no-underline" style="border-color:var(--border)">Next &rarr;</a>
+          </nav>
 
-			{/* About Brief */}
-			<section class="max-w-4xl mx-auto mt-20 p-8 rounded-2xl bg-muted/50 border border-border text-center">
-				<h2 class="text-2xl font-bold mb-4">About the Project</h2>
-				<p class="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-					LazyNoman is a space built for clarity and efficiency. Looking for your next novel? We've got honest, in-depth reviews to help you decide.
-				</p>
-				<a href="/about" class="inline-flex items-center font-bold text-primary hover:underline">
-					Learn more about me <span class="ml-1">&rarr;</span>
-				</a>
-			</section>
-		</main>
+          <!-- RECENT (mobile) -->
+          <div class="block lg:hidden mt-8">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4 pb-2 border-b" style="border-color:var(--border)">Recent Posts</h3>
+            <div class="divide-y divide-border">
+              {recent.map((post) => {
+                const date = post.data.updatedDate ?? post.data.pubDate
+                const formatted = date.toLocaleDateString('en-US', {
+                  year: 'numeric', month: 'short', day: 'numeric',
+                })
+                return (
+                  <div class="py-3">
+                    <a href={`/${post.id}/`} class="group block no-underline">
+                      <time class="block text-xs text-muted-foreground">{formatted}</time>
+                      <span class="block text-sm font-medium leading-snug mt-0.5 transition-colors group-hover:text-primary">{post.data.title}</span>
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
 
-		<Footer />
-	</body>
+        <!-- RIGHT: Recent sidebar (desktop) -->
+        <aside class="hidden lg:block w-72 shrink-0">
+          <div class="sticky top-24">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4 pb-2 border-b" style="border-color:var(--border)">Recent Posts</h3>
+            <div class="divide-y divide-border">
+              {recent.map((post) => {
+                const date = post.data.updatedDate ?? post.data.pubDate
+                const formatted = date.toLocaleDateString('en-US', {
+                  year: 'numeric', month: 'short', day: 'numeric',
+                })
+                return (
+                  <div class="py-3">
+                    <a href={`/${post.id}/`} class="group block no-underline">
+                      <time class="block text-xs text-muted-foreground">{formatted}</time>
+                      <span class="block text-sm font-medium leading-snug mt-0.5 transition-colors group-hover:text-primary">{post.data.title}</span>
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
 </html>
