@@ -39,6 +39,7 @@ export default function PostCard({ post, heroSrc, heroAlt }: Props) {
             <img
               src={heroSrc}
               alt={heroAlt ?? ""}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-none"
             />
           ) : (
