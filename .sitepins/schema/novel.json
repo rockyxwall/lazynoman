@@ -41,7 +41,7 @@
     {
       "name": "heroImage",
       "label": "HeroImage",
-      "type": "media",
+      "type": "string",
       "value": "",
       "isIgnored": false,
       "defaultValue": ""
