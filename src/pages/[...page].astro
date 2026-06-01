@@ -37,7 +37,10 @@ const cards = await Promise.all(
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      title={`Your Hub for Novel Reviews & Recommendations - ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
   </head>
   <body class="flex flex-col min-h-screen">
     <noscript
@@ -57,9 +60,7 @@ const cards = await Promise.all(
           <section>
             <header class="mb-12">
               <h1 class="text-4xl md:text-5xl font-bold mb-4">Popular</h1>
-              <p class="text-lg text-muted-foreground">
-                Most viewed reviews.
-              </p>
+              <p class="text-lg text-muted-foreground">Most viewed reviews.</p>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               {
