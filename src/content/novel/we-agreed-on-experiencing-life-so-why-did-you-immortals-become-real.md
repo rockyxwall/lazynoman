@@ -36,9 +36,10 @@ If the author explains all 100 lives, the novel will become boring; they should 
 The full novel could be explained in one sentence: "Wife Grooming Simulator." I think the novel would be more popular if they named it this.
 
 ## Thoughts While Reading:
-
 **Chapter 23:** "Stinking human! Even if I die, I won't let you make soup out of me!" How does a snake know about soup? 🍲
+
 **Chapter 194:** MC's personality and mindset stay the same. Is this a wife-grooming-by-going-into-the-past simulator?
+
 **Chapter 355:** It's getting boring with all that fighting. Seeing that it's not finished and only 100-some chapters are left in translation, I am going to drop it for now. It's interesting even though it's getting boring. I would like to read it, but since it's still releasing, I will keep it on hold.
 
 ## FAQ
