@@ -18,10 +18,7 @@ itemAuthor: "红烧油焖虾"
 draft: false
 ---
 ## What to Expect
-
-Genre: Xuanhuan, Seinen, Martial arts, Fantasy, Tragedy, Action, Harem, Romance, Adventure
-
-Tag: Unique cultivation technique, Fast cultivation, Strong love interests, Romantic subplot, Demons, Beautiful female lead, Demon lord, Bloodlines, Calm protagonist, Handsome male lead, Beast companions, Immortals, Body tempering, Artifacts, Beasts, Alchemy, Determined protagonist, Male protagonist, Demonic cultivation technique, Strength-based social hierarchy, Dragons, Revenge, Acting, Older love interests, Caring protagonist, Devoted love interests, Character growth, Time skip, Nobles, Royalty, Loyal subordinates, Age progression, Cultivation, Game elements, Limited lifespan, Misunderstandings, Cheats, Souls, Transmigration, Sudden strength gain, Overpowered protagonist, Master-disciple relationship, Complex family relationships, Cold love interests, Love interest falls in love first, Fantasy world, Multiple pov, Early romance, Depictions of cruelty, Spatial manipulation, Beastkin, Aristocracy, Underestimated protagonist, Hiding true abilities, Popular love interests, Hidden abilities, Special abilities, Godly powers, Polygamy, Murders, Skill assimilation, Multiple identities, Accelerated growth, Secrets, Death, Eye powers, Dao comprehension, Heavenly tribulation, Interconnected storylines, Abandoned children, Strong to stronger, Family conflict, Inscriptions, Death of loved ones, Empires, Mythical beasts, Dao companion, Human-nonhuman relationship, System administrator, Books, Kingdoms, Master-servant relationship, Fallen nobility, Past plays a big role, Ability steal, Clingy lover, Yandere, Goddesses, Fated lovers, Servants, Family, Persistent love interests, Fantasy creatures, First love, Power struggle, Different social status, Destiny, Helpful protagonist, Animal characteristics, Divination, Psychopaths, Daoism, Female master, Kind love interests, Serial killers, Court official, Rebellion, Selfless protagonist
+Xuanhuan, Martial arts, Harem, Romance, Selfless protagonist
 
 ## Some Thoughts
 

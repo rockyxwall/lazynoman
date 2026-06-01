@@ -1,25 +1,49 @@
 ---
-import { SITE_TITLE } from '../consts';
-import { Nav } from '@/components/Nav';
-import { ModeToggle } from '@/components/ModeToggle';
+import { Image } from "astro:assets";
+import { SITE_TITLE, SITE_TITLE_FULL } from "../consts";
+import { Nav } from "@/components/Nav";
+import { ModeToggle } from "@/components/ModeToggle";
 
 const navLinks = [
-	{ href: '/novel', label: 'Novel' },
-	{ href: '/about', label: 'About' }
+	{ href: "/novel", label: "Novel" },
+	{ href: "/about", label: "About" },
 ];
 ---
 
-<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm shadow-sm">
-	<nav class="container mx-auto flex items-center justify-between h-16 max-w-4xl px-4 sm:px-6 lg:px-8">
+<header
+	class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm shadow-sm"
+>
+	<nav
+		class="container mx-auto flex items-center justify-between h-16"
+		style="max-width:1152px;padding-left:24px;padding-right:24px"
+	>
 		<div class="flex items-center h-full">
 			<h2 class="m-0 leading-none">
-				<a href="/" class="flex items-center no-underline transition-opacity hover:opacity-80" aria-label={SITE_TITLE}>
-					<img src="/favicons/favicon.svg" alt="lazynoman_logo" class="w-8 h-8 sm:w-9 sm:h-9" />
+				<a
+					href="/"
+					class="flex items-center gap-2 no-underline transition-opacity hover:opacity-80"
+					aria-label={SITE_TITLE}
+				>
+					<Image
+						src="/favicons/favicon.svg"
+						alt="lazynoman_logo"
+						class="w-8 h-8 sm:w-9 sm:h-9"
+						width={32}
+						height={32}
+					/>
+					<span
+						class="text-base sm:text-lg font-heading font-bold tracking-tight text-foreground"
+						>{SITE_TITLE_FULL}</span
+					>
 				</a>
 			</h2>
 		</div>
 		<div class="flex items-center gap-1 sm:gap-4 h-full">
-			<Nav client:load links={navLinks} currentPath={Astro.url.pathname} />
+			<Nav
+				client:load
+				links={navLinks}
+				currentPath={Astro.url.pathname}
+			/>
 			<div class="ml-1 sm:ml-2 flex items-center h-full">
 				<ModeToggle client:load />
 			</div>

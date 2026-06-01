@@ -39,7 +39,8 @@ export default function PostCard({ post, heroSrc, heroAlt }: Props) {
             <img
               src={heroSrc}
               alt={heroAlt ?? ""}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-none"
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">

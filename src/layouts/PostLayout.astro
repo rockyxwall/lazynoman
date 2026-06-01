@@ -8,6 +8,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import RecentPosts from '../components/RecentPosts.astro';
 import { Tag } from '../components/ui/tag';
 import '../styles/markdown.css';
 
@@ -35,12 +36,13 @@ const {
   <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WC6RL4N6"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <Header />
 
-    <main class="mx-auto w-full max-w-4xl px-4 pt-12 pb-24 overflow-x-hidden">
-      <article>
+    <main class="pt-12 overflow-x-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
+        <article class="lg:col-span-3 min-w-0">
 
         {/* ── Post Header ── */}
         <header class="post-header mb-12">
@@ -81,6 +83,7 @@ const {
               src={heroImage}
               alt={`Cover for ${title}`}
               class="hero-img"
+              loading="eager"
             />
           </div>
         )}
@@ -107,6 +110,13 @@ const {
         <Comments />
 
       </article>
+
+      <aside class="lg:col-span-1">
+        <div class="sticky top-8 space-y-8">
+          <RecentPosts />
+        </div>
+      </aside>
+      </div>
     </main>
 
     <Footer />

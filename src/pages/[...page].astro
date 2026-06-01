@@ -1,0 +1,105 @@
+---
+import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import PostCard from "../components/PostCard";
+import RecentPosts from "../components/RecentPosts.astro";
+import { PaginationBar } from "@/components/ui/pagination";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+
+export async function getStaticPaths({ paginate }) {
+  const ITEMS_PER_PAGE = 8;
+  const allPosts = (await getCollection("post")).sort((a, b) => {
+    const aDate = a.data.updatedDate ?? a.data.pubDate;
+    const bDate = b.data.updatedDate ?? b.data.pubDate;
+    return bDate.valueOf() - aDate.valueOf();
+  });
+
+  return paginate(allPosts, {
+    pageSize: ITEMS_PER_PAGE,
+  });
+}
+
+const { page } = Astro.props;
+
+const cards = await Promise.all(
+  page.data.map(async (post) => ({
+    post,
+    heroSrc: post.data.heroImage
+      ? (await getImage({ src: post.data.heroImage })).src
+      : undefined,
+  })),
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Your Hub for Novel Reviews & Recommendations - ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-WC6RL4N6"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"></iframe></noscript
+    >
+    <Header />
+
+    <main>
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <!-- LEFT -->
+        <div class="min-w-0 flex-1">
+          <section>
+            <header class="mb-12">
+              <h1 class="text-4xl md:text-5xl font-bold mb-4">Popular</h1>
+              <p class="text-lg text-muted-foreground">Most viewed reviews.</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {
+                cards.map(({ post, heroSrc }) => (
+                  <PostCard
+                    client:load
+                    post={post}
+                    heroSrc={heroSrc}
+                    heroAlt={post.data.title}
+                  />
+                ))
+              }
+            </div>
+          </section>
+
+          <div class="pt-8 mt-8 border-t" style="border-color:var(--border)">
+            <PaginationBar
+              client:load
+              currentPage={page.currentPage}
+              totalPages={page.lastPage}
+              baseUrl="/"
+            />
+          </div>
+
+          <!-- RECENT (mobile) -->
+          <div class="block lg:hidden mt-8">
+            <RecentPosts />
+          </div>
+        </div>
+
+        <!-- RIGHT: Recent sidebar (desktop) -->
+        <aside class="hidden lg:block w-72 shrink-0">
+          <div class="sticky top-24">
+            <RecentPosts />
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
