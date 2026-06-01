@@ -5,26 +5,36 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import PostCard from '../components/PostCard';
+import { PaginationBar } from '@/components/ui/pagination';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const allPosts = (await getCollection('post'))
-  .sort((a, b) => {
-    const aDate = a.data.updatedDate ?? a.data.pubDate;
-    const bDate = b.data.updatedDate ?? b.data.pubDate;
-    return bDate.valueOf() - aDate.valueOf();
-  });
+export async function getStaticPaths({ paginate }) {
+  const ITEMS_PER_PAGE = 8;
+  const allPosts = (await getCollection('post'))
+    .sort((a, b) => {
+      const aDate = a.data.updatedDate ?? a.data.pubDate;
+      const bDate = b.data.updatedDate ?? b.data.pubDate;
+      return bDate.valueOf() - aDate.valueOf();
+    });
 
-const popular = allPosts.slice(0, 8);
-const recent = allPosts.slice(0, 8);
+  return paginate(allPosts, {
+    pageSize: ITEMS_PER_PAGE,
+    props: { allPosts },
+  });
+}
+
+const { page, allPosts } = Astro.props;
 
 const cards = await Promise.all(
-  popular.map(async (post) => ({
+  page.data.map(async (post) => ({
     post,
     heroSrc: post.data.heroImage
       ? (await getImage({ src: post.data.heroImage })).src
       : undefined,
   }))
 );
+
+const recent = allPosts.slice(0, 8);
 ---
 
 <!doctype html>
@@ -42,9 +52,12 @@ const cards = await Promise.all(
         <!-- LEFT -->
         <div class="min-w-0 flex-1">
           <section>
-            <div class="flex items-center justify-between mb-8">
-              <h2 class="text-3xl font-bold tracking-tight">Popular</h2>
-            </div>
+            <header class="mb-12">
+              <h1 class="text-4xl md:text-5xl font-bold mb-4">Popular</h1>
+              <p class="text-lg text-muted-foreground">
+                Most viewed reviews — honest takes, no fluff.
+              </p>
+            </header>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               {cards.map(({ post, heroSrc }) => (
                 <PostCard
@@ -57,18 +70,14 @@ const cards = await Promise.all(
             </div>
           </section>
 
-          <!-- PAGINATION -->
-          <nav class="flex items-center justify-center gap-4 pt-8 mt-8 border-t" style="border-color:var(--border)">
-            <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border text-sm font-semibold text-muted-foreground no-underline" style="border-color:var(--border)">&larr; Prev</a>
-            <div class="flex items-center gap-2">
-              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold text-primary bg-card border no-underline" style="border-color:var(--border)">1</a>
-              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-semibold text-muted-foreground no-underline">2</a>
-              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-semibold text-muted-foreground no-underline">3</a>
-              <span class="text-sm text-muted-foreground">&hellip;</span>
-              <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-semibold text-muted-foreground no-underline">2</a>
-            </div>
-            <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border text-sm font-semibold text-muted-foreground no-underline" style="border-color:var(--border)">Next &rarr;</a>
-          </nav>
+          <div class="pt-8 mt-8 border-t" style="border-color:var(--border)">
+            <PaginationBar
+              client:load
+              currentPage={page.currentPage}
+              totalPages={page.lastPage}
+              baseUrl="/"
+            />
+          </div>
 
           <!-- RECENT (mobile) -->
           <div class="block lg:hidden mt-8">
