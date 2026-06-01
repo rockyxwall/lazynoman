@@ -131,11 +131,11 @@ function PaginationBar({ currentPage, totalPages, baseUrl }: PaginationBarProps)
   return (
     <Pagination>
       <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious
-            href={currentPage > 1 ? pageUrl(currentPage - 1) : undefined}
-          />
-        </PaginationItem>
+        {currentPage > 1 && (
+          <PaginationItem>
+            <PaginationPrevious href={pageUrl(currentPage - 1)} />
+          </PaginationItem>
+        )}
         {pages.map((page, i) =>
           page === "ellipsis" ? (
             <PaginationItem key={`e${i}`}>
@@ -152,11 +152,11 @@ function PaginationBar({ currentPage, totalPages, baseUrl }: PaginationBarProps)
             </PaginationItem>
           )
         )}
-        <PaginationItem>
-          <PaginationNext
-            href={currentPage < totalPages ? pageUrl(currentPage + 1) : undefined}
-          />
-        </PaginationItem>
+        {currentPage < totalPages && (
+          <PaginationItem>
+            <PaginationNext href={pageUrl(currentPage + 1)} />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   )

@@ -63,7 +63,7 @@ const show = tocHeadings.length >= 2;
         <ul class="toc__list">
           {tocHeadings.map((heading) => (
             <li class="toc__item" data-depth={heading.depth}>
-              <a class="toc__link" href={`#${heading.slug}`} data-target={heading.slug}>
+              <a class="toc__link" href={`#${heading.slug}`} data-target={heading.slug} aria-label={heading.text}>
                 {heading.text}
               </a>
             </li>
