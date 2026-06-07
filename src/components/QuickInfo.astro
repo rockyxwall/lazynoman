@@ -37,6 +37,15 @@ const novelName = officialTitle || title
 const filledStars = rating ? Math.floor(rating / 2) : 0
 const emptyStars = 5 - filledStars
 const starDisplay = '★'.repeat(filledStars) + '☆'.repeat(emptyStars)
+
+const visibleLimit = 5
+const genreVisible = novelGenres.slice(0, visibleLimit)
+const genreHidden = novelGenres.slice(visibleLimit)
+const hasGenreHidden = genreHidden.length > 0
+const tagVisible = novelTags.slice(0, visibleLimit)
+const tagHidden = novelTags.slice(visibleLimit)
+const hasTagHidden = tagHidden.length > 0
+
 const wrapperClass =
   placement === 'mobile'
     ? 'mb-6 lg:hidden'
@@ -59,22 +68,48 @@ const wrapperClass =
       )}
 
       {novelGenres.length > 0 && (
-        <div class="flex flex-wrap gap-1.5">
-          {novelGenres.map((g) => (
-            <span class="inline-flex items-center rounded-full border border-border bg-secondary px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-secondary-foreground">
-              {g}
-            </span>
-          ))}
+        <div class="space-y-1">
+          <span class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Genres</span>
+          <div class="flex flex-wrap gap-1" data-novel-items>
+            {genreVisible.map((g) => (
+              <span class="inline-flex items-center rounded-full border border-border bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground leading-none">
+                {g}
+              </span>
+            ))}
+            {genreHidden.map((g) => (
+              <span class="hidden-item inline-flex items-center rounded-full border border-border bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground leading-none" data-hidden>
+                {g}
+              </span>
+            ))}
+            {hasGenreHidden && (
+              <button class="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none cursor-pointer hover:bg-accent" data-toggle-btn type="button">
+                +{genreHidden.length} more
+              </button>
+            )}
+          </div>
         </div>
       )}
 
       {novelTags.length > 0 && (
-        <div class="flex flex-wrap gap-1.5">
-          {novelTags.map((t) => (
-            <span class="inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
-              {t}
-            </span>
-          ))}
+        <div class="space-y-1">
+          <span class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Tags</span>
+          <div class="flex flex-wrap gap-1" data-novel-items>
+            {tagVisible.map((t) => (
+              <span class="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none">
+                {t}
+              </span>
+            ))}
+            {tagHidden.map((t) => (
+              <span class="hidden-item inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none" data-hidden>
+                {t}
+              </span>
+            ))}
+            {hasTagHidden && (
+              <button class="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none cursor-pointer hover:bg-accent" data-toggle-btn type="button">
+                +{tagHidden.length} more
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -107,3 +142,21 @@ const wrapperClass =
     </div>
   </div>
 </div>
+
+<script>
+  const containers = document.querySelectorAll('[data-novel-items]')
+  for (const container of containers) {
+    const btn = container.querySelector('[data-toggle-btn]')
+    const hidden = container.querySelectorAll('[data-hidden]')
+    if (btn && hidden.length) {
+      btn.addEventListener('click', () => {
+        hidden.forEach(el => el.classList.remove('hidden-item'))
+        btn.remove()
+      })
+    }
+  }
+</script>
+
+<style>
+  .hidden-item { display: none; }
+</style>
