@@ -60,7 +60,8 @@
       "type": "Array",
       "value": [],
       "isIgnored": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "subType": "string"
     },
     {
       "name": "rating",

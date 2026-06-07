@@ -21,6 +21,7 @@ const post = defineCollection({
 			platform: z.string().optional(),
 			progress: z.string().optional(),
 			tags: z.array(z.string()).optional(),
+			draft: z.boolean().default(false),
 			summary: z.string().optional(),
 			officialTitle: z.string().optional(),
 			synonyms: z.array(z.string()).optional(),
