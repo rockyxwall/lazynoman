@@ -16,6 +16,7 @@ const post = defineCollection({
 			heroImage: z.optional(image()),
 			category: z.string().optional(),
 			creator: z.string().optional(),
+			itemAuthor: z.string().optional(),
 			medium: z.string().optional(),
 			status: z.string().optional(),
 			platform: z.string().optional(),
@@ -25,6 +26,10 @@ const post = defineCollection({
 			summary: z.string().optional(),
 			officialTitle: z.string().optional(),
 			synonyms: z.array(z.string()).optional(),
+			rating: z.number().optional(),
+			novelGenres: z.array(z.string()).optional(),
+			chapterCount: z.number().optional(),
+			novelDescription: z.string().optional(),
 		}),
 });
 

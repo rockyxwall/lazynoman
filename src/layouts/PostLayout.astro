@@ -9,6 +9,7 @@ import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import RecentPosts from '../components/RecentPosts.astro';
+import QuickInfo from '../components/QuickInfo.astro';
 import { Tag } from '../components/ui/tag';
 import '../styles/markdown.css';
 
@@ -88,11 +89,15 @@ const {
           </div>
         )}
 
+        {/* ── Quick Info (mobile) ── */}
+        <QuickInfo {...Astro.props} placement="mobile" />
+
         {/* ── Table of Contents ── */}
         <TableOfContents headings={headings} />
 
         {/* ── Prose Body ── */}
         <div class="markdown-body">
+          <span id="review-start" class="block" style="scroll-margin-top: 5rem;"></span>
           <slot />
         </div>
 
@@ -113,6 +118,7 @@ const {
 
       <aside class="lg:col-span-1">
         <div class="sticky top-8 space-y-8">
+          <QuickInfo {...Astro.props} placement="desktop" />
           <RecentPosts />
         </div>
       </aside>

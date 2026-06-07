@@ -1,0 +1,91 @@
+---
+interface Props {
+  title: string
+  officialTitle?: string
+  itemAuthor?: string
+  rating?: number
+  novelGenres?: string[]
+  status?: string
+  chapterCount?: number
+  platform?: string
+  novelDescription?: string
+  placement: 'mobile' | 'desktop'
+}
+
+const {
+  title,
+  officialTitle,
+  itemAuthor,
+  rating,
+  novelGenres = [],
+  status,
+  chapterCount,
+  platform,
+  novelDescription,
+  placement,
+} = Astro.props
+
+const novelName = officialTitle || title
+const filledStars = rating ? Math.floor(rating / 2) : 0
+const emptyStars = 5 - filledStars
+const starDisplay = '★'.repeat(filledStars) + '☆'.repeat(emptyStars)
+const wrapperClass =
+  placement === 'mobile'
+    ? 'mb-6 lg:hidden'
+    : 'hidden lg:block sticky top-24'
+---
+
+<div class={wrapperClass}>
+  <div class="bg-card text-card-foreground flex flex-col gap-4 rounded-xl border border-border py-5 shadow-sm">
+    <div class="px-5 space-y-1">
+      <h3 class="font-semibold leading-tight text-base">{novelName}</h3>
+      {itemAuthor && <p class="text-sm text-muted-foreground">by {itemAuthor}</p>}
+    </div>
+
+    <div class="px-5 space-y-3">
+      {rating && (
+        <div class="flex items-center gap-2">
+          <span class="text-amber-500 text-sm tracking-wide">{starDisplay}</span>
+          <span class="font-mono text-sm font-bold">{rating}/10</span>
+        </div>
+      )}
+
+      {novelGenres.length > 0 && (
+        <div class="flex flex-wrap gap-1.5">
+          {novelGenres.map((g) => (
+            <span class="inline-flex items-center rounded-full border border-border bg-secondary px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-secondary-foreground">
+              {g}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div class="space-y-1 border-t border-border pt-3 text-sm">
+        {status && (
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Status</span>
+            <span class="font-medium">{status}</span>
+          </div>
+        )}
+        {chapterCount && (
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Chapters</span>
+            <span class="font-medium">~{chapterCount}</span>
+          </div>
+        )}
+        {platform && (
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Platform</span>
+            <span class="font-medium">{platform}</span>
+          </div>
+        )}
+      </div>
+
+      {novelDescription && (
+        <p class="text-xs text-muted-foreground leading-relaxed border-t border-border pt-3">
+          {novelDescription}
+        </p>
+      )}
+    </div>
+  </div>
+</div>
