@@ -3,7 +3,7 @@ import { type CollectionEntry, getCollection, render } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('post');
+  const posts = await getCollection('post', ({ data }) => import.meta.env.PROD ? data.draft !== true : true);
   return posts.map((post) => {
     const [category, ...slugParts] = post.id.split('/');
     const slug = slugParts.join('/');

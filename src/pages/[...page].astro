@@ -11,7 +11,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 export async function getStaticPaths({ paginate }) {
   const ITEMS_PER_PAGE = 8;
-  const allPosts = (await getCollection("post")).sort((a, b) => {
+  const allPosts = (await getCollection("post", ({ data }) => import.meta.env.PROD ? data.draft !== true : true)).sort((a, b) => {
     const aDate = a.data.updatedDate ?? a.data.pubDate;
     const bDate = b.data.updatedDate ?? b.data.pubDate;
     return bDate.valueOf() - aDate.valueOf();
