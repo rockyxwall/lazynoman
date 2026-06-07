@@ -34,9 +34,6 @@ const {
 } = novelInfo
 
 const novelName = officialTitle || title
-const filledStars = rating ? Math.floor(rating / 2) : 0
-const emptyStars = 5 - filledStars
-const starDisplay = '★'.repeat(filledStars) + '☆'.repeat(emptyStars)
 
 const visibleLimit = 5
 const genreVisible = novelGenres.slice(0, visibleLimit)
@@ -53,67 +50,82 @@ const wrapperClass =
 ---
 
 <div class={wrapperClass}>
-  <div class="bg-card text-card-foreground flex flex-col gap-4 rounded-xl border border-border py-5 shadow-sm">
-    <div class="px-5 space-y-1">
+  <div class="flex flex-col gap-4">
+    <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground pb-2 border-b border-border">
+      Quick Info
+    </h3>
+    <div class="space-y-1">
       <h3 class="font-semibold leading-tight text-base">{novelName}</h3>
       {itemAuthor && <p class="text-sm text-muted-foreground">by {itemAuthor}</p>}
     </div>
 
-    <div class="px-5 space-y-3">
-      {rating && (
-        <div class="flex items-center gap-2">
-          <span class="text-amber-500 text-sm tracking-wide">{starDisplay}</span>
-          <span class="font-mono text-sm font-bold">{rating}/10</span>
+      {novelDescription && (
+        <div class="space-y-1">
+          <span class="text-xs font-semibold text-muted-foreground">Description</span>
+          <p class="text-sm text-muted-foreground leading-relaxed">
+            {novelDescription}
+          </p>
         </div>
       )}
 
+    <div class="space-y-3">
       {novelGenres.length > 0 && (
-        <div class="space-y-1">
-          <span class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Genres</span>
-          <div class="flex flex-wrap gap-1" data-novel-items>
+        <div class="space-y-1.5" data-novel-section>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-muted-foreground">Genres</span>
+            {hasGenreHidden && (
+              <button class="text-xs text-muted-foreground/70 hover:text-foreground cursor-pointer transition-colors" data-toggle-btn data-hidden-count={genreHidden.length} type="button">
+                +{genreHidden.length} more
+              </button>
+            )}
+          </div>
+          <div class="flex flex-wrap gap-1.5" data-novel-items>
             {genreVisible.map((g) => (
-              <span class="inline-flex items-center rounded-full border border-border bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground leading-none">
+              <span class="inline-flex items-center rounded-full border border-border bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground leading-none">
                 {g}
               </span>
             ))}
             {genreHidden.map((g) => (
-              <span class="hidden-item inline-flex items-center rounded-full border border-border bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground leading-none" data-hidden>
+              <span class="hidden-item inline-flex items-center rounded-full border border-border bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground leading-none" data-hidden>
                 {g}
               </span>
             ))}
-            {hasGenreHidden && (
-              <button class="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none cursor-pointer hover:bg-accent" data-toggle-btn type="button">
-                +{genreHidden.length} more
-              </button>
-            )}
           </div>
         </div>
       )}
 
       {novelTags.length > 0 && (
-        <div class="space-y-1">
-          <span class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Tags</span>
-          <div class="flex flex-wrap gap-1" data-novel-items>
-            {tagVisible.map((t) => (
-              <span class="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none">
-                {t}
-              </span>
-            ))}
-            {tagHidden.map((t) => (
-              <span class="hidden-item inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none" data-hidden>
-                {t}
-              </span>
-            ))}
+        <div class="space-y-1.5" data-novel-section>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-muted-foreground">Tags</span>
             {hasTagHidden && (
-              <button class="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground leading-none cursor-pointer hover:bg-accent" data-toggle-btn type="button">
+              <button class="text-xs text-muted-foreground/70 hover:text-foreground cursor-pointer transition-colors" data-toggle-btn data-hidden-count={tagHidden.length} type="button">
                 +{tagHidden.length} more
               </button>
             )}
           </div>
+          <div class="flex flex-wrap gap-1.5" data-novel-items>
+            {tagVisible.map((t) => (
+              <span class="inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-1 text-xs font-medium text-foreground leading-none">
+                {t}
+              </span>
+            ))}
+            {tagHidden.map((t) => (
+              <span class="hidden-item inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-1 text-xs font-medium text-foreground leading-none" data-hidden>
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       )}
 
-      <div class="space-y-1 border-t border-border pt-3 text-sm">
+      <div class="space-y-1 text-sm">
+        {rating && (
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Rating</span>
+            <span class="font-medium">{rating}/10</span>
+          </div>
+        )}
         {status && (
           <div class="flex justify-between">
             <span class="text-muted-foreground">Status</span>
@@ -133,27 +145,28 @@ const wrapperClass =
           </div>
         )}
       </div>
-
-      {novelDescription && (
-        <p class="text-xs text-muted-foreground leading-relaxed border-t border-border pt-3">
-          {novelDescription}
-        </p>
-      )}
     </div>
   </div>
 </div>
 
 <script>
-  const containers = document.querySelectorAll('[data-novel-items]')
-  for (const container of containers) {
-    const btn = container.querySelector('[data-toggle-btn]')
-    const hidden = container.querySelectorAll('[data-hidden]')
-    if (btn && hidden.length) {
-      btn.addEventListener('click', () => {
+  const btns = document.querySelectorAll('[data-toggle-btn]')
+  for (const btn of btns) {
+    const section = btn.closest('[data-novel-section]')
+    const hidden = section.querySelectorAll('[data-hidden]')
+    const count = parseInt(btn.dataset.hiddenCount)
+    btn.addEventListener('click', () => {
+      const expanded = btn.dataset.expanded === 'true'
+      if (expanded) {
+        hidden.forEach(el => el.classList.add('hidden-item'))
+        btn.dataset.expanded = 'false'
+        btn.textContent = `+${count} more`
+      } else {
         hidden.forEach(el => el.classList.remove('hidden-item'))
-        btn.remove()
-      })
-    }
+        btn.dataset.expanded = 'true'
+        btn.textContent = 'show less'
+      }
+    })
   }
 </script>
 
