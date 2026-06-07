@@ -10,7 +10,7 @@ tags:
   - xianxia
   - xuanhuan
   - overpowered protagonist
-novelInfo:
+quickInfo:
   rating: 6
   itemAuthor: Let me laugh
 ---

@@ -19,7 +19,7 @@ const post = defineCollection({
 			draft: z.boolean().default(false),
 			summary: z.string().optional(),
 			synonyms: z.array(z.string()).optional(),
-			novelInfo: z.object({
+			quickInfo: z.object({
 				officialTitle: z.string().optional(),
 				itemAuthor: z.string().optional(),
 				rating: z.number().optional(),
@@ -29,6 +29,7 @@ const post = defineCollection({
 				chapterCount: z.number().optional(),
 				platform: z.string().optional(),
 				novelDescription: z.string().optional(),
+				novelType: z.string().optional(),
 			}).optional(),
 		}),
 });

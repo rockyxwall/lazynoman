@@ -10,7 +10,7 @@ tags:
   - world-hopping
   - op-mc
   - system
-novelInfo:
+quickInfo:
   rating: 7
   novelGenres:
     - Adventure
@@ -90,8 +90,9 @@ novelInfo:
   platform: Webnovel
   itemAuthor: "Salted Fish Jienan"
   officialTitle: "Fantasy Simulator"
-  novelDescription: "After dying, Chen Heng finds that he has transmigrated to an alternate reality: everything is the same, except the world is now a Wuxia world heavily influenced by martial arts! Not only this, he discovers that he has a Fantasy Simulator, from which he obtains rewards that make him incredibly powerful in his new reality as well. Martial arts, immortal cultivation, and overpowered abilities — all of this begins from a single simulation!"
-draft: true
+  novelDescription: "After dying, Chen Heng finds that he has transmigrated to an alternate reality: everything is the same, except the world is now a Wuxia world heavily influenced by martial arts! Not only this, he discovers that he has a Fantasy Simulator, from which he obtains rewards that make him incredibly powerful in his new reality as well. Martial arts, immortal cultivation, and overpowered abilities--all of this begins from a single simulation!"
+  novelType: Web Novel (CN)
+  draft: true
 ---
 
 ## What Is Fantasy Simulator?
