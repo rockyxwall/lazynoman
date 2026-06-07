@@ -1,0 +1,42 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { Button } from "@/components/ui/button";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`404 - Page Not Found | ${SITE_TITLE}`}
+      description={`The page you're looking for doesn't exist. | ${SITE_DESCRIPTION}`}
+    />
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-WC6RL4N6"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"></iframe></noscript
+    >
+    <Header />
+
+    <main class="flex-1 flex items-center justify-center">
+      <div class="text-center px-4">
+        <h1 class="text-7xl font-heading font-black mb-4">404</h1>
+        <p class="text-xl text-muted-foreground mb-8">
+          Page not found — it may have moved or never existed.
+        </p>
+        <Button asChild size="lg">
+          <a href="/"> &larr; Back to Home </a>
+        </Button>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
