@@ -1,9 +1,7 @@
 ---
 /**
  * TableOfContents Component
- * Renders a table of contents from the post's headings (h1–h3) at build time,
- * so the scoped styles apply correctly. A small client script handles the
- * collapse toggle and scroll-spy active highlighting.
+ * Port of shadcn/ui DocsTableOfContents (list variant).
  */
 import type { MarkdownHeading } from 'astro';
 
@@ -13,160 +11,94 @@ interface Props {
 
 const { headings = [] } = Astro.props;
 
-const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
 
-// A single heading doesn't warrant a contents panel.
 const show = tocHeadings.length >= 2;
 ---
 
 {
   show && (
-    <nav class="toc" aria-label="Table of contents">
+    <div class="toc" aria-label="Table of contents">
       <details class="toc__details">
         <summary class="toc__summary">
-          <span class="toc__heading">
-            <svg
-              class="toc__icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="8" x2="21" y1="6" y2="6" />
-              <line x1="8" x2="21" y1="12" y2="12" />
-              <line x1="8" x2="21" y1="18" y2="18" />
-              <line x1="3" x2="3.01" y1="6" y2="6" />
-              <line x1="3" x2="3.01" y1="12" y2="12" />
-              <line x1="3" x2="3.01" y1="18" y2="18" />
-            </svg>
-            <span>Contents</span>
-          </span>
-          <svg
-            class="toc__chevron"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
+          <span>On This Page</span>
+          <svg class="toc__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m6 9 6 6 6-6" />
           </svg>
         </summary>
-
-        <ul class="toc__list">
+        <div class="toc__content">
           {tocHeadings.map((heading) => (
-            <li class="toc__item" data-depth={heading.depth}>
-              <a class="toc__link" href={`#${heading.slug}`} data-target={heading.slug} aria-label={heading.text}>
-                {heading.text}
-              </a>
-            </li>
+            <a
+              class="toc__link"
+              href={`#${heading.slug}`}
+              data-depth={heading.depth}
+            >
+              {heading.text}
+            </a>
           ))}
-        </ul>
+        </div>
       </details>
-    </nav>
+    </div>
   )
 }
 
 <script>
-  // Offset matching the sticky header height (h-16 = 4rem) plus breathing room.
-  const SCROLL_OFFSET = 96;
-
-  let cleanup: (() => void) | null = null;
+  let cleanup: (() => void) | null = null
 
   function initTableOfContents() {
-    cleanup?.();
-    cleanup = null;
+    cleanup?.()
+    cleanup = null
 
-    const nav = document.querySelector<HTMLElement>('.toc');
-    if (!nav) return;
+    const container = document.querySelector<HTMLElement>('.toc')
+    if (!container) return
 
     const links = Array.from(
-      nav.querySelectorAll<HTMLAnchorElement>('.toc__link')
-    );
-    if (links.length === 0) return;
+      container.querySelectorAll<HTMLAnchorElement>('.toc__link')
+    )
+    if (links.length === 0) return
 
-    // Resolve each link to its target heading element.
-    const entries = links
-      .map((link) => {
-        const id = link.dataset.target;
-        const el = id ? document.getElementById(id) : null;
-        return el ? { link, el } : null;
+    const itemIds = links
+      .map((link) => link.getAttribute('href')?.replace('#', ''))
+      .filter((id): id is string => !!id)
+
+    const setActive = (id: string | null) => {
+      links.forEach((link) => {
+        const isActive = link.getAttribute('href') === (id ? `#${id}` : null)
+        link.classList.toggle('is-active', isActive)
+        link.toggleAttribute('data-active', isActive)
       })
-      .filter((e): e is { link: HTMLAnchorElement; el: HTMLElement } => e !== null);
+    }
 
-    if (entries.length === 0) return;
-
-    let activeLink: HTMLAnchorElement | null = null;
-    const setActive = (link: HTMLAnchorElement | null) => {
-      if (link === activeLink) return;
-      if (activeLink) {
-        activeLink.classList.remove('is-active');
-        activeLink.removeAttribute('aria-current');
-      }
-      activeLink = link;
-      if (link) {
-        link.classList.add('is-active');
-        link.setAttribute('aria-current', 'true');
-      }
-    };
-
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
-
-        // No active link until a heading has scrolled past the offset.
-        let current: HTMLAnchorElement | null = null;
+    const observer = new IntersectionObserver(
+      (entries) => {
         for (const entry of entries) {
-          if (entry.el.getBoundingClientRect().top - SCROLL_OFFSET <= 0) {
-            current = entry.link;
-          } else {
-            break;
+          if (entry.isIntersecting) {
+            setActive(entry.target.id)
           }
         }
+      },
+      { rootMargin: '0% 0% -80% 0%' }
+    )
 
-        // Snap to the last entry once we reach the bottom of the page.
-        const atBottom =
-          window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 2;
-        if (atBottom) current = entries[entries.length - 1].link;
+    for (const id of itemIds) {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    }
 
-        setActive(current);
-      });
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    onScroll();
-
-    cleanup = () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
+    cleanup = () => observer.disconnect()
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTableOfContents);
+    document.addEventListener('DOMContentLoaded', initTableOfContents)
   } else {
-    initTableOfContents();
+    initTableOfContents()
   }
 
-  // Astro view transitions.
-  document.addEventListener('astro:page-load', initTableOfContents);
-  document.addEventListener('astro:before-swap', () => cleanup?.());
+  document.addEventListener('astro:page-load', initTableOfContents)
+  document.addEventListener('astro:before-swap', () => cleanup?.())
 </script>
 
 <style is:global>
-  /* Keep clicked headings clear of the sticky header. */
   .markdown-body :is(h2, h3, h4) {
     scroll-margin-top: 5rem;
   }
@@ -181,27 +113,23 @@ const show = tocHeadings.length >= 2;
 <style>
   .toc {
     margin-bottom: 2.5rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--background);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    overflow: hidden;
-  }
-
-  .toc__details {
-    width: 100%;
   }
 
   .toc__summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
-    padding: 0.85rem 1.1rem;
+    gap: 0.5rem;
+    list-style: none;
     cursor: pointer;
     user-select: none;
-    list-style: none;
-    transition: background-color 0.15s ease;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--p-muted);
+    padding: 0.6rem 0 0.5rem;
+    border-bottom: 1px solid var(--p-border);
   }
 
   .toc__summary::-webkit-details-marker {
@@ -209,38 +137,14 @@ const show = tocHeadings.length >= 2;
   }
 
   .toc__summary:hover {
-    background: color-mix(in oklab, var(--foreground) 5%, transparent);
-  }
-
-  .toc__summary:focus-visible {
-    outline: 2px solid var(--ring);
-    outline-offset: -2px;
-  }
-
-  .toc__heading {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-family: 'Atkinson', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: var(--foreground);
-  }
-
-  .toc__icon {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-    opacity: 0.75;
+    opacity: 0.8;
   }
 
   .toc__chevron {
-    width: 1.05rem;
-    height: 1.05rem;
+    width: 1rem;
+    height: 1rem;
     flex-shrink: 0;
-    color: var(--muted-foreground);
+    color: var(--p-muted);
     transition: transform 0.25s ease;
   }
 
@@ -248,58 +152,34 @@ const show = tocHeadings.length >= 2;
     transform: rotate(180deg);
   }
 
-  .toc__list {
-    list-style: none;
-    margin: 0;
-    padding: 0.4rem 0.6rem 0.75rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .toc__item {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .toc__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .toc__link {
-    display: block;
-    padding: 0.32rem 0.75rem;
-    margin: 0.06rem 0;
-    font-size: 0.875rem;
-    line-height: 1.45;
-    color: var(--muted-foreground);
+    font-size: clamp(1rem, 0.4vw + 0.925rem, 1.125rem);
+    line-height: 1.7;
+    color: var(--p-muted);
     text-decoration: none;
-    border-left: 2px solid transparent;
-    border-radius: 0 0.4rem 0.4rem 0;
-    transition:
-      color 0.15s ease,
-      background-color 0.15s ease,
-      border-color 0.15s ease;
+    transition: color 0.15s ease;
   }
 
   .toc__link:hover {
-    color: var(--foreground);
-    background: color-mix(in oklab, var(--foreground) 6%, transparent);
+    color: var(--p-fg);
   }
 
-  .toc__link.is-active {
-    color: var(--foreground);
-    font-weight: 600;
-    border-left-color: var(--primary);
-    background: color-mix(in oklab, var(--foreground) 8%, transparent);
+  .toc__link[data-active="true"] {
+    color: var(--p-fg);
+    font-weight: 500;
   }
 
-  .toc__item[data-depth='1'] .toc__link {
-    padding-left: 0.75rem;
+  .toc__link[data-depth="3"] {
+    padding-left: 1rem;
   }
 
-  .toc__item[data-depth='2'] .toc__link {
-    padding-left: 1.7rem;
-    font-size: 0.825rem;
-  }
-
-  .toc__item[data-depth='3'] .toc__link {
-    padding-left: 2.65rem;
-    font-size: 0.8rem;
+  .toc__link[data-depth="4"] {
+    padding-left: 1.5rem;
   }
 </style>
