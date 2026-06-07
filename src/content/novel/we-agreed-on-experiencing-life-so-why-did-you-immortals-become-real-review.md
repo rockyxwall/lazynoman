@@ -13,7 +13,7 @@ tags:
   - romance
   - cultivation
   - transmigration
-rating: "7"
+rating: 7
 itemAuthor: "红烧油焖虾"
 draft: false
 ---
