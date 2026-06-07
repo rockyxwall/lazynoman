@@ -2,7 +2,6 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { Button } from "@/components/ui/button";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 ---
 
@@ -26,14 +25,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
     <Header />
 
     <main class="flex-1 flex items-center justify-center">
-      <div class="text-center px-4">
+      <div class="py-20 text-center px-4">
         <h1 class="text-7xl font-heading font-black mb-4">404</h1>
-        <p class="text-xl text-muted-foreground mb-8">
+        <p class="text-xl text-muted-foreground">
           Page not found — it may have moved or never existed.
         </p>
-        <Button asChild size="lg">
-          <a href="/"> &larr; Back to Home </a>
-        </Button>
+        <a
+          href="/"
+          class="mt-4 inline-block text-muted-foreground font-bold transition-colors hover:text-foreground"
+        >
+          &larr; Back to Home
+        </a>
       </div>
     </main>
 
