@@ -24,6 +24,7 @@ const post = defineCollection({
 				itemAuthor: z.string().optional(),
 				rating: z.number().optional(),
 				novelGenres: z.array(z.string()).optional(),
+				novelTags: z.array(z.string()).optional(),
 				status: z.string().optional(),
 				chapterCount: z.number().optional(),
 				platform: z.string().optional(),

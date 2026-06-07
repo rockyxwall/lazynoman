@@ -6,6 +6,7 @@ interface Props {
     itemAuthor?: string
     rating?: number
     novelGenres?: string[]
+    novelTags?: string[]
     status?: string
     chapterCount?: number
     platform?: string
@@ -25,6 +26,7 @@ const {
   itemAuthor,
   rating,
   novelGenres = [],
+  novelTags = [],
   status,
   chapterCount,
   platform,
@@ -61,6 +63,16 @@ const wrapperClass =
           {novelGenres.map((g) => (
             <span class="inline-flex items-center rounded-full border border-border bg-secondary px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-secondary-foreground">
               {g}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {novelTags.length > 0 && (
+        <div class="flex flex-wrap gap-1.5">
+          {novelTags.map((t) => (
+            <span class="inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
+              {t}
             </span>
           ))}
         </div>
