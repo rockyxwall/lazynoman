@@ -1,19 +1,26 @@
 ---
 interface Props {
   title: string
-  officialTitle?: string
-  itemAuthor?: string
-  rating?: number
-  novelGenres?: string[]
-  status?: string
-  chapterCount?: number
-  platform?: string
-  novelDescription?: string
+  novelInfo?: {
+    officialTitle?: string
+    itemAuthor?: string
+    rating?: number
+    novelGenres?: string[]
+    status?: string
+    chapterCount?: number
+    platform?: string
+    novelDescription?: string
+  }
   placement: 'mobile' | 'desktop'
 }
 
 const {
   title,
+  novelInfo = {},
+  placement,
+} = Astro.props
+
+const {
   officialTitle,
   itemAuthor,
   rating,
@@ -22,8 +29,7 @@ const {
   chapterCount,
   platform,
   novelDescription,
-  placement,
-} = Astro.props
+} = novelInfo
 
 const novelName = officialTitle || title
 const filledStars = rating ? Math.floor(rating / 2) : 0

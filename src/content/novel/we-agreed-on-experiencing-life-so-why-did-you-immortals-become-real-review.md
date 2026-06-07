@@ -13,8 +13,9 @@ tags:
   - romance
   - cultivation
   - transmigration
-rating: 7
-itemAuthor: "红烧油焖虾"
+novelInfo:
+  rating: 7
+  itemAuthor: "红烧油焖虾"
 draft: false
 ---
 ## What to Expect
