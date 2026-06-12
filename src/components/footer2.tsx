@@ -27,8 +27,8 @@ const defaultProps: Footer2Props = {
       title: "Explore",
       links: [
         { name: "Home", href: "/" },
-        { name: "Novel Reviews", href: "/novel" },
-        { name: "About", href: "/about" },
+        { name: "Novel Reviews", href: "/novel/" },
+        { name: "About", href: "/about/" },
       ],
     },
     {
@@ -41,7 +41,7 @@ const defaultProps: Footer2Props = {
   ],
   copyright: "\u00a9 2026 lazynoman. All rights reserved.",
   legalLinks: [
-    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Privacy Policy", href: "/privacy/" },
   ],
 }
 

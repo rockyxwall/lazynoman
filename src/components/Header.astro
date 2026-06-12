@@ -5,8 +5,8 @@ import { Nav } from "@/components/Nav";
 import { ModeToggle } from "@/components/ModeToggle";
 
 const navLinks = [
-	{ href: "/novel", label: "Novel" },
-	{ href: "/about", label: "About" },
+	{ href: "/novel/", label: "Novel" },
+	{ href: "/about/", label: "About" },
 ];
 ---
 
@@ -18,7 +18,7 @@ const navLinks = [
 		style="max-width:1152px;padding-left:24px;padding-right:24px"
 	>
 		<div class="flex items-center h-full">
-			<h2 class="m-0 leading-none">
+			<div class="m-0 leading-none">
 				<a
 					href="/"
 					class="flex items-center gap-2 no-underline transition-opacity hover:opacity-80"
@@ -36,7 +36,7 @@ const navLinks = [
 						>{SITE_TITLE_FULL}</span
 					>
 				</a>
-			</h2>
+			</div>
 		</div>
 		<div class="flex items-center gap-1 sm:gap-4 h-full">
 			<Nav

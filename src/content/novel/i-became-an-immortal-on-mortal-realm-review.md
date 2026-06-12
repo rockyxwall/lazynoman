@@ -1,6 +1,6 @@
 ---
 title: I Became an Immortal on Mortal Realm Review
-description: Read the review of I Became an Immortal on Mortal Realm — a xianxia/xuanhuan novel about a reincarnated MC with a cheat who carves his own cultivation path. No harem, overpowered protagonist, abrupt ending.
+description: "Read the review of I Became an Immortal on Mortal Realm — a xianxia novel about a reincarnated MC with a cheat who carves his own path."
 pubDate: 2026-05-31
 updatedDate: 2026-05-31
 heroImage: ../../assets/img/novel/i-became-an-immortal-on-mortal-realm.jpg
@@ -17,7 +17,7 @@ itemAuthor: Let me laugh
 ## What to expect
 MC gets reincarnated into cultivation world and has a cheat. Overpowered, never lost a battle. Never made a close call in a battle. Smart and humble. Not low-key. There are some one-sided late romances but no conclusion, as the MC does not have time for it. End of the novel but remained a virgin. It has 485 chapters, completed and fully translated.
 
-## Rreview
+## Review
 This is a Xianxia and Xuanhuan, as you can guess from the title. The initial chapters are exciting because of the MC's chat, then it becomes boring as it's the same old things. The MC has a helper that helps him from the shadows so the MC does not encounter many traumas; everything goes smoothly. Let's skip to the end of the novel. The MC creates his own path at the very end after cultivating the standard way and spreads it on a very small scale, which is why I felt it was a bit similar to [Comprehension Ability: Creating and teaching the Dao in various worlds]. Both MCs comprehend and create their own skills or techniques and carve their own path, and both end the novel as virgins. Lastly, at the end, the MC kills the big enemy — the end.
 
 ## Thoughts while reading
