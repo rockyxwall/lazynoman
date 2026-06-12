@@ -67,12 +67,7 @@ const cards = await Promise.all(
           <section>
             <header class="mb-12">
               <h1 class="text-4xl md:text-5xl font-bold mb-4">Popular{page.currentPage > 1 ? ` (Page ${page.currentPage})` : ''}</h1>
-              <p class="text-lg text-muted-foreground mb-4">Most viewed reviews.</p>
-              {page.currentPage === 1 && (
-                <p class="text-muted-foreground leading-relaxed max-w-3xl">
-                  Welcome to <strong>lazynoman</strong>, a personal blog dedicated to honest, in-depth reviews and recommendations of webnovels, translation novels, and cultivation stories. Here you will find unfiltered opinions on popular system novels, transmigration, reincarnation, and xianxia epics.
-                </p>
-              )}
+              <p class="text-lg text-muted-foreground">Most viewed reviews.</p>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               {
