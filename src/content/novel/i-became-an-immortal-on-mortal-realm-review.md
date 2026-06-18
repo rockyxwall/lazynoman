@@ -13,6 +13,13 @@ tags:
 infoNovel:
   rating: 6
   itemAuthor: Let me laugh
+infoMyReadingStats:
+  status: completed
+  startedReading: "April 2026"
+  stoppedReading: "May 2026"
+  chaptersRead: 485
+  totalChapters: 485
+  myRating: 6
 ---
 
 ## What to expect

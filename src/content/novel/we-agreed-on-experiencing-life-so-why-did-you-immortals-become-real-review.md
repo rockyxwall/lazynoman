@@ -17,6 +17,12 @@ infoNovel:
   rating: 7
   itemAuthor: "红烧油焖虾"
 draft: false
+infoMyReadingStats:
+  status: on-hold
+  startedReading: "May 2026"
+  stoppedReading: "June 2026"
+  chaptersRead: 355
+  myRating: 7
 ---
 ## What to Expect
 Xuanhuan, Martial arts, Harem, Romance, Selfless protagonist

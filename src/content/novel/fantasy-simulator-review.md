@@ -93,6 +93,13 @@ infoNovel:
   novelDescription: "After dying, Chen Heng finds that he has transmigrated to an alternate reality: everything is the same, except the world is now a Wuxia world heavily influenced by martial arts! Not only this, he discovers that he has a Fantasy Simulator, from which he obtains rewards that make him incredibly powerful in his new reality as well. Martial arts, immortal cultivation, and overpowered abilities--all of this begins from a single simulation!"
   novelType: Web Novel (CN)
   draft: true
+infoMyReadingStats:
+  status: completed
+  startedReading: "January 2026"
+  stoppedReading: "June 2026"
+  chaptersRead: 853
+  totalChapters: 853
+  myRating: 7
 ---
 
 ## What Is Fantasy Simulator?
