@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post Page Wireframe · LazyNoMan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
+<style>
+  :root.dark {
+    --bg: oklch(0.19 0 0);
+    --fg: oklch(0.92 0 0);
+    --card: oklch(0.23 0 0);
+    --card-fg: oklch(0.92 0 0);
+    --primary: oklch(0.92 0 0);
+    --secondary: oklch(0.28 0 0);
+    --secondary-fg: oklch(0.92 0 0);
+    --muted: oklch(0.28 0 0);
+    --muted-fg: oklch(0.7 0 0);
+    --border: oklch(0.35 0 0);
+    --radius: 0.625rem;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 20px; }
+  body {
+    font-family: 'Inter', Atkinson, Geist, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 896px; margin: 0 auto; padding: 0 24px; }
+  .container-wide { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header ── */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 95%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 3.2rem;
+  }
+  .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--fg); font-weight: 700; font-size: 0.9rem; letter-spacing: -0.02em; }
+  .logo-icon { width: 1.6rem; height: 1.6rem; background: var(--secondary); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+  .nav { display: flex; align-items: center; gap: 1rem; }
+  .nav a { color: var(--muted-fg); text-decoration: none; font-size: 0.75rem; transition: color .15s; }
+  .nav a:hover { color: var(--fg); }
+  .theme-toggle { font-size: 1rem; cursor: default; color: var(--muted-fg); }
+
+  /* ── Layout ── */
+  .layout { display: grid; grid-template-columns: 1fr; gap: 2rem; padding: 2rem 0; }
+  @media (min-width: 1024px) {
+    .layout { grid-template-columns: 3fr 1fr; gap: 3rem; }
+  }
+  .sidebar-col { display: none; }
+  @media (min-width: 1024px) {
+    .sidebar-col { display: block; }
+  }
+
+  /* ── Post Header ── */
+  .post-title {
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+    font-weight: 800; line-height: 1.2; letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .post-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;
+    font-size: 0.6rem; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--muted-fg); text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .post-meta .category {
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .post-meta .category::before {
+    content: ''; display: inline-block; width: 0.7rem; height: 0.7rem;
+    background: var(--muted-fg); mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'%3E%3Cpath d='M20 20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.9a2 2 0 0 0 1.42-.83l.66-.84a2 2 0 0 1 1.42-.83H18a2 2 0 0 1 2 2Z'/%3E%3C/svg%3E"); mask-size: contain; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'%3E%3Cpath d='M20 20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.9a2 2 0 0 0 1.42-.83l.66-.84a2 2 0 0 1 1.42-.83H18a2 2 0 0 1 2 2Z'/%3E%3C/svg%3E"); -webkit-mask-size: contain; background-color: var(--muted-fg); }
+  .post-meta .sep { opacity: 0.3; }
+
+  /* ── Hero ── */
+  .hero {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, oklch(0.25 0.04 260), oklch(0.2 0.03 200));
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted-fg); font-size: 0.7rem; letter-spacing: 0.05em;
+    border: 1px solid var(--border);
+  }
+
+  /* ── Quick Info (mobile) ── */
+  .quick-info-mobile { margin-bottom: 1.5rem; }
+  @media (min-width: 1024px) { .quick-info-mobile { display: none; } }
+  .qi-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted-fg); padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem;
+  }
+  .qi-grid { display: grid; gap: 0.4rem; }
+  .qi-row { display: flex; gap: 0.3rem; font-size: 0.6rem; }
+  .qi-label { font-weight: 600; color: var(--muted-fg); min-width: 5rem; }
+  .qi-value { color: var(--fg); }
+
+  /* ── Table of Contents ── */
+  .toc {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  .toc summary {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted-fg); cursor: default; padding: 0.5rem 0; list-style: none;
+  }
+  .toc summary::-webkit-details-marker { display: none; }
+  .toc-chevron { font-size: 0.6rem; transition: transform .2s; }
+  .toc[open] .toc-chevron { transform: rotate(180deg); }
+  .toc-links { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.5rem 0 0; }
+  .toc-links a {
+    font-size: 0.65rem; color: var(--muted-fg); text-decoration: none; line-height: 1.5;
+  }
+  .toc-links a:hover { color: var(--fg); }
+  .toc-links a.depth-3 { padding-left: 1rem; }
+
+  /* ── Prose ── */
+  .prose { font-size: clamp(1rem, 0.4vw + 0.925rem, 1.125rem); }
+  .prose h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 800;
+    margin-top: 2.5rem; margin-bottom: 1.25rem; line-height: 1.2;
+    letter-spacing: -0.02em; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border);
+  }
+  .prose h3 {
+    font-size: clamp(1.25rem, 3vw, 1.625rem); font-weight: 800;
+    margin-top: 2.5rem; margin-bottom: 1.25rem; line-height: 1.2; letter-spacing: -0.02em;
+  }
+  .prose p { margin-bottom: 1.5rem; }
+  .prose strong { font-weight: 600; }
+  .prose blockquote {
+    padding: 1rem 1.5rem; color: var(--muted-fg);
+    border-left: 3px solid var(--fg); background: var(--secondary);
+    border-radius: 0 0.5rem 0.5rem 0; font-style: italic; margin-bottom: 1.5rem;
+  }
+  .prose ul { padding-left: 1.5rem; margin-bottom: 1.5rem; list-style: disc; }
+  .prose li { margin-bottom: 0.5rem; }
+  .prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.85rem; }
+  .prose th, .prose td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); text-align: left; }
+  .prose th { background: var(--secondary); font-weight: 600; }
+
+  /* ── Tags ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 2rem 0; }
+  .tag {
+    display: inline-block; padding: 0.15rem 0.5rem; font-size: 0.6rem;
+    background: var(--secondary); color: var(--secondary-fg);
+    border-radius: 999px; border: 1px solid var(--border);
+  }
+
+  /* ── Comments ── */
+  .comments-section { margin: 2.5rem 0; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .comments-section h3 { font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; }
+  .comments-placeholder {
+    padding: 2rem; text-align: center; border: 1px dashed var(--border);
+    border-radius: var(--radius); color: var(--muted-fg); font-size: 0.7rem;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar { position: sticky; top: 5rem; }
+  .sidebar-section { margin-bottom: 2rem; }
+  .sidebar-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted-fg); padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); margin-bottom: 0.75rem;
+  }
+  .sidebar-label { font-size: 0.55rem; font-weight: 600; color: var(--muted-fg); margin-bottom: 0.15rem; }
+  .sidebar-value { font-size: 0.65rem; color: var(--fg); margin-bottom: 0.4rem; }
+  .sidebar-value.muted { color: var(--muted-fg); }
+  .sidebar-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .sidebar-tag {
+    font-size: 0.55rem; padding: 0.1rem 0.35rem;
+    background: var(--secondary); color: var(--secondary-fg);
+    border-radius: 999px; border: 1px solid var(--border);
+  }
+  .recent-item {
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.65rem; color: var(--fg); text-decoration: none; display: block; line-height: 1.4;
+  }
+  .recent-item:first-child { padding-top: 0; }
+  .recent-item:hover { color: var(--primary); }
+
+  /* ── Footer ── */
+  .footer {
+    border-top: 1px solid var(--border); padding: 1.5rem 0; text-align: center;
+    font-size: 0.6rem; color: var(--muted-fg);
+  }
+
+  /* ── Utility ── */
+  .hidden-lg { display: block; }
+  @media (min-width: 1024px) { .hidden-lg { display: none; } }
+  .visible-lg { display: none; }
+  @media (min-width: 1024px) { .visible-lg { display: block; } }
+</style>
+</head>
+<body>
+
+<!-- ═══ Header ═══ -->
+<header class="header">
+  <div class="header-inner container-wide">
+    <a href="#" class="logo">
+      <span class="logo-icon">◈</span>
+      <span>LazyNoMan</span>
+    </a>
+    <div class="nav">
+      <a href="#">Novels</a>
+      <a href="#">About</a>
+      <span class="theme-toggle">☾</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ Layout ═══ -->
+<main class="container-wide">
+  <div class="layout">
+
+    <!-- ─── Article Column ─── -->
+    <article>
+
+      <!-- Post Header -->
+      <header class="post-header">
+        <h1 class="post-title">The Innkeeper Review — Absolutely Worth Reading</h1>
+        <div class="post-meta">
+          <span class="category">Novel</span>
+          <span class="sep">·</span>
+          <span>📅 May 2, 2026</span>
+          <span class="sep">·</span>
+          <span>⟳ Updated May 2, 2026</span>
+        </div>
+      </header>
+
+      <!-- Hero Image -->
+      <div class="hero">
+        <span>16:9 · Hero Image Placeholder</span>
+      </div>
+
+      <!-- Quick Info (mobile) -->
+      <div class="quick-info-mobile">
+        <div class="qi-title">Quick Info</div>
+        <div class="qi-grid">
+          <div class="qi-row"><span class="qi-label">Author</span><span class="qi-value">Lifesketcher</span></div>
+          <div class="qi-row"><span class="qi-label">Rating</span><span class="qi-value">★★★★★★★★★☆ 9/10</span></div>
+          <div class="qi-row"><span class="qi-label">Status</span><span class="qi-value">Ongoing</span></div>
+          <div class="qi-row"><span class="qi-label">Chapters</span><span class="qi-value">~1005</span></div>
+        </div>
+      </div>
+
+      <!-- Table of Contents -->
+      <details class="toc" open>
+        <summary>
+          <span>On This Page</span>
+          <span class="toc-chevron">▼</span>
+        </summary>
+        <div class="toc-links">
+          <a href="#">Is The Innkeeper Worth It?</a>
+          <a href="#">What Is The Innkeeper?</a>
+          <a href="#">My Review</a>
+          <a href="#" class="depth-3">The Early Struggle: Puppet or Protagonist?</a>
+          <a href="#" class="depth-3">The Turning Point: Growing Smarter</a>
+          <a href="#" class="depth-3">Pros &amp; Cons</a>
+          <a href="#" class="depth-3">My Score</a>
+          <a href="#">Who Is This For?</a>
+          <a href="#">What Others Think</a>
+          <a href="#">Frequently Asked Questions</a>
+        </div>
+      </details>
+
+      <!-- Prose Body -->
+      <div class="prose">
+
+        <h2>Is The Innkeeper Worth It?</h2>
+        <p><strong>The Innkeeper is absolutely worth reading if you enjoy the 'misunderstanding' trope and kingdom-building.</strong> It starts slow, with a protagonist who feels like a puppet on system-enforced life support, but it evolves into a massive, multi-realm epic.</p>
+        <p><strong>My score: 8.5/10.</strong></p>
+
+        <h2>What Is The Innkeeper?</h2>
+        <p>The story follows Lex, an ordinary man who becomes the owner of the <strong>Midnight Inn</strong> — a mysterious establishment outside space and time. Bound to a snarky system, Lex must fulfill quests to upgrade the Inn and host guests from across the multiverse.</p>
+
+        <blockquote>This is a classic "fake it till you make it" scenario on a cosmic scale, perfect for readers who like seeing a "weak" MC outsmart the universe.</blockquote>
+
+        <h2>My Review</h2>
+        <p>I've spent a significant amount of time with Lex and his Inn, and as of Chapter 1005, my opinion has shifted significantly from where I started.</p>
+
+        <h3>The Early Struggle: Puppet or Protagonist?</h3>
+        <p>In the first 100 chapters, Lex is frustratingly ordinary. He often feels like a puppet being moved by the system's whims.</p>
+
+        <h3>Pros &amp; Cons</h3>
+        <table>
+          <thead>
+            <tr><th>Pros</th><th>Cons</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Well-executed 'misunderstanding' trope</td><td>Very slow start (first 100-150 chapters)</td></tr>
+            <tr><td>Massive, creative world-building</td><td>Too many side characters</td></tr>
+            <tr><td>Zero forced romance</td><td>Occasional editing errors</td></tr>
+          </tbody>
+        </table>
+
+        <h3>My Score</h3>
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Score</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Story &amp; Concept</td><td>9/10</td></tr>
+            <tr><td>Character Development</td><td>8/10</td></tr>
+            <tr><td>World Building</td><td>9/10</td></tr>
+            <tr><td>Pacing</td><td>7/10</td></tr>
+            <tr><td><strong>Overall</strong></td><td><strong>8.5/10</strong></td></tr>
+          </tbody>
+        </table>
+
+        <h2>Who Is This For?</h2>
+        <p><strong>Read If…</strong></p>
+        <ul>
+          <li>You love the misunderstanding style of comedy</li>
+          <li>You enjoy management and kingdom-building novels</li>
+          <li>You want a long-term read with 1000+ chapters</li>
+        </ul>
+
+      </div>
+
+      <!-- Tags -->
+      <div class="tags">
+        <span class="tag">system</span>
+        <span class="tag">misunderstanding</span>
+        <span class="tag">kingdom-building</span>
+        <span class="tag">comedy</span>
+        <span class="tag">no-romance</span>
+      </div>
+
+      <!-- Comments -->
+      <div class="comments-section">
+        <h3>Comments</h3>
+        <div class="comments-placeholder">
+          [Waline comment widget loads here]
+        </div>
+      </div>
+
+    </article>
+
+    <!-- ─── Sidebar Column ─── -->
+    <aside class="sidebar-col">
+      <div class="sidebar">
+
+        <!-- Quick Info (desktop) -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Quick Info</div>
+
+          <div class="sidebar-label">Title</div>
+          <div class="sidebar-value">The Innkeeper</div>
+
+          <div class="sidebar-label">Author</div>
+          <div class="sidebar-value muted">Lifesketcher</div>
+
+          <div class="sidebar-label">Type</div>
+          <div class="sidebar-value muted">Web Novel</div>
+
+          <div class="sidebar-label">Rating</div>
+          <div class="sidebar-value">★★★★★★★★★☆ 9/10</div>
+
+          <div class="sidebar-label">Status</div>
+          <div class="sidebar-value muted">Ongoing</div>
+
+          <div class="sidebar-label">Chapters</div>
+          <div class="sidebar-value muted">~1005</div>
+
+          <div class="sidebar-label">Platform</div>
+          <div class="sidebar-value muted">Webnovel</div>
+
+          <div class="sidebar-label" style="margin-top:0.5rem;">Genres</div>
+          <div class="sidebar-tags">
+            <span class="sidebar-tag">Cultivation</span>
+            <span class="sidebar-tag">Fantasy</span>
+            <span class="sidebar-tag">Comedy</span>
+          </div>
+
+          <div class="sidebar-label" style="margin-top:0.5rem;">Tags</div>
+          <div class="sidebar-tags">
+            <span class="sidebar-tag">system</span>
+            <span class="sidebar-tag">misunderstanding</span>
+            <span class="sidebar-tag">kingdom-building</span>
+            <span class="sidebar-tag">no-romance</span>
+          </div>
+        </div>
+
+        <!-- Recent Posts -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Recent Posts</div>
+          <a href="#" class="recent-item">Comprehension Ability: Creating and Teaching the Dao in Various Worlds Review</a>
+          <a href="#" class="recent-item">Infinite Mana in the Apocalypse Review</a>
+          <a href="#" class="recent-item">I Was Mistaken as a Monstrous Genius Actor Review</a>
+          <a href="#" class="recent-item">Family Management Game in Immortal Continent Review</a>
+          <a href="#" class="recent-item">The Strongest System Review</a>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- ═══ Footer ═══ -->
+<footer class="footer container-wide">
+  <p>© 2026 LazyNoMan. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
