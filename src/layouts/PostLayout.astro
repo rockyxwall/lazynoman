@@ -11,6 +11,7 @@ import TableOfContents from '../components/TableOfContents.astro';
 import RecentPosts from '../components/RecentPosts.astro';
 import QuickInfo from '../components/QuickInfo.astro';
 import { Tag } from '../components/ui/tag';
+import { SITE_TITLE } from '../consts';
 import '../styles/markdown.css';
 
 type Props = CollectionEntry<'post'>['data'] & {
@@ -31,7 +32,7 @@ const {
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} image={heroImage} ogType="article" />
+    <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} image={heroImage} ogType="article" />
   </head>
 
   <body>

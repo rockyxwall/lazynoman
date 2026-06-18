@@ -7,8 +7,10 @@ import Header from "../../components/Header.astro";
 import PostCard from "../../components/PostCard";
 import { PaginationBar } from "@/components/ui/pagination";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: { paginate: any }) {
   const ITEMS_PER_PAGE = 9;
   const allPosts = await getCollection("post", ({ data }) => import.meta.env.PROD ? data.draft !== true : true);
   const categories = [
@@ -36,11 +38,16 @@ export async function getStaticPaths({ paginate }) {
   return paths;
 }
 
+interface Props {
+  page: Page<CollectionEntry<"post">>;
+  categoryName: string;
+}
+
 const { page, categoryName } = Astro.props;
 const { category } = Astro.params;
 
 const cards = await Promise.all(
-  page.data.map(async (post) => ({
+  page.data.map(async (post: CollectionEntry<"post">) => ({
     post,
     heroSrc: post.data.heroImage
       ? (await getImage({ src: post.data.heroImage })).src
@@ -53,7 +60,7 @@ const cards = await Promise.all(
 <html lang="en">
   <head>
     <BaseHead
-      title={`${categoryName} - ${SITE_TITLE}`}
+      title={`In-Depth ${categoryName} Reviews & Recommendations - ${SITE_TITLE}${page.currentPage > 1 ? ` - Page ${page.currentPage}` : ''}`}
       description={SITE_DESCRIPTION}
     />
   </head>
@@ -61,7 +68,7 @@ const cards = await Promise.all(
     <Header />
     <main>
       <header class="mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">{categoryName}{page.currentPage > 1 ? ` (Page ${page.currentPage})` : ''}</h1>
         <p class="text-lg text-muted-foreground">
           All {categoryName.toLowerCase()} reviews.
         </p>
