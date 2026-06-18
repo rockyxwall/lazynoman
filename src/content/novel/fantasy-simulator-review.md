@@ -10,7 +10,7 @@ tags:
   - world-hopping
   - op-mc
   - system
-quickInfo:
+infoNovel:
   rating: 7
   novelGenres:
     - Adventure

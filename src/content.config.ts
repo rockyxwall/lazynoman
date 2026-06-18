@@ -19,7 +19,7 @@ const post = defineCollection({
 			draft: z.boolean().default(false),
 			summary: z.string().optional(),
 			synonyms: z.array(z.string()).optional(),
-			quickInfo: z.object({
+			infoNovel: z.object({
 				officialTitle: z.string().optional(),
 				itemAuthor: z.string().optional(),
 				rating: z.number().optional(),
@@ -30,6 +30,14 @@ const post = defineCollection({
 				platform: z.string().optional(),
 				novelDescription: z.string().optional(),
 				novelType: z.string().optional(),
+			}).optional(),
+			infoMyReadingStats: z.object({
+				status: z.enum(['completed', 'on-hold', 'dropped', 'reading']),
+				startedReading: z.string().optional(),
+				stoppedReading: z.string().optional(),
+				chaptersRead: z.number().optional(),
+				totalChapters: z.number().optional(),
+				myRating: z.number().optional(),
 			}).optional(),
 		}),
 });
