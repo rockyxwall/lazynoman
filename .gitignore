@@ -7,6 +7,7 @@ dist/
 worker-configuration.d.ts
 .obsidian/
 nul
+graphify-out
 
 # dependencies
 node_modules/
