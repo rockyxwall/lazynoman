@@ -1,5 +1,17 @@
----
-import { Footer2 } from '@/components/footer2';
----
-
-<Footer2 client:load className="mt-auto" />
+<footer class="border-t border-border bg-card text-center text-xs duration-200 ease-in-out font-sans antialiased">
+  <div class="mx-auto max-w-7xl px-4 py-1">
+    <div class="flex flex-wrap items-center justify-center gap-x-1 py-2">
+      <a class="px-1.5 py-0.5 no-underline transition-colors hover:text-primary" href="/about/">About Us</a>
+      <a class="px-1.5 py-0.5 no-underline transition-colors hover:text-primary" href="/contact/">Contact Us</a>
+      <a class="px-1.5 py-0.5 no-underline transition-colors hover:text-primary" href="/privacy/">Privacy Policy</a>
+    </div>
+    <div
+      data-orientation="horizontal" role="separator" aria-orientation="horizontal" data-slot="separator"
+      class="shrink-0 bg-border h-px w-full data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch my-1"
+    ></div>
+    <div class="py-2 text-muted-foreground">
+      <span>Copyright &copy; 2026 - lazynoman.com</span>
+      <a class="ms-1" href="https://github.com/rockyxwall/lazynoman/releases"><b>v1.0.339</b></a>
+    </div>
+  </div>
+</footer>
