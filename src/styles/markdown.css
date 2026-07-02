@@ -1,4 +1,6 @@
 .markdown-body {
+  max-width: 720px;
+  margin-inline: auto;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;

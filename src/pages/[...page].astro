@@ -69,7 +69,7 @@ const cards = await Promise.all(
               <h1 class="text-4xl md:text-5xl font-bold mb-4">Popular{page.currentPage > 1 ? ` (Page ${page.currentPage})` : ''}</h1>
               <p class="text-lg text-muted-foreground">Most viewed reviews.</p>
             </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="pull-full grid grid-cols-1 md:grid-cols-2 gap-8">
               {
                 cards.map(({ post, heroSrc }) => (
                   <PostCard
