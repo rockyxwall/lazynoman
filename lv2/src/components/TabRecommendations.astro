@@ -1,0 +1,46 @@
+---
+interface Recommendation {
+  title: string;
+  cover?: string;
+  rating?: number;
+  url?: string;
+}
+
+interface Props {
+  recommendations?: Recommendation[];
+}
+
+const { recommendations = [] } = Astro.props;
+---
+
+<div role="tabpanel" tabindex="-1" data-index="3" data-slot="tabs-content" hidden inert data-orientation="horizontal" data-activation-direction="left">
+  {recommendations.length > 0 ? (
+    <ul class="flex h-full gap-2 overflow-x-auto pb-1.5 wtr-scroll">
+      {recommendations.map(r => (
+        <li class="flex shrink-0 flex-col rounded-md bg-card text-sm text-card-foreground shadow border border-border w-44 min-w-44">
+          <a
+            href={r.url || "#"}
+            target="_blank"
+            class="block"
+          >
+            <div class="image-wrap relative rounded-md aspect-[3/4] w-full rounded-b-none zoom">
+              {r.cover ? (
+                <img src={r.cover} alt={r.title} class="w-full h-full object-cover" loading="lazy" />
+              ) : (
+                <div class="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">No Cover</div>
+              )}
+              {r.rating && (
+                <span class="status top-right">{r.rating.toFixed(1)} &#9733;</span>
+              )}
+            </div>
+          </a>
+          <div class="p-2">
+            <h3 class="text-xs font-medium text-foreground line-clamp-2 leading-snug">{r.title}</h3>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="text-xs text-muted-foreground text-center py-8">No recommendations available.</p>
+  )}
+</div>

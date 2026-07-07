@@ -1,0 +1,235 @@
+---
+import Nav from '../components/Nav.astro';
+import SvgSprite from '../components/SvgSprite.astro';
+import SvgDefs from '../components/SvgDefs.astro';
+import NovelHeader from '../components/NovelHeader.astro';
+import UnlockProgress from '../components/UnlockProgress.astro';
+import TabAbout from '../components/TabAbout.astro';
+import TabToc from '../components/TabToc.astro';
+import TabReviews from '../components/TabReviews.astro';
+import TabRecommendations from '../components/TabRecommendations.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import type { InferEntrySchema } from 'astro:content';
+
+interface Chapter {
+  num: number;
+  title: string;
+  date?: string;
+  url?: string;
+}
+
+interface ReviewsData {
+  averageRating?: number;
+  totalVotes?: number;
+  breakdown?: { 5: number; 4: number; 3: number; 2: number; 1: number };
+  reviews?: Array<{ user: string; rating: number; text: string; date?: string; likes?: number }>;
+}
+
+interface Recommendation {
+  title: string;
+  cover?: string;
+  rating?: number;
+  url?: string;
+}
+
+interface Patron {
+  name: string;
+  amount: number;
+  rank?: number;
+}
+
+interface OtherNovel {
+  title: string;
+  url: string;
+}
+
+interface Props {
+  frontmatter: InferEntrySchema<'novel'>;
+  patrons?: Patron[];
+  chaptersList?: Chapter[];
+  reviewsData?: ReviewsData;
+  recommendationsList?: Recommendation[];
+  otherNovels?: OtherNovel[];
+}
+
+const {
+  frontmatter,
+  patrons = [],
+  chaptersList = [],
+  reviewsData,
+  recommendationsList = [],
+  otherNovels = [],
+} = Astro.props;
+---
+
+<html lang="en" class="dark" data-color-scheme="dark" style="color-scheme: dark;">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{frontmatter.title} - WTR-LAB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Nunito+Sans:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://wtr-lab.com/assets/favicon_dark/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://wtr-lab.com/assets/favicon/favicon-dark.svg" />
+    <link rel="shortcut icon" href="https://wtr-lab.com/assets/favicon_dark/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://wtr-lab.com/assets/favicon_dark/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="wtr-lab" />
+    {frontmatter.cover && <meta property="og:image" content={frontmatter.cover} />}
+    <meta property="og:type" content="book" />
+  </head>
+  <body class="wtr-adblock-off bg-background text-foreground font-sans antialiased">
+    <SvgSprite />
+    <SvgDefs />
+
+    <Nav />
+
+    <main class="layout-body flex flex-col mx-auto max-w-[760px] font-sans antialiased px-0 sm:px-2">
+      <NovelHeader
+        title={frontmatter.title}
+        chineseTitle={frontmatter.chineseTitle}
+        cover={frontmatter.cover}
+        status={frontmatter.status}
+        views={frontmatter.views}
+        chapters={frontmatter.chapters}
+        rating={frontmatter.rating}
+        readers={frontmatter.readers}
+        totalChars={frontmatter.totalChars}
+        tags={frontmatter.tags}
+        genres={frontmatter.genres}
+        ratingVotes={reviewsData?.totalVotes}
+      />
+
+      <UnlockProgress />
+
+      <section class="flex flex-col gap-0 bg-card text-sm text-card-foreground has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl shadow rounded-none md:rounded-md ring-1 ring-foreground/20 mb-2 overflow-hidden" aria-label="Novel detail tabs">
+        <div class="p-2 chapter-details">
+          <div data-horizontal class="group/tabs flex gap-2 data-horizontal:flex-col new-pills">
+            <div role="tablist" class="group/tabs-list items-center justify-center rounded-lg text-muted-foreground bg-border h-auto grid w-full grid-cols-2 sm:grid-cols-4 gap-1 p-1">
+              <button role="tab" aria-selected="true" data-active class="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 text-sm font-medium whitespace-nowrap transition-all outline-none py-2 h-10 bg-background shadow-sm text-foreground">
+                About
+              </button>
+              <button role="tab" aria-selected="false" class="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 text-sm font-medium whitespace-nowrap transition-all outline-none py-2 h-10 text-muted-foreground hover:text-foreground">
+                Table of Contents
+              </button>
+              <button role="tab" aria-selected="false" class="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 text-sm font-medium whitespace-nowrap transition-all outline-none py-2 h-10 text-muted-foreground hover:text-foreground">
+                Reviews
+              </button>
+              <button role="tab" aria-selected="false" class="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 text-sm font-medium whitespace-nowrap transition-all outline-none py-2 h-10 text-muted-foreground hover:text-foreground">
+                Recommendations
+              </button>
+            </div>
+
+            <TabAbout
+              details={frontmatter.details}
+              rankings={frontmatter.rankings}
+              patrons={patrons}
+              otherNovels={otherNovels}
+              tags={frontmatter.tags}
+              genres={frontmatter.genres}
+              tagCategories={frontmatter.tagCategories}
+              title={frontmatter.title}
+              chineseTitle={frontmatter.chineseTitle}
+            >
+              <Fragment slot="content">
+                <slot name="content" />
+              </Fragment>
+            </TabAbout>
+
+            <TabToc chapters={chaptersList} />
+
+            <TabReviews reviewsData={reviewsData} />
+
+            <TabRecommendations recommendations={recommendationsList} />
+          </div>
+        </div>
+      </section>
+
+      <aside class="flex flex-col gap-0 bg-card text-sm text-card-foreground has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl shadow rounded-none md:rounded-md ring-1 ring-foreground/20 mt-2" aria-labelledby="similar-heading">
+        <div class="p-2">
+          <h2 id="similar-heading" class="flex items-center justify-between gap-2 mb-2 pl-2.5 border-l-2 border-l-primary mt-0 text-base font-semibold text-card-foreground">
+            Similar Novels
+          </h2>
+          {recommendationsList.length > 0 ? (
+            <div class="relative flex h-full items-stretch overflow-hidden">
+              <div class="flex h-full gap-2 overflow-x-auto pb-1.5 wtr-scroll">
+                {recommendationsList.map(r => (
+                  <div class="flex shrink-0 flex-col rounded-md bg-card text-sm text-card-foreground shadow border border-border w-44 min-w-44">
+                    <a
+                      href={r.url || "#"}
+                      target="_blank"
+                      class="block"
+                    >
+                      <div class="image-wrap relative rounded-md aspect-[3/4] w-full rounded-b-none zoom">
+                        {r.cover ? (
+                          <img src={r.cover} alt={r.title} class="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <div class="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">No Cover</div>
+                        )}
+                        {r.rating && (
+                          <span class="status top-right">{r.rating.toFixed(1)} &#9733;</span>
+                        )}
+                      </div>
+                    </a>
+                    <div class="p-2">
+                      <h3 class="text-xs font-medium text-foreground line-clamp-2 leading-snug">{r.title}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p class="text-xs text-muted-foreground text-center py-4">No recommendations available.</p>
+          )}
+        </div>
+      </aside>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<script>
+  (function() {
+    try {
+      const theme = localStorage.getItem('theme') || 'dark';
+      const isDark = theme === 'dark';
+      document.documentElement.classList.toggle('dark', isDark);
+      document.documentElement.setAttribute('data-color-scheme', theme);
+      document.documentElement.style.colorScheme = theme;
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var tablist = document.querySelector('[role="tablist"]');
+    if (!tablist) return;
+    var tabs = tablist.querySelectorAll('[role="tab"]');
+    var panels = document.querySelectorAll('[role="tabpanel"]');
+    tabs.forEach(function(tab, i) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) {
+          t.removeAttribute('data-active');
+          t.setAttribute('aria-selected', 'false');
+          t.className = t.className.replace(/bg-background shadow-sm text-foreground/g, 'text-muted-foreground');
+        });
+        tab.setAttribute('data-active', '');
+        tab.setAttribute('aria-selected', 'true');
+        tab.className = tab.className.replace(/text-muted-foreground/g, 'bg-background shadow-sm text-foreground');
+        panels.forEach(function(pan, j) {
+          if (i === j) {
+            pan.removeAttribute('hidden');
+            pan.removeAttribute('inert');
+            pan.style.display = '';
+          } else {
+            pan.setAttribute('hidden', '');
+            pan.setAttribute('inert', '');
+            pan.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

@@ -1,0 +1,44 @@
+---
+interface Chapter {
+  num: number;
+  title: string;
+  date?: string;
+  url?: string;
+}
+
+interface Props {
+  chapters?: Chapter[];
+}
+
+const { chapters = [] } = Astro.props;
+---
+
+<div role="tabpanel" tabindex="-1" data-index="1" data-slot="tabs-content" hidden inert data-orientation="horizontal" data-activation-direction="left">
+  <section aria-labelledby="toc-heading">
+    <h2 id="toc-heading" class="flex items-center gap-2 mt-4 mb-2 pl-2.5 border-l-2 border-l-primary text-base font-semibold text-card-foreground">
+      Table of Contents
+    </h2>
+    {chapters.length > 0 ? (
+      <ol class="rounded-lg border border-border overflow-hidden">
+        {chapters.map(ch => (
+          <li class="even:bg-black/[0.016] dark:even:bg-white/[0.022] border-b border-border last:border-b-0">
+            <a
+              href={ch.url || "#"}
+              class="flex items-center justify-between px-3 py-2 text-xs text-foreground/80 hover:text-primary no-underline transition-colors"
+            >
+              <span class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded bg-muted text-muted-foreground text-xs font-medium shrink-0">{ch.num}</span>
+                <span>{ch.title}</span>
+              </span>
+              {ch.date && (
+                <span class="text-muted-foreground text-xs shrink-0">{ch.date}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <p class="text-xs text-muted-foreground text-center py-8">No chapters available yet.</p>
+    )}
+  </section>
+</div>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  unlocked?: number;
+  total?: number;
+}
+
+const { unlocked = 806, total = 806 } = Astro.props;
+const isComplete = unlocked >= total;
+const pct = total > 0 ? Math.min(100, (unlocked / total) * 100) : 0;
+---
+
+<section class="unlock-progress-card fix-size fix-edge rounded-none md:rounded-[10px]" aria-labelledby="unlock-heading">
+  <h2 id="unlock-heading" class="sr-only">AI-Unlock Progress</h2>
+  <div class="upc-header">
+    <div class="upc-label">
+      <svg class="icon inline-flex shrink-0 size-6 icon-sm"><use href="#ticket" class="svg-ticket"></use></svg>
+      <span>AI-Unlock Progress</span>
+    </div>
+    <div class="upc-counter">
+      <span class="upc-unlocked">{unlocked}</span>
+      <span class="upc-sep">/</span>
+      <span class="upc-total">{total}</span>
+    </div>
+  </div>
+  <div class="upc-track">
+    <div class="upc-fill" class:list={[isComplete && "is-complete"]} style={`width: ${pct}%;`}></div>
+  </div>
+  <div class="upc-footer">
+    {isComplete ? (
+      <span class="upc-status-done"><span>All chapters unlocked</span></span>
+    ) : (
+      <span class="upc-status">{unlocked}/{total} unlocked</span>
+    )}
+    {!isComplete && (
+      <button type="button" class="upc-batch-btn">Batch Unlock</button>
+    )}
+  </div>
+</section>
+

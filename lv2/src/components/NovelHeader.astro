@@ -1,0 +1,171 @@
+---
+interface Props {
+  title?: string;
+  chineseTitle?: string;
+  cover?: string;
+  status?: string;
+  views?: string;
+  chapters?: number;
+  rating?: number;
+  readers?: number;
+  totalChars?: string;
+  tags?: string[];
+  genres?: string[];
+  ratingVotes?: number;
+}
+
+const {
+  title = "",
+  chineseTitle = "",
+  cover = "",
+  status = "",
+  views = "",
+  chapters = 0,
+  rating = 0,
+  readers = 0,
+  totalChars = "",
+  tags = [],
+  genres = [],
+  ratingVotes = 0,
+} = Astro.props;
+
+const isMale = genres.some(g => g.toLowerCase() === "male protagonist" || g.toLowerCase() === "male");
+const displayGenres = genres.filter(g => g.toLowerCase() !== "male protagonist" && g.toLowerCase() !== "male" && g.toLowerCase() !== "female protagonist" && g.toLowerCase() !== "female");
+const headerTagOrder = ["male", "cultivation", "business management", "system", "transmigration", "farming", "leadership"];
+const headerTagSet = new Set(headerTagOrder);
+const headerTags = tags.filter(t => headerTagSet.has(t.toLowerCase())).sort((a, b) => headerTagOrder.indexOf(a.toLowerCase()) - headerTagOrder.indexOf(b.toLowerCase()));
+const headerChips = [...headerTags, ...displayGenres];
+const headerMaleTag = headerTags.find(t => t.toLowerCase() === "male");
+
+const statusColorMap: Record<string, { dot: string; text: string }> = {
+  ongoing: { dot: "bg-green-500", text: "text-green-600 dark:text-green-400" },
+  completed: { dot: "bg-red-500", text: "text-red-600 dark:text-red-400" },
+  hiatus: { dot: "bg-yellow-500", text: "text-yellow-600 dark:text-yellow-400" },
+};
+const defaultStatusColor = { dot: "bg-gray-500", text: "text-gray-600 dark:text-gray-400" };
+const statusKey = status.toLowerCase();
+const sColor = statusColorMap[statusKey] || defaultStatusColor;
+---
+
+<section class="novel-header flex flex-col gap-0 bg-card text-sm text-card-foreground has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl shadow rounded-none md:rounded-md ring-1 ring-foreground/20 fix-size fix-edge mb-2 overflow-hidden">
+  <div class="p-2">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex-1 min-w-0">
+        <h1 class="text-base text-card-foreground sm:text-xl font-bold uppercase tracking-wide leading-tight wrap-break-word">{title}</h1>
+        {chineseTitle && (
+          <p class="text-xs sm:text-sm text-foreground mt-0.5 wrap-break-word">{chineseTitle}</p>
+        )}
+      </div>
+      <div class="shrink-0 flex items-center gap-1">
+        <button
+          type="button" tabindex="0" aria-label="Report novel"
+          class="group/button inline-flex cursor-pointer items-center justify-center bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none border bg-card hover:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 size-8 h-9 w-9 shrink-0 p-0 border-amber-200 text-amber-600 hover:bg-amber-50 rounded-lg self-start"
+        >
+          <svg class="icon inline-flex shrink-0 size-4"><use href="#alert-outline"></use></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex w-full rounded-lg border border-border/50 dark:border-white/15 bg-card/50 overflow-hidden mb-3">
+      <figure class="shrink-0">
+        <div class="image-wrap relative rounded-md h-full w-30 sm:w-40 rounded-none zoom group cursor-pointer">
+          <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-200 rounded-md">
+            <svg class="icon inline-flex shrink-0 size-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 drop-shadow-lg"><use href="#zoom_out"></use></svg>
+          </div>
+          {cover ? (
+            <>
+              <div class="absolute inset-0 overflow-hidden z-0">
+                <img alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 w-full h-full object-cover scale-110 blur-sm opacity-60 pointer-events-none select-none" src={cover} />
+              </div>
+              <img src={cover} alt={title} loading="lazy" class="relative z-1 w-full h-full object-cover" style="aspect-ratio: 3/4;" />
+            </>
+          ) : (
+            <div class="w-full h-full bg-muted rounded-md flex items-center justify-center text-muted-foreground text-xs" style="aspect-ratio: 3/4;">No Cover</div>
+          )}
+          <span class="status corner st-1"></span>
+        </div>
+      </figure>
+      <div class="flex flex-1 flex-col min-w-0 p-2 gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+          {status && (
+            <div class="flex flex-col rounded-lg bg-muted/40 border border-border/50 dark:border-white/15 px-2.5 py-1.5 items-center text-center gap-0.5">
+              <span class="text-[9px] uppercase tracking-wide font-bold leading-none text-foreground/80" translate="no">Status</span>
+              <div class="flex items-center gap-1">
+                <span class:list={["w-1.5 h-1.5 rounded-full shrink-0", sColor.dot]}></span>
+                <span class:list={["text-xs font-semibold leading-none", sColor.text]}>{status}</span>
+              </div>
+            </div>
+          )}
+          {views && (
+            <div class="flex flex-col rounded-lg bg-muted/40 border border-border/50 dark:border-white/15 px-2.5 py-1.5 items-center text-center gap-0.5">
+              <span class="text-[9px] uppercase tracking-wide font-bold leading-none text-foreground/80" translate="no">Views</span>
+              <span class="text-xs font-semibold leading-none" translate="no">{views}</span>
+            </div>
+          )}
+          {chapters > 0 && (
+            <div class="flex flex-col rounded-lg bg-muted/40 border border-border/50 dark:border-white/15 px-2.5 py-1.5 items-center text-center gap-0.5">
+              <span class="text-[9px] uppercase tracking-wide font-bold leading-none text-foreground/80" translate="no">Chapters</span>
+              <span class="text-xs font-semibold leading-none" translate="no">{chapters}</span>
+            </div>
+          )}
+          {rating > 0 && (
+            <div class="flex flex-col rounded-lg bg-muted/40 border border-border/50 dark:border-white/15 px-2.5 py-1.5 items-center text-center gap-0.5">
+              <span class="text-[9px] uppercase tracking-wide font-bold leading-none text-foreground/80" translate="no">Rating</span>
+              <div class="flex items-center gap-0.5">
+                <span class="text-amber-400 text-xs leading-none"></span>
+                <span class="text-xs font-semibold leading-none" translate="no">{rating.toFixed(1)}{ratingVotes > 0 ? ` (${ratingVotes})` : ""}</span>
+              </div>
+            </div>
+          )}
+          {readers > 0 && (
+            <div class="flex flex-col rounded-lg bg-muted/40 border border-border/50 dark:border-white/15 px-2.5 py-1.5 items-center text-center gap-0.5">
+              <span class="text-[9px] uppercase tracking-wide font-bold leading-none text-foreground/80" translate="no">Readers</span>
+              <span class="text-xs font-semibold leading-none">{readers}</span>
+            </div>
+          )}
+          {totalChars && (
+            <div class="flex flex-col rounded-lg bg-muted/40 border border-border/50 dark:border-white/15 px-2.5 py-1.5 items-center text-center gap-0.5">
+              <span class="text-[9px] uppercase tracking-wide font-bold leading-none text-foreground/80" translate="no">Chars</span>
+              <span class="text-xs font-semibold leading-none" translate="no">{totalChars}</span>
+            </div>
+          )}
+        </div>
+
+        <div class="flex flex-col gap-1.5 mt-auto">
+          <div class="flex gap-1.5">
+            <div class="inline-flex w-full flex-1 h-9 rounded-lg" translate="no">
+              <button type="button" class="group/button inline-flex cursor-pointer shrink-0 items-center justify-center w-full h-full gap-1 rounded-lg border border-border bg-card hover:bg-muted hover:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 px-2.5 text-[0.8rem] font-medium whitespace-nowrap transition-all outline-none select-none">
+                <div class="flex items-center gap-1.5 justify-center w-full">
+                  <svg class="icon inline-flex shrink-0 size-6"><use href="#book-open-variant"></use></svg>
+                  <span translate="no">Reading</span>
+                </div>
+              </button>
+            </div>
+          </div>
+          <a role="button" href="#" rel="nofollow" class="group/button inline-flex cursor-pointer shrink-0 items-center justify-center bg-clip-padding font-semibold whitespace-nowrap transition-all outline-none select-none border border-primary bg-transparent text-primary hover:bg-primary/10 gap-1.5 relative isolate h-9 rounded-lg w-full text-sm text-center px-4">
+            <div class="absolute inset-0 overflow-hidden rounded-[inherit] -z-10">
+              <div class="absolute inset-y-0 left-0 bg-primary/10 transition-all duration-500" style="width: 57.5682%;"></div>
+            </div>
+            <span class="absolute -top-2 left-1/2 -translate-x-1/2 text-[10px] font-normal tabular-nums bg-black/50 text-white px-1.5 py-px rounded-sm whitespace-nowrap max-sm:text-[9px] max-sm:px-1 max-sm:py-0.5 max-sm:-top-2 max-sm:px-2" translate="no">464 / 806</span>
+            <span>Continue Reading</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {headerChips.length > 0 && (
+      <ul class="flex flex-wrap items-center gap-1 max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:pb-2 scroll-thin">
+        {headerChips.map(c => {
+          const isGenre = displayGenres.some(g => g.toLowerCase() === c.toLowerCase());
+          const isHeaderMale = headerMaleTag && c.toLowerCase() === headerMaleTag.toLowerCase();
+          const chipClass = isHeaderMale
+            ? "inline-flex items-center capitalize text-xs font-semibold border rounded px-1.5 py-0.5 whitespace-nowrap transition-colors border-blue-400/50 text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-950/20 hover:bg-blue-100/70 dark:hover:bg-blue-950/40"
+            : isGenre
+              ? "inline-flex items-center capitalize text-xs font-medium border rounded py-0.5 whitespace-nowrap transition-colors border-border/70 text-card-foreground px-2"
+              : "inline-flex items-center capitalize text-xs font-medium border rounded px-1.5 py-0.5 whitespace-nowrap transition-colors border-border/70 text-card-foreground";
+          return <li class={chipClass}>{c}</li>;
+        })}
+      </ul>
+    )}
+  </div>
+</section>

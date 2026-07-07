@@ -1,0 +1,86 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import type { InferEntrySchema } from 'astro:content';
+
+interface DataFile {
+  default: unknown;
+}
+
+interface OtherNovel {
+  title: string;
+  url: string;
+}
+
+interface Patron {
+  name: string;
+  amount: number;
+  rank?: number;
+}
+
+interface Chapter {
+  num: number;
+  title: string;
+  date?: string;
+  url?: string;
+}
+
+interface ReviewsData {
+  averageRating?: number;
+  totalVotes?: number;
+  breakdown?: { 5: number; 4: number; 3: number; 2: number; 1: number };
+  reviews?: Array<{ user: string; rating: number; text: string; date?: string; likes?: number }>;
+}
+
+interface Recommendation {
+  title: string;
+  cover?: string;
+  rating?: number;
+  url?: string;
+}
+
+const dataModules = import.meta.glob('../../data/**/*.json', { eager: true });
+
+function getData<T>(slug: string, category: string): T | undefined {
+  for (const [path, mod] of Object.entries(dataModules)) {
+    if (path.includes(`/data/${category}/${slug}.json`)) {
+      return (mod as DataFile).default as T;
+    }
+  }
+  return undefined;
+}
+
+export async function getStaticPaths() {
+  const novels = await getCollection('novel');
+  return novels.map(entry => ({
+    params: { slug: entry.id.split('/').pop()! },
+    props: entry,
+  }));
+}
+
+type Props = CollectionEntry<'novel'>;
+
+const entry = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data as InferEntrySchema<'novel'>;
+const slug = entry.id.split('/').pop()!;
+
+const patrons = getData<Patron[]>(slug, 'patrons');
+const chaptersList = getData<Chapter[]>(slug, 'chapters');
+const reviewsData = getData<ReviewsData>(slug, 'reviews');
+const recommendationsList = getData<Recommendation[]>(slug, 'recommendations');
+const otherNovels = getData<OtherNovel[]>(slug, 'other-novels');
+---
+
+<PostLayout
+  frontmatter={data}
+  patrons={patrons}
+  chaptersList={chaptersList}
+  reviewsData={reviewsData}
+  recommendationsList={recommendationsList}
+  otherNovels={otherNovels}
+>
+  <Fragment slot="content">
+    <Content />
+  </Fragment>
+</PostLayout>
