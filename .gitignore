@@ -8,6 +8,7 @@ worker-configuration.d.ts
 .obsidian/
 nul
 graphify-out
+refrence-ui
 
 # dependencies
 node_modules/
