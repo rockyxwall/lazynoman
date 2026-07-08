@@ -5,10 +5,8 @@ dist/
 # generated types
 .astro/
 worker-configuration.d.ts
-.obsidian/
+.temp
 nul
-graphify-out
-refrence-ui
 
 # dependencies
 node_modules/
@@ -23,6 +21,3 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
-
-# macOS-specific files
-.DS_Store

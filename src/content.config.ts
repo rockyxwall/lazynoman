@@ -2,44 +2,45 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const post = defineCollection({
-	loader: glob({ base: './src/content', pattern: '**/*.mdx' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
-			heroImage: z.optional(image()),
-			category: z.string().optional(),
-			creator: z.string().optional(),
-			medium: z.string().optional(),
-			progress: z.string().optional(),
-			tags: z.array(z.string()).optional(),
-			draft: z.boolean().default(false),
-			summary: z.string().optional(),
-			synonyms: z.array(z.string()).optional(),
-			infoNovel: z.object({
-				officialTitle: z.string().optional(),
-				itemAuthor: z.string().optional(),
-				rating: z.number().optional(),
-				novelGenres: z.array(z.string()).optional(),
-				novelTags: z.array(z.string()).optional(),
-				status: z.string().optional(),
-				chapterCount: z.number().optional(),
-				platform: z.string().optional(),
-				novelDescription: z.string().optional(),
-				novelType: z.string().optional(),
-			}).optional(),
-			infoMyReadingStats: z.object({
-				status: z.enum(['completed', 'on-hold', 'dropped', 'reading']),
-				startedReading: z.string().optional(),
-				stoppedReading: z.string().optional(),
-				chaptersRead: z.number().optional(),
-				totalChapters: z.number().optional(),
-				myRating: z.number().optional(),
-			}).optional(),
-		}),
+const novel = defineCollection({
+  loader: glob({ base: './src/content', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),
+    chineseTitle: z.string().optional(),
+    cover: z.string().optional(),
+    author: z.string().optional(),
+    status: z.string().optional(),
+    views: z.string().optional(),
+    chapters: z.number().optional(),
+    rating: z.number().optional(),
+    readers: z.number().optional(),
+    totalChars: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    tagCategories: z.record(z.string(), z.array(z.string())).optional(),
+    genres: z.array(z.string()).optional(),
+    details: z.object({
+      author: z.string().optional(),
+      authorPinyin: z.string().optional(),
+      authorUrl: z.string().optional(),
+      status: z.string().optional(),
+      dateAdded: z.string().optional(),
+      requested: z.string().optional(),
+      requestedUrl: z.string().optional(),
+      year: z.number().optional(),
+      origin: z.string().optional(),
+      language: z.string().optional(),
+    }).optional(),
+    rankings: z.object({
+      weekly: z.number().optional(),
+      allTime: z.number().optional(),
+    }).optional(),
+    dataFiles: z.object({
+      chapters: z.string().optional(),
+      reviews: z.string().optional(),
+      recommendations: z.string().optional(),
+      patrons: z.string().optional(),
+    }).optional(),
+  }),
 });
 
-export const collections = { post };
+export const collections = { novel };

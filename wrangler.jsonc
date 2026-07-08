@@ -4,16 +4,5 @@
 	"compatibility_flags": [
 		"nodejs_compat",
 		"global_fetch_strictly_public"
-	],
-	"kv_namespaces": [
-		{
-			"binding": "SESSION"
-		}
-	],
-	"images": {
-		"binding": "IMAGES"
-	},
-	"observability": {
-		"enabled": true
-	}
+	]
 }
