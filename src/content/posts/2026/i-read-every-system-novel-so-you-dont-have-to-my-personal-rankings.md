@@ -19,6 +19,8 @@ To save you hundreds of hours of reading through junk food tropes, I ranked my e
 
 <!--more-->
 
+## My Personal Rankings
+
 1. Supreme Harem God System [Personal System]
 2. Lackey's Seducing Survival Odyssey [Universal System]
 3. **The Strongest System** [Personal System]
