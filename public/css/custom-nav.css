@@ -65,7 +65,7 @@ div.stickyside.pl-lg-4 {
     margin: 1rem 0;
     position: relative;
     text-align: center;
-    border: 1px solid #47c4f1;
+    border: 1px solid var(--accent, #e63946);
 }
 
 .googlead::before {
