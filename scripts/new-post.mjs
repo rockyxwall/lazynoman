@@ -166,7 +166,7 @@ export async function main(argv = process.argv.slice(2), root = process.cwd()) {
     "utf8",
   );
   const output = renderTemplate(template, input, slug);
-  const match = output.match(/^---\n([\s\S]*?)\n---/);
+  const match = output.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   const parsed = YAML.parse(match[1]);
   if (parsed.title !== input.title)
     throw new Error("generated title failed exact YAML round trip");

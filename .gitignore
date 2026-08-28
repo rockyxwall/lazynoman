@@ -16,3 +16,4 @@ playwright-report/
 !.github/scripts/*.sh
 .DS_Store
 _cleanup-staging/
+imported
