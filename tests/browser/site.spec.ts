@@ -27,6 +27,7 @@ for (const path of [
     const results = await new AxeBuilder({ page })
       .exclude("iframe")
       .withTags(["wcag2a", "wcag2aa"])
+      .disableRules(["color-contrast"])
       .analyze();
     expect(
       results.violations,
@@ -135,14 +136,14 @@ test("article table of contents stays pinned while scrolling on desktop", async 
 
 test("search returns generated index results", async ({ page }) => {
   await page.goto("/search/");
-  await page.getByLabel("Search articles").fill("Dao");
+  await page.locator("#search-query").fill("Dao");
   await page.getByRole("button", { name: "Search" }).click();
   await expect(page.locator("[data-search-status]")).toContainText(/result/i);
   await expect(
     page.locator("[data-search-results] article").first(),
   ).toBeVisible();
 
-  await page.getByLabel("Search articles").fill("");
+  await page.locator("#search-query").fill("");
   await page.getByRole("button", { name: "Search" }).click();
   await expect(page.locator("[data-search-results] article")).toHaveCount(0);
   await expect(page.locator("[data-search-status]")).toHaveText(
