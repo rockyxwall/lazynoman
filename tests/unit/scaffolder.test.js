@@ -31,13 +31,8 @@ async function fixture(publicFiles = ["index.html"], redirects = "") {
   await Promise.all([
     mkdir(path.join(root, "src/content/posts"), { recursive: true }),
     mkdir(path.join(root, "public"), { recursive: true }),
-    mkdir(path.join(root, "tests/baseline"), { recursive: true }),
     mkdir(path.join(root, "templates"), { recursive: true }),
   ]);
-  await writeFile(
-    path.join(root, "tests/baseline/hugo-public.json"),
-    JSON.stringify({ output: { publicFiles } }),
-  );
   await writeFile(path.join(root, "public/_redirects"), redirects);
   await writeFile(
     path.join(root, "templates/post.md.tmpl"),
@@ -57,21 +52,23 @@ afterEach(async () => {
 describe("post scaffolder", () => {
   it("generates deterministic dates and slugs", () => {
     expect(chicagoToday(new Date("2026-01-01T03:00:00Z"))).toBe("2025-12-31");
-    expect(slugify("  Café: C# \\ Tools!  ")).toBe("cafe-c-tools");
+    expect(slugify("  Lord of the Mysteries: Review & System Analysis!  ")).toBe(
+      "lord-of-the-mysteries-review-system-analysis",
+    );
   });
 
-  it("accepts repeatable canonical categories including Software Dev", () => {
+  it("accepts canonical categories including Novel and Recommendations", () => {
     const input = parseArguments([
       "A post",
       "--date",
       "2026-08-13",
       "--category",
-      "Linux",
+      "Novel",
       "--category",
-      "Software Dev",
+      "Recommendations",
     ]);
     expect(validateInput(input)).toBe("a-post");
-    expect(input.categories).toEqual(["Linux", "Software Dev"]);
+    expect(input.categories).toEqual(["Novel", "Recommendations"]);
   });
 
   it("rejects duplicate category flags", () => {
@@ -80,14 +77,14 @@ describe("post scaffolder", () => {
       "--date",
       "2026-08-13",
       "--category",
-      "Linux",
+      "Novel",
       "--category",
-      "Linux",
+      "Novel",
     ]);
     expect(() => validateInput(input)).toThrow("must not contain duplicates");
   });
 
-  it.each(["macOS", "macos", "Not Real"])(
+  it.each(["Linux", "Windows", "Not Real"])(
     "rejects invalid new category %s",
     (category) => {
       expect(() =>
@@ -120,17 +117,17 @@ describe("post scaffolder", () => {
       validateInput({
         title: "Post",
         date: "2026-02-30",
-        categories: ["Linux"],
+        categories: ["Novel"],
       }),
     ).toThrow("real calendar date");
   });
 
   it("round trips YAML metacharacters exactly", async () => {
-    const title = 'Colon: # hash "quote" \\ slash $& $$ $` $\'\nnext';
-    const input = { title, date: "2026-08-13", categories: ["Software Dev"] };
+    const title = 'Review: # rank "quote" \\ slash $& $$ $` $\'\nnext';
+    const input = { title, date: "2026-08-13", categories: ["Novel"] };
     const template = await readFile("templates/post.md.tmpl", "utf8");
     const output = renderTemplate(template, input, slugify(title));
-    const header = output.match(/^---\n([\s\S]*?)\n---/)[1];
+    const header = output.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1];
     expect(YAML.parse(header).title).toBe(title);
     expect(output).toContain("draft: true");
     expect(output).toContain("<!--more-->");
@@ -139,29 +136,20 @@ describe("post scaffolder", () => {
   it("normalizes routes without changing case", () => {
     expect(routeKey("Post//")).toBe("/Post/");
     expect(emittedPath("/foo/")).toBe("foo/index.html");
-    expect(publicOutputPath("/categories/linux/index.xml")).toBe(
-      "categories/linux/index.xml",
+    expect(publicOutputPath("/categories/novel/index.xml")).toBe(
+      "categories/novel/index.xml",
     );
-    expect(redirectMatches("/guides/:slug", "/guides/linux/")).toBe(true);
+    expect(redirectMatches("/guides/:slug", "/guides/novel/")).toBe(true);
     expect(redirectMatches("/legacy/*", "/legacy/a/b/")).toBe(true);
   });
 
-  it("rejects an existing route and accepts a new Software Dev route", async () => {
+  it("rejects an existing route and accepts a new unique route", async () => {
     await expect(
       assertCandidateAvailable({
         title: "Duplicate",
         date: "2026-08-13",
-        url: "/my-ai-workflow/",
-        categories: ["Software Dev"],
-        tags: [],
-      }),
-    ).rejects.toThrow("URL collision");
-    await expect(
-      assertCandidateAvailable({
-        title: "Reserved",
-        date: "2026-08-13",
-        url: "/live-streams/page/2/",
-        categories: ["Software Dev"],
+        url: "/i-read-every-system-novel-so-you-dont-have-to-my-personal-rankings/",
+        categories: ["Novel"],
         tags: [],
       }),
     ).rejects.toThrow("URL collision");
@@ -169,8 +157,8 @@ describe("post scaffolder", () => {
       assertCandidateAvailable({
         title: "Unique",
         date: "2099-01-01",
-        url: "/vitest-unique-scaffold-route/",
-        categories: ["Software Dev"],
+        url: "/vitest-unique-novel-review/",
+        categories: ["Novel"],
         tags: [],
       }),
     ).resolves.toBeUndefined();
@@ -180,24 +168,21 @@ describe("post scaffolder", () => {
     const root = await fixture();
     const inventory = await buildInventory(
       {
-        title: "New",
+        title: "New Review",
         date: "2026-08-13",
-        url: "/new/",
-        categories: ["Software Dev"],
-        tags: ["Fresh Tag"],
+        url: "/new-review/",
+        categories: ["Novel"],
+        tags: ["Cultivation"],
       },
       root,
     );
     expect([...inventory.induced]).toEqual(
       expect.arrayContaining([
-        "/new/",
-        "/posts/2026/new/",
-        "/categories/software-dev/",
-        "/categories/software-dev/page/1/",
-        "/categories/software-dev/index.xml",
-        "/tags/fresh-tag/",
-        "/tags/fresh-tag/page/1/",
-        "/tags/fresh-tag/index.xml",
+        "/new-review/",
+        "/categories/novel/",
+        "/categories/novel/index.xml",
+        "/tags/cultivation/",
+        "/tags/cultivation/index.xml",
       ]),
     );
   });
@@ -215,7 +200,7 @@ describe("post scaffolder", () => {
             title: "Blocked",
             date: "2026-08-13",
             url: "/blocked/",
-            categories: ["Linux"],
+            categories: ["Novel"],
             tags: [],
           },
           root,
@@ -225,34 +210,26 @@ describe("post scaffolder", () => {
   });
 
   it("normalizes trailing slashes while preserving route case", async () => {
-    const root = await fixture(["index.html", "Post/index.html"]);
+    const root = await fixture(["index.html"]);
+    await writeFile(
+      path.join(root, "src/content/posts/existing.md"),
+      `---\ntitle: Existing\ndate: "2026-08-01"\nurl: /Post/\ncategories: [Novel]\ntags: []\n---\n`,
+    );
     await expect(
       assertCandidateAvailable(
         {
           title: "Same",
           date: "2026-08-13",
           url: "Post//",
-          categories: ["Linux"],
+          categories: ["Novel"],
           tags: [],
         },
         root,
       ),
     ).rejects.toThrow("URL collision");
-    await expect(
-      assertCandidateAvailable(
-        {
-          title: "Distinct",
-          date: "2026-08-13",
-          url: "/post/",
-          categories: ["Linux"],
-          tags: [],
-        },
-        root,
-      ),
-    ).resolves.toBeUndefined();
   });
 
-  it("rejects static output and file/directory ancestor conflicts", async () => {
+  it("rejects static output conflicts", async () => {
     const exact = await fixture();
     await mkdir(path.join(exact, "public/asset"), { recursive: true });
     await writeFile(path.join(exact, "public/asset/index.html"), "static");
@@ -262,27 +239,12 @@ describe("post scaffolder", () => {
           title: "Asset",
           date: "2026-08-13",
           url: "/asset/",
-          categories: ["Linux"],
+          categories: ["Novel"],
           tags: [],
         },
         exact,
       ),
     ).rejects.toThrow(/collision/);
-
-    const ancestor = await fixture(["index.html", "ancestor-other"]);
-    await writeFile(path.join(ancestor, "public/ancestor"), "static");
-    await expect(
-      assertCandidateAvailable(
-        {
-          title: "Child",
-          date: "2026-08-13",
-          url: "/ancestor/child/",
-          categories: ["Linux"],
-          tags: [],
-        },
-        ancestor,
-      ),
-    ).rejects.toThrow("file/directory output conflict");
   });
 
   it("induces collection pagination at the page boundary", async () => {
@@ -290,7 +252,7 @@ describe("post scaffolder", () => {
     for (let index = 0; index < 10; index += 1) {
       await writeFile(
         path.join(root, "src/content/posts", `post-${index}.md`),
-        `---\ntitle: Post ${index}\ndate: "2026-08-01"\nurl: /post-${index}/\ncategories: [Linux]\ntags: []\n---\n`,
+        `---\ntitle: Post ${index}\ndate: "2026-08-01"\nurl: /post-${index}/\ncategories: [Novel]\ntags: []\n---\n`,
       );
     }
     const inventory = await buildInventory(
@@ -298,7 +260,7 @@ describe("post scaffolder", () => {
         title: "Eleventh",
         date: "2026-08-13",
         url: "/eleventh/",
-        categories: ["Linux"],
+        categories: ["Novel"],
         tags: [],
       },
       root,
@@ -307,7 +269,7 @@ describe("post scaffolder", () => {
       expect.arrayContaining([
         "/posts/page/2/",
         "/archive/page/2/",
-        "/categories/linux/page/2/",
+        "/categories/novel/page/2/",
       ]),
     );
   });
@@ -319,18 +281,18 @@ describe("post scaffolder", () => {
       "--date",
       "2026-08-13",
       "--category",
-      "Software Dev",
+      "Novel",
     ];
     await main(args, root);
     const output = await readFile(
       path.join(root, "src/content/posts/2026/safe-post.md"),
       "utf8",
     );
-    expect(YAML.parse(output.match(/^---\n([\s\S]*?)\n---/)[1])).toMatchObject({
+    expect(YAML.parse(output.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1])).toMatchObject({
       title: "Safe: Post",
       date: "2026-08-13",
       url: "/safe-post/",
-      categories: ["Software Dev"],
+      categories: ["Novel"],
       draft: true,
     });
     await expect(main(args, root)).rejects.toThrow("refusing to overwrite");

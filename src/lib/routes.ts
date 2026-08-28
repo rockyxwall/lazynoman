@@ -1,5 +1,3 @@
-import { readFileSync } from "node:fs";
-
 import type { Page, Post } from "./content";
 import { pageRoute, slugify, taxonomy } from "./content";
 import site from "../data/site.json";
@@ -27,10 +25,6 @@ export type PageDescriptor =
       pages: number;
     }
   | { kind: "redirect"; route: string; target: string };
-
-const baseline = JSON.parse(
-  readFileSync("tests/baseline/hugo-public.json", "utf8"),
-);
 
 function routeKey(route: string): string {
   const segments = route.split("/").filter(Boolean);
@@ -71,15 +65,6 @@ function addPaginated(
       },
     });
   }
-  const firstPageAlias = routeKey(base === "/" ? "/page/1/" : `${base}page/1/`);
-  if (!seen.has(firstPageAlias)) {
-    seen.add(firstPageAlias);
-    output.push({
-      kind: "redirect",
-      route: firstPageAlias,
-      target: routeKey(base),
-    });
-  }
 }
 
 function addTermPages(
@@ -108,29 +93,6 @@ function addTermPages(
       ),
     });
   }
-  const firstPageAlias = routeKey(`${root}page/1/`);
-  if (!seen.has(firstPageAlias)) {
-    seen.add(firstPageAlias);
-    output.push({
-      kind: "redirect",
-      route: firstPageAlias,
-      target: routeKey(root),
-    });
-  }
-}
-
-export function legacyAliases(): Record<string, string> {
-  const aliases = baseline.output.aliases as Record<
-    string,
-    { localRoute: string }
-  >;
-  return Object.fromEntries(
-    Object.entries(aliases).map(([route, value]) => [route, value.localRoute]),
-  );
-}
-
-export function legacyFeedPaths(): string[] {
-  return Object.keys(baseline.output.semantic.feeds);
 }
 
 export function buildPageDescriptors(
@@ -142,9 +104,6 @@ export function buildPageDescriptors(
   const reserved = new Set([
     "/archive/",
     "/search/",
-    "/live-streams/",
-    "/live-streams/player/",
-    "/videos/",
     "/newsletter/",
     "/rss/",
   ]);
@@ -154,17 +113,6 @@ export function buildPageDescriptors(
     if (seen.has(route)) throw new Error(`duplicate emitted route ${route}`);
     seen.add(route);
     output.push({ kind: "post", route, post });
-    const sourceAlias = routeKey(
-      `/${post.data._sourcePath.replace(/^src\/content\//, "").replace(/\.md$/, "")}/`,
-    );
-    if (
-      sourceAlias !== route &&
-      !seen.has(sourceAlias) &&
-      !reserved.has(sourceAlias)
-    ) {
-      seen.add(sourceAlias);
-      output.push({ kind: "redirect", route: sourceAlias, target: route });
-    }
   }
   for (const page of pages) {
     const route = routeKey(pageRoute(page));
@@ -180,7 +128,7 @@ export function buildPageDescriptors(
     "/posts/",
     "Articles",
     posts,
-    "Technology guides and commentary",
+    "Webnovel reviews, tier lists, and recommendations",
   );
   addPaginated(
     output,
@@ -188,9 +136,9 @@ export function buildPageDescriptors(
     "/archive/",
     "Archive",
     posts,
-    "Every published article",
+    "Every published article and review",
   );
-  addPaginated(output, seen, "/", "Latest Articles", posts, undefined, 33);
+  addPaginated(output, seen, "/", "Latest Reviews", posts, undefined, 1);
 
   for (const field of ["categories", "tags"] as const) {
     const groups = taxonomy(posts, field);
@@ -214,12 +162,6 @@ export function buildPageDescriptors(
     }
   }
 
-  for (const [route, target] of Object.entries(legacyAliases())) {
-    const key = routeKey(route);
-    if (seen.has(key) || reserved.has(key)) continue;
-    seen.add(key);
-    output.push({ kind: "redirect", route: key, target });
-  }
   return output;
 }
 

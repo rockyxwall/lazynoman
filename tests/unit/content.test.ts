@@ -12,7 +12,6 @@ import {
   validateFeaturedOrders,
 } from "../../src/lib/content-logic";
 import { renderFeedContent } from "../../src/lib/feed-content";
-import { requiredLivestreamDate } from "../../src/lib/livestreams";
 import { escapeXml } from "../../src/lib/xml";
 
 describe("production eligibility", () => {
@@ -164,25 +163,6 @@ describe("RSS content", () => {
     expect(result).toContain('src="/images/fixture.webp"');
     expect(result).toContain("youtube-nocookie.com/embed/fixture");
     expect(result).toContain("Tail marker.");
-  });
-
-  it("requires real offset timestamps for livestream publication dates", () => {
-    expect(
-      requiredLivestreamDate(
-        "2026-08-13T18:00:00-05:00",
-        "fixture",
-      ).toISOString(),
-    ).toBe("2026-08-13T23:00:00.000Z");
-    for (const invalid of [
-      undefined,
-      "2026-08-13T18:00:00",
-      "2026-02-30T00:00:00Z",
-      "2026-01-01T24:00:00Z",
-      "2026-01-01T12:00:00+24:00",
-    ])
-      expect(() => requiredLivestreamDate(invalid, "fixture")).toThrow(
-        /publishedAt/,
-      );
   });
 
   it("escapes every XML-sensitive character", () => {

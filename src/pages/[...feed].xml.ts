@@ -10,21 +10,24 @@ import {
   taxonomy,
   taxonomySlug,
 } from "../lib/content";
-import { legacyFeedPaths } from "../lib/routes";
 
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
-  const paths = new Set(legacyFeedPaths());
+  const paths = new Set<string>([
+    "posts/index.xml",
+    "archive/index.xml",
+    "categories/index.xml",
+    "tags/index.xml",
+  ]);
   for (const field of ["categories", "tags"] as const) {
-    for (const slug of taxonomy(posts, field).keys())
+    for (const slug of taxonomy(posts, field).keys()) {
       paths.add(`${field}/${slug}/index.xml`);
+    }
   }
-  return [...paths]
-    .filter((path) => path !== "index.xml" && path !== "live-streams/index.xml")
-    .map((path) => ({
-      params: { feed: path.replace(/\.xml$/, "") },
-      props: { path },
-    }));
+  return [...paths].map((path) => ({
+    params: { feed: path.replace(/\.xml$/, "") },
+    props: { path },
+  }));
 }) satisfies GetStaticPaths;
 
 export const GET: APIRoute = async (context) => {

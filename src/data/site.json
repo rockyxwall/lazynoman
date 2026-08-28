@@ -21,16 +21,6 @@
     "Recommendations",
     "Top Picks"
   ],
-  "legacyUncategorizedUrls": [
-    "/2022-recap/",
-    "/worst-tech-of-2022/",
-    "/youtube-telegram-scams/"
-  ],
-  "legacyCategoryPairs": {
-    "/2020-buyers-guide/": "macOS",
-    "/change-wallpaper/": "macOS",
-    "/macos-sysadmin-tips/": "macos",
-    "/opencore-mac/": "macOS",
-    "/zed-editor/": "macOS"
-  }
+  "legacyUncategorizedUrls": [],
+  "legacyCategoryPairs": {}
 }

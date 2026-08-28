@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://christitus.com",
+  site: "https://lazynoman.com",
   output: "static",
   outDir: "./dist",
   trailingSlash: "always",
@@ -13,12 +13,6 @@ export default defineConfig({
     shikiConfig: {
       theme: "github-dark",
       wrap: true,
-    },
-  },
-  redirects: {
-    "/videos/": {
-      status: 301,
-      destination: "https://youtube.com/@christitustech",
     },
   },
 });

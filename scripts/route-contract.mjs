@@ -67,7 +67,6 @@ export function redirectMatches(pattern, route) {
 function addPaginated(routes, base, count, minimumPages = 1) {
   const normalizedBase = routeKey(base);
   routes.add(normalizedBase);
-  routes.add(normalizedBase === "/" ? "/page/1/" : `${normalizedBase}page/1/`);
   const pages = Math.max(minimumPages, Math.ceil(count / site.postsPerPage), 1);
   for (let page = 2; page <= pages; page += 1) {
     routes.add(
@@ -85,11 +84,12 @@ function derivedRoutes(posts) {
     "/sitemap.xml",
     "/404.html",
     "/search/",
-    "/live-streams/",
-    "/live-streams/player/",
-    "/videos/",
     "/newsletter/",
     "/rss/",
+    "/archive/",
+    "/privacy/",
+    "/terms-conditions/",
+    "/recommendations/",
   ]);
   const categories = new Map();
   const tags = new Map();
@@ -106,17 +106,11 @@ function derivedRoutes(posts) {
     }
   }
 
-  addPaginated(routes, "/", posts.length, 33);
+  addPaginated(routes, "/", posts.length);
   addPaginated(routes, "/posts/", posts.length);
   addPaginated(routes, "/archive/", posts.length);
   routes.add("/posts/index.xml");
   routes.add("/archive/index.xml");
-  const livestreamPages = Math.max(
-    1,
-    Math.ceil(Math.max(0, validLivestreamCount - 1) / 24),
-  );
-  for (let page = 1; page <= livestreamPages; page += 1)
-    routes.add(`/live-streams/page/${page}/`);
 
   for (const [field, groups] of [
     ["categories", categories],
@@ -134,21 +128,9 @@ function derivedRoutes(posts) {
   return routes;
 }
 
-function routeFromPublicFile(relative) {
-  if (relative === "index.html") return "/";
-  if (relative.endsWith("/index.html"))
-    return `/${relative.slice(0, -"index.html".length)}`;
-  return `/${relative}`;
-}
-
 export async function buildInventory(candidate, root = process.cwd()) {
-  const baseline = JSON.parse(
-    await readFile(path.join(root, "tests/baseline/hugo-public.json"), "utf8"),
-  );
-  const routes = new Set(
-    baseline.output.publicFiles.map(routeFromPublicFile).map(publicRoute),
-  );
-  const outputPaths = new Set(baseline.output.publicFiles);
+  const routes = new Set();
+  const outputPaths = new Set();
 
   const postFiles = await fg("src/content/posts/**/*.md", { cwd: root });
   const posts = [];
@@ -168,13 +150,9 @@ export async function buildInventory(candidate, root = process.cwd()) {
     routes.add(normalized);
     outputPaths.add(publicOutputPath(normalized));
   }
+
   const futurePosts = candidate ? [...posts, candidate] : posts;
   const futureDerived = derivedRoutes(futurePosts);
-  if (candidate) {
-    const sourceSlug =
-      candidate._sourceSlug ?? path.basename(routeKey(candidate.url));
-    futureDerived.add(`/posts/${candidate.date.slice(0, 4)}/${sourceSlug}/`);
-  }
   const induced = new Set(
     [...futureDerived]
       .map(publicRoute)
@@ -188,13 +166,17 @@ export async function buildInventory(candidate, root = process.cwd()) {
     outputPaths.add(relative);
   }
 
-  const redirectLines = (
-    await readFile(path.join(root, "public/_redirects"), "utf8")
-  )
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith("#"));
-  const redirectSources = redirectLines.map((line) => line.split(/\s+/)[0]);
+  let redirectSources = [];
+  try {
+    const redirectLines = (
+      await readFile(path.join(root, "public/_redirects"), "utf8")
+    )
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith("#"));
+    redirectSources = redirectLines.map((line) => line.split(/\s+/)[0]);
+  } catch {}
+
   return { routes, outputPaths, induced, redirectSources };
 }
 

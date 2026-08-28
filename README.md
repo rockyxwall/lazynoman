@@ -1,20 +1,19 @@
-# Christitus.com
+# LazyNoman
 
-The source for [christitus.com](https://christitus.com), built as a fully static
-Astro site and deployed with Cloudflare Pages.
+The source for [lazynoman.com](https://lazynoman.com), a webnovel review, tier list, and progression fantasy recommendation hub built with Astro and deployed on Cloudflare Pages.
 
 ## Requirements
 
 - Node.js 24
-- npm
-- Python 3.12
+- npm (or bun)
 
-Install the exact dependency tree and run the complete local gate:
+Install dependencies and run the complete local gate:
 
 ```bash
 npm ci
-python -m pip install --disable-pip-version-check --require-hashes --requirement scripts/requirements-automation.txt
-npm run validate
+npm run check
+npm test
+npm run build
 ```
 
 Development commands:
@@ -26,50 +25,30 @@ npm run build        # static output in dist/
 npm run preview      # serve the production artifact
 ```
 
-Focused validation is available through `npm run check`, `npm test`,
-`npm run test:browser`, `npm run test:browser:webkit`, and
-`npm run test:lighthouse`. Historical article Markdown is excluded from broad
-formatting and Markdown-lint rewrites; source, configuration, migration docs,
-and the post template remain enforced.
-
 ## Create a post
 
-The repository scaffolder is the Astro equivalent of a Hugo archetype. In an
-interactive terminal, omit categories to choose from the complete numbered
-list:
+Create a new novel review or article with the interactive scaffolder:
 
 ```bash
-npm run new:post -- "My new article"
+npm run new:post -- "Lord of the Mysteries: Review & Analysis"
 ```
 
 For non-interactive use, pass one or more exact category names:
 
 ```bash
-npm run new:post -- "My new article" \
-  --category Linux \
-  --category "Software Dev"
+npm run new:post -- "Lord of the Mysteries: Review & Analysis" \
+  --category Novel \
+  --category Recommendations
 ```
 
-The command renders `templates/post.md.tmpl` into
-`src/content/posts/<year>/<slug>.md`, defaults the post to `draft: true`, and
-refuses file, URL, redirect, static-asset, taxonomy, feed, or pagination
-collisions. The available categories are Android, ChromeOS, Development,
-FreeBSD, Hardware, Linux, MacOS, Misc, Networking, Software Dev, Titus,
-Virtualization, Windows, Windows Server, and YouTube.
-
-Set the featured image at `public/images/<year>-thumbs/<slug>.webp`, edit the
-generated front matter and body, then preview drafts with `npm run dev:content`.
+The command renders `templates/post.md.tmpl` into `src/content/posts/<year>/<slug>.md`, defaults the post to `draft: true`, and verifies route uniqueness. Available categories include: `Animation`, `Anime`, `Game`, `List`, `Manga`, `Manhwa`, `Misc`, `Novel`, `Recommendations`, and `Top Picks`.
 
 ## Repository layout
 
-- `src/` contains Astro pages, layouts, components, styles, and browser code.
-- `src/content/` contains articles and standalone page Markdown.
-- `public/` is copied directly into the published site.
-- `data/livestreams.json` and `public/chats/` are maintained by Python
-  automation that validates the generated site before publishing directly to
-  `master`.
-- `scripts/` contains content preparation, validation, the post scaffolder, and
-  data automation.
-- `tests/` contains unit, route-contract, and browser coverage.
-- `SPEC.md` records the product and compatibility contract retained from the
-  Astro migration.
+- `src/pages/` - Public routes, RSS feeds, sitemap, and search.
+- `src/layouts/` & `src/components/` - Shell layouts, Waline comments, cards, pagination.
+- `src/content/` - Novel reviews (`posts/`) and standalone page Markdown.
+- `src/styles/` - Global styling, tokens, and dark theme variables.
+- `public/` - Static assets, images, brand logos, favicons, and redirects.
+- `scripts/` - Content preparation, route validation, and post scaffolder.
+- `tests/` - Vitest unit and route-contract tests.
