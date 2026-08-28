@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 
 import livestreams from "../../data/livestreams.json";
-import { getPages, getPublishedPosts, pageRoute } from "../lib/content";
+import { getPages, getPublishedPosts, pageRoute, site } from "../lib/content";
 import { buildPageDescriptors } from "../lib/routes";
 import { escapeXml } from "../lib/xml";
 
@@ -36,7 +36,7 @@ export const GET: APIRoute = async () => {
     .map(([route, date]) => {
       try {
         const location = escapeXml(
-          new URL(route, "https://christitus.com/").toString(),
+          new URL(route, site.url).toString(),
         );
         const lastmod = date
           ? `<lastmod>${escapeXml(normalizeLastModified(date))}</lastmod>`

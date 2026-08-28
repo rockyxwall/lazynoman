@@ -62,4 +62,4 @@ Disallow: /
 User-agent: YouBot
 Disallow: /
 
-Sitemap: https://christitus.com/sitemap.xml
+Sitemap: https://lazynoman.com/sitemap.xml

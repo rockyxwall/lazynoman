@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 
-import { getPublishedPosts } from "../lib/content";
+import { getPublishedPosts, site } from "../lib/content";
 
 export const GET: APIRoute = async () => {
   const posts = await getPublishedPosts();
@@ -14,7 +14,7 @@ export const GET: APIRoute = async () => {
           .replace(/<[^>]+>/g, " ")
           .replace(/\s+/g, " ")
           .trim(),
-        permalink: new URL(post.data.url, "https://christitus.com").toString(),
+        permalink: new URL(post.data.url, site.url).toString(),
       })),
     ),
     { headers: { "Content-Type": "application/json; charset=utf-8" } },

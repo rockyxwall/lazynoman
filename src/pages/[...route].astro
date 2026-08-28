@@ -4,7 +4,7 @@ import { render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Pagination from "../components/Pagination.astro";
 import PostList from "../components/PostList.astro";
-import { displayDate, getPages, getPublishedPosts, readingMinutes, relatedPosts, summary, taxonomySlug } from "../lib/content";
+import { displayDate, getPages, getPublishedPosts, readingMinutes, relatedPosts, site, summary, taxonomySlug } from "../lib/content";
 import { buildPageDescriptors, routeParam, type PageDescriptor } from "../lib/routes";
 
 export async function getStaticPaths() {
@@ -29,7 +29,7 @@ if (descriptor.kind === "post") ({ Content, headings } = await render(descriptor
 if (descriptor.kind === "page") ({ Content } = await render(descriptor.page));
 const title = descriptor.kind === "post" ? descriptor.post.data.title : descriptor.kind === "page" ? descriptor.page.data.title : descriptor.kind === "listing" ? descriptor.listing.title : descriptor.title;
 const description = descriptor.kind === "post" ? summary(descriptor.post) : descriptor.kind === "page" ? descriptor.page.data.description : descriptor.kind === "listing" ? descriptor.listing.description : undefined;
-const canonicalUrl = new URL(descriptor.route, "https://christitus.com").toString();
+const canonicalUrl = new URL(descriptor.route, site.url).toString();
 const shareText = encodeURIComponent(title);
 const shareUrl = encodeURIComponent(canonicalUrl);
 const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);

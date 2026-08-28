@@ -5,13 +5,14 @@ import {
   feedContent,
   feedPublicationDate,
   getPublishedPosts,
+  site,
 } from "../lib/content";
 
 export const GET: APIRoute = async (context) => {
   const posts = await getPublishedPosts();
   return rss({
-    title: "Chris Titus Tech",
-    description: "Having Fun with Technology",
+    title: site.name,
+    description: site.description,
     site: context.site!,
     customData: "<language>en-US</language>",
     items: posts.map((post) => {

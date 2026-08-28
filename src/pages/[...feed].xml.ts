@@ -7,6 +7,7 @@ import {
   feedContent,
   feedPublicationDate,
   publicationTime,
+  site,
   taxonomy,
   taxonomySlug,
 } from "../lib/content";
@@ -36,8 +37,8 @@ export const GET: APIRoute = async (context) => {
   );
   if (path === "live-streams/index.xml") {
     return rss({
-      title: "Live Streams | Chris Titus Tech",
-      description: "Chris Titus Tech live stream recordings",
+      title: `Live Streams | ${site.name}`,
+      description: `${site.name} live stream recordings`,
       site: channelUrl,
       customData: "<language>en-US</language>",
       items: livestreams.items.map((stream) => ({
@@ -57,8 +58,8 @@ export const GET: APIRoute = async (context) => {
   if (taxonomyRoot) {
     const groups = taxonomy(posts, taxonomyRoot);
     return rss({
-      title: `${taxonomyRoot} on Chris Titus Tech`,
-      description: `Recent content in ${taxonomyRoot} on Chris Titus Tech`,
+      title: `${taxonomyRoot} on ${site.name}`,
+      description: `Recent content in ${taxonomyRoot} on ${site.name}`,
       site: channelUrl,
       customData: "<language>en-US</language>",
       items: [...groups.entries()]
@@ -82,8 +83,8 @@ export const GET: APIRoute = async (context) => {
   }
   if (path === "archive/index.xml") {
     return rss({
-      title: "Archive on Chris Titus Tech",
-      description: "Recent content in Archive on Chris Titus Tech",
+      title: `Archive on ${site.name}`,
+      description: `Recent content in Archive on ${site.name}`,
       site: channelUrl,
       customData: "<language>en-US</language>",
       items: [],
@@ -100,13 +101,13 @@ export const GET: APIRoute = async (context) => {
       post.data.tags.some((value) => taxonomySlug(value) === tag),
     );
   const title = category
-    ? `${category} | Chris Titus Tech`
+    ? `${category} | ${site.name}`
     : tag
-      ? `${tag} | Chris Titus Tech`
-      : "Chris Titus Tech";
+      ? `${tag} | ${site.name}`
+      : site.name;
   return rss({
     title,
-    description: "Recent content from Chris Titus Tech",
+    description: `Recent content from ${site.name}`,
     site: channelUrl,
     customData: "<language>en-US</language>",
     items: posts.map((post) => {
