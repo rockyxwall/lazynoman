@@ -15,31 +15,31 @@ const topics = [...taxonomy(posts, "categories").entries()]
 ---
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
   <section class="hero container">
-    <p class="eyebrow">Webnovel Reviews & Recommendations</p>
-    <h1>Unfiltered webnovel reviews and recommendations.</h1>
-    <p class="lede">Honest reviews of cultivation, progression fantasy, system novels, and webnovels — zero fluff.</p>
+    <p class="eyebrow">Reviews, Recommendations & Guides</p>
+    <h1>Honest reviews, recommendations, and guides.</h1>
+    <p class="lede">Webnovels, light novels, anime, manga, games, tier lists, and top picks — zero fluff.</p>
   </section>
   <section class="container">
-    <h2>Featured Reviews</h2>
+    <h2>Featured Posts</h2>
     <div class="grid post-grid">{featured.map((post, index) => <PostCard post={post} heading="h3" priority={index === 0} />)}</div>
   </section>
   <section class="container hero">
-    <h2>Explore Genres</h2>
+    <h2>Explore Topics</h2>
     <div class="chips">{topics.map((topic) => <a class="chip" href={`/categories/${topic.slug}/`}>{topic.name} ({topic.count})</a>)}</div>
   </section>
   <section class="container">
-    <h2>Latest Reviews</h2>
+    <h2>Latest Posts</h2>
     <PostList posts={posts.slice(0, 10)} heading="h3" />
-    <p><a href="/posts/">Browse all reviews →</a></p>
+    <p><a href="/posts/">Browse all posts →</a></p>
   </section>
   <section class="container hero" aria-labelledby="hub-heading">
     <p class="eyebrow">Quick Navigation</p>
     <h2 id="hub-heading">Explore the Archive</h2>
     <div class="grid action-grid">
-      <article class="card"><div class="card-body"><h3>All Reviews</h3><p>Browse full catalog of reviewed webnovels.</p><a href="/posts/">Browse reviews →</a></div></article>
-      <article class="card"><div class="card-body"><h3>Genres</h3><p>Filter by Cultivation, System, Progression Fantasy, and more.</p><a href="/categories/">Browse genres →</a></div></article>
-      <article class="card"><div class="card-body"><h3>Tags</h3><p>Browse all specific tropes, character traits, and novel tags.</p><a href="/tags/">Browse tags →</a></div></article>
-      <article class="card"><div class="card-body"><h3>RSS Feed</h3><p>Subscribe to latest reviews in your favorite RSS reader.</p><a href="/rss/">Get feed →</a></div></article>
+      <article class="card"><div class="card-body"><h3>All Posts</h3><p>Browse full catalog of posts and reviews.</p><a href="/posts/">Browse posts →</a></div></article>
+      <article class="card"><div class="card-body"><h3>Topics</h3><p>Filter by Novels, Anime, Manga, Games, Recommendations, and more.</p><a href="/categories/">Browse topics →</a></div></article>
+      <article class="card"><div class="card-body"><h3>Tags</h3><p>Browse all specific tropes, character traits, and tags.</p><a href="/tags/">Browse tags →</a></div></article>
+      <article class="card"><div class="card-body"><h3>RSS Feed</h3><p>Subscribe to latest updates in your favorite RSS reader.</p><a href="/rss/">Get feed →</a></div></article>
     </div>
   </section>
 </BaseLayout>

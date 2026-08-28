@@ -155,7 +155,7 @@ test("homepage and article lists preserve heading levels and lazy images", async
 }) => {
   await page.goto("/");
   const latest = page
-    .getByRole("heading", { name: "Latest Reviews" })
+    .getByRole("heading", { name: "Latest Posts" })
     .locator("..");
   await expect(latest.locator(".post-grid .card h3").first()).toBeVisible();
   await expect(latest.locator(".post-grid .card img").first()).toHaveAttribute(
