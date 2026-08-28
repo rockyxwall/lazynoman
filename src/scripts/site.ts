@@ -156,7 +156,7 @@ function loadUtterances() {
   script.src = "https://utteranc.es/client.js";
   script.async = true;
   script.crossOrigin = "anonymous";
-  script.setAttribute("repo", "ChrisTitusTech/website");
+  script.setAttribute("repo", "rockyxwall/lazynoman");
   script.setAttribute("issue-term", "pathname");
   script.setAttribute("label", "comments");
   script.setAttribute(
@@ -170,7 +170,7 @@ function loadUtterances() {
       fallback.className = "notice";
       fallback.append("Comments are unavailable. ");
       const link = document.createElement("a");
-      link.href = "https://github.com/ChrisTitusTech/website/issues";
+      link.href = "https://github.com/rockyxwall/lazynoman/issues";
       link.textContent = "Continue the discussion on GitHub.";
       fallback.append(link);
       host.replaceChildren(fallback);

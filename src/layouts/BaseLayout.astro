@@ -185,10 +185,9 @@ const structuredData = JSON.stringify({
           aria-controls="primary-links">Menu</button
         >
         <div class="nav-links" id="primary-links" data-menu>
-          <a href="/posts/">Articles</a><a href="/downloads/">Downloads</a><a
-            href="https://forum.christitus.com/">Forums</a
-          ><a href="/live-streams/">Live</a><a href="/newsletter/">Newsletter</a
-          ><a href="/categories/">Topics</a><a href="/search/">Search</a>
+          <a href="/posts/">Articles</a><a href="/categories/">Topics</a><a
+            href="/search/">Search</a
+          >
           <button
             class="icon-button"
             type="button"
@@ -198,7 +197,7 @@ const structuredData = JSON.stringify({
               class="sr-only">Change color theme</span
             ></button
           >
-          <a href="https://youtube.com/@christitustech">YouTube</a>
+          <a href="https://github.com/rockyxwall/lazynoman">GitHub</a>
         </div>
       </nav>
     </header>
@@ -206,13 +205,11 @@ const structuredData = JSON.stringify({
     <footer class="site-footer">
       <div class="container">
         <div class="footer-links">
-          <a href="https://forum.christitus.com/">Forums</a><a
-            href="/recommendations/">Recommendations</a
-          ><a href="/archive/">Archive</a><a href="/rss/">RSS</a><a
-            href="https://youtube.com/@christitustech">YouTube</a
-          ><a href="https://twitch.tv/christitustech">Twitch</a><a
-            href="https://github.com/christitustech">GitHub</a
-          ><a href="/privacy/">Privacy</a><a href="/refund/">Refunds</a><a
+          <a href="/posts/">Articles</a><a href="/categories/">Topics</a><a
+            href="/archive/">Archive</a
+          ><a href="/rss/">RSS</a><a
+            href="https://github.com/rockyxwall/lazynoman">GitHub</a
+          ><a href="/privacy/">Privacy</a><a
             href="/terms-conditions/">Terms</a
           >
         </div><p>© {new Date().getFullYear()} {site.name}</p>
@@ -223,8 +220,8 @@ const structuredData = JSON.stringify({
     </script>
     <script is:inline>
       if (
-        location.hostname === "christitus.com" ||
-        location.hostname === "www.christitus.com"
+        location.hostname === "lazynoman.com" ||
+        location.hostname === "www.lazynoman.com"
       ) {
         const analytics = document.createElement("script");
         analytics.defer = true;
