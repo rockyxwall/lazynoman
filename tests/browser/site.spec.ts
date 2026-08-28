@@ -107,7 +107,7 @@ test("article exposes navigation and interactions", async ({
   await expect(page.getByRole("button", { name: "Copy link" })).toBeVisible();
   const image = page.locator(".article-image");
   await expect(image).toBeVisible();
-  await expect(page.locator("[data-comments]")).toBeVisible();
+  await expect(page.locator("#waline")).toBeVisible();
   await expect(page.locator("[data-ad-slot]")).toBeVisible();
 });
 
@@ -168,7 +168,9 @@ test("homepage and article lists preserve heading levels and lazy images", async
 test("the not-found page resolves", async ({ page }) => {
   const response = await page.goto("/definitely-not-a-real-page/");
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("404");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "wandered off",
+  );
 });
 
 test("keyboard users can reach the main content", async ({ page }) => {

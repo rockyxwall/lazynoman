@@ -118,6 +118,7 @@ const structuredData = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}

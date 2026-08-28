@@ -1,4 +1,5 @@
 const root = document.documentElement;
+root.classList.add("js");
 
 function syncThemeControl() {
   const light = root.dataset.theme === "light";
