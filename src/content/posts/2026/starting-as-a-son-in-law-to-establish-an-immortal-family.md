@@ -1,0 +1,102 @@
+---
+title: "Starting As A Son In Law To Establish An Immortal Family"
+date: 2026-08-28
+url: /starting-as-a-son-in-law-to-establish-an-immortal-family/
+image: images/2026/starting-as-a-son-in-law-to-establish-an-immortal-family.webp
+description: "Detailed review of Starting As A Son In Law To Establish An Immortal Family. An analysis of Lu Changsheng's dynasty system, harem, and clan building."
+categories:
+  - Novel
+tags:
+  - system
+  - harem
+  - cultivation
+  - family-building
+  - op-mc
+draft: false
+---
+
+With poor spiritual talent and zero chances of joining a major sect, transmigrator Lu Changsheng seemed destined for an ordinary mortal life. That is until he awakens a system that directly rewards him with cultivation breakthroughs and top-tier spiritual roots for every child born into his lineage.
+
+*Starting As A Son In Law To Establish An Immortal Family* balances relaxing slice-of-life romance, secret power accumulation, and multi-generational clan warfare into a surprisingly addictive read.
+
+<!--more-->
+
+## Is "Starting As A Son In Law To Establish An Immortal Family" Worth It?
+
+**"Starting As A Son In Law To Establish An Immortal Family" is a must-read if you enjoy low-key, overpowered protagonists, harem and romance**. The system provides a unique progression hook that keeps the early novel addictive. Seeing the Lu family rise from a small to a big family is genuinely satisfying. However, in my opinion, the narrative loses some steam when it shifts too heavily toward the offspring's individual stories.
+
+**My score: 8.5/10**
+
+## What Is "Starting As A Son In Law To Establish An Immortal Family"
+
+Lu Changsheng is a transmigrator in a brutal Xianxia world. With poor spiritual roots and no hope of joining a major sect, he faces a bleak future until he activates a system. The system rewards him with cultivation, talents, and resources for every child he fathers, effectively turning his lineage into his power source.
+
+Instead of fighting for every scrap of spirit stone, Lu Changsheng chooses a "safe" path. He marries into a cultivation family as a son-in-law, stays low-key, hides his true power, and focuses entirely on expanding his family tree. The tone is a mix of carefree harem-building and cautious, strategic cultivation, designed for readers who love "weak-to-strong" tropes but prefer a protagonist who is low key and a safe player.
+
+## My Review
+
+I have read **1,497 chapters** of this novel. I started it quite a while ago, and I was completely hooked; I had no big problem for the first 1,200 chapters. It is one of the better "system" novels that actually sticks to its core gimmick for a long time without immediately abandoning it for generic world-hopping.
+
+### The Beauty of Being Low-Key
+
+The "low-key" aspect is handled very well at the beginning. Unlike many MCs who claim to be low-key but provoke everyone they meet, Lu Changsheng actually tries to stay out of trouble. Seeing him "conquer" women to bring them into his family is satisfying. The power-hiding trope is peak here; there’s a specific joy in watching the MC reveal just enough power to protect his family while the world has no idea he’s the true strength.
+
+### The Offspring Shift: A Double-Edged Sword
+
+The novel was near-perfect until around chapter 1,300 or 1,400. At this point, the narrative begins to focus heavily on the children and the next generations. While this makes sense for a "family building" novel, it made the pacing feel much slower and, frankly, a bit boring. The MC's personal charm is what carries the story, so when he takes a backseat to his numerous offspring, the excitement dips. I liked how the MC conquers the women and gets them to have a child with him, but the shift in focus felt like a distraction from the core appeal.
+
+### Pros & Cons
+
+| Pros                               | Cons                                                        |
+| ---------------------------------- | ----------------------------------------------------------- |
+| Nice system                        | Late-game focus on offspring can feel like filler           |
+| Satisfying low-key/power-hiding MC | Some side characters become forgettable as the family grows |
+| Romance and harem                  | Slow pacing                                                 |
+
+### My Score
+
+| Category        | Score      |
+| --------------- | ---------- |
+| Story & Concept | 9/10       |
+| Character (MC)  | 9/10       |
+| World Building  | 8/10       |
+| **Overall**     | **8.5/10** |
+
+## Who Is This For?
+
+### Read If…
+
+* You love **system-based progression** that feels rewarding.
+* You enjoy **low-key/cautious MCs** who are secretly OP.
+* You like **family building** and seeing a small clan become a superpower.
+* You are a fan of **harem and romance** being tied to the plot.
+
+### Skip If…
+
+* You want an MC who is always in the middle of every war and battle.
+* You dislike "breeding" or "offspring" based power systems.
+* You need the narrative to stay 100% focused on the MC at all times.
+
+## What Others Think
+
+The community generally ranks this as one of the best in the "Family Building" sub-genre. Many compare it to _The Patriarch is Taking Concubines Again_, but note that _Son-In-Law_ has a slightly more "careful" protagonist.
+
+## Frequently Asked Questions
+
+### Is "Starting As A Son In Law To Establish An Immortal Family" worth reading in 2026?
+
+Yes. Despite the late-game pacing issues for my case, the first 1,200+ chapters are some of the most enjoyable "clan building" content available in the Xianxia genre. It’s perfect for binge-reading.
+
+### How long is "Starting As A Son In Law To Establish An Immortal Family"? Is it finished?
+
+As of my last check, the novel has over **2,355 chapters** and is still **ongoing**.
+
+### Does the MC ever stop being low-key?
+
+He stays low-key for as long as possible, which is the draw of the novel. He only reveals his hand when the survival of the Lu family is at stake, which makes those moments much more impactful.
+
+### What should I read after this?
+
+* **The Patriarch is Taking Concubines Again**: For a very similar family-building experience.
+* **Sign-in: To the Peak of the Immortal Path**: For another take on system-based growth and legacy.
+* **Top Tier Providence, Secretly Cultivate for a Thousand Years**: If you love the low-key/cautious MC trope.

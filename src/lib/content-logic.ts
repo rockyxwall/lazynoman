@@ -137,10 +137,26 @@ export function validateFeaturedOrders(
   }
 }
 
-export function summaryText(body: string, length = 220): string {
-  const prefix = body.split("<!--more-->")[0];
-  const preferred = prefix.trim() ? prefix : body;
-  const text = preferred
+export function summaryText(
+  body: string,
+  length = 220,
+  description?: string,
+): string {
+  if (body.includes("<!--more-->")) {
+    const prefix = body.split("<!--more-->")[0];
+    const preferred = prefix.trim() ? prefix : body;
+    const text = preferred
+      .replace(/```[\s\S]*?```/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
+      .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
+      .replace(/[#>*_`~\-]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    return text.length > length ? `${text.slice(0, length).trimEnd()}...` : text;
+  }
+  if (description) return description;
+  const text = body
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/<[^>]+>/g, " ")
     .replace(/!\[[^\]]*]\([^)]*\)/g, " ")

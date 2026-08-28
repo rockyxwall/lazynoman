@@ -191,10 +191,20 @@ describe("RSS content", () => {
     );
   });
 
-  it("falls back to body text when the summary marker comes first", () => {
-    expect(summaryText("<!--more-->\nVisible fallback text.")).toBe(
-      "Visible fallback text.",
+  it("uses text before <!--more--> when present, otherwise falls back to frontmatter description", () => {
+    const bodyWithMore = "Engaging intro paragraph.\n\n<!--more-->\n\n## Heading\n\nRest of post.";
+    expect(summaryText(bodyWithMore, 220, "SEO frontmatter description")).toBe(
+      "Engaging intro paragraph.",
     );
+
+    const bodyWithoutMore = "## Heading\n\nRest of post without intro.";
+    expect(
+      summaryText(
+        bodyWithoutMore,
+        220,
+        "Frontmatter description used as card summary.",
+      ),
+    ).toBe("Frontmatter description used as card summary.");
   });
 
   it("publishes date-only feed entries at UTC midnight", () => {
@@ -203,3 +213,4 @@ describe("RSS content", () => {
     );
   });
 });
+

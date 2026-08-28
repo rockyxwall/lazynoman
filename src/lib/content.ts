@@ -69,7 +69,7 @@ export function feedContent(post: Post): string {
 }
 
 export function summary(post: Post, length = 220): string {
-  return summaryText(post.body ?? "", length);
+  return summaryText(post.body ?? "", length, post.data.description);
 }
 
 export function feedPublicationDate(post: Post): Date {
