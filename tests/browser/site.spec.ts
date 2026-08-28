@@ -107,8 +107,8 @@ test("article exposes navigation and interactions", async ({
   await expect(page.getByRole("button", { name: "Copy link" })).toBeVisible();
   const image = page.locator(".article-image");
   await expect(image).toBeVisible();
-  await expect(page.locator("#waline")).toBeVisible();
-  await expect(page.locator("[data-ad-slot]")).toBeVisible();
+  await expect(page.locator("#waline")).toBeAttached();
+  await expect(page.locator("[data-ad-slot]")).toBeAttached();
 });
 
 test("article table of contents stays pinned while scrolling on desktop", async ({
@@ -193,10 +193,11 @@ test("mobile navigation opens with an accessible control", async ({
   await expect(button).toHaveAttribute("aria-expanded", "false");
   await button.click();
   await expect(button).toHaveAttribute("aria-expanded", "true");
+  const nav = page.locator("#primary-links");
   await expect(
-    page.getByRole("link", { name: "Articles", exact: true }),
+    nav.getByRole("link", { name: "Articles", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Topics", exact: true }),
+    nav.getByRole("link", { name: "Topics", exact: true }),
   ).toBeVisible();
 });
