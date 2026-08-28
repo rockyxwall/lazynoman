@@ -7,9 +7,9 @@ date: 2024-03-19T15:25:58+00:00
 
 We have a 30-day return policy, which means you have 30 days after receiving your item to request a return.
 
-To start a return, you can contact us at contact@christitus.com.
+To start a return, you can contact us at contact@lazynoman.com.
 
-You can always contact us for any return questions at contact@christitus.com.
+You can always contact us for any return questions at contact@lazynoman.com.
 
 ### European Union 14 day cooling off period
 
@@ -18,4 +18,4 @@ Notwithstanding the above, if the merchandise is being shipped into the European
 ### Refunds
 
 If approved, you’ll be automatically refunded on your original payment method within 10 business days. Please remember it can take some time for your bank or credit card company to process and post the refund too.
-If more than 15 business days have passed since we’ve approved your return, please contact us at contact@christitus.com.
+If more than 15 business days have passed since we’ve approved your return, please contact us at contact@lazynoman.com.

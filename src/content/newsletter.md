@@ -1,5 +1,5 @@
 ---
-title: Chris Titus Tech Newsletter 
+title: LazyNoman Newsletter 
 type: page
 date: 2020-07-19T15:25:58+00:00
 ---
@@ -45,4 +45,4 @@ Get updates, launch announcements and more by joining my newsletter.
  <input type="submit" name="submit" id="submit" value="Sign Me Up!"/>
 </form>
 
-You're signing up to receive emails from Chris Titus Tech
+You're signing up to receive emails from LazyNoman
