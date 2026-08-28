@@ -10,7 +10,10 @@ const waiverPath = new URL(
   import.meta.url,
 );
 const waivers = JSON.parse(await readFile(waiverPath, "utf8")).advisories ?? {};
-const result = spawnSync("npm", ["audit", "--json"], { encoding: "utf8" });
+const result = spawnSync("npm", ["audit", "--json"], {
+  encoding: "utf8",
+  shell: true,
+});
 
 let report;
 try {

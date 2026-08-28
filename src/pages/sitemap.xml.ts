@@ -33,9 +33,7 @@ export const GET: APIRoute = async () => {
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([route, date]) => {
       try {
-        const location = escapeXml(
-          new URL(route, site.url).toString(),
-        );
+        const location = escapeXml(new URL(route, site.url).toString());
         const lastmod = date
           ? `<lastmod>${escapeXml(normalizeLastModified(date))}</lastmod>`
           : "";

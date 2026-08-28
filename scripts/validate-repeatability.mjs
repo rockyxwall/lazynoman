@@ -17,10 +17,11 @@ function run(command, args, environment = baseEnvironment) {
     cwd: root,
     env: environment,
     encoding: "utf8",
+    shell: true,
   });
   if (result.status !== 0) {
-    process.stdout.write(result.stdout);
-    process.stderr.write(result.stderr);
+    if (result.stdout) process.stdout.write(result.stdout);
+    if (result.stderr) process.stderr.write(result.stderr);
     throw new Error(
       `${command} ${args.join(" ")} failed with status ${result.status}`,
     );
@@ -31,6 +32,7 @@ function status() {
   const result = spawnSync("git", ["status", "--porcelain=v1", "-uall"], {
     cwd: root,
     encoding: "utf8",
+    shell: true,
   });
   if (result.status !== 0) throw new Error("git status failed");
   return result.stdout;

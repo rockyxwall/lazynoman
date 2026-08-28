@@ -148,7 +148,6 @@ if (tocLinks.length && "IntersectionObserver" in window) {
   });
 }
 
-
 function loadAds() {
   if (
     !document.querySelector("[data-ad-slot]") ||

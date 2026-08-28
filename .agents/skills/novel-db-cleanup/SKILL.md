@@ -28,24 +28,29 @@ Processes a Notion CSV export of the novel database, strips unnecessary columns,
 ## Execution Steps
 
 ### Step 1: Database Column Filtering
+
 - Read the Notion CSV export (handle BOM, quoted fields with commas, and multiline values).
 - Strip all metadata/columns except `Name`, `Rating`, and `Genres`.
 - Write the cleaned table back to the **same** CSV file, ensuring fields with commas/quotes are properly escaped.
 
 ### Step 2: System Novel Filtering
+
 - Filter the records to keep only novels whose `Genres` contains either `System` or `Universal System`.
 - Non-system novels (e.g., pure Cultivation, Fantasy, Transmigration without System) are excluded from the rankings list.
 
 ### Step 3: Sorting & Tie-Breaking
+
 - Sort the filtered system novels by `Rating` **descending** (highest first, parsed as integers).
 - For novels with the same rating, sort them **alphabetically** by `Name` ascending (case-insensitive).
 
 ### Step 4: System Type Mapping
+
 - Map the system type label based on the `Genres` column:
   - If genres contain `Universal System` → label as `[Universal System]`
   - Otherwise → label as `[Personal System]`
 
 ### Step 5: Matching and Linking Reviews
+
 - Normalize the novel's `Name` to a kebab-case slug (lowercase, replace non-alphanumeric with hyphens, trim leading/trailing hyphens).
 - Scan `src/content/novel/` for files ending in `-review.mdx` or `-review.md`.
 - Match the novel slug against the base filename (excluding the `-review` suffix).
@@ -54,6 +59,7 @@ Processes a Notion CSV export of the novel database, strips unnecessary columns,
   - Append a review link: `<a href="/novel/{filename_without_extension}" className="ml-2">Read Review</a>`
 
 ### Step 6: Rewriting MDX
+
 - Rewrite the numbered list in `src/content/novel/i-read-every-system-novel-so-you-dont-have-to-my-personal-rankings.mdx`.
 - **Preserve the existing frontmatter exactly as-is** (everything between the `---` delimiters).
 - Each line follows the format:
@@ -66,6 +72,7 @@ Processes a Notion CSV export of the novel database, strips unnecessary columns,
   ```
 
 ### Step 7: Build Verification
+
 - Run `bun run build` to verify the static build completes successfully.
 - Report results to the user.
 
@@ -74,6 +81,7 @@ Processes a Notion CSV export of the novel database, strips unnecessary columns,
 ## CSV Parsing Notes
 
 Notion CSV exports have these quirks:
+
 - **BOM**: The file may start with a UTF-8 BOM (`\ufeff`) — strip it from the first header.
 - **Quoted fields**: Fields containing commas are wrapped in double quotes.
 - **Notion URLs in Genres**: Genre values look like `System (https://app.notion.com/p/...)`. Match on the genre **name** before the parenthetical URL.
@@ -84,6 +92,7 @@ Notion CSV exports have these quirks:
 ## Output Summary
 
 After execution, report:
+
 1. Total records parsed from CSV
 2. Total system novels after filtering
 3. Number of review links matched

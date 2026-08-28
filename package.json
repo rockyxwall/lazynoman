@@ -12,7 +12,7 @@
     "dev:content": "node scripts/dev.mjs --preview",
     "sync": "npm run prepare:content && astro sync",
     "check": "npm run prepare:content && astro check",
-    "build": "npm run prepare:content && astro build",
+    "build": "node scripts/prepare-content.mjs --production && astro build",
     "preview": "astro preview",
     "test": "npm run prepare:content && vitest run",
     "test:watch": "vitest",

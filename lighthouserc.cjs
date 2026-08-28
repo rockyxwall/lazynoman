@@ -5,9 +5,9 @@ module.exports = {
       startServerReadyPattern: "127.0.0.1:4321",
       url: [
         "http://127.0.0.1:4321/",
-        "http://127.0.0.1:4321/my-ai-workflow/",
-        "http://127.0.0.1:4321/categories/linux/",
-        "http://127.0.0.1:4321/live-streams/",
+        "http://127.0.0.1:4321/comprehension-ability-creating-and-teaching-the-dao-in-various-worlds/",
+        "http://127.0.0.1:4321/categories/novel/",
+        "http://127.0.0.1:4321/posts/",
       ],
       numberOfRuns: 3,
       settings: {

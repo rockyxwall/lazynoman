@@ -153,7 +153,9 @@ export function summaryText(
       .replace(/[#>*_`~\-]+/g, " ")
       .replace(/\s+/g, " ")
       .trim();
-    return text.length > length ? `${text.slice(0, length).trimEnd()}...` : text;
+    return text.length > length
+      ? `${text.slice(0, length).trimEnd()}...`
+      : text;
   }
   if (description) return description;
   const text = body

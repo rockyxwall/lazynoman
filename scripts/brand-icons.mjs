@@ -1,18 +1,18 @@
-import sharp from 'sharp';
-import fs from 'node:fs';
-import path from 'node:path';
+import sharp from "sharp";
+import fs from "node:fs";
+import path from "node:path";
 
 const ROOT = process.cwd();
-const PUBLIC_DIR = path.join(ROOT, 'public');
-const SOLID_MASTER = path.join(PUBLIC_DIR, 'img.png');
-const BORDER_MASTER = path.join(PUBLIC_DIR, 'img-border.png');
-const TRANSPARENT_MASTER = path.join(PUBLIC_DIR, 'img-transparent.png');
+const PUBLIC_DIR = path.join(ROOT, "public");
+const SOLID_MASTER = path.join(PUBLIC_DIR, "img.png");
+const BORDER_MASTER = path.join(PUBLIC_DIR, "img-border.png");
+const TRANSPARENT_MASTER = path.join(PUBLIC_DIR, "img-transparent.png");
 
-const PUBLIC_FAVICON_DIR = path.join(ROOT, 'public/favicon');
-const PUBLIC_NAVLOGO = path.join(ROOT, 'public/images/navlogo.webp');
-const PUBLIC_ROOT_ICO = path.join(ROOT, 'public/favicon.ico');
-const PUBLIC_FAVICON_ICO = path.join(ROOT, 'public/favicon/favicon.ico');
-const PUBLIC_FAVICON_SVG = path.join(ROOT, 'public/favicon/favicon.svg');
+const PUBLIC_FAVICON_DIR = path.join(ROOT, "public/favicon");
+const PUBLIC_NAVLOGO = path.join(ROOT, "public/images/navlogo.webp");
+const PUBLIC_ROOT_ICO = path.join(ROOT, "public/favicon.ico");
+const PUBLIC_FAVICON_ICO = path.join(ROOT, "public/favicon/favicon.ico");
+const PUBLIC_FAVICON_SVG = path.join(ROOT, "public/favicon/favicon.svg");
 
 // 1. Ensure masters exist
 async function ensureMasters() {
@@ -22,9 +22,13 @@ async function ensureMasters() {
 
   // Generate transparent master if missing
   if (!fs.existsSync(TRANSPARENT_MASTER) && fs.existsSync(SOLID_MASTER)) {
-    console.log('[brand] Generating transparent master emblem from solid background...');
+    console.log(
+      "[brand] Generating transparent master emblem from solid background...",
+    );
     const image = sharp(SOLID_MASTER);
-    const { data, info } = await image.raw().toBuffer({ resolveWithObject: true });
+    const { data, info } = await image
+      .raw()
+      .toBuffer({ resolveWithObject: true });
     const { width, height } = info;
 
     const out = Buffer.alloc(width * height * 4);
@@ -37,7 +41,8 @@ async function ensureMasters() {
 
     const visited = new Uint8Array(width * height);
     const queue = new Int32Array(width * height);
-    let head = 0, tail = 0;
+    let head = 0,
+      tail = 0;
 
     function push(x, y) {
       const idx = y * width + x;
@@ -46,8 +51,14 @@ async function ensureMasters() {
       queue[tail++] = idx;
     }
 
-    for (let x = 0; x < width; x++) { push(x, 0); push(x, height - 1); }
-    for (let y = 0; y < height; y++) { push(0, y); push(width - 1, y); }
+    for (let x = 0; x < width; x++) {
+      push(x, 0);
+      push(x, height - 1);
+    }
+    for (let y = 0; y < height; y++) {
+      push(0, y);
+      push(width - 1, y);
+    }
 
     function isBackground(r, g, b) {
       return r < 65 && g < 65 && b < 70;
@@ -64,10 +75,22 @@ async function ensureMasters() {
 
       if (isBackground(r, g, b)) {
         out[idx * 4 + 3] = 0;
-        if (x > 0 && !visited[idx - 1]) { visited[idx - 1] = 1; queue[tail++] = idx - 1; }
-        if (x < width - 1 && !visited[idx + 1]) { visited[idx + 1] = 1; queue[tail++] = idx + 1; }
-        if (y > 0 && !visited[idx - width]) { visited[idx - width] = 1; queue[tail++] = idx - width; }
-        if (y < height - 1 && !visited[idx + width]) { visited[idx + width] = 1; queue[tail++] = idx + width; }
+        if (x > 0 && !visited[idx - 1]) {
+          visited[idx - 1] = 1;
+          queue[tail++] = idx - 1;
+        }
+        if (x < width - 1 && !visited[idx + 1]) {
+          visited[idx + 1] = 1;
+          queue[tail++] = idx + 1;
+        }
+        if (y > 0 && !visited[idx - width]) {
+          visited[idx - width] = 1;
+          queue[tail++] = idx - width;
+        }
+        if (y < height - 1 && !visited[idx + width]) {
+          visited[idx + width] = 1;
+          queue[tail++] = idx + width;
+        }
       }
     }
 
@@ -79,16 +102,26 @@ async function ensureMasters() {
           const g = out[idx * 4 + 1];
           const b = out[idx * 4 + 2];
           if (r < 85 && g < 85 && b < 90) {
-            if (out[(idx - 1) * 4 + 3] === 0 || out[(idx + 1) * 4 + 3] === 0 ||
-                out[(idx - width) * 4 + 3] === 0 || out[(idx + width) * 4 + 3] === 0) {
-              out[idx * 4 + 3] = Math.max(0, Math.min(255, Math.round((r + g + b) / 3 * 2.5)));
+            if (
+              out[(idx - 1) * 4 + 3] === 0 ||
+              out[(idx + 1) * 4 + 3] === 0 ||
+              out[(idx - width) * 4 + 3] === 0 ||
+              out[(idx + width) * 4 + 3] === 0
+            ) {
+              out[idx * 4 + 3] = Math.max(
+                0,
+                Math.min(255, Math.round(((r + g + b) / 3) * 2.5)),
+              );
             }
           }
         }
       }
     }
 
-    let minX = width, maxX = 0, minY = height, maxY = 0;
+    let minX = width,
+      maxX = 0,
+      minY = height,
+      maxY = 0;
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const a = out[(y * width + x) * 4 + 3];
@@ -105,7 +138,12 @@ async function ensureMasters() {
     const trimmedHeight = maxY - minY + 1;
 
     await sharp(out, { raw: { width, height, channels: 4 } })
-      .extract({ left: minX, top: minY, width: trimmedWidth, height: trimmedHeight })
+      .extract({
+        left: minX,
+        top: minY,
+        width: trimmedWidth,
+        height: trimmedHeight,
+      })
       .png()
       .toFile(TRANSPARENT_MASTER);
 
@@ -147,23 +185,23 @@ function createIcoFile(pngBuffersWithSizes) {
   return Buffer.concat([header, ...entries, ...imageBuffers]);
 }
 
-const SITE_JSON_PATH = path.join(ROOT, 'src/data/site.json');
+const SITE_JSON_PATH = path.join(ROOT, "src/data/site.json");
 
 // 3. Build Suite
-async function applyVariant(variant = 'transparent') {
+async function applyVariant(variant = "transparent") {
   await ensureMasters();
 
   let sourceFile;
   let socialImagePath;
-  if (variant === 'solid') {
+  if (variant === "solid") {
     sourceFile = SOLID_MASTER;
-    socialImagePath = '/img.png';
-  } else if (variant === 'border' || variant === 'card') {
+    socialImagePath = "/img.png";
+  } else if (variant === "border" || variant === "card") {
     sourceFile = BORDER_MASTER;
-    socialImagePath = '/img-border.png';
+    socialImagePath = "/img-border.png";
   } else {
     sourceFile = TRANSPARENT_MASTER;
-    socialImagePath = '/img-transparent.png';
+    socialImagePath = "/img-transparent.png";
   }
 
   console.log(`\n[brand] Switching suite to variant: '${variant}'`);
@@ -171,9 +209,12 @@ async function applyVariant(variant = 'transparent') {
 
   // Update site.json socialImage to matching variant
   if (fs.existsSync(SITE_JSON_PATH)) {
-    const siteConfig = JSON.parse(fs.readFileSync(SITE_JSON_PATH, 'utf8'));
+    const siteConfig = JSON.parse(fs.readFileSync(SITE_JSON_PATH, "utf8"));
     siteConfig.socialImage = socialImagePath;
-    fs.writeFileSync(SITE_JSON_PATH, JSON.stringify(siteConfig, null, 2) + '\n');
+    fs.writeFileSync(
+      SITE_JSON_PATH,
+      JSON.stringify(siteConfig, null, 2) + "\n",
+    );
     console.log(`✓ Updated site.json socialImage -> ${socialImagePath}`);
   }
 
@@ -183,54 +224,65 @@ async function applyVariant(variant = 'transparent') {
 
   // 1. Generate NavLogo WebP (100x100)
   await sharp(sourceFile)
-    .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize(100, 100, {
+      fit: "contain",
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
     .webp({ alphaQuality: 100, quality: 95 })
     .toFile(PUBLIC_NAVLOGO);
   console.log(`✓ Updated ${path.relative(ROOT, PUBLIC_NAVLOGO)}`);
 
   // 2. Generate all PNG favicons
   const pngSizes = [
-    { name: 'android-icon-36x36.png', size: 36 },
-    { name: 'android-icon-48x48.png', size: 48 },
-    { name: 'android-icon-72x72.png', size: 72 },
-    { name: 'android-icon-96x96.png', size: 96 },
-    { name: 'android-icon-144x144.png', size: 144 },
-    { name: 'android-icon-192x192.png', size: 192 },
-    { name: 'apple-icon-57x57.png', size: 57 },
-    { name: 'apple-icon-60x60.png', size: 60 },
-    { name: 'apple-icon-72x72.png', size: 72 },
-    { name: 'apple-icon-76x76.png', size: 76 },
-    { name: 'apple-icon-114x114.png', size: 114 },
-    { name: 'apple-icon-120x120.png', size: 120 },
-    { name: 'apple-icon-144x144.png', size: 144 },
-    { name: 'apple-icon-152x152.png', size: 152 },
-    { name: 'apple-icon-180x180.png', size: 180 },
-    { name: 'apple-icon-precomposed.png', size: 180 },
-    { name: 'apple-icon.png', size: 180 },
-    { name: 'favicon-16x16.png', size: 16 },
-    { name: 'favicon-32x32.png', size: 32 },
-    { name: 'favicon-96x96.png', size: 96 },
-    { name: 'ms-icon-70x70.png', size: 70 },
-    { name: 'ms-icon-144x144.png', size: 144 },
-    { name: 'ms-icon-150x150.png', size: 150 },
-    { name: 'ms-icon-310x310.png', size: 310 }
+    { name: "android-icon-36x36.png", size: 36 },
+    { name: "android-icon-48x48.png", size: 48 },
+    { name: "android-icon-72x72.png", size: 72 },
+    { name: "android-icon-96x96.png", size: 96 },
+    { name: "android-icon-144x144.png", size: 144 },
+    { name: "android-icon-192x192.png", size: 192 },
+    { name: "apple-icon-57x57.png", size: 57 },
+    { name: "apple-icon-60x60.png", size: 60 },
+    { name: "apple-icon-72x72.png", size: 72 },
+    { name: "apple-icon-76x76.png", size: 76 },
+    { name: "apple-icon-114x114.png", size: 114 },
+    { name: "apple-icon-120x120.png", size: 120 },
+    { name: "apple-icon-144x144.png", size: 144 },
+    { name: "apple-icon-152x152.png", size: 152 },
+    { name: "apple-icon-180x180.png", size: 180 },
+    { name: "apple-icon-precomposed.png", size: 180 },
+    { name: "apple-icon.png", size: 180 },
+    { name: "favicon-16x16.png", size: 16 },
+    { name: "favicon-32x32.png", size: 32 },
+    { name: "favicon-96x96.png", size: 96 },
+    { name: "ms-icon-70x70.png", size: 70 },
+    { name: "ms-icon-144x144.png", size: 144 },
+    { name: "ms-icon-150x150.png", size: 150 },
+    { name: "ms-icon-310x310.png", size: 310 },
   ];
 
   for (const item of pngSizes) {
     const dest = path.join(PUBLIC_FAVICON_DIR, item.name);
     await sharp(sourceFile)
-      .resize(item.size, item.size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .resize(item.size, item.size, {
+        fit: "contain",
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
       .png()
       .toFile(dest);
   }
-  console.log(`✓ Generated ${pngSizes.length} PNG icons in ${path.relative(ROOT, PUBLIC_FAVICON_DIR)}`);
+  console.log(
+    `✓ Generated ${pngSizes.length} PNG icons in ${path.relative(ROOT, PUBLIC_FAVICON_DIR)}`,
+  );
 
   // 3. Generate multi-size ICO (16, 32, 48)
   const icoSizes = [16, 32, 48];
   const icoPngBuffers = [];
   for (const s of icoSizes) {
     const buf = await sharp(sourceFile)
-      .resize(s, s, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .resize(s, s, {
+        fit: "contain",
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
       .png()
       .toBuffer();
     icoPngBuffers.push({ size: s, buffer: buf });
@@ -239,10 +291,20 @@ async function applyVariant(variant = 'transparent') {
   const icoBuffer = createIcoFile(icoPngBuffers);
   fs.writeFileSync(PUBLIC_ROOT_ICO, icoBuffer);
   fs.writeFileSync(PUBLIC_FAVICON_ICO, icoBuffer);
-  console.log(`✓ Generated multi-size ICO: favicon.ico & public/favicon/favicon.ico`);
+  console.log(
+    `✓ Generated multi-size ICO: favicon.ico & public/favicon/favicon.ico`,
+  );
 
   // 4. Generate clean SVG icon wrapper
-  const base64Png = (await sharp(sourceFile).resize(128, 128, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer()).toString('base64');
+  const base64Png = (
+    await sharp(sourceFile)
+      .resize(128, 128, {
+        fit: "contain",
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
+      .png()
+      .toBuffer()
+  ).toString("base64");
   const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"><image width="128" height="128" href="data:image/png;base64,${base64Png}"/></svg>`;
   fs.writeFileSync(PUBLIC_FAVICON_SVG, svgContent);
   console.log(`✓ Generated SVG: ${path.relative(ROOT, PUBLIC_FAVICON_SVG)}`);
@@ -252,11 +314,11 @@ async function applyVariant(variant = 'transparent') {
 
 // CLI handler
 const args = process.argv.slice(2);
-let variant = 'transparent';
+let variant = "transparent";
 for (const arg of args) {
-  if (arg.includes('solid')) variant = 'solid';
-  else if (arg.includes('border') || arg.includes('card')) variant = 'border';
-  else if (arg.includes('transparent')) variant = 'transparent';
+  if (arg.includes("solid")) variant = "solid";
+  else if (arg.includes("border") || arg.includes("card")) variant = "border";
+  else if (arg.includes("transparent")) variant = "transparent";
 }
 
 applyVariant(variant).catch(console.error);

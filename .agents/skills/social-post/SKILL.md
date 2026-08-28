@@ -12,6 +12,7 @@ Converts novel review content into platform-optimized social media posts for **F
 ## Platform Rules
 
 ### Facebook (Long Form)
+
 - **Tone**: Conversational, punchy, personality-driven. Reads like a friend recommending something.
 - **Length**: 4–8 sentences. No hard limit. Long is fine and preferred.
 - **Structure**:
@@ -26,6 +27,7 @@ Converts novel review content into platform-optimized social media posts for **F
 - **Do NOT** shorten or compress. FB rewards engagement. Let it breathe.
 
 #### Facebook Example Pattern:
+
 ```
 [Hook — contrast or premise twist]
 
@@ -47,6 +49,7 @@ Full Review: [URL]
 ---
 
 ### X / Twitter (Short Form)
+
 - **Hard limit**: 280 characters total
 - **Link always counts as 23 characters** (X's t.co shortener — fixed regardless of URL length)
 - **Hashtags to use**: `#webnovel #cultivation #LazyNoman` (3 only — saves space)
@@ -62,6 +65,7 @@ Full Review: [URL]
 - **Trim aggressively**: Remove filler words, articles (a/the), and names when context is clear
 
 #### X Example Pattern:
+
 ```
 [One-line hook]
 
@@ -77,14 +81,15 @@ Full Review: [URL]
 ```
 
 #### Character Budget:
-| Element | Approx chars |
-|---|---|
-| Hook line | ~60 |
-| Core loop | ~60 |
-| Highlight + score | ~40 |
-| URL (always 23) | 23 |
-| Hashtags | ~40 |
-| **Total** | **~223** ✅ |
+
+| Element           | Approx chars |
+| ----------------- | ------------ |
+| Hook line         | ~60          |
+| Core loop         | ~60          |
+| Highlight + score | ~40          |
+| URL (always 23)   | 23           |
+| Hashtags          | ~40          |
+| **Total**         | **~223** ✅  |
 
 ---
 

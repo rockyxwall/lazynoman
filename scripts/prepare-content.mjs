@@ -358,7 +358,12 @@ export async function prepareContent() {
     );
   }
 
-  const preview = process.env.CONTENT_PREVIEW === "1";
+  const preview =
+    process.argv.includes("--production") ||
+    process.env.npm_lifecycle_event === "build" ||
+    process.env.npm_lifecycle_event === "check"
+      ? false
+      : process.env.CONTENT_PREVIEW === "1";
   const buildInstant = process.env.BUILD_INSTANT ?? new Date().toISOString();
   if (Number.isNaN(Date.parse(buildInstant)))
     throw new Error("BUILD_INSTANT must be an ISO timestamp");

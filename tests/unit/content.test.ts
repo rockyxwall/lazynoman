@@ -172,7 +172,8 @@ describe("RSS content", () => {
   });
 
   it("uses text before <!--more--> when present, otherwise falls back to frontmatter description", () => {
-    const bodyWithMore = "Engaging intro paragraph.\n\n<!--more-->\n\n## Heading\n\nRest of post.";
+    const bodyWithMore =
+      "Engaging intro paragraph.\n\n<!--more-->\n\n## Heading\n\nRest of post.";
     expect(summaryText(bodyWithMore, 220, "SEO frontmatter description")).toBe(
       "Engaging intro paragraph.",
     );
@@ -193,4 +194,3 @@ describe("RSS content", () => {
     );
   });
 });
-

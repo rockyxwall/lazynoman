@@ -94,11 +94,7 @@ export function buildPageDescriptors(
 ): PageDescriptor[] {
   const output: PageDescriptor[] = [];
   const seen = new Set<string>(["/"]);
-  const reserved = new Set([
-    "/search/",
-    "/newsletter/",
-    "/rss/",
-  ]);
+  const reserved = new Set(["/search/", "/newsletter/", "/rss/"]);
 
   for (const post of posts) {
     const route = routeKey(post.data.url);

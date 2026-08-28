@@ -52,9 +52,9 @@ afterEach(async () => {
 describe("post scaffolder", () => {
   it("generates deterministic dates and slugs", () => {
     expect(chicagoToday(new Date("2026-01-01T03:00:00Z"))).toBe("2025-12-31");
-    expect(slugify("  Lord of the Mysteries: Review & System Analysis!  ")).toBe(
-      "lord-of-the-mysteries-review-system-analysis",
-    );
+    expect(
+      slugify("  Lord of the Mysteries: Review & System Analysis!  "),
+    ).toBe("lord-of-the-mysteries-review-system-analysis");
   });
 
   it("accepts canonical categories including Novel and Recommendations", () => {
@@ -266,28 +266,21 @@ describe("post scaffolder", () => {
       root,
     );
     expect([...inventory.induced]).toEqual(
-      expect.arrayContaining([
-        "/posts/page/2/",
-        "/categories/novel/page/2/",
-      ]),
+      expect.arrayContaining(["/posts/page/2/", "/categories/novel/page/2/"]),
     );
   });
 
   it("writes the schema-compatible output once and refuses overwrite", async () => {
     const root = await fixture();
-    const args = [
-      "Safe: Post",
-      "--date",
-      "2026-08-13",
-      "--category",
-      "Novel",
-    ];
+    const args = ["Safe: Post", "--date", "2026-08-13", "--category", "Novel"];
     await main(args, root);
     const output = await readFile(
       path.join(root, "src/content/posts/2026/safe-post.md"),
       "utf8",
     );
-    expect(YAML.parse(output.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1])).toMatchObject({
+    expect(
+      YAML.parse(output.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1]),
+    ).toMatchObject({
       title: "Safe: Post",
       date: "2026-08-13",
       url: "/safe-post/",

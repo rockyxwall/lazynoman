@@ -11,29 +11,25 @@ Personal novel review blog at `LazyNoman.com`. Reviews webnovels (Chinese/Korean
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Astro 6.x (`output: 'static'`) |
-| Styling | Tailwind CSS v4 + shadcn/ui (radix-nova) |
-| UI Islands | React 19 via `@astrojs/react` |
-| Content | MDX via Astro Content Collections |
-| Package manager | Bun |
+| Layer           | Technology                               |
+| --------------- | ---------------------------------------- |
+| Framework       | Astro 6.x (`output: 'static'`)           |
+| Styling         | Tailwind CSS v4 + shadcn/ui (radix-nova) |
+| UI Islands      | React 19 via `@astrojs/react`            |
+| Content         | MDX via Astro Content Collections        |
+| Package manager | Bun                                      |
 
 ## Design System (use these exact tokens in wireframes)
 
 **Dark theme (default):**
+
 ```css
---background: oklch(0.19 0 0)
---foreground: oklch(0.92 0 0)
---card: oklch(0.23 0 0)
---card-foreground: oklch(0.92 0 0)
---primary: oklch(0.92 0 0)
---primary-foreground: oklch(0.19 0 0)
---secondary: oklch(0.28 0 0)
---secondary-foreground: oklch(0.92 0 0)
---muted: oklch(0.28 0 0)
---muted-foreground: oklch(0.7 0 0)
---border: oklch(0.35 0 0)
+--background: oklch(0.19 0 0) --foreground: oklch(0.92 0 0)
+  --card: oklch(0.23 0 0) --card-foreground: oklch(0.92 0 0)
+  --primary: oklch(0.92 0 0) --primary-foreground: oklch(0.19 0 0)
+  --secondary: oklch(0.28 0 0) --secondary-foreground: oklch(0.92 0 0)
+  --muted: oklch(0.28 0 0) --muted-foreground: oklch(0.7 0 0)
+  --border: oklch(0.35 0 0);
 ```
 
 **Fonts:** Inter (body), Atkinson (headings), Geist (mono)
@@ -68,6 +64,7 @@ Personal novel review blog at `LazyNoman.com`. Reviews webnovels (Chinese/Korean
 ## Common Feedback Loop
 
 User will request changes in iteratively. Common changes:
+
 - Reorder/remove sections
 - Toggle between card vs list view
 - Adjust grid columns
