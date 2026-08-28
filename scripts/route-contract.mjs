@@ -86,7 +86,6 @@ function derivedRoutes(posts) {
     "/search/",
     "/newsletter/",
     "/rss/",
-    "/archive/",
     "/privacy/",
     "/terms-conditions/",
     "/recommendations/",
@@ -108,16 +107,14 @@ function derivedRoutes(posts) {
 
   addPaginated(routes, "/", posts.length);
   addPaginated(routes, "/posts/", posts.length);
-  addPaginated(routes, "/archive/", posts.length);
   routes.add("/posts/index.xml");
-  routes.add("/archive/index.xml");
 
   for (const [field, groups] of [
     ["categories", categories],
     ["tags", tags],
   ]) {
     const root = `/${field}/`;
-    addPaginated(routes, root, groups.size);
+    routes.add(root);
     routes.add(`${root}index.xml`);
     for (const [slug, count] of groups) {
       const base = `${root}${slug}/`;

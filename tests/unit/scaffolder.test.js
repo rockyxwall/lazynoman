@@ -268,7 +268,6 @@ describe("post scaffolder", () => {
     expect([...inventory.induced]).toEqual(
       expect.arrayContaining([
         "/posts/page/2/",
-        "/archive/page/2/",
         "/categories/novel/page/2/",
       ]),
     );

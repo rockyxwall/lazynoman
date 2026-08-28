@@ -22,7 +22,7 @@ LazyNoman (`https://lazynoman.com`) is a fast, static web application for webnov
   - Taxonomy RSS: `/<field>/<slug>/index.xml`
   - JSON Search Index: `/index.json`
   - Sitemap: `/sitemap.xml`
-- Pages: `/archive/`, `/recommendations/`, `/newsletter/`, `/privacy/`, `/terms-conditions/`, `/search/`.
+- Pages: `/recommendations/`, `/newsletter/`, `/privacy/`, `/terms-conditions/`, `/search/`.
 
 ## Quality & Validation Gates
 

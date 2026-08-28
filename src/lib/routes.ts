@@ -74,25 +74,18 @@ function addTermPages(
   title: string,
   terms: Array<{ name: string; slug: string; count: number }>,
 ) {
-  const pages = Math.max(1, Math.ceil(terms.length / site.postsPerPage));
-  for (let page = 1; page <= pages; page += 1) {
-    const route = page === 1 ? root : `${root}page/${page}/`;
-    const key = routeKey(route);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    output.push({
-      kind: "terms",
-      route: key,
-      root,
-      title,
-      page,
-      pages,
-      terms: terms.slice(
-        (page - 1) * site.postsPerPage,
-        page * site.postsPerPage,
-      ),
-    });
-  }
+  const key = routeKey(root);
+  if (seen.has(key)) return;
+  seen.add(key);
+  output.push({
+    kind: "terms",
+    route: key,
+    root,
+    title,
+    page: 1,
+    pages: 1,
+    terms,
+  });
 }
 
 export function buildPageDescriptors(
@@ -102,7 +95,6 @@ export function buildPageDescriptors(
   const output: PageDescriptor[] = [];
   const seen = new Set<string>(["/"]);
   const reserved = new Set([
-    "/archive/",
     "/search/",
     "/newsletter/",
     "/rss/",
@@ -129,14 +121,6 @@ export function buildPageDescriptors(
     "Articles",
     posts,
     "Webnovel reviews, tier lists, and recommendations",
-  );
-  addPaginated(
-    output,
-    seen,
-    "/archive/",
-    "Archive",
-    posts,
-    "Every published article and review",
   );
   addPaginated(output, seen, "/", "Latest Reviews", posts, undefined, 1);
 

@@ -15,7 +15,6 @@ export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
   const paths = new Set<string>([
     "posts/index.xml",
-    "archive/index.xml",
     "categories/index.xml",
     "tags/index.xml",
   ]);
@@ -65,15 +64,7 @@ export const GET: APIRoute = async (context) => {
         })),
     });
   }
-  if (path === "archive/index.xml") {
-    return rss({
-      title: `Archive on ${site.name}`,
-      description: `Recent content in Archive on ${site.name}`,
-      site: channelUrl,
-      customData: "<language>en-US</language>",
-      items: [],
-    });
-  }
+
   const category = path.match(/^categories\/([^/]+)\/index\.xml$/)?.[1];
   const tag = path.match(/^tags\/([^/]+)\/index\.xml$/)?.[1];
   if (category)
