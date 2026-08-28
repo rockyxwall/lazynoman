@@ -160,7 +160,7 @@ function loadAds() {
   script.dataset.googleAds = "true";
   script.crossOrigin = "anonymous";
   script.src =
-    "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6679678361432308";
+    "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5027399024636019";
   script.addEventListener(
     "load",
     () => {

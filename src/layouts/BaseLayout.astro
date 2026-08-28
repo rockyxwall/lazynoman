@@ -214,18 +214,5 @@ const structuredData = JSON.stringify({
     <script>
       import "../scripts/site.ts";
     </script>
-    <script is:inline>
-      if (
-        location.hostname === "lazynoman.com" ||
-        location.hostname === "www.lazynoman.com"
-      ) {
-        const analytics = document.createElement("script");
-        analytics.defer = true;
-        analytics.src = "https://static.cloudflareinsights.com/beacon.min.js";
-        analytics.dataset.cfBeacon =
-          '{"token":"48e9040046c743328a1abd6b87ec22fd"}';
-        document.head.append(analytics);
-      }
-    </script>
   </body>
 </html>
