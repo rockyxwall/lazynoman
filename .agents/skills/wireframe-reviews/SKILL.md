@@ -1,13 +1,13 @@
 ---
 name: wireframe-reviews
-description: Wireframe guidelines, design tokens, and layout conventions for the LazyNoMan review site homepage. Trigger when user asks to wireframe or prototype review site pages.
+description: Wireframe guidelines, design tokens, and layout conventions for the LazyNoman review site homepage. Trigger when user asks to wireframe or prototype review site pages.
 ---
 
 # Wireframe: Review Site Homepage
 
 ## Project Context
 
-Personal novel review blog at `lazynoman.com`. Reviews webnovels (Chinese/Korean cultivation, isekai, progression fantasy). 10 reviews published.
+Personal novel review blog at `LazyNoman.com`. Reviews webnovels (Chinese/Korean cultivation, isekai, progression fantasy). 10 reviews published.
 
 ## Tech Stack
 

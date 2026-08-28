@@ -20,7 +20,7 @@ const {
   title = site.title,
   description = site.description,
   canonical = Astro.url.pathname,
-  image = "/images/bannerbackground.webp",
+  image = site.socialImage ?? "/img-border.png",
   type = "website",
   publishedTime,
   robots,

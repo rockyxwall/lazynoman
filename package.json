@@ -33,7 +33,7 @@
     "validate": "npm run setup:browsers && npm run validate:core && npm run test:browser && npm run test:browser:webkit && npm run test:lighthouse",
     "new:post": "node scripts/new-post.mjs",
     "brand:transparent": "node scripts/brand-icons.mjs --variant=transparent",
-    "brand:card": "node scripts/brand-icons.mjs --variant=card",
+    "brand:border": "node scripts/brand-icons.mjs --variant=border",
     "brand:solid": "node scripts/brand-icons.mjs --variant=solid"
   },
   "dependencies": {

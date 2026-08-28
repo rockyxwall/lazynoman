@@ -3,10 +3,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = process.cwd();
-const BRAND_DIR = path.join(ROOT, 'src/assets/brand');
-const SOLID_MASTER = path.join(BRAND_DIR, 'logo-solid-bg.png');
-const CARD_MASTER = path.join(BRAND_DIR, 'logo-card-badge.png');
-const TRANSPARENT_MASTER = path.join(BRAND_DIR, 'logo-transparent.png');
+const PUBLIC_DIR = path.join(ROOT, 'public');
+const SOLID_MASTER = path.join(PUBLIC_DIR, 'img.png');
+const BORDER_MASTER = path.join(PUBLIC_DIR, 'img-border.png');
+const TRANSPARENT_MASTER = path.join(PUBLIC_DIR, 'img-transparent.png');
 
 const PUBLIC_FAVICON_DIR = path.join(ROOT, 'public/favicon');
 const PUBLIC_NAVLOGO = path.join(ROOT, 'public/images/navlogo.webp');
@@ -16,8 +16,8 @@ const PUBLIC_FAVICON_SVG = path.join(ROOT, 'public/favicon/favicon.svg');
 
 // 1. Ensure masters exist
 async function ensureMasters() {
-  if (!fs.existsSync(BRAND_DIR)) {
-    fs.mkdirSync(BRAND_DIR, { recursive: true });
+  if (!fs.existsSync(PUBLIC_DIR)) {
+    fs.mkdirSync(PUBLIC_DIR, { recursive: true });
   }
 
   // Generate transparent master if missing
@@ -147,21 +147,35 @@ function createIcoFile(pngBuffersWithSizes) {
   return Buffer.concat([header, ...entries, ...imageBuffers]);
 }
 
+const SITE_JSON_PATH = path.join(ROOT, 'src/data/site.json');
+
 // 3. Build Suite
 async function applyVariant(variant = 'transparent') {
   await ensureMasters();
 
   let sourceFile;
+  let socialImagePath;
   if (variant === 'solid') {
     sourceFile = SOLID_MASTER;
-  } else if (variant === 'card') {
-    sourceFile = CARD_MASTER;
+    socialImagePath = '/img.png';
+  } else if (variant === 'border' || variant === 'card') {
+    sourceFile = BORDER_MASTER;
+    socialImagePath = '/img-border.png';
   } else {
     sourceFile = TRANSPARENT_MASTER;
+    socialImagePath = '/img-transparent.png';
   }
 
   console.log(`\n[brand] Switching suite to variant: '${variant}'`);
   console.log(`[brand] Source asset: ${path.relative(ROOT, sourceFile)}`);
+
+  // Update site.json socialImage to matching variant
+  if (fs.existsSync(SITE_JSON_PATH)) {
+    const siteConfig = JSON.parse(fs.readFileSync(SITE_JSON_PATH, 'utf8'));
+    siteConfig.socialImage = socialImagePath;
+    fs.writeFileSync(SITE_JSON_PATH, JSON.stringify(siteConfig, null, 2) + '\n');
+    console.log(`✓ Updated site.json socialImage -> ${socialImagePath}`);
+  }
 
   if (!fs.existsSync(PUBLIC_FAVICON_DIR)) {
     fs.mkdirSync(PUBLIC_FAVICON_DIR, { recursive: true });
@@ -241,7 +255,7 @@ const args = process.argv.slice(2);
 let variant = 'transparent';
 for (const arg of args) {
   if (arg.includes('solid')) variant = 'solid';
-  else if (arg.includes('card')) variant = 'card';
+  else if (arg.includes('border') || arg.includes('card')) variant = 'border';
   else if (arg.includes('transparent')) variant = 'transparent';
 }
 

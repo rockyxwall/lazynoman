@@ -1,9 +1,9 @@
 ---
 name: social-post
-description: Use this skill whenever the user wants to create Facebook or X (Twitter) social media posts for LazyNoMan novel reviews. Trigger when user says "write a post", "make a fb post", "convert to X post", "create social post", "write for facebook", "write for twitter/x", or pastes a review and asks to format it for social media. Always use this skill for both platforms together unless user specifies one only.
+description: Use this skill whenever the user wants to create Facebook or X (Twitter) social media posts for LazyNoman novel reviews. Trigger when user says "write a post", "make a fb post", "convert to X post", "create social post", "write for facebook", "write for twitter/x", or pastes a review and asks to format it for social media. Always use this skill for both platforms together unless user specifies one only.
 ---
 
-# LazyNoMan Social Post Skill
+# LazyNoman Social Post Skill
 
 Converts novel review content into platform-optimized social media posts for **Facebook** and **X (Twitter)**.
 
@@ -22,7 +22,7 @@ Converts novel review content into platform-optimized social media posts for **F
   5. **Who it's for** — End with a clear "if you want X, this is for you" line.
   6. **Score** — Always include `My score: X/10`
   7. **Full Review link** — Always include the full URL
-  8. **Hashtags** — Always end with: `#webnovel #cultivation #novelreview #lazynoman`
+  8. **Hashtags** — Always end with: `#webnovel #cultivation #novelreview #LazyNoman`
 - **Do NOT** shorten or compress. FB rewards engagement. Let it breathe.
 
 #### Facebook Example Pattern:
@@ -41,7 +41,7 @@ My score: X/10
 
 Full Review: [URL]
 
-#webnovel #cultivation #novelreview #lazynoman
+#webnovel #cultivation #novelreview #LazyNoman
 ```
 
 ---
@@ -49,7 +49,7 @@ Full Review: [URL]
 ### X / Twitter (Short Form)
 - **Hard limit**: 280 characters total
 - **Link always counts as 23 characters** (X's t.co shortener — fixed regardless of URL length)
-- **Hashtags to use**: `#webnovel #cultivation #lazynoman` (3 only — saves space)
+- **Hashtags to use**: `#webnovel #cultivation #LazyNoman` (3 only — saves space)
 - **Structure** (fit within ~200 chars of actual text + 23 link + ~40 hashtags):
   1. One-line hook or core premise (punchy)
   2. Core loop explained in one sentence
@@ -73,7 +73,7 @@ Full Review: [URL]
 
 [raw URL no emoji]
 
-#webnovel #cultivation #lazynoman
+#webnovel #cultivation #LazyNoman
 ```
 
 #### Character Budget:
