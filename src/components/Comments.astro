@@ -1,0 +1,77 @@
+---
+import { site } from "../lib/content";
+
+interface Props {
+  serverUrl?: string;
+}
+
+const { serverUrl = site.walineServerUrl || "" } = Astro.props;
+---
+
+{serverUrl && (
+  <section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading">Comments</h2>
+    <div id="waline" data-waline-server={serverUrl}>
+      <p class="muted">Comments load when scrolled into view.</p>
+    </div>
+  </section>
+
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+
+  <script>
+    function setupWaline() {
+      const container = document.querySelector<HTMLElement>("#waline[data-waline-server]");
+      if (!container || container.dataset.loaded === "true") return;
+
+      const serverURL = container.dataset.walineServer;
+      if (!serverURL) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          container.dataset.loaded = "true";
+
+          import("https://unpkg.com/@waline/client@v3/dist/waline.js").then(({ init }) => {
+            init({
+              el: "#waline",
+              serverURL,
+              lang: "en",
+              dark: 'html:not([data-theme="light"])',
+              reaction: true,
+              search: false,
+            });
+          }).catch((err) => {
+            console.error("Failed to load Waline comments:", err);
+            container.innerHTML = '<p class="muted">Comments are currently unavailable.</p>';
+          });
+        }
+      }, { rootMargin: "300px" });
+
+      observer.observe(container);
+    }
+
+    setupWaline();
+    document.addEventListener("astro:after-swap", setupWaline);
+  </script>
+
+  <style is:global>
+    #waline {
+      --waline-theme-color: var(--accent);
+      --waline-active-color: var(--accent-strong);
+      --waline-badge-color: var(--accent);
+      --waline-border-color: var(--border);
+      --waline-bgcolor: var(--surface);
+      --waline-bgcolor-light: var(--surface-2);
+      --waline-bgcolor-hover: var(--surface-2);
+      --waline-color: var(--text);
+      --waline-info-color: var(--muted);
+      --waline-text-color: var(--text);
+      margin-top: 1.5rem;
+    }
+    #waline .wl-panel {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+    }
+  </style>
+)}

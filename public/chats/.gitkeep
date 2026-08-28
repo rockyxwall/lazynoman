@@ -1,3 +1,0 @@
-# Chat replay JSON files land here (keyed by YouTube video ID).
-# Generated automatically by .github/workflows/update-livestreams.yml via TwitchDownloader CLI.
-# Place manually-downloaded files here as public/chats/{youtubeVideoId}.json

@@ -2,6 +2,7 @@
 import { render } from "astro:content";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Comments from "../components/Comments.astro";
 import Pagination from "../components/Pagination.astro";
 import PostList from "../components/PostList.astro";
 import { displayDate, getPages, getPublishedPosts, readingMinutes, relatedPosts, site, summary, taxonomySlug } from "../lib/content";
@@ -58,7 +59,7 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
         </aside>
         {descriptor.post.data.tags.length > 0 && <footer><h2>Tags</h2><div class="chips">{descriptor.post.data.tags.map((tag) => <a class="chip" href={`/tags/${taxonomySlug(tag)}/`}>{tag}</a>)}</div></footer>}
         {related.length > 0 && <section aria-labelledby="related-heading"><h2 id="related-heading">Related articles</h2><PostList posts={related} heading="h3" /></section>}
-        <section class="comments" aria-labelledby="comments-heading"><h2 id="comments-heading">Comments</h2><div data-comments><p class="muted">Comments load when this section comes into view.</p></div></section>
+        <Comments />
       </div>
     </article>
   </>}

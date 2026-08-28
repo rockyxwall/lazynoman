@@ -1,7 +1,6 @@
 import rss from "@astrojs/rss";
 import type { APIRoute, GetStaticPaths } from "astro";
 
-import livestreams from "../../data/livestreams.json";
 import {
   getPublishedPosts,
   feedContent,
@@ -11,7 +10,6 @@ import {
   taxonomy,
   taxonomySlug,
 } from "../lib/content";
-import { requiredLivestreamDate } from "../lib/livestreams";
 import { legacyFeedPaths } from "../lib/routes";
 
 export const getStaticPaths = (async () => {
@@ -22,7 +20,7 @@ export const getStaticPaths = (async () => {
       paths.add(`${field}/${slug}/index.xml`);
   }
   return [...paths]
-    .filter((path) => path !== "index.xml")
+    .filter((path) => path !== "index.xml" && path !== "live-streams/index.xml")
     .map((path) => ({
       params: { feed: path.replace(/\.xml$/, "") },
       props: { path },
@@ -35,23 +33,6 @@ export const GET: APIRoute = async (context) => {
     `/${path.replace(/index\.xml$/, "")}`,
     context.site,
   );
-  if (path === "live-streams/index.xml") {
-    return rss({
-      title: `Live Streams | ${site.name}`,
-      description: `${site.name} live stream recordings`,
-      site: channelUrl,
-      customData: "<language>en-US</language>",
-      items: livestreams.items.map((stream) => ({
-        title: stream.title,
-        description: stream.description,
-        link: new URL(
-          `/live-streams/player/?v=${encodeURIComponent(stream.videoId)}`,
-          context.site,
-        ).toString(),
-        pubDate: requiredLivestreamDate(stream.publishedAt, stream.videoId),
-      })),
-    });
-  }
   let posts = await getPublishedPosts();
   const taxonomyRoot = path.match(/^(categories|tags)\/index\.xml$/)?.[1] as
     "categories" | "tags" | undefined;

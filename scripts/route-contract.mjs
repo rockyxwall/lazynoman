@@ -4,12 +4,7 @@ import path from "node:path";
 import fg from "fast-glob";
 import YAML from "yaml";
 
-import livestreams from "../data/livestreams.json" with { type: "json" };
 import site from "../src/data/site.json" with { type: "json" };
-
-const validLivestreamCount = livestreams.items.filter((stream) =>
-  /^[A-Za-z0-9_-]{6,16}$/.test(stream.videoId),
-).length;
 
 export function routeKey(value) {
   const segments = value.split(/[?#]/)[0].split("/").filter(Boolean);

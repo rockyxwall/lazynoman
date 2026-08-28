@@ -148,51 +148,6 @@ if (tocLinks.length && "IntersectionObserver" in window) {
   });
 }
 
-function loadUtterances() {
-  const host = document.querySelector<HTMLElement>("[data-comments]");
-  if (!host || host.dataset.loaded) return;
-  host.dataset.loaded = "true";
-  const script = document.createElement("script");
-  script.src = "https://utteranc.es/client.js";
-  script.async = true;
-  script.crossOrigin = "anonymous";
-  script.setAttribute("repo", "rockyxwall/lazynoman");
-  script.setAttribute("issue-term", "pathname");
-  script.setAttribute("label", "comments");
-  script.setAttribute(
-    "theme",
-    root.dataset.theme === "light" ? "github-light" : "github-dark",
-  );
-  script.addEventListener(
-    "error",
-    () => {
-      const fallback = document.createElement("p");
-      fallback.className = "notice";
-      fallback.append("Comments are unavailable. ");
-      const link = document.createElement("a");
-      link.href = "https://github.com/rockyxwall/lazynoman/issues";
-      link.textContent = "Continue the discussion on GitHub.";
-      fallback.append(link);
-      host.replaceChildren(fallback);
-    },
-    { once: true },
-  );
-  host.replaceChildren(script);
-}
-
-const comments = document.querySelector<HTMLElement>("[data-comments]");
-if (comments && "IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        loadUtterances();
-        observer.disconnect();
-      }
-    },
-    { rootMargin: "500px" },
-  );
-  observer.observe(comments);
-}
 
 function loadAds() {
   if (

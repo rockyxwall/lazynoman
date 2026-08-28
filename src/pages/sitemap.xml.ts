@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 
-import livestreams from "../../data/livestreams.json";
 import { getPages, getPublishedPosts, pageRoute, site } from "../lib/content";
 import { buildPageDescriptors } from "../lib/routes";
 import { escapeXml } from "../lib/xml";
@@ -12,7 +11,6 @@ export const GET: APIRoute = async () => {
   const newsletter = pages.find((page) => pageRoute(page) === "/newsletter/");
   const routes = new Map<string, string | undefined>([
     ["/", posts[0]?.data.date],
-    ["/live-streams/", livestreams.updated],
     ["/newsletter/", newsletter?.data.date],
   ]);
   for (const entry of descriptors) {
