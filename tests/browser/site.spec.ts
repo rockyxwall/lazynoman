@@ -108,7 +108,7 @@ test("article exposes navigation and interactions", async ({
   const image = page.locator(".article-image");
   await expect(image).toBeVisible();
   await expect(page.locator("#waline")).toBeAttached();
-  await expect(page.locator("[data-ad-slot]")).toBeAttached();
+  await expect(page.locator("aside.ad-slot")).toBeAttached();
 });
 
 test("article table of contents stays pinned while scrolling on desktop", async ({
