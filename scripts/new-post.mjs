@@ -126,7 +126,7 @@ export async function getExistingTags(root = process.cwd()) {
           if (typeof tag === "string" && tag.trim()) tagsSet.add(tag.trim());
         }
       }
-    } catch { }
+    } catch {}
   }
   return Array.from(tagsSet).sort((a, b) => a.localeCompare(b));
 }
@@ -211,7 +211,9 @@ async function promptMultiSelect(message, items, defaultChecked = []) {
         readline.cursorTo(process.stdout, 0);
         readline.clearScreenDown(process.stdout);
         const chosen = items.filter((item) => selected.has(item));
-        console.log(`  \x1b[90mSelected categories:\x1b[0m \x1b[32m${chosen.join(", ")}\x1b[0m`);
+        console.log(
+          `  \x1b[90mSelected categories:\x1b[0m \x1b[32m${chosen.join(", ")}\x1b[0m`,
+        );
         resolve(chosen);
       }
     }
@@ -269,7 +271,9 @@ async function promptSearchableMultiSelect({
       // Line 1: Filter input
       readline.cursorTo(process.stdout, 0);
       readline.clearLine(process.stdout, 0);
-      process.stdout.write(`  \x1b[90mFilter:\x1b[0m ${searchQuery}\x1b[36m_\x1b[0m\n`);
+      process.stdout.write(
+        `  \x1b[90mFilter:\x1b[0m ${searchQuery}\x1b[36m_\x1b[0m\n`,
+      );
 
       // Lines 2 to maxVisible + 1: Items
       for (let i = 0; i < maxVisible; i += 1) {
@@ -348,7 +352,9 @@ async function promptSearchableMultiSelect({
       } else if (key.name === "space" || key.name === "tab") {
         if (filtered.length > 0 && cursor < filtered.length) {
           const item = filtered[cursor];
-          const valueName = item.startsWith('+ Add "') ? item.slice(7, -1) : item;
+          const valueName = item.startsWith('+ Add "')
+            ? item.slice(7, -1)
+            : item;
           if (selected.has(valueName)) {
             selected.delete(valueName);
           } else {
@@ -410,14 +416,18 @@ async function promptWizard() {
   let title = "";
   try {
     while (!title) {
-      const answer = (await titlePrompt.question("\x1b[32m? \x1b[0m\x1b[1mTitle:\x1b[0m ")).trim();
+      const answer = (
+        await titlePrompt.question("\x1b[32m? \x1b[0m\x1b[1mTitle:\x1b[0m ")
+      ).trim();
       if (!answer) {
         console.log("  \x1b[31mTitle is required.\x1b[0m");
         continue;
       }
       const slug = slugify(answer);
       if (!slug) {
-        console.log("  \x1b[31mTitle does not produce a usable ASCII slug.\x1b[0m");
+        console.log(
+          "  \x1b[31mTitle does not produce a usable ASCII slug.\x1b[0m",
+        );
         continue;
       }
       title = answer;
@@ -447,12 +457,16 @@ async function promptWizard() {
 
   try {
     const dateInput = (
-      await extraPrompt.question(`\n\x1b[32m? \x1b[0m\x1b[1mDate [default: ${date}]:\x1b[0m `)
+      await extraPrompt.question(
+        `\n\x1b[32m? \x1b[0m\x1b[1mDate [default: ${date}]:\x1b[0m `,
+      )
     ).trim();
     if (dateInput) date = dateInput;
 
     const draftInput = (
-      await extraPrompt.question("\n\x1b[32m? \x1b[0m\x1b[1mSave as draft? (Y/n) [default: Y]:\x1b[0m ")
+      await extraPrompt.question(
+        "\n\x1b[32m? \x1b[0m\x1b[1mSave as draft? (Y/n) [default: Y]:\x1b[0m ",
+      )
     )
       .trim()
       .toLowerCase();
@@ -574,4 +588,3 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href)
     console.error(error.message);
     process.exitCode = 1;
   });
-

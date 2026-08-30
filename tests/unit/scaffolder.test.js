@@ -340,4 +340,3 @@ describe("post scaffolder", () => {
     expect(tags).toEqual(["Cultivation", "System"]);
   });
 });
-
