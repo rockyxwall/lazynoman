@@ -8,6 +8,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import site from "../../src/data/site.json" with { type: "json" };
 import {
   chicagoToday,
+  getExistingTags,
   main,
   parseArguments,
   renderTemplate,
@@ -289,4 +290,54 @@ describe("post scaffolder", () => {
     });
     await expect(main(args, root)).rejects.toThrow("refusing to overwrite");
   });
+
+  it("handles empty args and interactive flags as wizard triggers", () => {
+    expect(parseArguments([])).toBeNull();
+    expect(parseArguments(["-i"])).toBeNull();
+    expect(parseArguments(["--interactive"])).toBeNull();
+  });
+
+  it("supports tags, draft flags, and renders custom frontmatter correctly", async () => {
+    const input = parseArguments([
+      "Custom Post",
+      "--date",
+      "2026-08-13",
+      "--category",
+      "Novel",
+      "--tag",
+      "Cultivation",
+      "--tag",
+      "System",
+      "--no-draft",
+    ]);
+    expect(input).toMatchObject({
+      title: "Custom Post",
+      date: "2026-08-13",
+      categories: ["Novel"],
+      tags: ["Cultivation", "System"],
+      draft: false,
+    });
+    const template = await readFile("templates/post.md.tmpl", "utf8");
+    const output = renderTemplate(template, input, slugify(input.title));
+    const header = YAML.parse(output.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1]);
+    expect(header).toMatchObject({
+      title: "Custom Post",
+      date: "2026-08-13",
+      url: "/custom-post/",
+      categories: ["Novel"],
+      tags: ["Cultivation", "System"],
+      draft: false,
+    });
+  });
+
+  it("extracts existing tags from content posts", async () => {
+    const root = await fixture();
+    await writeFile(
+      path.join(root, "src/content/posts/test-post.md"),
+      `---\ntitle: T\ndate: "2026-08-13"\nurl: /t/\ncategories: [Novel]\ntags:\n  - "Cultivation"\n  - "System"\n---\n`,
+    );
+    const tags = await getExistingTags(root);
+    expect(tags).toEqual(["Cultivation", "System"]);
+  });
 });
+
