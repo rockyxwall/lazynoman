@@ -15,15 +15,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <label for="newsletter-email">Email</label>
         <input type="email" name="email" id="newsletter-email" autocomplete="email" placeholder="your@email.com" required />
         <button class="primary-button" type="submit" name="submit">Sign me up</button>
+        <p class="notice" data-newsletter-notice hidden>Newsletter subscription is coming soon!</p>
         <p class="muted">You are signing up to receive updates from LazyNoman.</p>
       </div>
     </form>
   </section>
   <script>
     const form = document.querySelector<HTMLFormElement>("[data-newsletter-form]");
+    const notice = document.querySelector<HTMLElement>("[data-newsletter-notice]");
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
-      alert("Newsletter subscription is coming soon!");
+      if (notice) notice.hidden = false;
     });
   </script>
 </BaseLayout>

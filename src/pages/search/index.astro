@@ -4,19 +4,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Search"
-  description="Search LazyNoman articles and reviews"
+  description="Search LazyNoman posts and reviews"
   canonical="/search/"
   robots="noindex, follow"
 >
   <section class="reading">
     <h1>Search</h1><form role="search" data-search-form>
-      <label for="search-query">Search reviews and articles</label><div class="search-row">
+      <label for="search-query">Search reviews and posts</label><div class="search-row">
         <input
           id="search-query"
           name="s"
           type="search"
           autocomplete="off"
-        /><button type="submit">Search</button>
+        /><button class="primary-button" type="submit">Search</button>
       </div>
     </form><p class="muted" aria-live="polite" data-search-status>
       Enter a search term.

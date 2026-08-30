@@ -12,12 +12,6 @@ function syncThemeControl() {
   );
   const icon = toggle?.querySelector<HTMLElement>("[data-theme-icon]");
   if (icon) icon.textContent = light ? "☾" : "☀";
-  document
-    .querySelector<HTMLIFrameElement>("iframe.utterances-frame")
-    ?.contentWindow?.postMessage(
-      { type: "set-theme", theme: light ? "github-light" : "github-dark" },
-      "https://utteranc.es",
-    );
 }
 
 document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {

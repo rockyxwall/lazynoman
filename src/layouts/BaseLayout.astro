@@ -118,7 +118,6 @@ const structuredData = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <script is:inline>document.documentElement.classList.add("js");</script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
@@ -186,10 +185,9 @@ const structuredData = JSON.stringify({
           aria-controls="primary-links">Menu</button
         >
         <div class="nav-links" id="primary-links" data-menu>
-          <a href="/posts/">Articles</a><a href="/categories/">Topics</a><a
-            href="/tags/">Tags</a><a
-            href="/search/">Search</a
-          >
+          <a href="/tags/">Tags</a><a href="/posts/">Posts</a><a
+            href="/categories/">Topics</a
+          ><a href="/search/">Search</a><a href="/newsletter/">Newsletter</a>
           <button
             class="icon-button"
             type="button"
@@ -206,7 +204,7 @@ const structuredData = JSON.stringify({
     <footer class="site-footer">
       <div class="container">
         <div class="footer-links">
-          <a href="/posts/">Articles</a><a href="/categories/">Topics</a><a
+          <a href="/posts/">Posts</a><a href="/categories/">Topics</a><a
             href="/tags/">Tags</a><a href="/rss/">RSS</a><a href="/privacy/"
             >Privacy</a><a href="/terms-conditions/">Terms</a>
         </div><p>© {new Date().getFullYear()} {site.name}</p>

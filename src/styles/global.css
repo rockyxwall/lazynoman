@@ -469,31 +469,6 @@ td {
   gap: 0.75rem;
   margin-top: 1.75rem;
 }
-.stream-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.7fr);
-  margin-bottom: 1.25rem;
-}
-.stream-feature img {
-  height: 100%;
-}
-.stream-feature .card-body {
-  align-self: center;
-}
-.stream-grid .card h2 {
-  font-size: 1.2rem;
-}
-.player-wrapper {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  overflow: clip;
-  border: 1px solid var(--border);
-  background: #000;
-  border-radius: var(--radius);
-}
-.player-wrapper.has-chat {
-  grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.7fr);
-}
 .media-embed {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -507,69 +482,18 @@ td {
   height: 100%;
   border: 0;
 }
-.chat-panel {
-  position: relative;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  contain: size;
-  min-height: 0;
-  background: var(--surface);
-  border-left: 1px solid var(--border);
-}
-.chat-panel[hidden] {
-  display: none;
-}
-.chat-header {
+.search-row {
   display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 0.65rem;
-  border-bottom: 1px solid var(--border);
+  gap: 0.5rem;
+  margin-block: 0.75rem 1rem;
 }
-.chat-messages {
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  scrollbar-gutter: stable;
-  padding: 0.5rem;
-  font-size: 0.86rem;
-}
-.chat-message {
-  padding: 0.22rem 0;
-  overflow-wrap: anywhere;
-}
-.chat-ts {
-  margin-right: 0.45rem;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-.chat-user {
-  margin-right: 0.35rem;
-  color: var(--accent);
-}
-.chat-badge,
-.chat-emote {
-  display: inline-block;
-  width: auto;
-  height: 1.15em;
-  margin-inline: 0.12rem;
-  vertical-align: middle;
-}
-.chat-scroll {
-  position: absolute;
-  right: 0.75rem;
-  bottom: 2.4rem;
+.search-row input {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
   border: 1px solid var(--border);
-  background: var(--surface-2);
+  background: var(--surface);
   color: var(--text);
   border-radius: var(--radius);
-  padding: 0.25rem 0.5rem;
-}
-.chat-credit {
-  margin: 0;
-  padding: 0.35rem 0.6rem;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.72rem;
 }
 .newsletter-page {
   padding-block: 0.75rem 2rem;
@@ -589,90 +513,6 @@ td {
 .newsletter-form .primary-button {
   width: fit-content;
   margin-top: 0.5rem;
-}
-.honeypot {
-  position: absolute;
-  left: -10000px;
-}
-.store-handoff {
-  width: min(var(--max), calc(100vw - 2rem));
-  margin: 1rem 50%;
-  padding: clamp(1rem, 3vw, 1.75rem);
-  border-radius: var(--radius);
-  transform: translateX(-50%);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-.store-handoff h2,
-.store-handoff p {
-  margin-top: 0;
-}
-.store-handoff__intro {
-  max-width: 70ch;
-}
-.store-handoff__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-block: 1rem 1.25rem;
-}
-.store-secondary-button {
-  display: inline-flex;
-  justify-content: center;
-  padding: 0.55rem 0.85rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-weight: 700;
-  text-decoration: none;
-}
-.store-secondary-button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.store-product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  padding: 0;
-  list-style: none;
-}
-.store-product-grid li {
-  min-width: 0;
-}
-.store-product {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.9rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  color: var(--muted);
-  text-decoration: none;
-}
-.store-product:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-.store-product strong {
-  color: var(--text);
-  font-size: 1.3rem;
-  line-height: 1.2;
-}
-.store-product .eyebrow {
-  margin: 0;
-}
-.store-product__link {
-  margin-top: auto;
-  color: var(--accent);
-  font-weight: 700;
-}
-.store-handoff__help {
-  margin: 1rem 0 0;
-  color: var(--muted);
 }
 .error-page {
   padding-block: clamp(3rem, 10vw, 6rem);
@@ -723,67 +563,11 @@ td {
     overflow: auto;
   }
 }
-@media (max-width: 720px) {
-  .player-wrapper.has-chat {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 0.75rem;
-    height: min(760px, calc(100dvh - 5rem));
-    overflow: visible;
-    border: 0;
-    background: transparent;
-  }
-  .player-wrapper.has-chat .media-embed {
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: #000;
-    border-radius: var(--radius);
-  }
-  .player-wrapper.has-chat .chat-panel {
-    contain: none;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-  }
-}
-@media (max-width: 559px) and (orientation: landscape) {
-  .player-wrapper.has-chat {
-    height: auto;
-  }
-  .player-wrapper.has-chat .chat-panel {
-    height: min(18rem, calc(100dvh - 5rem));
-    min-height: min(10rem, calc(100dvh - 5rem));
-  }
-}
-@media (min-width: 560px) and (max-width: 720px) and (orientation: landscape) {
-  .player-wrapper.has-chat {
-    grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.7fr);
-    grid-template-rows: none;
-    gap: 0;
-    height: auto;
-    overflow: clip;
-    border: 1px solid var(--border);
-    background: #000;
-  }
-  .player-wrapper.has-chat .media-embed {
-    border: 0;
-    border-radius: 0;
-  }
-  .player-wrapper.has-chat .chat-panel {
-    contain: size;
-    border: 0;
-    border-left: 1px solid var(--border);
-    border-radius: 0;
-  }
-}
 @media (max-width: 900px) {
   .nav {
     flex-wrap: wrap;
     min-height: 56px;
     padding-block: 0.4rem;
-  }
-  .nav-logo img {
-    width: 154px;
   }
   .js .menu-button {
     display: inline-flex;
@@ -811,9 +595,6 @@ td {
   }
 }
 @media (max-width: 760px) {
-  .stream-feature {
-    grid-template-columns: 1fr;
-  }
   .listing-page .post-grid {
     grid-template-columns: 1fr;
   }
@@ -854,13 +635,6 @@ td {
     position: static;
     opacity: 1;
     padding-right: 0.35rem;
-  }
-  .store-handoff__actions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  .store-product-grid {
-    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 360px) {

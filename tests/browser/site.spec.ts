@@ -195,7 +195,7 @@ test("mobile navigation opens with an accessible control", async ({
   await expect(button).toHaveAttribute("aria-expanded", "true");
   const nav = page.locator("#primary-links");
   await expect(
-    nav.getByRole("link", { name: "Articles", exact: true }),
+    nav.getByRole("link", { name: "Posts", exact: true }),
   ).toBeVisible();
   await expect(
     nav.getByRole("link", { name: "Topics", exact: true }),

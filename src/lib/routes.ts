@@ -114,7 +114,7 @@ export function buildPageDescriptors(
     output,
     seen,
     "/posts/",
-    "Articles",
+    "Posts",
     posts,
     "Webnovel reviews, tier lists, and recommendations",
   );

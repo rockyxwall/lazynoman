@@ -15,7 +15,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
 ---
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
   <section class="hero container">
-    <p class="eyebrow">Reviews, Recommendations & Guides</p>
+    <p class="eyebrow">Webnovels, Anime & Gaming</p>
     <h1>Honest reviews, recommendations, and guides.</h1>
     <p class="lede">Webnovels, light novels, anime, manga, games, tier lists, and top picks — zero fluff.</p>
   </section>
@@ -23,7 +23,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
     <h2>Featured Posts</h2>
     <div class="grid post-grid">{featured.map((post, index) => <PostCard post={post} heading="h3" priority={index === 0} />)}</div>
   </section>
-  <section class="container hero">
+  <section class="container">
     <h2>Explore Topics</h2>
     <div class="chips">{topics.map((topic) => <a class="chip" href={`/categories/${topic.slug}/`}>{topic.name} ({topic.count})</a>)}</div>
   </section>
@@ -32,7 +32,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
     <PostList posts={posts.slice(0, 10)} heading="h3" />
     <p><a href="/posts/">Browse all posts →</a></p>
   </section>
-  <section class="container hero" aria-labelledby="hub-heading">
+  <section class="container" aria-labelledby="hub-heading">
     <p class="eyebrow">Quick Navigation</p>
     <h2 id="hub-heading">Explore the Archive</h2>
     <div class="grid action-grid">
