@@ -11,7 +11,7 @@ tags:
   - Harem
   - Cultivation
   - Family Building
-  - OP MC
+  - Overpowered MC
 draft: false
 ---
 

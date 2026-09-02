@@ -10,7 +10,7 @@ tags:
   - Cultivation
   - System
   - Comedy
-  - OP MC
+  - Overpowered MC
 draft: false
 ---
 

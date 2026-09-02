@@ -9,7 +9,7 @@ categories:
 tags:
   - Cultivation
   - World Hopping
-  - OP MC
+  - Overpowered MC
   - System
 draft: false
 ---

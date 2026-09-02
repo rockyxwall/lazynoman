@@ -10,7 +10,7 @@ tags:
   - Cultivation
   - Simulation
   - Group Chat
-  - OP MC
+  - Overpowered MC
 draft: false
 ---
 

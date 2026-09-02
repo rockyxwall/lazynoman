@@ -9,7 +9,7 @@ categories:
 tags:
   - Cultivation
   - Clan
-  - OP MC
+  - Overpowered MC
   - System
   - Mecha
   - Family Management
