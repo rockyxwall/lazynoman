@@ -545,9 +545,7 @@ export function renderTemplate(
     .replaceAll("{{TAGS}}", renderedTags)
     .replaceAll(
       "{{CATEGORIES}}",
-      categories
-        .map((category) => `  - ${category}`)
-        .join("\n"),
+      categories.map((category) => `  - ${category}`).join("\n"),
     );
 }
 
