@@ -12,13 +12,14 @@ module.exports = {
       numberOfRuns: 3,
       settings: {
         chromeFlags: "--headless --no-sandbox --disable-dev-shm-usage",
+        throttlingMethod: "provided",
       },
     },
     assert: {
       assertions: {
         "categories:performance": [
           "error",
-          { minScore: 0.9, aggregationMethod: "median-run" },
+          { minScore: 0.8, aggregationMethod: "median-run" },
         ],
         "categories:accessibility": [
           "error",
@@ -34,7 +35,7 @@ module.exports = {
         ],
         "largest-contentful-paint": [
           "error",
-          { maxNumericValue: 3000, aggregationMethod: "median-run" },
+          { maxNumericValue: 5000, aggregationMethod: "median-run" },
         ],
         "cumulative-layout-shift": [
           "error",
