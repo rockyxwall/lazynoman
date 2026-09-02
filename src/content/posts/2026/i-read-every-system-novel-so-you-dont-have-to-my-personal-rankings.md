@@ -1,15 +1,15 @@
 ---
 title: "I Read Every System Novel So You Dont Have To My Personal Rankings"
-date: 2026-08-28
+date: 2026-04-20
 url: /i-read-every-system-novel-so-you-dont-have-to-my-personal-rankings/
 image: images/2026/i-read-every-system-novel-so-you-dont-have-to-my-personal-rankings.webp
 description: "The ultimate tier list and ranking of popular system web novels. Find the best cultivation, harem, apocalypse, and leveling novels to binge next."
 categories:
   - Novel
 tags:
-  - list
-  - system
-  - ranking
+  - List
+  - System
+  - Ranking
 draft: false
 ---
 

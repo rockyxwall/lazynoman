@@ -1,6 +1,6 @@
 ---
 title: I Became An Immortal On Mortal Realm
-date: 2026-08-28T00:00:00.000Z
+date: 2026-05-31
 url: /i-became-an-immortal-on-mortal-realm/
 image: images/2026/i-became-an-immortal-on-mortal-realm.jpg
 description: >-
@@ -9,10 +9,10 @@ description: >-
 categories:
   - Novel
 tags:
-  - cheat
-  - xianxia
-  - xuanhuan
-  - overpowered protagonist
+  - Cheat
+  - Xianxia
+  - Xuanhuan
+  - Overpowered Protagonist
 draft: false
 ---
 

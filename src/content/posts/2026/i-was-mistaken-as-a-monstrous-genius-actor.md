@@ -1,19 +1,19 @@
 ---
 title: "I Was Mistaken As A Monstrous Genius Actor"
-date: 2026-08-28
+date: 2026-05-25
 url: /i-was-mistaken-as-a-monstrous-genius-actor/
 image: images/2026/i-was-mistaken-as-a-monstrous-genius-actor.webp
 description: "Review of I Was Mistaken as a Monstrous Genius Actor Korean web novel. Analysis of its showbiz immersion system, misunderstandings, and comedy."
 categories:
   - Novel
 tags:
-  - korean-novel
-  - comedy
-  - slice-of-life
-  - system
-  - misunderstanding
-  - showbiz
-  - dense-mc
+  - Korean Novel
+  - Comedy
+  - Slice Of Life
+  - System
+  - Misunderstanding
+  - Showbiz
+  - Dense MC
 draft: false
 ---
 

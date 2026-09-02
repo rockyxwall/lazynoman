@@ -1,16 +1,16 @@
 ---
 title: "Comprehension Ability Creating And Teaching The Dao In Various Worlds"
-date: 2026-08-28
+date: 2026-04-21
 url: /comprehension-ability-creating-and-teaching-the-dao-in-various-worlds/
 image: images/2026/comprehension-ability-creating-and-teaching-the-dao-in-various-worlds.webp
 description: "Full review of Comprehension Ability: Creating and Teaching the Dao in Various Worlds. Discover its founder progression, world-hopping arcs, and score."
 categories:
   - Novel
 tags:
-  - cultivation
-  - world-hopping
-  - op-mc
-  - system
+  - Cultivation
+  - World Hopping
+  - OP MC
+  - System
 draft: false
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: We Agreed On Experiencing Life So Why Did You Immortals Become Real
-date: 2026-08-28T00:00:00.000Z
+date: 2026-06-01
 url: /we-agreed-on-experiencing-life-so-why-did-you-immortals-become-real/
 image: >-
   images/2026/we-agreed-on-experiencing-life-so-why-did-you-immortals-become-real.jpg
@@ -10,10 +10,10 @@ description: >-
 categories:
   - Novel
 tags:
-  - cheat
-  - romance
-  - cultivation
-  - transmigration
+  - Cheat
+  - Romance
+  - Cultivation
+  - Transmigration
 draft: false
 ---
 

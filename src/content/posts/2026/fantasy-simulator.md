@@ -1,10 +1,10 @@
 ---
 title: "Fantasy Simulator"
-date: 2026-08-30
+date: 2026-06-08
 url: /fantasy-simulator/
 image: images/2026/fantasy-simulator.webp
 categories:
-  - "Novel"
+  - Novel
 tags: []
 draft: true
 ---

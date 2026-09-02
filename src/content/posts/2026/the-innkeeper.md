@@ -1,17 +1,17 @@
 ---
 title: "The Innkeeper"
-date: 2026-08-28
+date: 2026-05-02
 url: /the-innkeeper/
 image: images/2026/the-innkeeper.webp
 description: "Comprehensive review of The Innkeeper web novel. Follow Lex's multiversal hotel management, system upgrades, misunderstandings, and rating."
 categories:
   - Novel
 tags:
-  - system
-  - misunderstanding
-  - kingdom-building
-  - no-romance
-  - comedy
+  - System
+  - Misunderstanding
+  - Kingdom Building
+  - No Romance
+  - Comedy
 draft: false
 ---
 

@@ -1,16 +1,16 @@
 ---
 title: "Others Level Up But I Pursue Cultivation"
-date: 2026-08-28
+date: 2026-04-19
 url: /others-level-up-but-i-pursue-cultivation/
 image: images/2026/others-level-up-but-i-pursue-cultivation.webp
 description: "Review of Others Level Up, but I Pursue Cultivation. Explore Su Xing's life simulator cheat, timeline progression, system loops, and final verdict."
 categories:
   - Novel
 tags:
-  - reincarnation
-  - cultivation
-  - system
-  - simulation
+  - Reincarnation
+  - Cultivation
+  - System
+  - Simulation
 draft: false
 ---
 

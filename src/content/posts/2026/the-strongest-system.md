@@ -1,16 +1,16 @@
 ---
 title: "The Strongest System"
-date: 2026-08-28
+date: 2026-04-15
 url: /the-strongest-system/
 image: images/2026/the-strongest-system.webp
 description: "An in-depth review and rating of The Strongest System web novel. Explore Lin Fan's shameless comedy, leveling progression, and flawed ending."
 categories:
   - Novel
 tags:
-  - cultivation
-  - system
-  - comedy
-  - op-mc
+  - Cultivation
+  - System
+  - Comedy
+  - OP MC
 draft: false
 ---
 

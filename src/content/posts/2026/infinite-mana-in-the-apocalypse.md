@@ -1,18 +1,18 @@
 ---
 title: "Infinite Mana In The Apocalypse"
-date: 2026-08-28
+date: 2026-04-28
 url: /infinite-mana-in-the-apocalypse/
 image: images/2026/infinite-mana-in-the-apocalypse.webp
 description: "Critical review of Infinite Mana in the Apocalypse by APassingWanderer. An analysis of Noah Osmont's endless power creep across 5,000+ chapters."
 categories:
   - Novel
 tags:
-  - infinite-mana
-  - system
-  - cultivation
-  - overpowered-mc
-  - apocalypse
-  - noah-osmont
+  - Infinite Mana
+  - System
+  - Cultivation
+  - Overpowered MC
+  - Apocalypse
+  - Noah Osmont
 draft: false
 ---
 

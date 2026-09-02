@@ -1,17 +1,17 @@
 ---
 title: "Starting As A Son In Law To Establish An Immortal Family"
-date: 2026-08-28
+date: 2026-05-06
 url: /starting-as-a-son-in-law-to-establish-an-immortal-family/
 image: images/2026/starting-as-a-son-in-law-to-establish-an-immortal-family.webp
 description: "Detailed review of Starting As A Son In Law To Establish An Immortal Family. An analysis of Lu Changsheng's dynasty system, harem, and clan building."
 categories:
   - Novel
 tags:
-  - system
-  - harem
-  - cultivation
-  - family-building
-  - op-mc
+  - System
+  - Harem
+  - Cultivation
+  - Family Building
+  - OP MC
 draft: false
 ---
 

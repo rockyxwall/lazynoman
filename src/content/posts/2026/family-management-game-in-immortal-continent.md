@@ -1,18 +1,18 @@
 ---
 title: "Family Management Game In Immortal Continent"
-date: 2026-08-28
+date: 2026-05-25
 url: /family-management-game-in-immortal-continent/
 image: images/2026/family-management-game-in-immortal-continent.webp
 description: "Review of Family Management Game In Immortal Continent web novel. A detailed look at its ancestor simulation mechanics, clan building, and rating."
 categories:
   - Novel
 tags:
-  - cultivation
-  - clan
-  - op-mc
-  - system
-  - mecha
-  - family-management
+  - Cultivation
+  - Clan
+  - OP MC
+  - System
+  - Mecha
+  - Family Management
 draft: false
 ---
 

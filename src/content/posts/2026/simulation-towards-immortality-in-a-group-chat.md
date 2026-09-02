@@ -1,16 +1,16 @@
 ---
 title: "Simulation Towards Immortality In A Group Chat"
-date: 2026-08-28
+date: 2026-04-08
 url: /simulation-towards-immortality-in-a-group-chat/
 image: images/2026/simulation-towards-immortality-in-a-group-chat.webp
 description: "Review and score for Simulation Towards Immortality In A Group Chat web novel. Breakdown of the transmigrator death-chat and simulator survival tropes."
 categories:
   - Novel
 tags:
-  - cultivation
-  - simulation
-  - group-chat
-  - op-mc
+  - Cultivation
+  - Simulation
+  - Group Chat
+  - OP MC
 draft: false
 ---
 

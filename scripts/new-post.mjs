@@ -34,6 +34,21 @@ export function chicagoToday(now = new Date()) {
   return `${value.year}-${value.month}-${value.day}`;
 }
 
+export function formatTagName(tag) {
+  if (!tag || typeof tag !== "string") return tag;
+  const trimmed = tag.trim();
+  return trimmed
+    .replace(/[-_]+/g, " ")
+    .split(/\s+/)
+    .map((word) => {
+      const lower = word.toLowerCase();
+      if (lower === "mc") return "MC";
+      if (lower === "op") return "OP";
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
 export function parseArguments(argv) {
   if (
     argv.length === 0 ||
@@ -76,7 +91,7 @@ export function parseArguments(argv) {
       continue;
     }
     if (flag === "--tag" && value) {
-      tags.push(value);
+      tags.push(formatTagName(value));
       index += 1;
       continue;
     }
@@ -247,7 +262,8 @@ async function promptSearchableMultiSelect({
       const q = searchQuery.trim().toLowerCase();
       let matched = items.filter((item) => item.toLowerCase().includes(q));
       if (allowNew && q && !matched.some((item) => item.toLowerCase() === q)) {
-        matched = [...matched, `+ Add "${searchQuery.trim()}"`];
+        const formatted = formatTagName(searchQuery.trim());
+        matched = [...matched, `+ Add "${formatted}"`];
       }
       return matched;
     }
@@ -514,10 +530,11 @@ export function renderTemplate(
   { title, date, categories, tags = [], draft = true },
   slug,
 ) {
+  const formattedTags = tags.map(formatTagName);
   const renderedTags =
-    tags.length === 0
+    formattedTags.length === 0
       ? "[]"
-      : "\n" + tags.map((tag) => `  - ${JSON.stringify(tag)}`).join("\n");
+      : "\n" + formattedTags.map((tag) => `  - ${tag}`).join("\n");
 
   return template
     .replaceAll("{{TITLE}}", () => JSON.stringify(title))
@@ -529,7 +546,7 @@ export function renderTemplate(
     .replaceAll(
       "{{CATEGORIES}}",
       categories
-        .map((category) => `  - ${JSON.stringify(category)}`)
+        .map((category) => `  - ${category}`)
         .join("\n"),
     );
 }
