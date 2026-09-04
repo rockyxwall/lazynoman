@@ -32,6 +32,7 @@ draft: false
 | **Status in COO** | 856 Chapters (Completed) |
 | **Licensed** | Yes |
 | **Translation** | Completely Translated |
+| **Word Count** | ~1.62M words (853 Chapters) |
 | **Original Publisher** | Qidian |
 | **English Publisher** | Webnovel |
 | **NovelUpdates Rating** | 3.6 / 5.0 (140 votes) |
@@ -41,8 +42,324 @@ draft: false
 
 
 ## What to Expect
+The novel is easy to describe: there are no important characters except the MC, Chen Heng. The story is a pure world-hopper where he jumps from one world to another with different power systems, eventually becoming the strongest being in the novel. Side characters are introduced and forgotten as soon as their arc ends.
 
-The novel is easy to describe: there are no important characters except the MC (Chen Heng). The story is a pure world-hopper where he jumps from one world to another with different power systems, eventually becoming the strongest being in the multiverse. Side characters are introduced and forgotten as soon as their arc ends. The MC is extremely cold and calculating, focusing purely on his own gain. Whether that's the entire point of the novel or not, the story keeps you engaged because you always want to see what he does next. The pacing is very fast at the beginning, though it slows down over time. The world-building isn't particularly deep across the multiverse—each world feels disconnected with little continuity between them. Overall, it's a solid read if you want a fast-paced world-hopping novel with a ruthless, benefit-driven MC.
+Chen Heng is extremely cold and calculating, focusing purely on his own gain. Whether that emotional detachment works for you or not, the story keeps you engaged because you always want to see what he does next. The pacing starts out very fast, though it gradually slows down over time.
+
+The world-building isn't particularly deep in the novel,each realm feels disconnected with little continuity between them. Overall, it's a solid read if you want a fast-paced world-hopping novel with a ruthless, benefit-driven MC.
+
+## Should You Read This Novel?
+
+Try it out if you enjoy:
+
+- **System-Optimizer Protagonists:** Heroes who prioritize logic, efficiency, and resource management over righteousness and morality.
+- **Diverse Multiversal Arcs:** System elements layered with intense multiversal body-hopping, kingdom building, and diverse power systems.
+- **Similar Authors:** The Plagiarist (author of *Warlock of the Magus World*) or Get Lost (author of *Mystical Journey*), both known for calculating, power-driven protagonists.
+- **Similar Books:** *Warlock of the Magus World* for its cold, benefit-oriented tone and bloodline-refining system; *Mystical Journey* for its premise of soul-projection into vastly different multiversal identities; *Way of the Devil* for its points-based upgrade mechanics.
+
+
+## Some Thoughts & Status
+
+| My Reading Status | Details |
+|---|---|
+| **Start Date** | 12/05/2024 |
+| **End Date** | 06/06/2026 |
+| **Status** | Completed (853 Chapters) |
+| **Total Words** | 1,622,865 words (~1.62M) |
+| **Chapter Length** | ~1,903 words/chapter |
+| **Word Range** | 597 – 3,285 words (median: 1,875) |
+| **My Rating** | 2.9 / 5.0 Stars |
+
+I started this novel on 12/05/2024 and finished it on 06/06/2026, so it took me over two years to finish (though not in one continuous run).
+
+I originally read up to chapter 390 and dropped it because I was craving a pure cultivation setting, whereas the story kept pivoting to Western fantasy and faith-based worlds. Later, when I had nothing else to read, I picked it back up and powered through the rest in a few days.
+
+The beginning (first ~390 chapters) was great—I'd easily rate that first half **3.9 / 5.0**. But the second half felt forced, repetitive with its world-conquering loops, and the ending was unsatisfying because it felt like the prologue to a brand-new arc rather than a true conclusion. Overall, my final rating sits at **2.9 / 5.0**.
+
+## Thoughts While Reading
+
+<div id="chapter-thoughts" class="chapter-thoughts">
+
+<details>
+<summary>Chapter 390: Context (Spoiler)</summary>
+
+*In this stage of the "World of Gods," the focus shifts heavily to Chen Heng's Kobold clone, Kalunu, who is painstakingly building a civilization in the desert. The power system here is governed by the rigid mechanics of faith energy, divine authority, and the rules of ancient churches, which require a slow, logistical buildup of believers to unlock divinity. This slow-paced conflict pits the highly fertile but physically weak Kobolds against the naturally powerful, fast-moving Centaurs who rule the desert. This bureaucratic, faith-based system stands in stark contrast to the rapid, individualistic power scaling of traditional cultivation arcs.*
+
+</details>
+
+> 💭 Before this it was very good and exciting, but this world's power system I don't like at all. It's boring as hell.
+
+<details>
+<summary>Chapter 390 (Later): Context (Spoiler)</summary>
+
+*Kalunu is actively researching how to capture divine runes onto physical materials to cast healing spells without needing a Priest. He is also dealing with the complex economics of bartering sugar and paper for human slaves and refugees with local Lords, establishing a kingdom built on the systematic manipulation of beliefs, fate, and faith.*
+
+</details>
+
+> 💭 This shit I don't like—gods, beliefs, fate. I like cultivation...
+
+<details>
+<summary>Chapter 405: Context (Spoiler)</summary>
+
+*Chen Heng returns from his previous simulations to the main "World of Gods." Rather than introducing a brand-new simulation world immediately, the narrative keeps him in the same realm as his host identity, Ardim, the heir of Duke Yaru. He is forced to manage the rapid expansion of his domain and recruit more Life Knights, which initially feels like a repetitive reuse of the World of Gods setting.*
+
+</details>
+
+> 💭 Finally another simulation... Okay I think the author is trying not to create more worlds... It's the same world again... Okay sorry about that, it's getting interesting again...
+
+<details>
+<summary>Chapter 410: Context (Spoiler)</summary>
+
+*In the Kaner City manor, Chen Heng (as Ardim) deals with an arrogant noblewoman named Ella who had barged in demanding the release of her imprisoned subordinate. Instead of bowing to her high social status, Ardim calmly detains her and ruthlessly executes her rebellious subordinates to systematically harvest their souls for his Slaughter Divinity. This immediately ruins her family's commercial influence and forces her cousin, Princess Eloise, to beg for Ardim's mercy on her knees, providing a highly satisfying display of cold, absolute power.*
+
+</details>
+
+> 💭 Good good, haha that felt good.
+
+<details>
+<summary>Chapter 414: Context (Spoiler)</summary>
+
+*Chen Heng initiates a simulation in the Hollow World, a modern-society setting featuring extraordinary elements. In this world, Beastmasters are a highly respected, exceptionally rare elite who possess a specialized "telekinesis seed" within their bodies, allowing them to telekinetically control and bond with powerful magical beasts to fight.*
+
+</details>
+
+> 💭 Nice, another simulation in another world. It's a beast taming world.
+
+<details>
+<summary>Chapter 455: Context (Spoiler)</summary>
+
+*Chen Heng is working in a school slaughterhouse under a manager named Fang Yuan. He systematically slaughters hundreds of rare beasts to harvest slaughter power via his Slaughter Divinity, while also using the Heaven-Devouring Scripture to refine and evolve his Imperial Beast, a Dragon Bird named Red, from a common creature into a beast of royal lineage. Because Chen Heng uses his system to hop across multiple worlds, plundering their laws to bring back to his main body, his interface functions much more like a multi-world transmigration system than a simple simulator.*
+
+</details>
+
+> 💭 Sudden thought just now: maybe the title of the novel should be transmigration system?
+
+<details>
+<summary>Chapter 468: Context (Spoiler)</summary>
+
+*The Hollow World's elite tournament arc heavily emphasizes high-stakes arena battles where Martial Arts and Mecha interface with telekinetic powers. The matches are treated as major public spectacles backed by massive corporate conglomerates, such as the Black Dream Group, who actively sponsor young talents like Chen Heng.*
+
+</details>
+
+> 💭 Mecha!
+
+<details>
+<summary>Chapter 480: Context (Spoiler)</summary>
+
+*After returning to his home world, Chen Heng visits his family's new villa. Despite interacting with his family, the narrator consistently refers to his mother as his "predecessor’s mother." This choice highlights Chen Heng's extreme emotional detachment and strategic coldness—he views his biological family in this world as mere obligations belonging to the original owner of his host body rather than his true family.*
+
+</details>
+
+> 💭 I like how the narrator, after MC inhabits a body, calls the MC's mother "predecessor’s mother".
+
+<details>
+<summary>Chapter 483: Context (Spoiler)</summary>
+
+*The powerful Crimson Knight descends to planetary space, and local forces organize a massive welcoming ceremony. As Avril, Ferrier, and others discuss her arrival and her pursuit of Lu Yao, the text exhibits confusing machine-translation issues, constantly mixing up the pronouns "he" and "she" when describing the Crimson Knight or other key figures.*
+
+</details>
+
+> 💭 They are talking about someone who is 'she', but sometimes they use 'he' and sometimes 'she'. Translation problem?
+
+<details>
+<summary>Chapter 494: Context (Spoiler)</summary>
+
+*The Crimson Knight completely overpowers Chen Heng's defenses, piercing his host body through the chest with a crimson battle sword and reducing his body to white bones. Watching her brother sacrifice his life to buy time for the teleportation array to activate, his sister Lu Yao (who is the reincarnation of the legendary Golden King) breaks down in tears, having a dramatic flashback to how her brother had always been an outstanding genius and her lifelong protector since childhood.*
+
+</details>
+
+> 💭 So the MC has a sister who is a reincarnation of someone, and because of her enemies the MC is dying while giving her time to escape—and what does she do? A brief flashback of her brother's life achievements and crying...
+
+<details>
+<summary>Chapter 497: Context (Spoiler)</summary>
+
+*Despite the setting featuring advanced interstellar travel, space alliance battleships, and mecha technology, the local planetary economies of the Star Alliance still rely heavily on physical gold coins and metallic currency. This creates a classic, jarring world-building inconsistency where low-tech commerce persists in an advanced space-faring era.*
+
+</details>
+
+> 💭 The planet is so advanced but they use old gold coins... What about virtual currency?
+
+<details>
+<summary>Chapter 526: Context (Spoiler)</summary>
+
+*After escaping to Hechi Star, the pacing of the novel accelerates drastically. The author rapidly introduces the curse of the Oriel family, Malikado, and the internal politics of the Red Lotus Society. Because the transition scenes are skipped or summarized abruptly, the immediate context of why characters are suddenly in new positions or engaging in new conflicts is often left unexplained.*
+
+</details>
+
+> 💭 I think many scenes are not properly explained and just start with some context... It's fast-paced, but at least explain what is happening.
+
+<details>
+<summary>Chapter 556: Context (Spoiler)</summary>
+
+*The story undergoes a significant jump forward to bypass years of peaceful development. This allows the author to skip the slow process of Chen Heng's genetic research on the Oriel bloodline and Lu Yao’s desperate survival training in the wider galaxy, immediately showing them as much stronger characters.*
+
+</details>
+
+> 💭 Haha time skip, nice.
+
+<details>
+<summary>Chapter 560: Context (Spoiler)</summary>
+
+*The pacing continues to speed up as Chen Heng returns to his main body in the World of Gods. The text quickly summarizes the geopolitical changes of the last few years, including his establishment of the Hatim Kingdom and Guluo Mary's alerts about the massive desert war between the Centaurs and Kalunu’s Kobold Kingdom. This skip successfully bypasses the slow, tedious logistics of managing religious churches.*
+
+</details>
+
+> 💭 Nice, another speed up. It was getting boring in this World of Gods.
+
+<details>
+<summary>Chapter 580: Context (Spoiler)</summary>
+
+*Chen Heng, Orith, and the priests of the Nature God conduct a massive excavation in the desert ruins. They are seeking to penetrate the "God's Tomb" to retrieve a powerful demigod artifact—a golden greatsword. The narrative focuses heavily on the mechanics of divine domains, priestly spells, the Eye of Nature, and religious history, which can feel dry and unappealing compared to high-action arcs.*
+
+</details>
+
+> 💭 I really don't have any interest in this World of Gods power system. Not interested at all, boring for me. Entering a god's tomb? Treasure site? Whatever.
+
+<details>
+<summary>Chapter 583: Context (Spoiler)</summary>
+
+*Frustrated by the stagnant, faith-based progression of the World of Gods, Chen Heng utilizes his massive pool of nearly 50,000 accumulated simulation points to escape his current geopolitical bottleneck and initiate a brand-new simulation.*
+
+</details>
+
+> 💭 Next simulation yeee, hopefully it's a cultivation world.
+
+<details>
+<summary>Chapter 585: Context (Spoiler)</summary>
+
+*Chen Heng reincarnates into a brand-new cultivation world but finds his soul has projected into a literal sentient longsword covered in copper rust inside a dangerous "Sword Tomb" secret realm. Although the premise seems bizarre and unappealing at first, the unique mechanic of him using his True Spirit to inhale Gen Qi, devour other broken weapons, and systematically upgrade his own steel body quickly turns into a fascinating progression loop.*
+
+</details>
+
+> 💭 A new simulation finally. What the heck, he became a sword lol... Didn't feel interested at first... Okay, I was wrong, it's interesting.
+
+<details>
+<summary>Chapter 603: Context (Spoiler)</summary>
+
+*After undergoing his second brutal Armed Catastrophe (Lightning Tribulation) within the Sword Tomb, the sentient glazed sword undergoes a qualitative transformation, absorbing the lightning's laws. The author uses highly metaphorical, anthropomorphic prose, describing the sword as "revealing a smile" to express its spiritual satisfaction at its breakthrough, which reads as physically bizarre for a literal piece of metal.*
+
+</details>
+
+> 💭 How does a sword reveal a smile?
+
+<details>
+<summary>Chapter 637: Context (Spoiler)</summary>
+
+*To bypass centuries of dormant sitting inside the Sword Tomb and the slow cultivation of his successive sword-wielders, the narrative undergoes a massive time skip of several hundred years. This allows Chen Heng's sword body to silently accumulate divinity and witness generations of wielders rise and fall without forcing the reader through slow, repetitive years.*
+
+</details>
+
+> 💭 A very big time skip again, nice. The biggest so far.
+
+<details>
+<summary>Chapter 684: Context (Spoiler)</summary>
+
+*Chen Heng's incredibly long and fruitful simulation in the Sword Tomb cultivation world finally concludes, and his soul returns to his main body in the World of Gods, where he instantly manifests his newly plundered insights to solidify his position as the supreme King of the Hatim Kingdom.*
+
+</details>
+
+> 💭 Simulation ended, back to World of Gods.
+
+<details>
+<summary>Chapter 707: Context (Spoiler)</summary>
+
+*Kalunu (Chen Heng's Kobold clone) invades the legendary Dragon Island. Facing a colossal, ancient Giant Red Dragon that represents an invincible god-like existence to the lesser desert races, Kalunu casually unleashes his divine power and slays the beast in a single move, systematically collecting its flesh and blood to prevent any waste of high-grade genetic material.*
+
+</details>
+
+> 💭 Dragon killing with a single move...
+
+<details>
+<summary>Chapter 715: Context (Spoiler)</summary>
+
+*Kalunu merges the plundered "Mark of Divine Spark" of the fallen Dragon God into his own soul using his simulator. By doing so, he gains absolute "bloodline control" over the entire dragon race, allowing him to bypass physical warfare and command any pure-blooded dragon to surrender or obey him with a single thought, showcasing his high strategic intelligence.*
+
+</details>
+
+> 💭 The MC is smart.
+
+<details>
+<summary>Chapter 721: Context (Spoiler)</summary>
+
+*Chen Heng plans to simulate into the Great Primogenitor World, but rather than entering alone, he orchestrates a massive collective expedition. He recruits several other World of Gods deities and demigods to simulate alongside him, using them as high-profile "variables" to draw the local world's defensive attention while he quietly slips in to reincarnate as a prince.*
+
+</details>
+
+> 💭 New simulation again, but MC seems to have a plan and it's not his first time entering this world...
+
+<details>
+<summary>Chapter 728: Context (Spoiler)</summary>
+
+*Reincarnating as a prince in the Violet Empire, Chen Heng enters a world dominated by a strict "bloodline-based power system," where combatants inherit divine bloodlines of ancient progenitor gods. Although the political intrigue, royal lineage struggles, and world-building are highly polished, the lack of traditional individualistic cultivation makes it less appealing to readers who prefer standard progression fantasy.*
+
+</details>
+
+> 💭 I don't like this bloodline world, even though it's well-written compared to cultivation worlds. Personal preference.
+
+<details>
+<summary>Chapter 754: Context (Spoiler)</summary>
+
+*As Chen Heng gains power in the Primogenitor World, the plot slips back into his highly repetitive structural loop: utilizing his clones, establishing alliances, building kingdoms, and executing massive military campaigns to conquer the world and harvest its resources, leading to narrative fatigue.*
+
+</details>
+
+> 💭 Feeling boring again because the same thing is repeating with world conquering...
+
+<details>
+<summary>Chapter 767: Context (Spoiler)</summary>
+
+*While the Primogenitor World is structurally depicted as a primitive, medieval-style fantasy world of swords, bloodlines, and ancient ruins, characters suddenly utilize "screens" and "broadcast arrays" to monitor combat scenes and broadcast live battles across territories. This represents a jarring world-building clash where advanced high-tech observation methods are retrofitted into a low-development fantasy environment.*
+
+</details>
+
+> 💭 So the world is not developed, how do they have screens?...
+
+<details>
+<summary>Chapter 796: Context (Spoiler)</summary>
+
+*During a high-stakes combat scene, the author uses highly melodramatic purple prose, writing: "They were so resplendent and beautiful, yet they were also pregnant with fatal killing intent." The excessive, repetitive phrasing and bizarre word choice prompts the reader's amused and skeptical reaction.*
+
+</details>
+
+> 💭 "They were so resplendent and beautiful, yet they were also pregnant with fatal killing intent." — Really? 🐸
+
+<details>
+<summary>Chapter 835: Context (Spoiler)</summary>
+
+*Chen Heng reaches the absolute peak of Supreme Divine Power. The simulator's original points-based and talent-purchase mechanics are completely cast aside; instead, the system operates purely as a "devouring system" where he uses his divine Space of Marks to directly consume, absorb, and digest the laws, authority, and physical bodies of the ancient Progenitor Gods to achieve ultimate cosmic godhood.*
+
+</details>
+
+> 💭 His system became a devouring system...
+
+<details>
+<summary>Chapter 840: Context (Spoiler)</summary>
+
+*The author skips forward hundreds of years to summarize the aftermath of Chen Heng's ascension. Instead of detailing the tedious mechanics of building new kingdoms or managing galactic logistics, the narrative rapidly summarizes the creation of the Magic Net, the relocation of hundreds of billions of Kobolds across star systems, and his ultimate consolidation of the multiverse.*
+
+</details>
+
+> 💭 It's nice that the author time skips and summarizes.
+
+<details>
+<summary>Chapter 846 (Main Ending): Context (Spoiler)</summary>
+
+*The main story concludes with Chen Heng achieving the absolute peak of multiversal godhood, manipulating the laws of time, and setting off into the endless void of the Boundary Sea to seek his true origin. This open-ended conclusion feels highly abrupt and unresolved, leaving the reader with a sense of dissatisfaction.*
+
+</details>
+
+> 💭 The end. The story shows the start of a new journey then ends—felt a bit unsatisfied. But there are some extras, let's see what they have.
+
+<details>
+<summary>Chapter 853 (Extras): Context (Spoiler)</summary>
+
+*The final extra chapters of the novel do not act as an epilogue or resolve the open-ended cliffhanger of the main ending. Instead, they focus entirely on retrospective background histories of characters and events before the actual climax of the story, leaving the finality of the novel completely unresolved and disappointing.*
+
+</details>
+
+> 💭 Those extras were from before the end of the story... I did not like the ending.
+
+</div>
 
 ## The Analysis
 
@@ -91,157 +408,6 @@ Here are some details you might find interesting.
 * **Faith & Divinity:** Condenses mortal worship into divine authority (e.g., Slaughter Divinity) and accesses the Goddess's Magic Net. *(World: World of Gods)*
 * **Beastmastery & Mechas:** Uses Telekinesis Seeds to bond with Imperial Beasts; high-tier practitioners pilot willpower-amplified Galaxy Mechas. *(World: Star Alliance)*
 * **Bloodline Primogenitors:** Power inherited from primordial progenitor gods (Sun, Silver Moon); locked until seized via the Trial of Origins. *(World: Primogenitor World)*
-
-## Should You Read This Novel?
-
-Try it out if you enjoy:
-
-- **System-Optimizer Protagonists:** Heroes who prioritize logic, efficiency, and resource management over righteousness and morality.
-- **Diverse Multiversal Arcs:** System elements layered with intense multiversal body-hopping, kingdom building, and diverse power systems.
-- **Similar Authors:** The Plagiarist (author of *Warlock of the Magus World*) or Get Lost (author of *Mystical Journey*), both known for calculating, power-driven protagonists.
-- **Similar Books:** *Warlock of the Magus World* for its cold, benefit-oriented tone and bloodline-refining system; *Mystical Journey* for its premise of soul-projection into vastly different multiversal identities; *Way of the Devil* for its points-based upgrade mechanics.
-
-
-## Some Thoughts & Status
-
-| Reading Status | Details |
-|---|---|
-| **Start Date** | 12/05/2024 |
-| **End Date** | 06/06/2026 |
-| **Status** | Completed (853 Chapters) |
-| **My Rating** | 2.9 / 5.0 Stars |
-
-I started this novel on 12/05/2024 and finished it on 06/06/2026, so it took me over two years to finish (though not in one continuous run).
-
-I originally read up to chapter 390 and dropped it because I was craving a pure cultivation setting, whereas the story kept pivoting to Western fantasy and faith-based worlds. Later, when I had nothing else to read, I picked it back up and powered through the rest in a few days.
-
-The beginning (first ~390 chapters) was great—I'd easily rate that first half **3.9 / 5.0**. But the second half felt forced, repetitive with its world-conquering loops, and the ending was unsatisfying because it felt like the prologue to a brand-new arc rather than a true conclusion. Overall, my final rating sits at **2.9 / 5.0**.
-
-## Thoughts While Reading
-
-**Chapter 390:** *In this stage of the "World of Gods," the focus shifts heavily to Chen Heng's Kobold clone, Kalunu, who is painstakingly building a civilization in the desert. The power system here is governed by the rigid mechanics of faith energy, divine authority, and the rules of ancient churches, which require a slow, logistical buildup of believers to unlock divinity. This slow-paced conflict pits the highly fertile but physically weak Kobolds against the naturally powerful, fast-moving Centaurs who rule the desert. This bureaucratic, faith-based system stands in stark contrast to the rapid, individualistic power scaling of traditional cultivation arcs.*
-
-> 💭 **Before this it was very good and exciting, but this world's power system I don't like at all. It's boring as hell.**
-
-**Chapter 390 (Later):** *Kalunu is actively researching how to capture divine runes onto physical materials to cast healing spells without needing a Priest. He is also dealing with the complex economics of bartering sugar and paper for human slaves and refugees with local Lords, establishing a kingdom built on the systematic manipulation of beliefs, fate, and faith.*
-
-> 💭 **This shit I don't like—gods, beliefs, fate. I like cultivation...**
-
-**Chapter 405:** *Chen Heng returns from his previous simulations to the main "World of Gods." Rather than introducing a brand-new simulation world immediately, the narrative keeps him in the same realm as his host identity, Ardim, the heir of Duke Yaru. He is forced to manage the rapid expansion of his domain and recruit more Life Knights, which initially feels like a repetitive reuse of the World of Gods setting.*
-
-> 💭 **Finally another simulation... Okay I think the author is trying not to create more worlds... It's the same world again... Okay sorry about that, it's getting interesting again...**
-
-**Chapter 410:** *In the Kaner City manor, Chen Heng (as Ardim) deals with an arrogant noblewoman named Ella who had barged in demanding the release of her imprisoned subordinate. Instead of bowing to her high social status, Ardim calmly detains her and ruthlessly executes her rebellious subordinates to systematically harvest their souls for his Slaughter Divinity. This immediately ruins her family's commercial influence and forces her cousin, Princess Eloise, to beg for Ardim's mercy on her knees, providing a highly satisfying display of cold, absolute power.*
-
-> 💭 **Good good, haha that felt good.**
-
-**Chapter 414:** *Chen Heng initiates a simulation in the Hollow World, a modern-society setting featuring extraordinary elements. In this world, Beastmasters are a highly respected, exceptionally rare elite who possess a specialized "telekinesis seed" within their bodies, allowing them to telekinetically control and bond with powerful magical beasts to fight.*
-
-> 💭 **Nice, another simulation in another world. It's a beast taming world.**
-
-**Chapter 455:** *Chen Heng is working in a school slaughterhouse under a manager named Fang Yuan. He systematically slaughters hundreds of rare beasts to harvest slaughter power via his Slaughter Divinity, while also using the Heaven-Devouring Scripture to refine and evolve his Imperial Beast, a Dragon Bird named Red, from a common creature into a beast of royal lineage. Because Chen Heng uses his system to hop across multiple worlds, plundering their laws to bring back to his main body, his interface functions much more like a multi-world transmigration system than a simple simulator.*
-
-> 💭 **Sudden thought just now: maybe the title of the novel should be transmigration system?**
-
-**Chapter 468:** *The Hollow World's elite tournament arc heavily emphasizes high-stakes arena battles where Martial Arts and Mecha interface with telekinetic powers. The matches are treated as major public spectacles backed by massive corporate conglomerates, such as the Black Dream Group, who actively sponsor young talents like Chen Heng.*
-
-> 💭 **Mecha!**
-
-**Chapter 480:** *After returning to his home world, Chen Heng visits his family's new villa. Despite interacting with his family, the narrator consistently refers to his mother as his "predecessor’s mother." This choice highlights Chen Heng's extreme emotional detachment and strategic coldness—he views his biological family in this world as mere obligations belonging to the original owner of his host body rather than his true family.*
-
-> 💭 **I like how the narrator, after MC inhabits a body, calls the MC's mother "predecessor’s mother".**
-
-**Chapter 483:** *The powerful Crimson Knight descends to planetary space, and local forces organize a massive welcoming ceremony. As Avril, Ferrier, and others discuss her arrival and her pursuit of Lu Yao, the text exhibits confusing machine-translation issues, constantly mixing up the pronouns "he" and "she" when describing the Crimson Knight or other key figures.*
-
-> 💭 **They are talking about someone who is 'she', but sometimes they use 'he' and sometimes 'she'. Translation problem?**
-
-**Chapter 494:** *The Crimson Knight completely overpowers Chen Heng's defenses, piercing his host body through the chest with a crimson battle sword and reducing his body to white bones. Watching her brother sacrifice his life to buy time for the teleportation array to activate, his sister Lu Yao (who is the reincarnation of the legendary Golden King) breaks down in tears, having a dramatic flashback to how her brother had always been an outstanding genius and her lifelong protector since childhood.*
-
-> 💭 **So the MC has a sister who is a reincarnation of someone, and because of her enemies the MC is dying while giving her time to escape—and what does she do? A brief flashback of her brother's life achievements and crying...**
-
-**Chapter 497:** *Despite the setting featuring advanced interstellar travel, space alliance battleships, and mecha technology, the local planetary economies of the Star Alliance still rely heavily on physical gold coins and metallic currency. This creates a classic, jarring world-building inconsistency where low-tech commerce persists in an advanced space-faring era.*
-
-> 💭 **The planet is so advanced but they use old gold coins... What about virtual currency?**
-
-**Chapter 526:** *After escaping to Hechi Star, the pacing of the novel accelerates drastically. The author rapidly introduces the curse of the Oriel family, Malikado, and the internal politics of the Red Lotus Society. Because the transition scenes are skipped or summarized abruptly, the immediate context of why characters are suddenly in new positions or engaging in new conflicts is often left unexplained.*
-
-> 💭 **I think many scenes are not properly explained and just start with some context... It's fast-paced, but at least explain what is happening.**
-
-**Chapter 556:** *The story undergoes a significant jump forward to bypass years of peaceful development. This allows the author to skip the slow process of Chen Heng's genetic research on the Oriel bloodline and Lu Yao’s desperate survival training in the wider galaxy, immediately showing them as much stronger characters.*
-
-> 💭 **Haha time skip, nice.**
-
-**Chapter 560:** *The pacing continues to speed up as Chen Heng returns to his main body in the World of Gods. The text quickly summarizes the geopolitical changes of the last few years, including his establishment of the Hatim Kingdom and Guluo Mary's alerts about the massive desert war between the Centaurs and Kalunu’s Kobold Kingdom. This skip successfully bypasses the slow, tedious logistics of managing religious churches.*
-
-> 💭 **Nice, another speed up. It was getting boring in this World of Gods.**
-
-**Chapter 580:** *Chen Heng, Orith, and the priests of the Nature God conduct a massive excavation in the desert ruins. They are seeking to penetrate the "God's Tomb" to retrieve a powerful demigod artifact—a golden greatsword. The narrative focuses heavily on the mechanics of divine domains, priestly spells, the Eye of Nature, and religious history, which can feel dry and unappealing compared to high-action arcs.*
-
-> 💭 **I really don't have any interest in this World of Gods power system. Not interested at all, boring for me. Entering a god's tomb? Treasure site? Whatever.**
-
-**Chapter 583:** *Frustrated by the stagnant, faith-based progression of the World of Gods, Chen Heng utilizes his massive pool of nearly 50,000 accumulated simulation points to escape his current geopolitical bottleneck and initiate a brand-new simulation.*
-
-> 💭 **Next simulation yeee, hopefully it's a cultivation world.**
-
-**Chapter 585:** *Chen Heng reincarnates into a brand-new cultivation world but finds his soul has projected into a literal sentient longsword covered in copper rust inside a dangerous "Sword Tomb" secret realm. Although the premise seems bizarre and unappealing at first, the unique mechanic of him using his True Spirit to inhale Gen Qi, devour other broken weapons, and systematically upgrade his own steel body quickly turns into a fascinating progression loop.*
-
-> 💭 **A new simulation finally. What the heck, he became a sword lol... Didn't feel interested at first... Okay, I was wrong, it's interesting.**
-
-**Chapter 603:** *After undergoing his second brutal Armed Catastrophe (Lightning Tribulation) within the Sword Tomb, the sentient glazed sword undergoes a qualitative transformation, absorbing the lightning's laws. The author uses highly metaphorical, anthropomorphic prose, describing the sword as "revealing a smile" to express its spiritual satisfaction at its breakthrough, which reads as physically bizarre for a literal piece of metal.*
-
-> 💭 **How does a sword reveal a smile?**
-
-**Chapter 637:** *To bypass centuries of dormant sitting inside the Sword Tomb and the slow cultivation of his successive sword-wielders, the narrative undergoes a massive time skip of several hundred years. This allows Chen Heng's sword body to silently accumulate divinity and witness generations of wielders rise and fall without forcing the reader through slow, repetitive years.*
-
-> 💭 **A very big time skip again, nice. The biggest so far.**
-
-**Chapter 684:** *Chen Heng's incredibly long and fruitful simulation in the Sword Tomb cultivation world finally concludes, and his soul returns to his main body in the World of Gods, where he instantly manifests his newly plundered insights to solidify his position as the supreme King of the Hatim Kingdom.*
-
-> 💭 **Simulation ended, back to World of Gods.**
-
-**Chapter 707:** *Kalunu (Chen Heng's Kobold clone) invades the legendary Dragon Island. Facing a colossal, ancient Giant Red Dragon that represents an invincible god-like existence to the lesser desert races, Kalunu casually unleashes his divine power and slays the beast in a single move, systematically collecting its flesh and blood to prevent any waste of high-grade genetic material.*
-
-> 💭 **Dragon killing with a single move...**
-
-**Chapter 715:** *Kalunu merges the plundered "Mark of Divine Spark" of the fallen Dragon God into his own soul using his simulator. By doing so, he gains absolute "bloodline control" over the entire dragon race, allowing him to bypass physical warfare and command any pure-blooded dragon to surrender or obey him with a single thought, showcasing his high strategic intelligence.*
-
-> 💭 **The MC is smart.**
-
-**Chapter 721:** *Chen Heng plans to simulate into the Great Primogenitor World, but rather than entering alone, he orchestrates a massive collective expedition. He recruits several other World of Gods deities and demigods to simulate alongside him, using them as high-profile "variables" to draw the local world's defensive attention while he quietly slips in to reincarnate as a prince.*
-
-> 💭 **New simulation again, but MC seems to have a plan and it's not his first time entering this world...**
-
-**Chapter 728:** *Reincarnating as a prince in the Violet Empire, Chen Heng enters a world dominated by a strict "bloodline-based power system," where combatants inherit divine bloodlines of ancient progenitor gods. Although the political intrigue, royal lineage struggles, and world-building are highly polished, the lack of traditional individualistic cultivation makes it less appealing to readers who prefer standard progression fantasy.*
-
-> 💭 **I don't like this bloodline world, even though it's well-written compared to cultivation worlds. Personal preference.**
-
-**Chapter 754:** *As Chen Heng gains power in the Primogenitor World, the plot slips back into his highly repetitive structural loop: utilizing his clones, establishing alliances, building kingdoms, and executing massive military campaigns to conquer the world and harvest its resources, leading to narrative fatigue.*
-
-> 💭 **Feeling boring again because the same thing is repeating with world conquering...**
-
-**Chapter 767:** *While the Primogenitor World is structurally depicted as a primitive, medieval-style fantasy world of swords, bloodlines, and ancient ruins, characters suddenly utilize "screens" and "broadcast arrays" to monitor combat scenes and broadcast live battles across territories. This represents a jarring world-building clash where advanced high-tech observation methods are retrofitted into a low-development fantasy environment.*
-
-> 💭 **So the world is not developed, how do they have screens?...**
-
-**Chapter 796:** *During a high-stakes combat scene, the author uses highly melodramatic purple prose, writing: "They were so resplendent and beautiful, yet they were also pregnant with fatal killing intent." The excessive, repetitive phrasing and bizarre word choice prompts the reader's amused and skeptical reaction.*
-
-> 💭 **"They were so resplendent and beautiful, yet they were also pregnant with fatal killing intent." — Really? 🐸**
-
-**Chapter 835:** *Chen Heng reaches the absolute peak of Supreme Divine Power. The simulator's original points-based and talent-purchase mechanics are completely cast aside; instead, the system operates purely as a "devouring system" where he uses his divine Space of Marks to directly consume, absorb, and digest the laws, authority, and physical bodies of the ancient Progenitor Gods to achieve ultimate cosmic godhood.*
-
-> 💭 **His system became a devouring system...**
-
-**Chapter 840:** *The author skips forward hundreds of years to summarize the aftermath of Chen Heng's ascension. Instead of detailing the tedious mechanics of building new kingdoms or managing galactic logistics, the narrative rapidly summarizes the creation of the Magic Net, the relocation of hundreds of billions of Kobolds across star systems, and his ultimate consolidation of the multiverse.*
-
-> 💭 **It's nice that the author time skips and summarizes.**
-
-**Chapter 846 (Main Ending):** *The main story concludes with Chen Heng achieving the absolute peak of multiversal godhood, manipulating the laws of time, and setting off into the endless void of the Boundary Sea to seek his true origin. This open-ended conclusion feels highly abrupt and unresolved, leaving the reader with a sense of dissatisfaction.*
-
-> 💭 **The end. The story shows the start of a new journey then ends—felt a bit unsatisfied. But there are some extras, let's see what they have.**
-
-**Chapter 853 (Extras):** *The final extra chapters of the novel do not act as an epilogue or resolve the open-ended cliffhanger of the main ending. Instead, they focus entirely on retrospective background histories of characters and events before the actual climax of the story, leaving the finality of the novel completely unresolved and disappointing.*
-
-> 💭 **Those extras were from before the end of the story... I did not like the ending.**
 
 ## Frequently Asked Questions
 

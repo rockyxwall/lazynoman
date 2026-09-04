@@ -344,6 +344,75 @@ h2 {
 .article-body h3 {
   margin-top: 1.5rem;
 }
+.chapter-thoughts details {
+  position: relative;
+  margin: 1.5rem 0 0 0.5rem;
+  padding: 0 0 0.25rem 1.25rem;
+  background: transparent;
+  border: none;
+}
+.chapter-thoughts details::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(0.5em + 4px);
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+}
+.chapter-thoughts details summary {
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+  font-weight: 600;
+  color: var(--accent);
+  user-select: none;
+  transition: color 0.15s ease;
+}
+.chapter-thoughts details summary::-webkit-details-marker,
+.chapter-thoughts details summary::marker {
+  display: none;
+}
+.chapter-thoughts details summary::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.25rem - 3px);
+  top: 0.5em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  box-sizing: border-box;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+.chapter-thoughts details summary:hover::before {
+  transform: scale(1.2);
+}
+.chapter-thoughts details[open] summary::before {
+  background: var(--accent);
+}
+.chapter-thoughts details p {
+  margin: 0.45rem 0 0.6rem;
+  padding: 0;
+  border: none;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.chapter-thoughts blockquote {
+  margin: 0 0 1.5rem 0.5rem;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  background: transparent;
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+  color: var(--text);
+}
+.chapter-thoughts blockquote p {
+  margin: 0;
+  line-height: 1.6;
+}
 .linked-heading {
   position: relative;
 }
