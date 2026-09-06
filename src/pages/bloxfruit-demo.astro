@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/bloxfruit.css";
+---
+
+<BaseLayout
+  title="BloxFruit UI Demo - LazyNoman"
+  description="Sample UI elements inspired by Blox Fruits wiki styling for novel reviews"
+  canonical="/bloxfruit-demo/"
+>
+  <section
+    class="reading"
+    style="max-width: 860px; margin: 0 auto; padding: 2rem 1rem;"
+  >
+    <header class="article-header" style="margin-bottom: 2rem;">
+      <p class="eyebrow" style="color: var(--Rare-c); font-weight: bold;">
+        UI Experiment · Branch: bloxfruit-ui
+      </p>
+      <h1>BloxFruit UI Test Sample</h1>
+      <p class="lede">
+        Showcasing RPG status panels, rarity tier badges, and arcade buttons for
+        webnovel reviews.
+      </p>
+    </header>
+
+    <!-- 1. Editorial Callout -->
+    <div class="hatnote" style="margin-bottom: 2rem;">
+      <strong>System Alert:</strong> This preview demonstrates how wiki game-mechanic
+      styling can integrate into LazyNoman progression fantasy reviews without breaking
+      layout readability.
+    </div>
+
+    <!-- 2. Rarity Tier Badges -->
+    <div
+      style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--theme-border-color); margin-bottom: 2rem;"
+    >
+      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 1rem;">
+        1. Novel Tier / Rarity Badges
+      </h2>
+      <div
+        style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;"
+      >
+        <span
+          class="Bg(--Mythical) Bd(--Mythical) Bxsh(--Mythical) Bdrs(5px) C-Wh"
+          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
+        >
+          ★ MYTHICAL (SSS-TIER)
+        </span>
+        <span
+          class="Bg(--Legendary) Bd(--Legendary) Bxsh(--Legendary) Bdrs(5px) C-Wh"
+          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
+        >
+          ◆ LEGENDARY (S-TIER)
+        </span>
+        <span
+          class="Bg(--Rare) Bd(--Rare) Bxsh(--Rare) Bdrs(5px) C-Wh"
+          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
+        >
+          ▲ RARE (A-TIER)
+        </span>
+        <span
+          class="Bg(--Uncommon) Bd(--Uncommon) Bxsh(--Uncommon) Bdrs(5px) C-Wh"
+          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
+        >
+          ● UNCOMMON (B-TIER)
+        </span>
+        <span
+          class="Bg(--Common) Bd(--Common) Bxsh(--Common) Bdrs(5px) C-Wh"
+          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
+        >
+          ■ COMMON (C-TIER)
+        </span>
+      </div>
+    </div>
+
+    <!-- 3. Protagonist RPG System Status Window -->
+    <div
+      style="background: var(--tbl-Primary); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--main-bd-c); box-shadow: var(--main-bxsh); margin-bottom: 2rem;"
+    >
+      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 1rem;">
+        2. Protagonist System Status Card
+      </h2>
+
+      <div
+        style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;"
+      >
+        <!-- Boss / MC Box -->
+        <div
+          class="boss-box1"
+          style="width: 140px; text-align: center; padding-bottom: 8px;"
+        >
+          <div
+            class="boss-image"
+            style="width: 140px; height: 160px; background: #111a28;"
+          >
+            <img
+              src="/images/bannerbackground.webp"
+              alt="Character Avatar"
+              style="width: 100%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <p
+            style="margin: 6px 0 2px; font-size: 0.85rem; font-weight: bold; color: #facc15;"
+          >
+            Noah Osmont
+          </p>
+          <span
+            class="C(--Mythical)"
+            style="font-size: 0.75rem; font-weight: bold;">Apex Paragon</span
+          >
+        </div>
+
+        <!-- System Stats Details -->
+        <div style="flex: 1; min-width: 260px;">
+          <div
+            style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;"
+          >
+            <span class="color-currency(Fragment)">Fragments: 999,999+</span>
+            <span class="color-currency(Money)">Mana: ∞ INFINITE</span>
+            <span class="color-currency(Valor)">Dao: Slaughter & Fate</span>
+          </div>
+
+          <!-- Item / Skill Badges -->
+          <div
+            class="EventShop"
+            style="width: 100%; border-collapse: separate;"
+          >
+            <table style="width: 100%; border: none;">
+              <thead>
+                <tr>
+                  <th colspan="2" style="font-size: 1rem; text-align: left;"
+                    >Unique Cheat Ability</th
+                  >
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px;">
+                    <div class="EventShop_Item" style="margin: 0;">
+                      <div class="EventShop_Item_Name">
+                        <span style="color: #67e8f9;">Infinite Mana Engine</span
+                        >
+                      </div>
+                      <div class="EventShop_Item_Box">
+                        <span style="font-size: 0.8rem; color: #cbd5e1;"
+                          >Casts any universal tier forbidden skill with 0
+                          cooldown and 0 mana drain.</span
+                        >
+                        <div class="EventShop_Item_Price">COST: 0 MP</div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Arcade Buttons -->
+    <div
+      style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--theme-border-color); margin-bottom: 2rem;"
+    >
+      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 1rem;">
+        3. Interactive Arcade Buttons
+      </h2>
+      <div
+        style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;"
+      >
+        <button type="button" class="button1"> ▶ Read First Chapter </button>
+        <button
+          type="button"
+          class="button1"
+          style="--background-primary: #3b82f6; --button-hover: #2563eb;"
+        >
+          ★ Bookmark Review
+        </button>
+        <button
+          type="button"
+          class="codes-notifier-subscribe-button"
+          data-watched="false"
+        >
+          ⚡ System Notify
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. Navigation / Back -->
+    <div style="margin-top: 2rem; text-align: center;">
+      <a href="/" style="color: var(--theme-link-color); font-weight: 600;"
+        >← Back to LazyNoman Home</a
+      >
+    </div>
+  </section>
+</BaseLayout>
