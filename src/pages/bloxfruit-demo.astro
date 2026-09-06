@@ -1,239 +1,164 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/bloxfruit.css";
+
+const mcImage = "/images/2026/infinite-mana-in-the-apocalypse.webp";
 ---
 
 <BaseLayout
-  title="Blox Fruits Wiki UI Components - LazyNoman"
-  description="Complete showcase of all Blox Fruits wiki components and official theme background"
+  title="BloxFruit RPG Review UI Demo - LazyNoman"
+  description="Blox Fruits Wiki UI styling tailored for webnovel reviews"
   canonical="/bloxfruit-demo/"
 >
-  <div class="bloxfruit-page-wrapper">
-    <div style="max-width: 1040px; margin: 0 auto; padding: 2.5rem 1rem;">
-      <!-- Top Title Badge -->
-      <header
-        style="text-align: center; margin-bottom: 2.5rem; position: relative;"
-      >
-        <div class="bfw-header-badge" style="margin-bottom: 1rem;">
-          BLOX FRUITS WIKI UI · SYSTEM SHOWCASE
-        </div>
+  <!-- Full canvas wrapper with authentic Blox Fruits Wiki background #161714 -->
+  <div
+    style="background-color: #161714; color: #e2e8f0; min-height: 100vh; padding: 2.5rem 1rem;"
+  >
+    <main style="max-width: 920px; margin: 0 auto;">
+      <!-- Title & Eyebrow with Traffic-03 -->
+      <header style="margin-bottom: 2rem;">
         <p
-          style="color: #ffd700; font-family: Traffic-03; font-size: 1.1rem; margin: 0 0 0.5rem 0;"
+          class="Traffic-03"
+          style="color: #ffd700; font-size: 1.1rem; margin-bottom: 0.5rem; letter-spacing: 0.5px;"
         >
-          Loaded with Official Wiki Background & Local Assets
+          ★ SYSTEM INTERFACE · BLOXFRUIT RPG THEME
         </p>
-        <p style="color: #94a3b8; font-size: 0.95rem;">
-          Every component from the CSS loaded below on the authentic dark
-          background (<code>/images/bloxfruit-bg.png</code>).
+        <h1
+          class="Traffic-03"
+          style="font-size: 2.4rem; color: #ffffff; margin: 0 0 0.5rem 0;"
+        >
+          Webnovel Review RPG Components
+        </h1>
+        <p style="color: #9ca3af; font-size: 1rem;">
+          Pruned of wiki bloat (crafting/gacha). Kept high-leverage UI for
+          progression fantasy reviews.
         </p>
       </header>
 
-      <!-- 1. Editorial Alert & Chroma Text -->
-      <div class="hatnote" style="margin-bottom: 2rem;">
+      <!-- 1. Editorial Alert Box (System Notification) -->
+      <div class="hatnote" style="margin-bottom: 2.5rem;">
         <strong class="Traffic-03" style="color: #ffd700;"
           >SYSTEM NOTICE:</strong
         >
-        This demo displays all 18+ components extracted from the Blox Fruits Fandom
-        wiki stylesheets.
+        This review contains in-depth cultivation realm spoilers and power system
+        breakdowns.
         <span class="legendarychroma" style="margin-left: 8px;"
-          >★ RAINBOW CHROMA ACTIVE ★</span
+          >[VERIFIED SSS-TIER NOVEL]</span
         >
       </div>
 
-      <!-- 2. Main Notice Button -->
-      <div style="margin-bottom: 2rem;">
-        <a href="#item-cards" class="main-notice-button">
-          ⚡ CLICK TO JUMP TO AUTHENTIC WIKI ITEM CARDS ⚡
-        </a>
-      </div>
-
-      <!-- 3. Arcade Buttons -->
+      <!-- 2. Authentic BFW Arcade Buttons -->
       <section
-        style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2rem;"
+        style="background: #20201b; padding: 1.5rem; border-radius: 8px; border: 1px solid #3b3b3b; margin-bottom: 2.5rem;"
       >
         <h2
           class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
+          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
         >
-          1. Official BFW Arcade Buttons
+          1. Arcade Action Buttons
         </h2>
+        <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 1rem;">
+          High-contrast, tactile CTAs for novel links and spoiler toggles:
+        </p>
         <div
           style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;"
         >
-          <button type="button" class="bfw-button">Read Novel</button>
-          <button type="button" class="bfw-button">Tier List</button>
-          <button type="button" class="bfw-button-toggle">Spoiler Toggle</button
-          >
-          <button type="button" class="button1">Arcade Bevel Button</button>
-          <button type="button" class="codes-notifier-subscribe-button"
-            >★ Codes Subscribe</button
-          >
+          <a href="#status-window" class="bfw-button"> Read First Chapter </a>
+          <a href="#scorecard" class="bfw-button"> Jump to Verdict </a>
+          <button type="button" class="bfw-button-toggle">
+            Hide Spoilers
+          </button>
+          <button type="button" class="button1"> Bookmark Review </button>
         </div>
       </section>
 
-      <!-- 4. Authentic Item Cards (with downloaded wiki card frames) -->
+      <!-- 3. Rarity Tier Badges & Glowing Cards -->
       <section
-        id="item-cards"
-        style="background: var(--tbl-Primary); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--main-bd-c); box-shadow: var(--main-bxsh); margin-bottom: 2rem;"
+        style="background: #20201b; padding: 1.5rem; border-radius: 8px; border: 1px solid #3b3b3b; margin-bottom: 2.5rem;"
       >
         <h2
           class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 0.5rem;"
+          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
         >
-          2. Authentic Wiki Item Cards (Using Real Card Backgrounds)
+          2. Novel Rating & Tier Badges
         </h2>
-        <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 1rem;">
-          Rendered using <code>Card_Mythical.png</code>, <code
-            >Card_Legendary.png</code
-          >, etc., with <code>.card-text</code> and <code>.card-text-sup</code>:
+
+        <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 1rem;">
+          Pill tags for tier lists, recommendation cards, and article headers:
         </p>
-
         <div
-          style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center;"
+          style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem;"
         >
-          <!-- Mythical Card -->
-          <div class="card-item(Mythical)">
-            <span class="card-text-sup">V3</span>
-            <img
-              src="/images/bannerbackground.webp"
-              alt="Fruit"
-              style="width: 72px; height: 72px; object-fit: cover; border-radius: 6px;"
-            />
-            <div class="card-text">Infinite Mana</div>
-            <div class="card-text-default">MYTHICAL</div>
-          </div>
+          <span
+            class="Bg(--Mythical) Bd(--Mythical) Bxsh(--Mythical) Traffic-03"
+            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+          >
+            ★ MYTHICAL · SSS TIER
+          </span>
+          <span
+            class="Bg(--Legendary) Bd(--Legendary) Bxsh(--Legendary) Traffic-03"
+            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+          >
+            ◆ LEGENDARY · S TIER
+          </span>
+          <span
+            class="Bg(--Rare) Bd(--Rare) Bxsh(--Rare) Traffic-03"
+            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+          >
+            ▲ RARE · A TIER
+          </span>
+          <span
+            class="Bg(--Uncommon) Bd(--Uncommon) Bxsh(--Uncommon) Traffic-03"
+            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+          >
+            ● UNCOMMON · B TIER
+          </span>
+          <span
+            class="Bg(--Common) Bd(--Common) Bxsh(--Common) Traffic-03"
+            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+          >
+            ■ COMMON · C TIER
+          </span>
+        </div>
 
-          <!-- Legendary Card -->
-          <div class="card-item(Legendary)">
-            <span class="card-text-sup">Max</span>
-            <img
-              src="/images/bannerbackground.webp"
-              alt="Fruit"
-              style="width: 72px; height: 72px; object-fit: cover; border-radius: 6px;"
-            />
-            <div class="card-text">Dragon Soul</div>
-            <div class="card-text-default">LEGENDARY</div>
+        <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 0.8rem;">
+          Full Glowing Rarity Cards (For Recommended Novels):
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <div class="card-tooltips(Mythical)">
+            Infinite Mana in the Apocalypse
           </div>
-
-          <!-- Rare Card -->
-          <div class="card-item(Rare)">
-            <span class="card-text-sup">Lv. 50</span>
-            <img
-              src="/images/bannerbackground.webp"
-              alt="Fruit"
-              style="width: 72px; height: 72px; object-fit: cover; border-radius: 6px;"
-            />
-            <div class="card-text">Dao Insight</div>
-            <div class="card-text-default">RARE</div>
-          </div>
-
-          <!-- Uncommon Card -->
-          <div class="card-item(Uncommon)">
-            <img
-              src="/images/bannerbackground.webp"
-              alt="Fruit"
-              style="width: 72px; height: 72px; object-fit: cover; border-radius: 6px;"
-            />
-            <div class="card-text">Iron Body</div>
-            <div class="card-text-default">UNCOMMON</div>
-          </div>
-
-          <!-- Common Card -->
-          <div class="card-item(Common)">
-            <img
-              src="/images/bannerbackground.webp"
-              alt="Fruit"
-              style="width: 72px; height: 72px; object-fit: cover; border-radius: 6px;"
-            />
-            <div class="card-text">Qi Gathering</div>
-            <div class="card-text-default">COMMON</div>
-          </div>
+          <div class="card-tooltips(Legendary)">Fantasy Simulator</div>
+          <div class="card-tooltips(Rare)">The Innkeeper</div>
         </div>
       </section>
 
-      <!-- 5. Mini-Cards & Inventory Stock Box -->
+      <!-- 4. Protagonist RPG System Status Window -->
       <section
-        style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2rem;"
+        id="status-window"
+        style="background: #252427; padding: 1.5rem; border-radius: 8px; border: 2px solid #d5ac04; box-shadow: inset 0 0 5px 0 #ffe00059, 0 6px 20px 2px #ffe0001a; margin-bottom: 2.5rem;"
       >
         <h2
           class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
+          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1.2rem;"
         >
-          3. Mini Inventory Cards & Stock Box
-        </h2>
-        <div
-          style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;"
-        >
-          <div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0 0 6px 0;">
-              Mini Cards (Cyan hover glow):
-            </p>
-            <div style="display: flex; gap: 8px;">
-              <div class="mini-card">
-                <img
-                  src="/images/bannerbackground.webp"
-                  alt="mini"
-                  style="width: 46px; height: 46px; object-fit: cover;"
-                />
-              </div>
-              <div class="mini-card">
-                <img
-                  src="/images/bannerbackground.webp"
-                  alt="mini"
-                  style="width: 46px; height: 46px; object-fit: cover;"
-                />
-              </div>
-              <div class="mini-card">
-                <img
-                  src="/images/bannerbackground.webp"
-                  alt="mini"
-                  style="width: 46px; height: 46px; object-fit: cover;"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0 0 6px 0;">
-              Stock Box:
-            </p>
-            <div class="stock-box">
-              <span
-                class="Traffic-03"
-                style="color: #ffd700; font-size: 0.9rem;">IN STOCK:</span
-              >
-              <span class="C(--Mythical) Traffic-03">Infinite Mana (1)</span>
-              <span class="C(--Legendary) Traffic-03">Simulator (3)</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6. Boss Card Box & Event Shop -->
-      <section
-        style="background: var(--tbl-Primary); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--main-bd-c); margin-bottom: 2rem;"
-      >
-        <h2
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1.2rem;"
-        >
-          4. Boss Card Box & Event Shop Item
+          3. Protagonist System Status Card
         </h2>
 
         <div
           style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start;"
         >
-          <!-- Boss Box 1 -->
+          <!-- Boss / MC Box -->
           <div
             class="boss-box1"
-            style="width: 150px; text-align: center; padding-bottom: 10px;"
+            style="width: 160px; text-align: center; padding-bottom: 10px;"
           >
             <div
-              style="width: 150px; height: 170px; background: #0c121c; overflow: hidden;"
+              style="width: 160px; height: 180px; background: #0c121c; overflow: hidden;"
             >
               <img
-                src="/images/bannerbackground.webp"
-                alt="Boss"
+                src={mcImage}
+                alt="Noah Osmont"
                 style="width: 100%; height: 100%; object-fit: cover;"
               />
             </div>
@@ -248,32 +173,43 @@ import "../styles/bloxfruit.css";
             >
           </div>
 
-          <!-- Event Shop Item -->
+          <!-- Right Side: Stats & Skill Card -->
           <div style="flex: 1; min-width: 280px;">
+            <!-- Currencies / Stat Counters -->
+            <div
+              style="display: flex; gap: 14px; margin-bottom: 1.2rem; flex-wrap: wrap;"
+            >
+              <span class="color-currency(Money)">Mana: ∞ INFINITE</span>
+              <span class="color-currency(Fragment)">Fragments: 999,999+</span>
+              <span class="color-currency(Valor)">Dao: Slaughter & Fate</span>
+            </div>
+
+            <!-- Cheat / Skill Card -->
             <div class="EventShop" style="width: 100%;">
               <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                  <tr><th>Event Shop Item Panel</th></tr>
+                  <tr>
+                    <th style="text-align: left;">Innate Cheat Ability</th>
+                  </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td style="padding: 10px;">
+                    <td style="padding: 8px;">
                       <div class="EventShop_Item">
                         <div class="EventShop_Item_Name">
                           <span style="color: #67e8f9;"
-                            >Primordial Dao Core</span
+                            >Infinite Mana Engine</span
                           >
                         </div>
                         <div class="EventShop_Item_Box">
                           <span
-                            style="font-size: 0.85rem; color: #e2e8f0; text-align: center;"
+                            style="font-size: 0.85rem; color: #e2e8f0; text-align: center; line-height: 1.4;"
                           >
-                            Grants infinite cosmic energy and bypasses realm
-                            bottlenecks.
+                            Allows continuous casting of Universal and Cosmic
+                            forbidden spells with 0 cooldown and 0 mana
+                            exhaustion.
                           </span>
-                          <div class="EventShop_Item_Price">
-                            5,000,000 FRAGMENTS
-                          </div>
+                          <div class="EventShop_Item_Price">COST: 0 MP</div>
                         </div>
                       </div>
                     </td>
@@ -285,237 +221,66 @@ import "../styles/bloxfruit.css";
         </div>
       </section>
 
-      <!-- 7. Currency Counters & Gacha Calc Input -->
-      <section
-        style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2rem;"
-      >
+      <!-- 5. Novel Scorecard Table -->
+      <section id="scorecard" style="margin-bottom: 2.5rem;">
         <h2
           class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
+          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
         >
-          5. Currency Counters & Gacha Number Input
-        </h2>
-        <div
-          style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 1rem;"
-        >
-          <span class="color-currency(Robux)">Robux: 2,500 R$</span>
-          <span class="color-currency(Money)">Beli: $50,000,000</span>
-          <span class="color-currency(Fragment)">Fragments: 150,000 ƒ</span>
-          <span class="color-currency(Valor)">Valor: 9,999 V</span>
-        </div>
-
-        <div
-          style="display: flex; gap: 12px; align-items: center; margin-top: 1rem;"
-        >
-          <span class="Traffic-03" style="color: #e2e8f0;">Gacha Spins:</span>
-          <input type="number" min="1" max="999" value="10" />
-          <button
-            type="button"
-            class="bfw-button"
-            style="height: 32px; min-width: 80px !important;">ROLL</button
-          >
-        </div>
-      </section>
-
-      <!-- 8. Rarity Badges & Tooltip Glows -->
-      <section
-        style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2rem;"
-      >
-        <h2
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
-        >
-          6. Rarity Badges & Inset Tooltips
-        </h2>
-
-        <div
-          style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.2rem;"
-        >
-          <span
-            class="Bg(--Mythical) Bd(--Mythical) Bxsh(--Mythical) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-            >★ MYTHICAL</span
-          >
-          <span
-            class="Bg(--Legendary) Bd(--Legendary) Bxsh(--Legendary) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-            >◆ LEGENDARY</span
-          >
-          <span
-            class="Bg(--Rare) Bd(--Rare) Bxsh(--Rare) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-            >▲ RARE</span
-          >
-          <span
-            class="Bg(--Uncommon) Bd(--Uncommon) Bxsh(--Uncommon) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-            >● UNCOMMON</span
-          >
-          <span
-            class="Bg(--Common) Bd(--Common) Bxsh(--Common) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-            >■ COMMON</span
-          >
-        </div>
-
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <div class="card-tooltips(Mythical)">Mythical Inset Tooltip</div>
-          <div class="card-tooltips(Legendary)">Legendary Inset Tooltip</div>
-          <div class="card-tooltips(Rare)">Rare Inset Tooltip</div>
-          <div class="card-tooltips(Common)">Common Inset Tooltip</div>
-        </div>
-      </section>
-
-      <!-- 9. Update Log Animated Box -->
-      <section
-        style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2rem;"
-      >
-        <h2
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
-        >
-          7. Animated Pulsing Update Log Box
-        </h2>
-        <div class="update-log-container">
-          <div class="update-log-title">Update 24: Dragon Rework</div>
-          <div class="update-log-next">
-            <div class="update-log-next-event">NEXT UPDATE EVENT</div>
-            <div class="update-log-timer">02 : 14 : 58</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 10. Upgrading / Crafting Table -->
-      <section
-        style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2rem;"
-      >
-        <h2
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
-        >
-          8. Upgrading & Crafting Layout
-        </h2>
-        <div class="upgrading-container">
-          <div style="text-align: center;">
-            <div class="mini-card" style="width: 64px; height: 64px;">
-              <img
-                src="/images/bannerbackground.webp"
-                alt="base"
-                style="width: 56px; height: 56px; object-fit: cover;"
-              />
-            </div>
-            <div class="upgrading-name">Dark Blade</div>
-            <span class="upgrading-eff">+25% ATK</span>
-          </div>
-
-          <div class="upgrading-arrow">➔</div>
-
-          <div class="material-wrapper">
-            <div class="mini-card" title="Material 1">
-              <img
-                src="/images/bannerbackground.webp"
-                alt="mat"
-                style="width: 46px; height: 46px; object-fit: cover;"
-              />
-            </div>
-            <div class="mini-card" title="Material 2">
-              <img
-                src="/images/bannerbackground.webp"
-                alt="mat"
-                style="width: 46px; height: 46px; object-fit: cover;"
-              />
-            </div>
-            <div class="mini-card" title="Material 3">
-              <img
-                src="/images/bannerbackground.webp"
-                alt="mat"
-                style="width: 46px; height: 46px; object-fit: cover;"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 11. BFW Table & Roblox Wikis Table -->
-      <section style="margin-bottom: 2rem;">
-        <h2
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;"
-        >
-          9. BFW Structured Table
+          4. Novel Spec Scorecard Table
         </h2>
         <table class="bfw-table">
           <thead>
-            <tr><th colspan="2">System Novel Power Ranking Matrix</th></tr>
+            <tr>
+              <th colspan="2"
+                >Infinite Mana in the Apocalypse — Review Scorecard</th
+              >
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="width: 50%;"
-                ><div class="bfw-table-cell">
-                  <b>Cultivation Speed:</b> 100x Cheat Speed
-                </div></td
-              >
-              <td style="width: 50%;"
-                ><div class="bfw-table-cell">
-                  <b>Domain Size:</b> Universal Multiverse
-                </div></td
-              >
+              <td style="width: 50%;">
+                <div class="bfw-table-cell">
+                  <b>Progression Speed:</b> Instant Cheat / Exponential Growth
+                </div>
+              </td>
+              <td style="width: 50%;">
+                <div class="bfw-table-cell">
+                  <b>World Scope:</b> Infinite Universes & Dimensional Realms
+                </div>
+              </td>
             </tr>
             <tr>
-              <td
-                ><div class="bfw-table-cell">
-                  <b>MC Temperament:</b> Cautious / Decisive
-                </div></td
-              >
-              <td
-                ><div class="bfw-table-cell">
-                  <b>Overall Tier:</b>
-                  <span class="C(--Mythical) Traffic-03">SSS+ Masterpiece</span>
-                </div></td
-              >
+              <td>
+                <div class="bfw-table-cell">
+                  <b>Romance / Harem:</b> Conquest Focused (Zero Drama)
+                </div>
+              </td>
+              <td>
+                <div class="bfw-table-cell">
+                  <b>Final Verdict:</b>
+                  <span class="C(--Mythical) Traffic-03"
+                    >9.8 / 10 · Must Read</span
+                  >
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
-
-        <!-- Roblox Wikis Navbox -->
-        <h2
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.5rem;"
-        >
-          10. Roblox Wikis Checkered Navbox
-        </h2>
-        <div class="RobloxWikis">
-          <div class="RobloxWikis-Head">
-            <a class="RobloxWikis-HeadButton">Fruits</a>
-            <a class="RobloxWikis-HeadButton">Swords</a>
-            <a class="RobloxWikis-HeadButton">Guns</a>
-            <a class="RobloxWikis-HeadButton">Accessories</a>
-          </div>
-          <table class="RobloxWikis-TableAll">
-            <tbody>
-              <tr class="RobloxWikis-OddRow">
-                <td><b>Combat Style:</b> Godhuman</td>
-                <td><b>Weapon:</b> Cursed Dual Katana</td>
-              </tr>
-              <tr class="RobloxWikis-EvenRow">
-                <td><b>Race:</b> Cyborg V4</td>
-                <td><b>Accessory:</b> Leviathan Shield</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
-      <!-- Back link -->
-      <div style="text-align: center; margin-top: 2.5rem;">
+      <!-- Navigation link -->
+      <footer
+        style="text-align: center; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #282824;"
+      >
         <a
           href="/"
           class="Traffic-03"
-          style="color: #ffd700; font-size: 1.1rem; text-decoration: none;"
+          style="color: #ffd700; text-decoration: none; font-size: 1.1rem;"
         >
           ← Back to LazyNoman Home
         </a>
-      </div>
-    </div>
+      </footer>
+    </main>
   </div>
 </BaseLayout>
