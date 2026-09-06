@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Blox Fruits Wiki UI Design System (Unified & Self-Contained)
+   Blox Fruits Wiki UI Design System (Self-Contained with Assets)
    ========================================================================== */
 
-/* -------------------[ Local Fonts (No CORS) ]------------------- */
+/* -------------------[ Local Fonts ]------------------- */
 @font-face {
   font-family: Traffic-03;
   src: url("/fonts/TRAFFIC3.woff2") format("woff2");
@@ -27,6 +27,14 @@
   --Tsh:
     1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black,
     -1px -1px 1px black;
+
+  /* Local Card Rarity Backgrounds */
+  --Common-card-bg: url("/images/Card_Common.png");
+  --Uncommon-card-bg: url("/images/Card_Uncommon.png");
+  --Rare-card-bg: url("/images/Card_Rare.png");
+  --Legendary-card-bg: url("/images/Card_Legendary.png");
+  --Mythical-card-bg: url("/images/Card_Mythical.png");
+  --Premium-card-bg: url("/images/Card_Premium.png");
 
   /* Dropshadow Rarity */
   --Common-fil: #b3b3b340;
@@ -76,7 +84,7 @@
   --Mythical-tooltips-bxsh: #ba252799 0px 0px 10px 5px, #ba25275e;
   --Premium-tooltips-bxsh: #9c850099 0px 0px 10px 5px, #9c85005e;
 
-  /* Dark Theme Tokens (Default) */
+  /* Dark Theme Tokens */
   --main-bxsh: inset 0 0 5px 0 #ffe00059, 0 6px 20px 2px #ffe0001a;
   --main-bd: 1px solid #ffe00059;
   --main-bd-c: #d5ac04;
@@ -93,12 +101,12 @@
 
   --header-gradient: linear-gradient(90deg, #e1a937, #ead939, #e1a937);
   --header-shadow: #000000;
-  --main-bg-page: linear-gradient(#171815, #12130b);
+  --main-bg-page: #101217;
   --edit-bookmark: #171815;
 
   --tbl-Primary: #252427;
-  --tbl-Secondary: #39393d;
-  --tbl-Tertiary: #1c1c1c;
+  --tbl-Secondary: #1a1b1d;
+  --tbl-Tertiary: #151618;
   --tbl-Line: solid #3b3b3b;
   --clr-tbl-Line: solid #3b3b3b;
   --clr-tbl: solid #8a8a8a59 2px;
@@ -114,12 +122,12 @@
   --Mythical-c: #ee2f32;
   --Premium-c: #b8a32e;
 
-  --infobox-bg: #424242;
+  --infobox-bg: #282828;
 
   --event-shop-item-name-bg-color: #36454f;
   --event-shop-item-name-bd-color: #7d7f96;
-  --event-shop-item-bg-color: #3a3333;
-  --event-shop-item-bd-color: #967d7d;
+  --event-shop-item-bg-color: #272323;
+  --event-shop-item-bd-color: #665454;
 
   /* BFW Buttons */
   --bfw-btn-bg: #fdf159 50%, #fad536 50%;
@@ -132,8 +140,8 @@
 
   /* Tables */
   --bfw-table-bd: #000000;
-  --bfw-table-bg: #252621;
-  --bfw-table-cell-bg: #383935;
+  --bfw-table-bg: #1c1d1a;
+  --bfw-table-cell-bg: #2b2c28;
   --bfw-table-cell-c: #e1e1e1;
   --update-log-bg: #121415;
   --update-log-title-bg: linear-gradient(to right, #252621, #484848, #252621);
@@ -142,16 +150,57 @@
   --button-hover: #737878;
 }
 
-/* -------------------[ 2. BFW Arcade Buttons ]------------------- */
+/* -------------------[ Authentic Wiki Body Background ]------------------- */
+.bloxfruit-page-wrapper {
+  background-color: #0b0f14;
+  background-image: url("/images/bloxfruit-bg.png");
+  background-attachment: fixed;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 1920px auto;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+/* -------------------[ 2. Header Title Badge ]------------------- */
+.bfw-header-badge {
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-weight: bold;
+  border-radius: 6px;
+  display: inline-flex;
+  z-index: 1;
+  text-shadow:
+    1px 1px black,
+    -1px 1px black,
+    1px -1px black,
+    -1px -1px black,
+    -1px 2px black,
+    1px 2px black,
+    -1px 3px black,
+    1px 3px black,
+    -1px 4px black,
+    1px 4px black;
+  background: var(--header-gradient);
+  filter: drop-shadow(0 4px 0 var(--header-shadow));
+  padding: 8px 32px;
+  border: 2px solid var(--header-shadow);
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+/* -------------------[ 3. BFW Arcade Buttons ]------------------- */
 .bfw-button,
 .bfw-button-toggle {
   text-align: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 7px 16px;
-  min-height: 36px;
-  min-width: 100px !important;
+  padding: 7px 18px;
+  height: 36px;
+  min-width: 110px !important;
   cursor: pointer;
   background: linear-gradient(to bottom, var(--bfw-btn-bg));
   color: white !important;
@@ -195,9 +244,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  vertical-align: top;
   text-transform: uppercase;
-  padding: 8px 20px;
+  padding: 8px 22px;
   margin: 3px 1px;
   border-radius: 6px;
   font-style: italic;
@@ -218,109 +266,139 @@
   border-color: #ffd700;
 }
 
-/* -------------------[ 3. BFW Tables ]------------------- */
-.bfw-table {
-  margin: 1em 0;
-  border-radius: 6px;
-  border-collapse: separate !important;
-  border-spacing: 0;
-  width: 100%;
-}
-.bfw-table > * > tr > th {
+.codes-notifier-subscribe-button {
   font-family: Traffic-03, system-ui, sans-serif;
-  position: relative;
+  font-weight: bold;
+  border-radius: 6px;
+  display: inline-flex;
+  text-shadow: var(--bfw-tsh);
+  filter: drop-shadow(0 4px 0 var(--header-shadow));
+  width: fit-content;
+  padding: 6px 28px !important;
+  border: 2px solid var(--header-shadow);
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
   background: var(--header-gradient);
-  color: white !important;
-  font-size: 1.3em;
-  padding: 6px 14px;
-  text-shadow:
-    1px 1px black,
-    -1px 1px black,
-    1px -1px black,
-    -1px -1px black,
-    -1px 2px black,
-    1px 2px black,
-    -1px 3px black,
-    1px 3px black,
-    -1px 4px black,
-    1px 4px black;
-  box-shadow:
-    0 0 0 2px var(--header-shadow),
-    0px 4px 0 2px var(--header-shadow);
-  border-radius: 6px;
-  text-align: center !important;
-  line-height: 1.6;
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
 }
-.bfw-table > * > tr > td {
-  background: var(--bfw-table-bg);
-  border: 2px solid var(--bfw-table-bd);
-  border-radius: 4px;
-  padding: 8px;
-}
-.bfw-table-cell {
-  background: var(--bfw-table-cell-bg);
-  border-radius: 4px;
-  color: var(--bfw-table-cell-c);
-  padding: 10px;
-  width: 100%;
-}
-.bfw-table-cell > b {
-  color: white !important;
-  font-weight: bold;
-  text-shadow:
-    1px 1px black,
-    -1px 1px black,
-    1px -1px black,
-    -1px -1px black;
+.codes-notifier-subscribe-button:hover {
+  filter: drop-shadow(0 4px 0 var(--header-shadow)) brightness(1.1);
+  transform: scale(1.02);
 }
 
-/* -------------------[ 4. Card & Rarity System ]------------------- */
-[class*="card-tooltips"] {
-  padding: 12px 16px;
-  height: auto;
-  border-radius: 12px;
-  color: #e6e6e6;
-  font-family: Traffic-03, system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  border: solid 3.5px var(--rarity-bd);
-  background: var(--rarity-bg);
-  box-shadow: inset var(--rarity-bxsh) 0px 0px 5px 5px;
+/* -------------------[ 4. Official Wiki Item Card Template ]------------------- */
+[class*="card-item"] {
+  height: 132px;
+  width: 128px;
+  background: 0 0/128px var(--rarity-card-bg);
+  background-size: cover;
+  cursor: pointer;
   margin: 6px;
-  display: inline-block;
+  overflow: hidden;
+  padding: 4px;
+  padding-bottom: 8px;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  transition: 0.15s ease-in-out;
 }
-.card-tooltips\(Common\) {
-  --rarity-bd: var(--Common-bd);
-  --rarity-bg: var(--Common-tooltips-bg);
-  --rarity-bxsh: var(--Common-tooltips-bxsh);
-}
-.card-tooltips\(Uncommon\) {
-  --rarity-bd: var(--Uncommon-bd);
-  --rarity-bg: var(--Uncommon-tooltips-bg);
-  --rarity-bxsh: var(--Uncommon-tooltips-bxsh);
-}
-.card-tooltips\(Rare\) {
-  --rarity-bd: var(--Rare-bd);
-  --rarity-bg: var(--Rare-tooltips-bg);
-  --rarity-bxsh: var(--Rare-tooltips-bxsh);
-}
-.card-tooltips\(Legendary\) {
-  --rarity-bd: var(--Legendary-bd);
-  --rarity-bg: var(--Legendary-tooltips-bg);
-  --rarity-bxsh: var(--Legendary-tooltips-bxsh);
-}
-.card-tooltips\(Mythical\) {
-  --rarity-bd: var(--Mythical-bd);
-  --rarity-bg: var(--Mythical-tooltips-bg);
-  --rarity-bxsh: var(--Mythical-tooltips-bxsh);
-}
-.card-tooltips\(Premium\) {
-  --rarity-bd: var(--Premium-bd);
-  --rarity-bg: var(--Premium-tooltips-bg);
-  --rarity-bxsh: var(--Premium-tooltips-bxsh);
+[class*="card-item"]:hover {
+  transform: scale(1.04);
+  filter: brightness(1.15);
 }
 
-/* Boss Card Box */
+.card-item\(Common\) {
+  --rarity-card-bg: var(--Common-card-bg);
+}
+.card-item\(Uncommon\) {
+  --rarity-card-bg: var(--Uncommon-card-bg);
+}
+.card-item\(Rare\) {
+  --rarity-card-bg: var(--Rare-card-bg);
+}
+.card-item\(Legendary\) {
+  --rarity-card-bg: var(--Legendary-card-bg);
+}
+.card-item\(Mythical\) {
+  --rarity-card-bg: var(--Mythical-card-bg);
+  box-shadow: #ba25275e 0px 0px 8px 5px;
+}
+.card-item\(Premium\) {
+  --rarity-card-bg: var(--Premium-card-bg);
+  box-shadow: #9c85005e 0px 0px 8px 5px;
+}
+
+.card-text {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: white !important;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 13px;
+  filter: drop-shadow(0px 1px #000000) drop-shadow(2px 1px 0.2px #000000bf);
+  line-height: 1.2em;
+  text-align: right;
+  text-shadow: var(--bfw-tsh);
+  user-select: none;
+  max-width: 100px;
+}
+.card-text-sup {
+  color: white;
+  font-style: italic;
+  font-family: Traffic-03, system-ui, sans-serif;
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 11px;
+  text-shadow: var(--bfw-tsh);
+  user-select: none;
+}
+.card-text-default {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  font-weight: bold;
+  text-align: center;
+  background: #00000088;
+  text-shadow:
+    1px 1px 1px black,
+    -1px -1px 1px black;
+  padding: 2px 0px;
+  font-size: 11px;
+  font-family: Traffic-03, system-ui, sans-serif;
+}
+
+/* -------------------[ 5. Mini-Cards ]------------------- */
+.mini-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 56px;
+  height: 56px;
+  margin: 3px;
+  border-radius: 6px;
+  background: #182232;
+  border: 1px solid #334155;
+  transition: 0.1s linear;
+  cursor: pointer;
+}
+.mini-card:hover {
+  box-shadow:
+    inset #00ffff 0px 0px 9px -3px,
+    #00ffff 0px 0px 9px -3px;
+  filter: brightness(1.2);
+  outline: 2px solid white;
+  transform: scale(1.05);
+}
+
+/* -------------------[ 6. Boss Card Box ]------------------- */
 .boss-box1 {
   background: var(--background-primary);
   border: solid 4px #d8b74d;
@@ -338,7 +416,7 @@
     #665624 0px 4px 0;
 }
 
-/* Event Shop */
+/* -------------------[ 7. Event Shop ]------------------- */
 .EventShop {
   background: var(--tbl-Secondary);
   border: 3px solid var(--main-bd-c);
@@ -409,13 +487,16 @@
   font-family: VCR-OSD-Mono, monospace;
 }
 
-/* Currency tags */
+/* -------------------[ 8. Currency Counters ]------------------- */
 [class*="color-currency"] {
   color: var(--c_c);
   font-weight: bold;
   font-family: Traffic-03, system-ui, sans-serif;
   text-shadow: var(--bfw-tsh);
   letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .color-currency\(Robux\) {
   --c_c: #eee0a3;
@@ -430,9 +511,265 @@
   --c_c: #55ffff;
 }
 
-/* Editorial Callout */
+/* -------------------[ 9. Stock & Gacha Calc ]------------------- */
+.stock-box {
+  border-radius: 6px;
+  margin: 4px;
+  padding: 8px 16px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+  background: var(--background-primary);
+  border: var(--bd-first);
+}
+.fruit-stock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="number" i] {
+  background: var(--tbl-Secondary);
+  border: 1px solid var(--main-bd-c);
+  height: 32px;
+  width: 140px;
+  text-align: center;
+  color: var(--inverse-text);
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: VCR-OSD-Mono, monospace;
+  font-size: 15px;
+}
+
+/* -------------------[ 10. Main Notice Button ]------------------- */
+.main-notice-button {
+  background: var(--tbl-Primary);
+  border: var(--main-bd);
+  border-radius: 6px;
+  color: #ffd700;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: center;
+  padding: 8px 18px;
+  text-transform: uppercase;
+  transition: 0.2s ease-in-out;
+  text-decoration: none;
+  width: 100%;
+}
+.main-notice-button:hover {
+  background: #3b82f6;
+  border-color: #60a5fa;
+  color: white;
+}
+
+/* -------------------[ 11. Tables ]------------------- */
+.bfw-table {
+  margin: 1em 0;
+  border-radius: 6px;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  width: 100%;
+}
+.bfw-table > * > tr > th {
+  font-family: Traffic-03, system-ui, sans-serif;
+  background: var(--header-gradient);
+  color: white !important;
+  font-size: 1.3em;
+  padding: 6px 14px;
+  text-shadow:
+    1px 1px black,
+    -1px 1px black,
+    1px -1px black,
+    -1px -1px black,
+    -1px 2px black,
+    1px 2px black,
+    -1px 3px black,
+    1px 3px black,
+    -1px 4px black,
+    1px 4px black;
+  box-shadow:
+    0 0 0 2px var(--header-shadow),
+    0px 4px 0 2px var(--header-shadow);
+  border-radius: 6px;
+  text-align: center !important;
+  line-height: 1.6;
+}
+.bfw-table > * > tr > td {
+  background: var(--bfw-table-bg);
+  border: 2px solid var(--bfw-table-bd);
+  border-radius: 4px;
+  padding: 8px;
+}
+.bfw-table-cell {
+  background: var(--bfw-table-cell-bg);
+  border-radius: 4px;
+  color: var(--bfw-table-cell-c);
+  padding: 10px;
+  width: 100%;
+}
+.bfw-table-cell > b {
+  color: white !important;
+  font-weight: bold;
+  text-shadow:
+    1px 1px black,
+    -1px 1px black;
+}
+
+/* Roblox Wikis Table */
+.RobloxWikis {
+  margin-top: 1em;
+  box-shadow: 0px 0px 14px -5px var(--main-bd-c);
+  width: 100%;
+}
+.RobloxWikis-Head {
+  border: 2px solid var(--main-bd-c);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  background: #1e1e1e;
+  padding: 6px;
+  gap: 6px;
+}
+.RobloxWikis-HeadButton {
+  border: 1px solid var(--main-bd-c) !important;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 12px;
+  color: white;
+  background: #2b2b2b;
+  cursor: pointer;
+  text-decoration: none;
+}
+.RobloxWikis-HeadButton:hover {
+  background: #474747;
+  border-color: white !important;
+}
+.RobloxWikis-TableAll {
+  border: 2px solid var(--main-bd-c);
+  border-radius: 0 0 4px 4px;
+  width: 100%;
+  border-collapse: collapse;
+}
+.RobloxWikis-OddRow {
+  background: var(--tbl-Primary);
+}
+.RobloxWikis-EvenRow {
+  background: var(--tbl-Secondary);
+}
+.RobloxWikis-TableAll td {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+/* -------------------[ 12. Update Log Animated Box ]------------------- */
+.update-log-container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--update-log-bg);
+  border: 2px solid var(--bfw-table-bd);
+  border-radius: 6px;
+  color: white !important;
+  font-family: Traffic-03, system-ui, sans-serif;
+  overflow: hidden;
+  animation: update-log-anim 5s linear infinite;
+  margin: 1rem 0;
+}
+@keyframes update-log-anim {
+  50% {
+    box-shadow: 0 0 20px 0px var(--update-log-color);
+  }
+}
+.update-log-title {
+  background: var(--update-log-title-bg);
+  border-top: 2px solid var(--bfw-table-bd);
+  font-size: 20px;
+  padding: 6px 12px;
+  text-align: center;
+  text-shadow: var(--bfw-tsh);
+}
+.update-log-next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  text-shadow: var(--bfw-tsh);
+}
+.update-log-next-event {
+  min-width: 220px;
+  background: linear-gradient(
+    to right,
+    #121415,
+    var(--update-log-color),
+    var(--update-log-color),
+    #121415
+  );
+  outline: 1px solid var(--update-log-color);
+  font-size: 16px;
+  padding: 4px 20px;
+  text-align: center;
+  margin: 4px;
+}
+.update-log-timer {
+  min-width: 160px;
+  background: #383935;
+  border-radius: 4px;
+  color: #ffd700 !important;
+  margin: 0.8rem;
+  padding: 6px;
+  text-align: center;
+  font-family: VCR-OSD-Mono, monospace;
+  font-size: 18px;
+}
+
+/* -------------------[ 13. Upgrading / Crafting Grid ]------------------- */
+.upgrading-container {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr;
+  padding: 16px;
+  align-items: center;
+  background: var(--tbl-Secondary);
+  border: 2px solid var(--bfw-table-bd);
+  border-radius: 6px;
+}
+.upgrading-arrow {
+  color: #fad536;
+  text-shadow: var(--bfw-tsh);
+  font-size: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+.material-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.upgrading-name {
+  color: white;
+  font-size: 16px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: var(--bfw-tsh);
+  margin-top: 4px;
+}
+.upgrading-eff {
+  background: linear-gradient(to right, #00000001, #e3b42d55, #00000001);
+  color: #ffc500;
+  font-size: 13px;
+  padding: 2px 8px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: 1px 1px black;
+}
+
+/* -------------------[ 14. Editorial Notice & Chroma ]------------------- */
 .hatnote {
-  border-left: 4px solid var(--header-shadow, #d5ac04);
+  border-left: 4px solid var(--main-bd-c);
   padding: 8px 14px;
   border-radius: 4px;
   background: linear-gradient(
@@ -441,11 +778,41 @@
     rgba(225, 169, 55, 0) 100%
   );
   margin: 10px 0;
-  font-style: normal;
   color: #f1f5f9;
 }
 
-/* Rarity ACSS Classes */
+.legendarychroma {
+  background: linear-gradient(
+    to right,
+    #00ffff,
+    #00ff00,
+    #b3ff00,
+    #ff4d00,
+    #ff0000,
+    #00ffff,
+    #00ff00,
+    #b3ff00,
+    #ff4d00,
+    #ff0000,
+    #00ffff
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200%;
+  animation: legendarychroma 2s linear infinite;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-weight: bold;
+}
+@keyframes legendarychroma {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* -------------------[ 15. Rarity ACSS Classes ]------------------- */
 .C\(--Common\) {
   color: var(--Common-c);
 }
@@ -526,6 +893,67 @@
     inset #9c850099 0px 0px 10px 5px,
     #9c85005e 0px 0px 5px 5px,
     var(--Premium-bxsh) 0px 4px 0;
+}
+
+.card-tooltips\(Common\) {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: solid 3px var(--Common-bd);
+  background: var(--Common-tooltips-bg);
+  box-shadow: inset var(--Common-tooltips-bxsh) 0px 0px 5px 5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  color: white;
+}
+.card-tooltips\(Uncommon\) {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: solid 3px var(--Uncommon-bd);
+  background: var(--Uncommon-tooltips-bg);
+  box-shadow: inset var(--Uncommon-tooltips-bxsh) 0px 0px 5px 5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  color: white;
+}
+.card-tooltips\(Rare\) {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: solid 3px var(--Rare-bd);
+  background: var(--Rare-tooltips-bg);
+  box-shadow: inset var(--Rare-tooltips-bxsh) 0px 0px 5px 5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  color: white;
+}
+.card-tooltips\(Legendary\) {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: solid 3px var(--Legendary-bd);
+  background: var(--Legendary-tooltips-bg);
+  box-shadow: inset var(--Legendary-tooltips-bxsh) 0px 0px 5px 5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  color: white;
+}
+.card-tooltips\(Mythical\) {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: solid 3px var(--Mythical-bd);
+  background: var(--Mythical-tooltips-bg);
+  box-shadow: inset var(--Mythical-tooltips-bxsh) 0px 0px 5px 5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  color: white;
+}
+.card-tooltips\(Premium\) {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: solid 3px var(--Premium-bd);
+  background: var(--Premium-tooltips-bg);
+  box-shadow: inset var(--Premium-tooltips-bxsh) 0px 0px 5px 5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  color: white;
 }
 
 .Traffic-03 {
