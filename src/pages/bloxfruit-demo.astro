@@ -5,147 +5,198 @@ import "../styles/bloxfruit.css";
 
 <BaseLayout
   title="BloxFruit UI Demo - LazyNoman"
-  description="Sample UI elements inspired by Blox Fruits wiki styling for novel reviews"
+  description="Blox Fruits Wiki UI styling recreated locally for webnovel reviews"
   canonical="/bloxfruit-demo/"
 >
   <section
     class="reading"
-    style="max-width: 860px; margin: 0 auto; padding: 2rem 1rem;"
+    style="max-width: 900px; margin: 0 auto; padding: 2.5rem 1rem;"
   >
-    <header class="article-header" style="margin-bottom: 2rem;">
-      <p class="eyebrow" style="color: var(--Rare-c); font-weight: bold;">
-        UI Experiment · Branch: bloxfruit-ui
+    <!-- Title & Eyebrow with Traffic-03 -->
+    <header style="margin-bottom: 2rem;">
+      <p
+        class="Traffic-03"
+        style="color: #ffd700; font-size: 1.1rem; margin-bottom: 0.5rem;"
+      >
+        ★ SYSTEM INTERFACE · BRANCH: BLOXFRUIT-UI
       </p>
-      <h1>BloxFruit UI Test Sample</h1>
-      <p class="lede">
-        Showcasing RPG status panels, rarity tier badges, and arcade buttons for
-        webnovel reviews.
+      <h1
+        class="Traffic-03"
+        style="font-size: 2.4rem; color: #ffffff; margin: 0 0 0.5rem 0;"
+      >
+        Blox Fruits Wiki UI Showcase
+      </h1>
+      <p style="color: #94a3b8; font-size: 1.05rem;">
+        Recreated faithfully from Blox Fruits Wiki styles with local fonts and
+        dark theme tokens.
       </p>
     </header>
 
-    <!-- 1. Editorial Callout -->
-    <div class="hatnote" style="margin-bottom: 2rem;">
-      <strong>System Alert:</strong> This preview demonstrates how wiki game-mechanic
-      styling can integrate into LazyNoman progression fantasy reviews without breaking
-      layout readability.
+    <!-- 1. Editorial Alert Box -->
+    <div class="hatnote" style="margin-bottom: 2.5rem;">
+      <strong class="Traffic-03" style="color: #ffd700;">SYSTEM NOTICE:</strong>
+      All fonts (<code>Traffic-03</code> and <code>VCR-OSD-Mono</code>) are now
+      loaded locally. No CORS errors or missing Fandom dependencies.
     </div>
 
-    <!-- 2. Rarity Tier Badges -->
+    <!-- 2. Authentic BFW Buttons -->
     <div
-      style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--theme-border-color); margin-bottom: 2rem;"
+      style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2.5rem;"
     >
-      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 1rem;">
-        1. Novel Tier / Rarity Badges
+      <h2
+        class="Traffic-03"
+        style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
+      >
+        1. Official BFW Arcade Buttons
       </h2>
       <div
-        style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;"
+        style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;"
       >
-        <span
-          class="Bg(--Mythical) Bd(--Mythical) Bxsh(--Mythical) Bdrs(5px) C-Wh"
-          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
-        >
-          ★ MYTHICAL (SSS-TIER)
-        </span>
-        <span
-          class="Bg(--Legendary) Bd(--Legendary) Bxsh(--Legendary) Bdrs(5px) C-Wh"
-          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
-        >
-          ◆ LEGENDARY (S-TIER)
-        </span>
-        <span
-          class="Bg(--Rare) Bd(--Rare) Bxsh(--Rare) Bdrs(5px) C-Wh"
-          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
-        >
-          ▲ RARE (A-TIER)
-        </span>
-        <span
-          class="Bg(--Uncommon) Bd(--Uncommon) Bxsh(--Uncommon) Bdrs(5px) C-Wh"
-          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
-        >
-          ● UNCOMMON (B-TIER)
-        </span>
-        <span
-          class="Bg(--Common) Bd(--Common) Bxsh(--Common) Bdrs(5px) C-Wh"
-          style="padding: 4px 14px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;"
-        >
-          ■ COMMON (C-TIER)
-        </span>
+        <button type="button" class="bfw-button"> Read Novel </button>
+        <button type="button" class="bfw-button"> Tier List </button>
+        <button type="button" class="bfw-button-toggle">
+          Spoiler Hidden
+        </button>
+        <button type="button" class="button1"> Bookmark Review </button>
       </div>
     </div>
 
-    <!-- 3. Protagonist RPG System Status Window -->
+    <!-- 3. Rarity Badges & Tooltip Cards -->
     <div
-      style="background: var(--tbl-Primary); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--main-bd-c); box-shadow: var(--main-bxsh); margin-bottom: 2rem;"
+      style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--tbl-Line); margin-bottom: 2.5rem;"
     >
-      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 1rem;">
-        2. Protagonist System Status Card
+      <h2
+        class="Traffic-03"
+        style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
+      >
+        2. Rarity Tier System (Novel Power / Rating)
+      </h2>
+
+      <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 1rem;">
+        Compact rarity badges for novel reviews and recommendations:
+      </p>
+      <div
+        style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem;"
+      >
+        <span
+          class="Bg(--Mythical) Bd(--Mythical) Bxsh(--Mythical) Traffic-03"
+          style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+        >
+          ★ MYTHICAL · SSS
+        </span>
+        <span
+          class="Bg(--Legendary) Bd(--Legendary) Bxsh(--Legendary) Traffic-03"
+          style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+        >
+          ◆ LEGENDARY · S
+        </span>
+        <span
+          class="Bg(--Rare) Bd(--Rare) Bxsh(--Rare) Traffic-03"
+          style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+        >
+          ▲ RARE · A
+        </span>
+        <span
+          class="Bg(--Uncommon) Bd(--Uncommon) Bxsh(--Uncommon) Traffic-03"
+          style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+        >
+          ● UNCOMMON · B
+        </span>
+        <span
+          class="Bg(--Common) Bd(--Common) Bxsh(--Common) Traffic-03"
+          style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+        >
+          ■ COMMON · C
+        </span>
+      </div>
+
+      <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 0.8rem;">
+        Full Wiki Card Tooltips with Inset Glows:
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+        <div class="card-tooltips(Mythical)">
+          Mythical Grade: Infinite Mana System
+        </div>
+        <div class="card-tooltips(Legendary)">
+          Legendary Grade: Fantasy Simulator
+        </div>
+        <div class="card-tooltips(Rare)">Rare Grade: Innkeeper Realm</div>
+      </div>
+    </div>
+
+    <!-- 4. Protagonist System Status & Event Shop -->
+    <div
+      style="background: var(--tbl-Primary); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--main-bd-c); box-shadow: var(--main-bxsh); margin-bottom: 2.5rem;"
+    >
+      <h2
+        class="Traffic-03"
+        style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1.2rem;"
+      >
+        3. Protagonist Character Card & Skill Shop
       </h2>
 
       <div
-        style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;"
+        style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start;"
       >
         <!-- Boss / MC Box -->
         <div
           class="boss-box1"
-          style="width: 140px; text-align: center; padding-bottom: 8px;"
+          style="width: 150px; text-align: center; padding-bottom: 10px;"
         >
           <div
-            class="boss-image"
-            style="width: 140px; height: 160px; background: #111a28;"
+            style="width: 150px; height: 170px; background: #0c121c; overflow: hidden;"
           >
             <img
               src="/images/bannerbackground.webp"
-              alt="Character Avatar"
+              alt="Avatar"
               style="width: 100%; height: 100%; object-fit: cover;"
             />
           </div>
           <p
-            style="margin: 6px 0 2px; font-size: 0.85rem; font-weight: bold; color: #facc15;"
+            class="Traffic-03"
+            style="margin: 8px 0 2px; font-size: 0.95rem; color: #ffd700;"
           >
             Noah Osmont
           </p>
-          <span
-            class="C(--Mythical)"
-            style="font-size: 0.75rem; font-weight: bold;">Apex Paragon</span
+          <span class="C(--Mythical) Traffic-03" style="font-size: 0.8rem;"
+            >Apex Paragon</span
           >
         </div>
 
-        <!-- System Stats Details -->
-        <div style="flex: 1; min-width: 260px;">
+        <!-- Right Side: Stats & Skill Card -->
+        <div style="flex: 1; min-width: 280px;">
+          <!-- Currencies -->
           <div
-            style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;"
+            style="display: flex; gap: 14px; margin-bottom: 1rem; flex-wrap: wrap;"
           >
             <span class="color-currency(Fragment)">Fragments: 999,999+</span>
             <span class="color-currency(Money)">Mana: ∞ INFINITE</span>
             <span class="color-currency(Valor)">Dao: Slaughter & Fate</span>
           </div>
 
-          <!-- Item / Skill Badges -->
-          <div
-            class="EventShop"
-            style="width: 100%; border-collapse: separate;"
-          >
-            <table style="width: 100%; border: none;">
+          <!-- BFW Event Shop -->
+          <div class="EventShop" style="width: 100%;">
+            <table style="width: 100%; border-collapse: collapse;">
               <thead>
                 <tr>
-                  <th colspan="2" style="font-size: 1rem; text-align: left;"
-                    >Unique Cheat Ability</th
-                  >
+                  <th style="text-align: left;">Unique Cheat Ability</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td style="padding: 8px;">
-                    <div class="EventShop_Item" style="margin: 0;">
+                    <div class="EventShop_Item">
                       <div class="EventShop_Item_Name">
                         <span style="color: #67e8f9;">Infinite Mana Engine</span
                         >
                       </div>
                       <div class="EventShop_Item_Box">
-                        <span style="font-size: 0.8rem; color: #cbd5e1;"
-                          >Casts any universal tier forbidden skill with 0
-                          cooldown and 0 mana drain.</span
+                        <span
+                          style="font-size: 0.85rem; color: #e2e8f0; text-align: center;"
                         >
+                          Casts any forbidden universal tier skill with 0
+                          cooldown, 0 mana requirement, and instant mastery.
+                        </span>
                         <div class="EventShop_Item_Price">COST: 0 MP</div>
                       </div>
                     </div>
@@ -158,39 +209,61 @@ import "../styles/bloxfruit.css";
       </div>
     </div>
 
-    <!-- 4. Arcade Buttons -->
-    <div
-      style="background: var(--tbl-Secondary); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--theme-border-color); margin-bottom: 2rem;"
-    >
-      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 1rem;">
-        3. Interactive Arcade Buttons
-      </h2>
-      <div
-        style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;"
+    <!-- 5. BFW Wiki Table Layout -->
+    <div style="margin-bottom: 2.5rem;">
+      <h2
+        class="Traffic-03"
+        style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
       >
-        <button type="button" class="button1"> ▶ Read First Chapter </button>
-        <button
-          type="button"
-          class="button1"
-          style="--background-primary: #3b82f6; --button-hover: #2563eb;"
-        >
-          ★ Bookmark Review
-        </button>
-        <button
-          type="button"
-          class="codes-notifier-subscribe-button"
-          data-watched="false"
-        >
-          ⚡ System Notify
-        </button>
-      </div>
+        4. BFW Structured Wiki Table
+      </h2>
+      <table class="bfw-table">
+        <thead>
+          <tr>
+            <th colspan="2">System Novel Power Ranking Breakdown</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width: 50%;">
+              <div class="bfw-table-cell">
+                <b>Progression Speed:</b> Instant Cheat Unlock
+              </div>
+            </td>
+            <td style="width: 50%;">
+              <div class="bfw-table-cell">
+                <b>World Scope:</b> Infinite Realms & Dimensions
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="bfw-table-cell">
+                <b>Harem Status:</b> Non-Romance / Conquest Focused
+              </div>
+            </td>
+            <td>
+              <div class="bfw-table-cell">
+                <b>Overall Rating:</b>
+                <span class="C(--Mythical) Traffic-03"
+                  >9.8 / 10 (Masterpiece)</span
+                >
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- 5. Navigation / Back -->
-    <div style="margin-top: 2rem; text-align: center;">
-      <a href="/" style="color: var(--theme-link-color); font-weight: 600;"
-        >← Back to LazyNoman Home</a
+    <!-- Navigation link -->
+    <div style="text-align: center; margin-top: 2rem;">
+      <a
+        href="/"
+        class="Traffic-03"
+        style="color: #ffd700; text-decoration: none; font-size: 1.1rem;"
       >
+        ← Back to LazyNoman Home
+      </a>
     </div>
   </section>
 </BaseLayout>

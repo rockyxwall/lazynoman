@@ -1,111 +1,238 @@
-/* 
-==Main Navigation===
-1. Main Parameters
-	1.1 Fandom values
-		1.1.1 Page Design
-		1.1.2 Fandom's things
-	1.2 Custom values
-		1.2.1 Hover
-		1.2.2 Special things
-		1.2.3 Short / One-Time  things
-		1.2.4 Codes Notify button
-2. Mass Values
-	2.1 Standart Values
-	2.2 Special Values
-3. ACSS
-	3.1 Main ACSS
-	3.2 Rarity ACSS
-	3.3 FS ACSS
-	3.4 Another ACSS
-*/
+/* ==========================================================================
+   Blox Fruits Wiki UI Design System (Unified & Self-Contained)
+   ========================================================================== */
 
-/* Default Fallbacks for Blox Fruits Fandom Tokens */
-:root {
-  --main-bg-page: #10141d;
-  --header-gradient: linear-gradient(180deg, #2b3b55 0%, #172030 100%);
-  --header-shadow: #0b111a;
-  --edit-bookmark: #1f2a3c;
-  --theme-border-color: #2b394f;
-  --theme-page-background-color--secondary: #162030;
-  --theme-page-text-color: #e2e8f0;
-  --theme-link-color: #60a5fa;
-  --theme-accent-color: #3b82f6;
-  --theme-accent-color--rgb: 59, 130, 246;
-  --background-primary: #182232;
-  --background-gradient: linear-gradient(180deg, #1e293b, #0f172a);
-  --button-hover: #263852;
-  --bd-first: 2px solid #3b82f6;
-  --main-bd-c: #3b82f6;
-  --main-bd: 2px solid #3b82f6;
-  --main-bxsh: 0px 0px 14px -5px #3b82f6;
-  --main-bg: #111827;
-  --main-c: #ffffff;
-  --inverse-text: #ffffff;
-  --color-grey: #94a3b8;
-  --color-grey-hover: #f1f5f9;
-  --tbl-Primary: #172233;
-  --tbl-Secondary: #0f1726;
-  --tbl-Tertiary: #24344d;
-  --tbl-Line: 1px solid #24344d;
-  --event-shop-item-name-bg-color: #1a273b;
-  --event-shop-item-name-bd-color: #364e73;
-  --event-shop-item-bg-color: #0e1622;
-  --event-shop-item-bd-color: #283a54;
-  --Common-c: #cbd5e1;
-  --Common-bg: #334155, #1e293b;
-  --Common-bd: #475569;
-  --Common-bxsh: #1e293b;
-  --Common-tooltips-bxsh: #475569;
-  --Common-fil: #64748b;
-  --Uncommon-c: #4ade80;
-  --Uncommon-bg: #166534, #14532d;
-  --Uncommon-bd: #22c55e;
-  --Uncommon-bxsh: #15803d;
-  --Uncommon-tooltips-bxsh: #22c55e;
-  --Uncommon-fil: #22c55e;
-  --Rare-c: #60a5fa;
-  --Rare-bg: #1e40af, #1e3a8a;
-  --Rare-bd: #3b82f6;
-  --Rare-bxsh: #1d4ed8;
-  --Rare-tooltips-bxsh: #3b82f6;
-  --Rare-fil: #3b82f6;
-  --Legendary-c: #c084fc;
-  --Legendary-bg: #6b21a8, #581c87;
-  --Legendary-bd: #a855f7;
-  --Legendary-bxsh: #7e22ce;
-  --Legendary-tooltips-bxsh: #a855f7;
-  --Legendary-fil: #a855f7;
-  --Mythical-c: #f87171;
-  --Mythical-bg: #991b1b, #7f1d1d;
-  --Mythical-bd: #ef4444;
-  --Mythical-bxsh: #b91c1c;
-  --Mythical-tooltips-bxsh: #ef4444;
-  --Mythical-fil: #ef4444;
-  --Premium-c: #facc15;
-  --Premium-bg: #854d0e, #713f12;
-  --Premium-bd: #eab308;
-  --Premium-bxsh: #a16207;
-  --Premium-tooltips-bxsh: #eab308;
-  --Premium-fil: #eab308;
-}
-
-/* 1. Main Parameters */
-/* 1.1 Fandom values */
-/* 1.1.1 Page Design  */
-.page {
-  margin-top: 50px;
-}
-.page__main {
-  background: var(--main-bg-page);
-}
-.page-header__title-wrapper h1 {
+/* -------------------[ Local Fonts (No CORS) ]------------------- */
+@font-face {
   font-family: Traffic-03;
-  font-weight: bold;
-  position: absolute;
-  border-radius: 5px;
-  top: -35px;
-  display: flex;
-  z-index: 1;
+  src: url("/fonts/TRAFFIC3.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: VCR-OSD-Mono;
+  src: url("/fonts/VCR_OSD_Mono.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* -------------------[ 1. Root Tokens ]------------------- */
+:root {
+  --bfw-tsh:
+    1.5px 0px black, -1.5px 0px black, 0px 1.5px black, 0px -1.5px black,
+    1.5px 1.5px black, -1.5px 1.5px black, -1.5px -1.5px black,
+    1.5px -1.5px black, 1.5px 1px black, -1.5px 1px black, 1.5px -1px black,
+    -1.5px -1px black, -1px -1.5px black, 1px -1.5px black, -1px 1.5px black,
+    1px 1.5px black, -1.5px 3px black, -1px 3px black, 0px 3px black,
+    1px 3px black, 1.5px 3px black;
+  --Tsh:
+    1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black,
+    -1px -1px 1px black;
+
+  /* Dropshadow Rarity */
+  --Common-fil: #b3b3b340;
+  --Uncommon-fil: #4fc8df40;
+  --Rare-fil: #8b55fb40;
+  --Legendary-fil: #d12ddf40;
+  --Mythical-fil: #ea313140;
+  --Premium-fil: #dec22740;
+
+  /* Border Rarity */
+  --Common-bd: #b3b3b3;
+  --Uncommon-bd: #4fc8df;
+  --Rare-bd: #895bff;
+  --Legendary-bd: #d52be4;
+  --Mythical-bd: #ee2f32;
+  --Premium-bd: #dbbc00;
+
+  /* Background Rarity */
+  --Common-bg: #9e9e9e, #696969;
+  --Uncommon-bg: #3eaacf, #18698b;
+  --Rare-bg: #7b48e1, #5e37ac;
+  --Legendary-bg: #bc26c9, #951196;
+  --Mythical-bg: #d2292c, #a12022;
+  --Premium-bg: #c5a700, #957f00;
+
+  /* Box-Shadow Rarity */
+  --Common-bxsh: #3d3e3e;
+  --Uncommon-bxsh: #0c425a;
+  --Rare-bxsh: #301d5a;
+  --Legendary-bxsh: #4a0f53;
+  --Mythical-bxsh: #7d1517;
+  --Premium-bxsh: #60560d;
+
+  /* Tooltips Background Rarity */
+  --Common-tooltips-bg: #181b21e4;
+  --Uncommon-tooltips-bg: #08252ee4;
+  --Rare-tooltips-bg: #150538e4;
+  --Legendary-tooltips-bg: #240538e4;
+  --Mythical-tooltips-bg: #380505e4;
+  --Premium-tooltips-bg: #241e00e4;
+
+  /* Tooltips Box-Shadow Rarity */
+  --Common-tooltips-bxsh: #79797999 0px 0px 10px 5px, #7979795e;
+  --Uncommon-tooltips-bxsh: #3b97a899 0px 0px 10px 5px, #3b97a85e;
+  --Rare-tooltips-bxsh: #5e37ac99 0px 0px 10px 5px, #5e37ac5e;
+  --Legendary-tooltips-bxsh: #911d9b99 0px 0px 10px 5px, #911d9b5e;
+  --Mythical-tooltips-bxsh: #ba252799 0px 0px 10px 5px, #ba25275e;
+  --Premium-tooltips-bxsh: #9c850099 0px 0px 10px 5px, #9c85005e;
+
+  /* Dark Theme Tokens (Default) */
+  --main-bxsh: inset 0 0 5px 0 #ffe00059, 0 6px 20px 2px #ffe0001a;
+  --main-bd: 1px solid #ffe00059;
+  --main-bd-c: #d5ac04;
+  --main-bg: linear-gradient(#7c611db3, #20201b, #1a1a1ae6);
+  --main-c: white;
+
+  --inverse-text: #ffffff;
+  --color-grey: #d6ad0b;
+  --color-grey-hover: #f6d450;
+  --background-primary: #232225;
+  --bd-first: 2px solid #737878;
+  --background-gradient: linear-gradient(to right, #555555 20%, #3a3a3a 100%);
+  --theme-page: #121214;
+
+  --header-gradient: linear-gradient(90deg, #e1a937, #ead939, #e1a937);
+  --header-shadow: #000000;
+  --main-bg-page: linear-gradient(#171815, #12130b);
+  --edit-bookmark: #171815;
+
+  --tbl-Primary: #252427;
+  --tbl-Secondary: #39393d;
+  --tbl-Tertiary: #1c1c1c;
+  --tbl-Line: solid #3b3b3b;
+  --clr-tbl-Line: solid #3b3b3b;
+  --clr-tbl: solid #8a8a8a59 2px;
+  --Dropshadow-ds: drop-shadow(0px 0px 3px #d6ad0b);
+  --text:
+    1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black,
+    -1px -1px 1px black;
+
+  --Common-c: #b3b3b3;
+  --Uncommon-c: #5c8cd3;
+  --Rare-c: #8c52ff;
+  --Legendary-c: #d52be4;
+  --Mythical-c: #ee2f32;
+  --Premium-c: #b8a32e;
+
+  --infobox-bg: #424242;
+
+  --event-shop-item-name-bg-color: #36454f;
+  --event-shop-item-name-bd-color: #7d7f96;
+  --event-shop-item-bg-color: #3a3333;
+  --event-shop-item-bd-color: #967d7d;
+
+  /* BFW Buttons */
+  --bfw-btn-bg: #fdf159 50%, #fad536 50%;
+  --bfw-btn-bg-hover: #fff157 50%, #b39622 50%;
+  --bfw-btn-bg-active: #fff157 50%, #ffe36f 50%;
+  --bfw-btn-bxsh: #fad536;
+  --bfw-btn-bxsh-hover: #b39622;
+  --bfw-btn-bxsh-active: #ffe36f;
+  --bfw-btn-bd: #6d4300;
+
+  /* Tables */
+  --bfw-table-bd: #000000;
+  --bfw-table-bg: #252621;
+  --bfw-table-cell-bg: #383935;
+  --bfw-table-cell-c: #e1e1e1;
+  --update-log-bg: #121415;
+  --update-log-title-bg: linear-gradient(to right, #252621, #484848, #252621);
+  --update-log-color: #e1a937;
+
+  --button-hover: #737878;
+}
+
+/* -------------------[ 2. BFW Arcade Buttons ]------------------- */
+.bfw-button,
+.bfw-button-toggle {
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  min-height: 36px;
+  min-width: 100px !important;
+  cursor: pointer;
+  background: linear-gradient(to bottom, var(--bfw-btn-bg));
+  color: white !important;
+  border: 2px solid var(--bfw-btn-bd);
+  border-radius: 4px;
+  font-weight: normal;
+  font-size: 15px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: var(--bfw-tsh);
+  text-transform: capitalize;
+  box-shadow: inset 0px 0px 0px 2px var(--bfw-btn-bxsh);
+  transition: 0.1s ease-in-out;
+  user-select: none;
+  text-decoration: none !important;
+}
+.bfw-button:hover {
+  border: 2px solid var(--bfw-btn-bd);
+  background: linear-gradient(to bottom, var(--bfw-btn-bg-hover));
+  box-shadow: inset 0px 0px 0px 2px var(--bfw-btn-bxsh-hover);
+  transform: scale(1.02);
+}
+.bfw-button:active {
+  border: 2px solid var(--bfw-btn-bd);
+  background: linear-gradient(to bottom, var(--bfw-btn-bg-active));
+  box-shadow: inset 0px 0px 0px 2px var(--bfw-btn-bxsh-active);
+  transform: scale(0.98);
+}
+
+.bfw-button-toggle {
+  background: linear-gradient(to bottom, #ff7272 50%, #ff4c4d 50%);
+  border: 2px solid #83280b;
+  box-shadow: inset 0px 0px 0px 2px #ff4c4d;
+}
+.bfw-button-toggle:hover {
+  background: linear-gradient(to bottom, #ff6f74 50%, #b8393a 50%);
+  border: 2px solid #83280b;
+  box-shadow: inset 0px 0px 0px 2px #b8393a;
+}
+
+.button1 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  margin: 3px 1px;
+  border-radius: 6px;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 15px;
+  border: var(--bd-first);
+  background: var(--background-primary);
+  transition: 0.15s ease-in-out;
+  user-select: none;
+  color: white;
+  text-shadow: var(--bfw-tsh);
+}
+.button1:hover {
+  background: var(--button-hover);
+  transform: scale(1.03);
+  border-color: #ffd700;
+}
+
+/* -------------------[ 3. BFW Tables ]------------------- */
+.bfw-table {
+  margin: 1em 0;
+  border-radius: 6px;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  width: 100%;
+}
+.bfw-table > * > tr > th {
+  font-family: Traffic-03, system-ui, sans-serif;
+  position: relative;
+  background: var(--header-gradient);
+  color: white !important;
+  font-size: 1.3em;
+  padding: 6px 14px;
   text-shadow:
     1px 1px black,
     -1px 1px black,
@@ -117,327 +244,83 @@
     1px 3px black,
     -1px 4px black,
     1px 4px black;
-  background: var(--header-gradient);
-  filter: drop-shadow(0 4px 0 var(--header-shadow));
-  width: fit-content;
-  padding: 5px 40px 7px !important;
-  left: -15px;
-  border: 2px solid var(--header-shadow);
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: white;
+  box-shadow:
+    0 0 0 2px var(--header-shadow),
+    0px 4px 0 2px var(--header-shadow);
+  border-radius: 6px;
+  text-align: center !important;
+  line-height: 1.6;
 }
-.page-side-tools__wrapper {
-  top: 30px;
+.bfw-table > * > tr > td {
+  background: var(--bfw-table-bg);
+  border: 2px solid var(--bfw-table-bd);
+  border-radius: 4px;
+  padding: 8px;
 }
-.page-header__actions {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  background: var(--edit-bookmark);
-  border-radius: 10px 10px 0 0;
-  padding: 10px 5px 5px 5px;
-  margin: 10px 0 10px 10px;
-}
-.page-header__page-subtitle {
-  display: flex;
-  position: relative;
-  padding-right: 15px;
-  gap: 5px;
-}
-.DiscordIntegratorModule.rail-module {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-/* Page Design END */
-
-/* 1.1.2 Fandom's things */
-.rail-module h2:not(.wds-widget-frame__title):not(.widget-frame__title),
-.rail-module__header {
+.bfw-table-cell {
+  background: var(--bfw-table-cell-bg);
+  border-radius: 4px;
+  color: var(--bfw-table-cell-c);
+  padding: 10px;
   width: 100%;
 }
-.page-header__categories > :last-child {
-  padding-bottom: 0px !important;
-}
-.cdx-message.cdx-message--block.cdx-message--warning.mw-revision {
-  margin-top: 25px;
-}
-h1,
-h2 {
+.bfw-table-cell > b {
+  color: white !important;
+  font-weight: bold;
   text-shadow:
     1px 1px black,
     -1px 1px black,
     1px -1px black,
-    -1px -1px black,
-    -1px 2px black,
-    1px 2px black,
-    -1px 3px black,
-    1px 3px black;
-  color: white !important;
-  font-family: "Traffic-03" !important;
-  padding-left: 5px !important;
-}
-h2.rail-module__header.has-icon {
-  position: relative;
-  left: 3px;
-}
-.mw-redirectedfrom {
-  position: relative;
-  top: 20px;
-}
-.pi-secondary-background {
-  background: var(--header-gradient);
-}
-hr {
-  border: none;
-  height: 1px;
-  color: var(--theme-border-color);
-  background-color: var(--theme-border-color);
-}
-code {
-  background-color: var(--theme-page-background-color--secondary);
-  border: 1px solid var(--theme-border-color);
-  color: var(--theme-page-text-color);
-  border-radius: 2px;
-  padding: 1px 2px;
-}
-audio {
-  height: 32px;
-  display: block;
-}
-.mw-parser-output ol,
-.mw-parser-output ul {
-  margin: 6px 0 6px 36px;
-}
-.mw-parser-output p {
-  margin-top: 0.8em;
-  margin-bottom: 0.8em;
-}
-.page-content dl {
-  margin: 12px 0 6px;
-}
-.ooui-theme-fandomooui .wikitable * > tr > th {
-  padding: 0.2em 0.4em;
-}
-.mw-collapsible-toggle {
-  font-weight: normal;
-  text-align: right;
-}
-.bfw-navbox .mw-collapsible-toggle {
-  width: 6em;
-}
-.collapse-center {
-  float: left;
-  text-align: left;
-  width: 6em;
-}
-.gallery-image-wrapper,
-.pi-image-thumbnail,
-.fruit-stock img {
-  transition: 0.15s ease-in-out;
-}
-.gallery-image-wrapper:hover,
-.fruit-stock img:hover {
-  transform: scale(1.02);
-  filter: brightness(1.1) saturate(1.1);
-  transition: 0.15s ease-out;
-}
-.pi-image-thumbnail:hover {
-  filter: brightness(1.1) saturate(1.1);
-  transition: 0.15s ease-out;
-}
-.wds-tab__content > .article-table {
-  margin-top: 0;
-}
-.rail-module.recent-images-module .wds-widget-frame {
-  max-width: 100% !important;
-}
-.mw-templatedata-doc-param-alias {
-  color: #919191;
-}
-.ve-ui-mwTwoPaneTransclusionDialogLayout-stackLayout
-  .oo-ui-textInputWidget.oo-ui-widget-enabled
-  .oo-ui-inputWidget-input {
-  color: revert-layer;
-}
-.wds-modal__title {
-  padding: 0 24px !important;
-}
-/* ---------------[ Tooltip ]--------------- */
-.main-tooltip {
-  display: initial;
-  background: initial;
-  border: initial;
-  box-shadow: initial;
-}
-/* ---------------[ Infobox ]--------------- */
-body > .main-container .wds-tabs__wrapper {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  flex-wrap: wrap;
-  margin-left: 0 !important;
-}
-aside.portable-infobox .wds-tabs {
-  width: 100%;
-  text-align: center;
-}
-aside.portable-infobox .wds-tabs__tab {
-  flex-grow: 1;
-  background: var(--infobox-bg);
-}
-aside.portable-infobox .pi-header {
-  background: var(--infobox-bg);
-}
-.theme-fandomdesktop-light
-  aside.portable-infobox
-  h2.pi-header.pi-secondary-font.pi-item-spacing.pi-secondary-background {
-  color: #3a3a3abf;
-}
-.page-content .portable-infobox ol,
-.page-content .portable-infobox ul {
-  margin: 0 !important;
-}
-/* Fandom's things END */
-/* Fandom values END */
-
-/* 1.2 Custom values */
-/* 1.2.1 Hover */
-/* ---------------[ Just Hover ]--------------- */
-.highlighted-on-hover {
-  transition: 0.2s ease-in-out !important;
-}
-.highlighted-on-hover:hover {
-  transform: scale(1.05);
-  transition: 0.2s ease-out;
-}
-/* ---------------[ Buttons ]--------------- */
-.button1 {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: top;
-  text-transform: uppercase;
-  padding: 7px 18px;
-  margin: 3px 1px;
-  border-radius: 5px;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.15px;
-  line-height: 16px;
-  border: var(--bd-first);
-  background: var(--background-primary);
-  transition: 0.15s ease-in-out;
-  user-select: none;
-  color: white;
-  paint-order: stroke;
-  -webkit-text-stroke: 0.2em black;
-}
-.button1:hover {
-  background: var(--button-hover);
-  transform: scale(1.03);
-  transition: 0.15s linear;
-}
-.button1:active:hover {
-  filter: brightness(0.85);
-  transform: scale(1.015);
-}
-/* Hover END */
-
-/* 1.2.2 Colors */
-.text-black {
-  color: black;
-}
-.text-white {
-  color: white;
-}
-.text-gray {
-  color: gray;
+    -1px -1px black;
 }
 
-.text-red {
-  color: red;
-}
-.text-orange {
-  color: orange;
-}
-.text-yellow {
-  color: yellow;
-}
-.text-lime {
-  color: lime;
-}
-.text-green {
-  color: green;
-}
-.text-cyan {
-  color: cyan;
-}
-.text-blue {
-  color: blue;
-}
-.text-purple {
-  color: purple;
-}
-.text-pink {
-  color: pink;
-}
-
-/* Color END */
-
-/* 1.2.2 Special things */
-/* -------------------[ Font ]------------------- */
-@font-face {
-  font-family: Traffic-03;
-  src: url("https://static.wikia.nocookie.net/roblox-blox-piece/images/0/0d/TRAFFIC3.woff2/revision/latest?cb=20250422143904&format=original")
-    format("woff2");
-}
-@font-face {
-  font-family: VCR-OSD-Mono;
-  src: url("https://static.wikia.nocookie.net/roblox-blox-piece/images/d/de/VCR_OSD_Mono.woff2/revision/latest?cb=20250518154317&format=original")
-    format("woff2");
-}
-
-/* ---------------[ GIF Showcase ]--------------- */
-.gif-showcase-list {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  justify-content: center;
-  align-items: center;
-  margin-left: 5px;
-}
-.gif-showcase-container {
-  margin: 9px;
-  transition: 0.2s ease-in-out;
-}
-.gif-showcase-container:hover {
-  transform: scale(1.02);
-  transition: 0.2s ease-out;
-}
-.gif-showcase-container span {
-  overflow: hidden;
-  z-index: 1;
-}
-.gif-showcase-container span:nth-child(2) > a > img {
-  border-radius: 8px;
-}
-.gif-showcase-container span:first-child {
-  filter: blur(7px) brightness(2) saturate(2);
-  will-change: transform;
-  position: absolute;
-}
-.gif-showcase-container span:nth-child(2) {
-  position: relative;
-}
-/* ---------------[ Boss Template ]--------------- */
-.boss-box {
+/* -------------------[ 4. Card & Rarity System ]------------------- */
+[class*="card-tooltips"] {
+  padding: 12px 16px;
+  height: auto;
+  border-radius: 12px;
+  color: #e6e6e6;
+  font-family: Traffic-03, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  border: solid 3.5px var(--rarity-bd);
+  background: var(--rarity-bg);
+  box-shadow: inset var(--rarity-bxsh) 0px 0px 5px 5px;
+  margin: 6px;
   display: inline-block;
-  margin: 10px;
-  cursor: pointer;
 }
+.card-tooltips\(Common\) {
+  --rarity-bd: var(--Common-bd);
+  --rarity-bg: var(--Common-tooltips-bg);
+  --rarity-bxsh: var(--Common-tooltips-bxsh);
+}
+.card-tooltips\(Uncommon\) {
+  --rarity-bd: var(--Uncommon-bd);
+  --rarity-bg: var(--Uncommon-tooltips-bg);
+  --rarity-bxsh: var(--Uncommon-tooltips-bxsh);
+}
+.card-tooltips\(Rare\) {
+  --rarity-bd: var(--Rare-bd);
+  --rarity-bg: var(--Rare-tooltips-bg);
+  --rarity-bxsh: var(--Rare-tooltips-bxsh);
+}
+.card-tooltips\(Legendary\) {
+  --rarity-bd: var(--Legendary-bd);
+  --rarity-bg: var(--Legendary-tooltips-bg);
+  --rarity-bxsh: var(--Legendary-tooltips-bxsh);
+}
+.card-tooltips\(Mythical\) {
+  --rarity-bd: var(--Mythical-bd);
+  --rarity-bg: var(--Mythical-tooltips-bg);
+  --rarity-bxsh: var(--Mythical-tooltips-bxsh);
+}
+.card-tooltips\(Premium\) {
+  --rarity-bd: var(--Premium-bd);
+  --rarity-bg: var(--Premium-tooltips-bg);
+  --rarity-bxsh: var(--Premium-tooltips-bxsh);
+}
+
+/* Boss Card Box */
 .boss-box1 {
   background: var(--background-primary);
   border: solid 4px #d8b74d;
@@ -446,21 +329,20 @@ aside.portable-infobox .pi-header {
     #d8b74d55 0px 0px 5px 5px,
     #665624 0px 4px 0;
   overflow: hidden;
+  transition: 0.2s ease-in-out;
 }
-.boss-image {
-  position: relative;
-  width: 120px;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.boss-box1:hover {
+  transform: scale(1.02);
+  box-shadow:
+    #ffd70088 0px 0px 10px 6px,
+    #665624 0px 4px 0;
 }
 
-/* ---------------[ Event Shop ]--------------- */
+/* Event Shop */
 .EventShop {
   background: var(--tbl-Secondary);
   border: 3px solid var(--main-bd-c);
-  border-radius: 4px;
+  border-radius: 6px;
   border-spacing: 5px;
   box-shadow:
     0px 0px 14px -5px var(--main-bd-c),
@@ -470,8 +352,10 @@ aside.portable-infobox .pi-header {
 .EventShop > * > tr > th {
   background: var(--header-gradient);
   color: var(--main-c);
-  padding: 4px 12px;
-  font-size: 1.4em;
+  padding: 6px 14px;
+  font-size: 1.2em;
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: var(--bfw-tsh);
 }
 .EventShop_Item {
   align-items: center;
@@ -480,34 +364,23 @@ aside.portable-infobox .pi-header {
   flex-direction: column;
   border-radius: 4px;
   box-shadow: 0px 2px #282525;
-  margin-bottom: 2px;
-  transition: 0.2s ease-in-out;
+  margin-bottom: 4px;
+  transition: 0.15s ease-in-out;
 }
 .EventShop_Item:hover {
-  filter: brightness(0.85);
-  transform: scale(1.03);
-  transition: 0.2s ease-out;
-}
-.EventShop_Item:active {
-  transform: scale(1.01);
+  filter: brightness(1.1);
+  transform: scale(1.02);
 }
 .EventShop_Item_Name {
   background: var(--event-shop-item-name-bg-color);
   border: solid 2px var(--event-shop-item-name-bd-color);
   border-radius: 4px 4px 0 0;
   font-weight: bold;
-  padding: 2px 6px;
+  padding: 4px 8px;
   text-align: center;
   width: 100%;
-  paint-order: stroke;
-  -webkit-text-stroke: 0.2em black;
-}
-
-.EventShop_Item_Name > a {
-  color: #b2cce3;
-}
-.EventShop_Item_Name > a:hover {
-  color: #bee9ff;
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: var(--bfw-tsh);
 }
 .EventShop_Item_Box {
   align-items: center;
@@ -520,26 +393,29 @@ aside.portable-infobox .pi-header {
   flex-direction: column;
   font-weight: bold;
   gap: 4px;
-  padding: 3px 12px 6px;
+  padding: 6px 12px;
   width: 100%;
 }
 .EventShop_Item_Price {
   background: #00000080;
-  border-radius: 2px;
+  border-radius: 3px;
   text-align: center;
   text-shadow:
     1px 1px 1px black,
-    -1px 1px 1px black,
-    1px -1px 1px black,
-    -1px -1px 1px black;
+    -1px 1px 1px black;
   width: 100%;
+  padding: 2px 4px;
+  color: #ffd700;
+  font-family: VCR-OSD-Mono, monospace;
 }
-/* ---------------[ Currency Template ]--------------- */
+
+/* Currency tags */
 [class*="color-currency"] {
   color: var(--c_c);
   font-weight: bold;
-  paint-order: stroke;
-  -webkit-text-stroke: 0.2em black;
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: var(--bfw-tsh);
+  letter-spacing: 0.5px;
 }
 .color-currency\(Robux\) {
   --c_c: #eee0a3;
@@ -554,715 +430,41 @@ aside.portable-infobox .pi-header {
   --c_c: #55ffff;
 }
 
-/* ---------------[ Gacha Calc ]--------------- */
-input[type="number" i] {
-  background: var(--tbl-Secondary);
-  border: none;
-  height: 30px;
-  width: 150px;
-  text-align: center;
-  color: var(--inverse-text);
-  border-radius: 5px;
-  font-weight: 500;
-  padding: 0px 5px;
-}
-
-.result {
-  padding: 10px 0 5px;
-}
-/* ---------------[ Stock ]--------------- */
-.stock-box {
-  border-radius: 5px;
-  margin: 3px 1px;
-  padding: 6px 12px;
-  width: fit-content;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  column-gap: 7px;
-  background: var(--background-primary);
-  border: var(--bd-first);
-}
-.fruit-stock {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-.empty-stock {
-  margin: 1em;
-  margin-left: 1.4em;
-}
-/* ---------------[ Home Page ]--------------- */
-.main-notice-list {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 12px;
-  margin-bottom: 6px;
-}
-.main-notice-button {
-  background: var(--tbl-Primary);
-  border: var(--main-bd);
-  border-radius: 5px;
-  box-sizing: border-box;
-  color: var(--theme-link-color);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  justify-content: center;
-  letter-spacing: 0.15px;
-  line-height: 16px;
-  margin: 0;
-  min-height: 18px;
-  padding: 7px 18px;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition-duration: 0.3s;
-  transition-property: background-color, border-color, color;
-  user-select: none;
-  vertical-align: top;
-  width: 100%;
-}
-.main-notice-button:hover {
-  background-color: var(--theme-accent-color);
-  border-color: var(--theme-accent-color);
-  color: white;
-}
-.main-nav-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
-}
-.main-nav-subcontainer {
-  display: flex;
-  gap: 8px;
-}
-.main-nav-container img {
-  border: 2px solid var(--main-bd-c);
-  border-radius: 4px;
-  box-shadow:
-    0px 0px 14px -5px var(--main-bd-c),
-    inset 0px 0px 14px -5px var(--main-bd-c);
-  transition: 0.2s ease-in-out;
-}
-.main-nav-container img:hover {
-  border-color: white;
-  box-shadow:
-    0px 0px 14px -5px #00ffff,
-    inset 0px 0px 14px -5px #00ffff;
-  filter: brightness(1.15);
-  transition: 0.2s ease-out;
-}
-.main-discord-widget {
-  padding: 5px 5px 0px 5px;
-  border: 2px solid #5865f2;
-  border-radius: 4px;
-  box-shadow:
-    inset 0 0 15px 0 #5865f2a1,
-    0 6px 20px 2px #5865f236;
-  text-align: center;
-  margin-top: 1em;
-}
-.social-media-container {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  width: 250px;
-  justify-content: center;
-}
-.social-media-button {
-  background: var(--header-gradient);
-  border: 2px solid var(--main-bd-c);
-  border-radius: 12px;
-  box-shadow:
-    0px 0px 14px -5px var(--main-bd-c),
-    inset 0px 0px 14px -5px var(--main-bd-c);
-  overflow: hidden;
-}
-.social-media-app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.social-media-app img {
-  background: var(--header-gradient);
-  border: 2px solid var(--main-bd-c);
-  border-radius: 12px;
-  box-shadow:
-    0px 0px 14px -5px var(--main-bd-c),
-    inset 0px 0px 14px -5px var(--main-bd-c);
-  overflow: hidden;
-  transition: 0.2s ease-in-out;
-}
-.social-media-app:hover img {
-  border-color: white;
-  background: white;
-  transition: 0.2s ease-out;
-}
-.social-media-app:hover b {
-  color: var(--inverse-text);
-  transition: 0.2s ease-out;
-}
-a:has(.social-media-app):hover {
-  text-decoration: none;
-}
-/* --------------[ Roblox Wikis ]-------------- */
-.RobloxWikis {
-  margin-top: 1em;
-  box-shadow: 0px 0px 14px -5px var(--main-bd-c);
-}
-.RobloxWikis-Head {
-  border: 2px solid var(--main-bd-c);
-  border-bottom: none;
-  border-radius: 4px 4px 0 0;
-  border-spacing: 0;
-  flex-wrap: wrap !important;
-}
-.RobloxWikis-HeadButton {
-  border: 1px solid var(--main-bd-c) !important;
-  border-radius: 4px;
-  box-shadow:
-    0px 0px 14px -5px var(--main-bd-c),
-    inset 0px 0px 14px -5px var(--main-bd-c);
-  transition: 0.2s ease-in-out;
-}
-.RobloxWikis-HeadButton:hover {
-  background: #474747;
-  border-color: white !important;
-  box-shadow:
-    0px 0px 14px -5px #00ffff,
-    inset 0px 0px 14px -5px #00ffff;
-  transition: 0.2s ease-out;
-}
-.RobloxWikis-TableAll {
-  border-left: 2px solid var(--main-bd-c);
-  border-bottom: 2px solid var(--main-bd-c);
-  border-right: 2px solid var(--main-bd-c);
-  border-radius: 0 0 4px 4px;
-  color: var(--theme-page-text-color);
-}
-.RobloxWikis-TableAll a > span {
-  color: var(--theme-color-link) !important;
-}
-.RobloxWikis-TableAll a > span:hover {
-  color: var(--theme-color-link-hover) !important;
-}
-.RobloxWikis-OddRow {
-  background: var(--tbl-Primary);
-}
-.RobloxWikis-EvenRow {
-  background: var(--tbl-Secondary);
-}
-
-/* Special things END */
-
-/* 1.2.3 Short / One-Time  things */
-/* ---------------[ Short Info ]--------------- */
+/* Editorial Callout */
 .hatnote {
-  border-left: 3px solid var(--theme-accent-color);
-  padding: 3px 10px;
-  border-radius: 3px;
+  border-left: 4px solid var(--header-shadow, #d5ac04);
+  padding: 8px 14px;
+  border-radius: 4px;
   background: linear-gradient(
     90deg,
-    rgba(var(--theme-accent-color--rgb), 0.15) 0%,
-    rgba(var(--theme-accent-color--rgb), 0) 100%
+    rgba(225, 169, 55, 0.18) 0%,
+    rgba(225, 169, 55, 0) 100%
   );
-  margin: 5px 0;
-  font-style: italic;
-}
-/* ---------------[ Change History Template ]--------------- */
-.change-history {
-  overflow: auto;
-  max-height: 300px;
-  padding: 0.5em;
-  box-sizing: border-box;
-  border-radius: 4px;
-  border: 1px solid var(--theme-border-color);
-}
-/* ---------------[ Updates Template ]--------------- */
-.update-box {
-  width: 100%;
-  padding: 8px;
-  border-radius: 0 0 4px 4px;
-  border: 1px solid var(--theme-border-color);
-}
-.update-header {
-  display: flex;
-  justify-content: space-between;
-}
-/* ---------------[ Mobile Width ]--------------- */
-[class*="Maw"] {
-  max-width: calc(var(--Maw-px) * 1px);
-  max-width: calc(var(--Maw-pr) * 1%);
-}
-[class*="Miw"] {
-  min-width: calc(var(--Miw-px) * 1px);
-  min-width: calc(var(--Miw-pr) * 1%);
-}
-/* ---------------[ Gif Size ]--------------- */
-[class*="gif-size"] {
-  aspect-ratio: auto 180 / 180;
-  width: var(--percent);
-  height: auto;
-  max-width: 15em;
-}
-/* ---------------[ no Max Height/Width ]--------------- */
-.noMah {
-  max-height: none;
-}
-.noMaw {
-  max-width: none;
-}
-.noMaw_Mah {
-  max-height: none;
-  max-width: none;
+  margin: 10px 0;
+  font-style: normal;
+  color: #f1f5f9;
 }
 
-/* ---------------[ Other Stuff ]--------------- */
-.Outline-B {
-  paint-order: stroke;
-  -webkit-text-stroke: 0.2em black;
-}
-.Outline-W {
-  paint-order: stroke;
-  -webkit-text-stroke: 0.2em white;
-}
-.text-center {
-  text-align: center;
-}
-.article-table.text-center th {
-  text-align: center;
-}
-.nowrap {
-  white-space: nowrap;
-}
-.noDecorationn,
-.noDecoration a {
-  text-decoration: none !important;
-}
-.bfw-tsh {
-  text-shadow: var(--bfw-tsh);
-}
-.Traffic-03 {
-  font-family: Traffic-03;
-}
-
-/* ---------------[ Codes Notifier button ]--------------- */
-.codes-notifier-subscribe-button {
-  font-family: Traffic-03;
-  font-weight: bold;
-  border-radius: 5px;
-  display: flex;
-  z-index: 1;
-  text-shadow:
-    1px 1px black,
-    -1px 1px black,
-    1px -1px black,
-    -1px -1px black,
-    -1px 2px black,
-    1px 2px black,
-    -1px 3px black,
-    1px 3px black,
-    -1px 4px black,
-    1px 4px black;
-  filter: drop-shadow(0 4px 0 var(--header-shadow));
-  width: fit-content;
-  padding: 5px 40px 7px !important;
-  border: 2px solid var(--header-shadow);
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: white;
-}
-
-.codes-notifier-subscribe-button[data-watched="false"] {
-  background: var(--header-gradient);
-}
-
-.codes-notifier-subscribe-button[data-watched="true"] {
-  background: linear-gradient(to bottom, #c2c2c2 50%, #848484 50%);
-}
-
-/* ---------------[ Some Trash ]--------------- */
-.legendarychroma {
-  background: linear-gradient(
-    to right,
-    #00ffff,
-    #00ff00,
-    #b3ff00,
-    #ff4d00,
-    #ff0000,
-    #00ffff,
-    #00ff00,
-    #b3ff00,
-    #ff4d00,
-    #ff0000,
-    #00ffff
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200%;
-  animation: legendarychroma 2s linear infinite;
-}
-/* Short / One-Time  things END */
-/* Custom values END */
-
-/* 2. Mass Values */
-/* 2.1 Standart Values */
-/* ---------------[ Border-Radius ]--------------- */
-.Bdrs\(2px\) {
-  border-radius: 2px;
-}
-.Bdrs\(3px\) {
-  border-radius: 3px;
-}
-.Bdrs\(5px\) {
-  border-radius: 5px;
-}
-.Bdrs\(7px\) {
-  border-radius: 7px;
-}
-.Bdrs\(12px\) {
-  border-radius: 12px;
-}
-.Bdrs\(16px\) {
-  border-radius: 16px;
-}
-/* ---------------[ Filter ]--------------- */
-.Brightness\(0\.5\) {
-  filter: brightness(0.5);
-}
-.Brightness\(0\.7\) {
-  filter: brightness(0.7);
-}
-.Brightness\(1\.3\) {
-  filter: brightness(1.3);
-}
-.Brightness\(1\.5\) {
-  filter: brightness(1.5);
-}
-
-.backdrop-fil {
-  backdrop-filter: blur(10px);
-}
-/* ---------------[ Margin ]--------------- */
-.M\(miniY\) {
-  margin: -0.1em 0px;
-}
-.M\(2px\) {
-  margin: 2px;
-}
-.M\(3px\) {
-  margin: 3px;
-}
-.M\(5px\) {
-  margin: 5px;
-}
-.M\(7px\) {
-  margin: 7px;
-}
-.M\(10px\) {
-  margin: 10px;
-}
-.M\(11px\) {
-  margin: 11px;
-}
-/* ---------------[ Transform RotateX ]--------------- */
-.RotateX\(180deg\) {
-  transform: rotateX(180deg);
-}
-/* ---------------[ Color ]--------------- */
-.C-Wh {
-  color: white !important;
-}
-.C-Bl {
-  color: black !important;
-}
-/* ---------------[ Drop Shadow IMG ]--------------- */
-/* White */
-.Dropshadow-S-W {
-  filter: drop-shadow(0px 0px 3px white);
-}
-.Dropshadow-M-W {
-  filter: drop-shadow(0px 0px 5px white);
-}
-.Dropshadow-L-W {
-  filter: drop-shadow(0px 0px 7px white);
-}
-.Dropshadow-XL-W {
-  filter: drop-shadow(0px 0px 10px white);
-}
-.Dropshadow-XXL-W {
-  filter: drop-shadow(0px 0px 12px white);
-}
-/* Black */
-.Dropshadow-S-B {
-  filter: drop-shadow(0px 0px 3px black);
-}
-.Dropshadow-M-B {
-  filter: drop-shadow(0px 0px 5px black);
-}
-.Dropshadow-L-B {
-  filter: drop-shadow(0px 0px 7px black);
-}
-.Dropshadow-XL-B {
-  filter: drop-shadow(0px 0px 10px black);
-}
-.Dropshadow-XXL-B {
-  filter: drop-shadow(0px 0px 12px black);
-}
-/* Standart Values END */
-
-/* 2.2 Special Values */
-/* ---------------[ Mobile Width ]--------------- */
-/* Min Width Pixels */
-.Miw\(50\) {
-  --Miw-px: 50;
-}
-.Miw\(55\) {
-  --Miw-px: 55;
-}
-.Miw\(60\) {
-  --Miw-px: 60;
-}
-.Miw\(65\) {
-  --Miw-px: 65;
-}
-.Miw\(70\) {
-  --Miw-px: 70;
-}
-.Miw\(75\) {
-  --Miw-px: 75;
-}
-.Miw\(80\) {
-  --Miw-px: 80;
-}
-.Miw\(85\) {
-  --Miw-px: 85;
-}
-.Miw\(90\) {
-  --Miw-px: 90;
-}
-.Miw\(95\) {
-  --Miw-px: 95;
-}
-.Miw\(100\) {
-  --Miw-px: 100;
-}
-/* Max Width Pixels */
-.Maw\(50\) {
-  --Maw-px: 50;
-}
-.Maw\(55\) {
-  --Maw-px: 55;
-}
-.Maw\(60\) {
-  --Maw-px: 60;
-}
-.Maw\(65\) {
-  --Maw-px: 65;
-}
-.Maw\(70\) {
-  --Maw-px: 70;
-}
-.Maw\(75\) {
-  --Maw-px: 75;
-}
-.Maw\(80\) {
-  --Maw-px: 80;
-}
-.Maw\(85\) {
-  --Maw-px: 85;
-}
-.Maw\(90\) {
-  --Maw-px: 90;
-}
-.Maw\(95\) {
-  --Maw-px: 95;
-}
-.Maw\(100\) {
-  --Maw-px: 100;
-}
-/*  Min Width Percentages */
-.Miw\(50\%\) {
-  --Miw-pr: 50;
-}
-.Miw\(55\%\) {
-  --Miw-pr: 55;
-}
-.Miw\(60\%\) {
-  --Miw-pr: 60;
-}
-.Miw\(65\%\) {
-  --Miw-pr: 65;
-}
-.Miw\(70\%\) {
-  --Miw-pr: 70;
-}
-.Miw\(75\%\) {
-  --Miw-pr: 75;
-}
-.Miw\(80\%\) {
-  --Miw-pr: 80;
-}
-.Miw\(85\%\) {
-  --Miw-pr: 85;
-}
-.Miw\(90\%\) {
-  --Miw-pr: 90;
-}
-.Miw\(95\%\) {
-  --Miw-pr: 95;
-}
-.Miw\(100\%\) {
-  --Miw-pr: 100;
-}
-/* Max Width Percentages */
-.Maw\(50\%\) {
-  --Maw-pr: 50;
-}
-.Maw\(55\%\) {
-  --Maw-pr: 55;
-}
-.Maw\(60\%\) {
-  --Maw-pr: 60;
-}
-.Maw\(65\%\) {
-  --Maw-pr: 65;
-}
-.Maw\(70\%\) {
-  --Maw-pr: 70;
-}
-.Maw\(75\%\) {
-  --Maw-pr: 75;
-}
-.Maw\(80\%\) {
-  --Maw-pr: 80;
-}
-.Maw\(85\%\) {
-  --Maw-pr: 85;
-}
-.Maw\(90\%\) {
-  --Maw-pr: 90;
-}
-.Maw\(95\%\) {
-  --Maw-pr: 95;
-}
-.Maw\(100\%\) {
-  --Maw-pr: 100;
-}
-/* ---------------[ GIF Size ]--------------- */
-.gif-size\(120\%\) {
-  --percent: 120%;
-}
-.gif-size\(110\%\) {
-  --percent: 110%;
-}
-.gif-size\(90\%\) {
-  --percent: 90%;
-}
-.gif-size\(70\%\) {
-  --percent: 70%;
-}
-.gif-size\(50\%\) {
-  --percent: 50%;
-}
-/* Special Values END */
-
-/* 3. ACSS */
-/* 3.1 Main ACSS */
-/* ---------------[ Main Page ]--------------- */
-.Bxsh\(--main\) {
-  box-shadow: var(--main-bxsh);
-}
-.Bd\(--main\) {
-  border: var(--main-bd);
-}
-.Bg\(--main\) {
-  background: var(--main-bg);
-}
-.C\(--main\) {
-  color: var(--main-c);
-}
-/* ---------------[ Main Color ]--------------- */
-.C\(--inverse\) {
-  color: var(--inverse-text);
-}
-.C\(--grey\) > a {
-  color: var(--color-grey);
-}
-.C\(--grey\) > a:hover {
-  color: var(--color-grey-hover);
-}
-.Bg\(--primary\) {
-  background: var(--background-primary);
-}
-.Bg\(--gradient\) {
-  background: var(--background-gradient);
-}
-.Bd\(--bd-first\) {
-  border: var(--bd-first);
-}
-.Tx\(--Tsh\) {
-  text-shadow: var(--Tsh);
-}
-/* ---------------[ Table Color ]--------------- */
-.Bg\(--tbl-Primary\) {
-  background: var(--tbl-Primary);
-}
-.Bg\(--tbl-Secondary\) {
-  background: var(--tbl-Secondary);
-}
-.Bg\(--tbl-Tertiary\) {
-  background: var(--tbl-Tertiary);
-}
-.Bd\(--tbl-Line\) {
-  border: var(--tbl-Line);
-}
-.Bd\(--lr-tbl\) {
-  border: var(--clr-tbl);
-}
-.Bdc\(--lr-tbl-Line\) {
-  border-color: var(--clr-tbl-Line);
-}
-.Fil\(--Dropshadow-ds\) {
-  filter: var(--Dropshadow-ds);
-}
-/* Main ACSS END */
-
-/* 3.2 Rarity ACSS */
-/* ---------------[ Color ]--------------- */
-.C\(--Common\),
-.C\(--Common\) * {
+/* Rarity ACSS Classes */
+.C\(--Common\) {
   color: var(--Common-c);
 }
-.C\(--Uncommon\),
-.C\(--Uncommon\) * {
+.C\(--Uncommon\) {
   color: var(--Uncommon-c);
 }
-.C\(--Rare\),
-.C\(--Rare\) * {
+.C\(--Rare\) {
   color: var(--Rare-c);
 }
-.C\(--Legendary\),
-.C\(--Legendary\) * {
+.C\(--Legendary\) {
   color: var(--Legendary-c);
 }
-.C\(--Mythical\),
-.C\(--Mythical\) * {
+.C\(--Mythical\) {
   color: var(--Mythical-c);
 }
-.C\(--Premium\),
-.C\(--Premium\) * {
+.C\(--Premium\) {
   color: var(--Premium-c);
 }
-/* ---------------[ Background ]--------------- */
+
 .Bg\(--Common\) {
   background: linear-gradient(to bottom, var(--Common-bg));
 }
@@ -1281,26 +483,26 @@ a:has(.social-media-app):hover {
 .Bg\(--Premium\) {
   background: linear-gradient(to bottom, var(--Premium-bg));
 }
-/* ---------------[ Border ]--------------- */
+
 .Bd\(--Common\) {
-  border: solid 4px var(--Common-bd);
+  border: solid 3px var(--Common-bd);
 }
 .Bd\(--Uncommon\) {
-  border: solid 4px var(--Uncommon-bd);
+  border: solid 3px var(--Uncommon-bd);
 }
 .Bd\(--Rare\) {
-  border: solid 4px var(--Rare-bd);
+  border: solid 3px var(--Rare-bd);
 }
 .Bd\(--Legendary\) {
-  border: solid 4px var(--Legendary-bd);
+  border: solid 3px var(--Legendary-bd);
 }
 .Bd\(--Mythical\) {
-  border: solid 4px var(--Mythical-bd);
+  border: solid 3px var(--Mythical-bd);
 }
 .Bd\(--Premium\) {
-  border: solid 4px var(--Premium-bd);
+  border: solid 3px var(--Premium-bd);
 }
-/* ---------------[ Box-Shadow ]--------------- */
+
 .Bxsh\(--Common\) {
   box-shadow: var(--Common-bxsh) 0px 4px 0;
 }
@@ -1325,97 +527,8 @@ a:has(.social-media-app):hover {
     #9c85005e 0px 0px 5px 5px,
     var(--Premium-bxsh) 0px 4px 0;
 }
-/* ---------------[ Tooltip Box-Shadow ]--------------- */
-.Tooltips-Bxsh\(--Common\) {
-  box-shadow: inset var(--Common-tooltips-bxsh) 0px 0px 5px 5px;
-}
-.Tooltips-Bxsh\(--Uncommon\) {
-  box-shadow: inset var(--Uncommon-tooltips-bxsh) 0px 0px 5px 5px;
-}
-.Tooltips-Bxsh\(--Rare\) {
-  box-shadow: inset var(--Rare-tooltips-bxsh) 0px 0px 5px 5px;
-}
-.Tooltips-Bxsh\(--Legendary\) {
-  box-shadow: inset var(--Legendary-tooltips-bxsh) 0px 0px 5px 5px;
-}
-.Tooltips-Bxsh\(--Mythical\) {
-  box-shadow: inset var(--Mythical-tooltips-bxsh) 0px 0px 5px 5px;
-}
-.Tooltips-Bxsh\(--Premium\) {
-  box-shadow: inset var(--Premium-tooltips-bxsh) 0px 0px 5px 5px;
-}
-/* ---------------[ Dropshadow ]--------------- */
-.Dropshadow\(--Common\) {
-  filter: drop-shadow(0px 0px 20px var(--Common-fil));
-}
-.Dropshadow\(--Uncommon\) {
-  filter: drop-shadow(0px 0px 20px var(--Uncommon-fil));
-}
-.Dropshadow\(--Rare\) {
-  filter: drop-shadow(0px 0px 20px var(--Rare-fil));
-}
-.Dropshadow\(--Legendary\) {
-  filter: drop-shadow(0px 0px 20px var(--Legendary-fil));
-}
-.Dropshadow\(--Mythical\) {
-  filter: drop-shadow(0px 0px 20px var(--Mythical-fil));
-}
-.Dropshadow\(--Premium\) {
-  filter: drop-shadow(0px 0px 20px var(--Premium-fil));
-}
-/* Rarity ACSS END */
 
-/* 3.3 FS ACSS */
-/* ---------------[ Background ]--------------- */
-.Bg\(--First\) {
-  background: var(--First-bg);
+.Traffic-03 {
+  font-family: Traffic-03, system-ui, sans-serif;
+  text-shadow: var(--bfw-tsh);
 }
-.Bg\(--Second\) {
-  background: var(--Second-bg);
-}
-.Bg\(--Third\) {
-  background: var(--Third-bg);
-}
-/* ---------------[ Border ]--------------- */
-.Bd\(--First\) {
-  border: solid 3px var(--First-bd);
-}
-.Bd\(--Second\) {
-  border: solid 3px var(--Second-bd);
-}
-.Bd\(--Third\) {
-  border: solid 3px var(--Third-bd);
-}
-/* ---------------[ Box-Shadow ]--------------- */
-.Bxsh\(--First\) {
-  box-shadow: var(--First-bxsh);
-}
-.Bxsh\(--Second\) {
-  box-shadow: var(--Second-bxsh);
-}
-.Bxsh\(--Third\) {
-  box-shadow: var(--Third-bxsh);
-}
-/* FS ACSS END */
-
-/* 3.4 Another ACSS */
-.Bg\(--Race\),
-.Bg\(--Subclass\) {
-  background: #3f6e2c;
-}
-/* ---------------[ Text ]--------------- */
-.Tsh\(--text\) {
-  text-shadow: var(--text);
-}
-/* -----------[ User Select ]------------ */
-.Us\(a\) {
-  user-select: all;
-}
-.Us\(n\) {
-  user-select: none;
-}
-.Us\(t\) {
-  user-select: text;
-}
-/* Another ACSS END */
-/* ACSS END */
