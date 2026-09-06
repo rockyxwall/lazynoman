@@ -2,238 +2,257 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/bloxfruit.css";
 
-const mcImage = "/images/2026/infinite-mana-in-the-apocalypse.webp";
+const novelTitle = "Infinite Mana in the Apocalypse";
 ---
 
 <BaseLayout
-  title="BloxFruit RPG Review UI Demo - LazyNoman"
-  description="Blox Fruits Wiki UI styling tailored for webnovel reviews"
+  title="Novel Spec Scorecard Demo - LazyNoman"
+  description="Refined webnovel review scorecard blending Blox Fruits arcade feel with LazyNoman theme"
   canonical="/bloxfruit-demo/"
 >
-  <!-- Full canvas wrapper with authentic Blox Fruits Wiki background #161714 -->
-  <div
-    style="background-color: #161714; color: #e2e8f0; min-height: 100vh; padding: 2.5rem 1rem;"
-  >
-    <main style="max-width: 920px; margin: 0 auto;">
-      <!-- Title & Eyebrow with Traffic-03 -->
-      <header style="margin-bottom: 2rem;">
-        <p
-          class="Traffic-03"
-          style="color: #ffd700; font-size: 1.1rem; margin-bottom: 0.5rem; letter-spacing: 0.5px;"
-        >
-          ★ SYSTEM INTERFACE · BLOXFRUIT RPG THEME
-        </p>
-        <h1
-          class="Traffic-03"
-          style="font-size: 2.4rem; color: #ffffff; margin: 0 0 0.5rem 0;"
-        >
-          Webnovel Review RPG Components
-        </h1>
-        <p style="color: #9ca3af; font-size: 1rem;">
-          Pruned of wiki bloat (crafting/gacha). Kept high-leverage UI for
-          progression fantasy reviews.
-        </p>
-      </header>
+  <div style="max-width: 860px; margin: 0 auto; padding: 2.5rem 1rem;">
+    <header style="margin-bottom: 2rem;">
+      <p
+        style="color: var(--accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;"
+      >
+        Component Experiment · Ponytail Mixture
+      </p>
+      <h1 style="font-size: 2.2rem; margin: 0 0 0.5rem 0; font-weight: 700;">
+        Novel Spec Scorecard
+      </h1>
+      <p style="color: var(--muted); font-size: 1rem; margin: 0;">
+        Blended: Blox Fruits arcade pill-grid & rarity badges + LazyNoman's
+        clean dark theme tokens.
+      </p>
+    </header>
 
-      <!-- 1. Editorial Alert Box (System Notification) -->
-      <div class="hatnote" style="margin-bottom: 2.5rem;">
-        <strong class="Traffic-03" style="color: #ffd700;"
-          >SYSTEM NOTICE:</strong
-        >
-        This review contains in-depth cultivation realm spoilers and power system
-        breakdowns.
-        <span class="legendarychroma" style="margin-left: 8px;"
-          >[VERIFIED SSS-TIER NOVEL]</span
+    <!-- ================================================================= -->
+    <!-- 1. REMADE HYBRID SCORECARD (RECOMMENDED MIXTURE)                  -->
+    <!-- ================================================================= -->
+    <section style="margin-bottom: 3.5rem;">
+      <div
+        style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.5rem;"
+      >
+        <h2 style="font-size: 1.15rem; margin: 0; color: var(--text);">
+          Option 1: Remade Editorial Hybrid Scorecard (Recommended)
+        </h2>
+        <span style="font-size: 0.8rem; color: var(--muted);"
+          >Adapts to light & dark theme</span
         >
       </div>
+      <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;">
+        Uses <code>var(--surface)</code> and <code>var(--border)</code> for subtle
+        contrast, replaces the harsh yellow gradient with our site accent, but preserves
+        the Blox Fruits cell grid and glowing Mythical badge.
+      </p>
 
-      <!-- 2. Authentic BFW Arcade Buttons -->
-      <section
-        style="background: #20201b; padding: 1.5rem; border-radius: 8px; border: 1px solid #3b3b3b; margin-bottom: 2.5rem;"
-      >
-        <h2
-          class="Traffic-03"
-          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
-        >
-          1. Arcade Action Buttons
-        </h2>
-        <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 1rem;">
-          High-contrast, tactile CTAs for novel links and spoiler toggles:
-        </p>
-        <div
-          style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;"
-        >
-          <a href="#status-window" class="bfw-button"> Read First Chapter </a>
-          <a href="#scorecard" class="bfw-button"> Jump to Verdict </a>
-          <button type="button" class="bfw-button-toggle">
-            Hide Spoilers
-          </button>
-          <button type="button" class="button1"> Bookmark Review </button>
-        </div>
-      </section>
-
-      <!-- 3. Rarity Tier Badges & Glowing Cards -->
-      <section
-        style="background: #20201b; padding: 1.5rem; border-radius: 8px; border: 1px solid #3b3b3b; margin-bottom: 2.5rem;"
-      >
-        <h2
-          class="Traffic-03"
-          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
-        >
-          2. Novel Rating & Tier Badges
-        </h2>
-
-        <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 1rem;">
-          Pill tags for tier lists, recommendation cards, and article headers:
-        </p>
-        <div
-          style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem;"
-        >
+      <div class="novel-spec-table">
+        <div class="novel-spec-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span
+              style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"
+            ></span>
+            <h3>{novelTitle} — Review Scorecard</h3>
+          </div>
           <span
             class="Bg(--Mythical) Bd(--Mythical) Bxsh(--Mythical) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
+            style="padding: 3px 12px; border-radius: 999px; font-size: 0.8rem; letter-spacing: 0.5px;"
           >
-            ★ MYTHICAL · SSS TIER
-          </span>
-          <span
-            class="Bg(--Legendary) Bd(--Legendary) Bxsh(--Legendary) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-          >
-            ◆ LEGENDARY · S TIER
-          </span>
-          <span
-            class="Bg(--Rare) Bd(--Rare) Bxsh(--Rare) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-          >
-            ▲ RARE · A TIER
-          </span>
-          <span
-            class="Bg(--Uncommon) Bd(--Uncommon) Bxsh(--Uncommon) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-          >
-            ● UNCOMMON · B TIER
-          </span>
-          <span
-            class="Bg(--Common) Bd(--Common) Bxsh(--Common) Traffic-03"
-            style="padding: 4px 14px; border-radius: 6px; font-size: 0.85rem;"
-          >
-            ■ COMMON · C TIER
+            ★ MYTHICAL · 9.8 / 10
           </span>
         </div>
 
-        <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 0.8rem;">
-          Full Glowing Rarity Cards (For Recommended Novels):
-        </p>
-        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-          <div class="card-tooltips(Mythical)">
-            Infinite Mana in the Apocalypse
+        <div class="novel-spec-grid">
+          <div class="novel-spec-cell">
+            <span class="novel-spec-label">Progression Pacing</span>
+            <span class="novel-spec-value"
+              >Exponential Growth · Instant Cheat</span
+            >
           </div>
-          <div class="card-tooltips(Legendary)">Fantasy Simulator</div>
-          <div class="card-tooltips(Rare)">The Innkeeper</div>
-        </div>
-      </section>
 
-      <!-- 4. Protagonist RPG System Status Window -->
-      <section
-        id="status-window"
-        style="background: #252427; padding: 1.5rem; border-radius: 8px; border: 2px solid #d5ac04; box-shadow: inset 0 0 5px 0 #ffe00059, 0 6px 20px 2px #ffe0001a; margin-bottom: 2.5rem;"
+          <div class="novel-spec-cell">
+            <span class="novel-spec-label">World Scope</span>
+            <span class="novel-spec-value">Infinite Universes & Dimensions</span
+            >
+          </div>
+
+          <div class="novel-spec-cell">
+            <span class="novel-spec-label">Cheat System</span>
+            <span class="novel-spec-value" style="color: #67e8f9;"
+              >Infinite Mana Engine (0 MP / 0 CD)</span
+            >
+          </div>
+
+          <div class="novel-spec-cell">
+            <span class="novel-spec-label">Romance / Subplots</span>
+            <span class="novel-spec-value"
+              >Conquest Focused · Zero Melodrama</span
+            >
+          </div>
+
+          <div class="novel-spec-cell">
+            <span class="novel-spec-label">Protagonist Archetype</span>
+            <span class="novel-spec-value"
+              >Noah Osmont · Ruthless & Decisive</span
+            >
+          </div>
+
+          <div class="novel-spec-cell">
+            <span class="novel-spec-label">Length & Status</span>
+            <span class="novel-spec-value">3,200+ Chapters · Ongoing</span>
+          </div>
+        </div>
+
+        <div class="novel-spec-footer">
+          <div style="font-size: 0.9rem; color: var(--muted);">
+            <strong style="color: var(--text);">Verdict:</strong> Peak progression
+            fantasy popcorn read. Mandatory if you love god-level OP MCs.
+          </div>
+          <a
+            href="/infinite-mana-in-the-apocalypse/"
+            class="bfw-button"
+            style="padding: 6px 14px; min-height: 32px; font-size: 13px;"
+          >
+            Read Full Review →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 2. COMPACT STAT TILES (MODULAR TECH VARIATION)                    -->
+    <!-- ================================================================= -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.15rem; margin: 0 0 0.5rem 0; color: var(--text);">
+        Option 2: Compact Modular Stat Tiles
+      </h2>
+      <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;">
+        Even lighter: minimal card shell with arcade-styled metric chips inside.
+      </p>
+
+      <div
+        style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem;"
       >
-        <h2
-          class="Traffic-03"
-          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1.2rem;"
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1rem;"
         >
-          3. Protagonist System Status Card
-        </h2>
+          <div>
+            <span
+              style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-family: VCR-OSD-Mono, monospace; font-weight: 700;"
+              >Novel Specs</span
+            >
+            <h4
+              style="margin: 2px 0 0; font-size: 1.1rem; color: var(--text); font-weight: 700;"
+            >
+              {novelTitle}
+            </h4>
+          </div>
+          <span
+            class="C(--Mythical) Traffic-03"
+            style="font-size: 1.2rem; font-weight: bold;"
+          >
+            9.8 / 10
+          </span>
+        </div>
 
         <div
-          style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start;"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 1rem;"
         >
-          <!-- Boss / MC Box -->
           <div
-            class="boss-box1"
-            style="width: 160px; text-align: center; padding-bottom: 10px;"
+            style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 8px 12px;"
           >
             <div
-              style="width: 160px; height: 180px; background: #0c121c; overflow: hidden;"
+              style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-family: VCR-OSD-Mono, monospace;"
             >
-              <img
-                src={mcImage}
-                alt="Noah Osmont"
-                style="width: 100%; height: 100%; object-fit: cover;"
-              />
+              Pacing
             </div>
-            <p
-              class="Traffic-03"
-              style="margin: 8px 0 2px; font-size: 0.95rem; color: #ffd700;"
-            >
-              Noah Osmont
-            </p>
-            <span class="C(--Mythical) Traffic-03" style="font-size: 0.8rem;"
-              >Apex Paragon</span
-            >
-          </div>
-
-          <!-- Right Side: Stats & Skill Card -->
-          <div style="flex: 1; min-width: 280px;">
-            <!-- Currencies / Stat Counters -->
             <div
-              style="display: flex; gap: 14px; margin-bottom: 1.2rem; flex-wrap: wrap;"
+              style="font-size: 0.9rem; font-weight: 600; color: var(--text);"
             >
-              <span class="color-currency(Money)">Mana: ∞ INFINITE</span>
-              <span class="color-currency(Fragment)">Fragments: 999,999+</span>
-              <span class="color-currency(Valor)">Dao: Slaughter & Fate</span>
+              Exponential
             </div>
-
-            <!-- Cheat / Skill Card -->
-            <div class="EventShop" style="width: 100%;">
-              <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                  <tr>
-                    <th style="text-align: left;">Innate Cheat Ability</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="padding: 8px;">
-                      <div class="EventShop_Item">
-                        <div class="EventShop_Item_Name">
-                          <span style="color: #67e8f9;"
-                            >Infinite Mana Engine</span
-                          >
-                        </div>
-                        <div class="EventShop_Item_Box">
-                          <span
-                            style="font-size: 0.85rem; color: #e2e8f0; text-align: center; line-height: 1.4;"
-                          >
-                            Allows continuous casting of Universal and Cosmic
-                            forbidden spells with 0 cooldown and 0 mana
-                            exhaustion.
-                          </span>
-                          <div class="EventShop_Item_Price">COST: 0 MP</div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          </div>
+          <div
+            style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 8px 12px;"
+          >
+            <div
+              style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-family: VCR-OSD-Mono, monospace;"
+            >
+              Cheat
+            </div>
+            <div style="font-size: 0.9rem; font-weight: 600; color: #67e8f9;">
+              Infinite Mana
+            </div>
+          </div>
+          <div
+            style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 8px 12px;"
+          >
+            <div
+              style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-family: VCR-OSD-Mono, monospace;"
+            >
+              Chapters
+            </div>
+            <div
+              style="font-size: 0.9rem; font-weight: 600; color: var(--text);"
+            >
+              3,200+
+            </div>
+          </div>
+          <div
+            style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 8px 12px;"
+          >
+            <div
+              style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-family: VCR-OSD-Mono, monospace;"
+            >
+              Tier
+            </div>
+            <div
+              style="font-size: 0.9rem; font-weight: 600; color: var(--Mythical-c);"
+            >
+              Mythical (SSS)
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- 5. Novel Scorecard Table -->
-      <section id="scorecard" style="margin-bottom: 2.5rem;">
-        <h2
-          class="Traffic-03"
-          style="font-size: 1.3rem; margin-top: 0; color: #ffd700; margin-bottom: 1rem;"
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; pt-2; font-size: 0.85rem; color: var(--muted);"
         >
-          4. Novel Spec Scorecard Table
-        </h2>
+          <span>Recommended for: <em>OP MC Enthusiasts</em></span>
+          <button
+            type="button"
+            class="button1"
+            style="padding: 5px 14px; font-size: 13px;"
+          >
+            Read Review
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 3. ORIGINAL FLASHY WIKI TABLE (FOR DIRECT COMPARISON)              -->
+    <!-- ================================================================= -->
+    <details
+      style="margin-top: 3rem; background: #161714; border: 1px dashed #4b493f; border-radius: 8px; padding: 1rem 1.25rem;"
+    >
+      <summary
+        style="cursor: pointer; color: #ffd700; font-family: Traffic-03; font-size: 1rem;"
+      >
+        ▼ Compare with Original Flashy Wiki Table (Click to expand)
+      </summary>
+
+      <div style="margin-top: 1rem;">
+        <p style="color: #9ca3af; font-size: 0.85rem;">
+          Notice the difference: the original below used harsh solid black
+          borders, pure yellow gradients, and heavy black drop-shadows that felt
+          jarring on article prose.
+        </p>
+
         <table class="bfw-table">
           <thead>
             <tr>
               <th colspan="2"
-                >Infinite Mana in the Apocalypse — Review Scorecard</th
+                >Infinite Mana in the Apocalypse — Original Wiki Style</th
               >
             </tr>
           </thead>
@@ -267,20 +286,13 @@ const mcImage = "/images/2026/infinite-mana-in-the-apocalypse.webp";
             </tr>
           </tbody>
         </table>
-      </section>
+      </div>
+    </details>
 
-      <!-- Navigation link -->
-      <footer
-        style="text-align: center; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #282824;"
+    <footer style="margin-top: 3rem; text-align: center; font-size: 0.9rem;">
+      <a href="/" style="color: var(--accent); font-weight: 600;"
+        >← Back to LazyNoman Home</a
       >
-        <a
-          href="/"
-          class="Traffic-03"
-          style="color: #ffd700; text-decoration: none; font-size: 1.1rem;"
-        >
-          ← Back to LazyNoman Home
-        </a>
-      </footer>
-    </main>
+    </footer>
   </div>
 </BaseLayout>
