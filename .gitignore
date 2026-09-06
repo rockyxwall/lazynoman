@@ -8,6 +8,7 @@ dist/
 .astro-content/
 *.log
 node_modules/
+.wrangler/
 .lighthouseci/
 test-results/
 playwright-report/
