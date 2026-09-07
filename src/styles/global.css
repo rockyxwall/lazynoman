@@ -344,42 +344,28 @@ h2 {
 .article-body h3 {
   margin-top: 1.5rem;
 }
+.chapter-thoughts {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--border);
+  margin: 2.25rem 0 2.5rem 0.5rem;
+}
 .chapter-thoughts details {
   position: relative;
-  margin: 1.5rem 0 0 0.5rem;
-  padding: 0 0 0.25rem 1.25rem;
-  background: transparent;
+  margin: 2rem 0 0.4rem 0;
+  padding: 0;
   border: none;
+}
+.chapter-thoughts details:first-of-type {
+  margin-top: 0.5rem;
 }
 .chapter-thoughts details::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: calc(0.5em + 4px);
-  bottom: 0;
-  width: 2px;
-  background: var(--accent);
-}
-.chapter-thoughts details summary {
-  list-style: none;
-  cursor: pointer;
-  position: relative;
-  font-weight: 600;
-  color: var(--accent);
-  user-select: none;
-  transition: color 0.15s ease;
-}
-.chapter-thoughts details summary::-webkit-details-marker,
-.chapter-thoughts details summary::marker {
-  display: none;
-}
-.chapter-thoughts details summary::before {
-  content: "";
-  position: absolute;
-  left: calc(-1.25rem - 3px);
-  top: 0.5em;
-  width: 8px;
-  height: 8px;
+  left: calc(-1.5rem - 5px);
+  top: 0.35rem;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 2px solid var(--accent);
   background: var(--bg);
@@ -388,30 +374,79 @@ h2 {
     background 0.15s ease,
     transform 0.15s ease;
 }
-.chapter-thoughts details summary:hover::before {
-  transform: scale(1.2);
+.chapter-thoughts details:hover::before {
+  transform: scale(1.25);
 }
-.chapter-thoughts details[open] summary::before {
+.chapter-thoughts details[open]::before {
   background: var(--accent);
 }
-.chapter-thoughts details p {
-  margin: 0.45rem 0 0.6rem;
-  padding: 0;
+.chapter-thoughts details summary {
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--text);
+  user-select: none;
+  background: transparent;
   border: none;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+.chapter-thoughts details summary:hover {
+  color: var(--text-heading, var(--text));
+  text-decoration: underline;
+}
+.chapter-thoughts details summary::-webkit-details-marker,
+.chapter-thoughts details summary::marker {
+  display: none;
+}
+.chapter-thoughts details summary::after {
+  content: "▸";
+  font-size: 0.75rem;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+}
+.chapter-thoughts details[open] summary::after {
+  transform: rotate(90deg);
+}
+.chapter-thoughts details p {
+  font-style: normal;
   color: var(--muted);
   line-height: 1.6;
-}
-.chapter-thoughts blockquote {
-  margin: 0 0 1.5rem 0.5rem;
-  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin: 0.65rem 0 0.75rem 0.25rem;
+  padding: 0.2rem 0 0.2rem 0.85rem;
+  border-left: 2px dashed var(--border);
   background: transparent;
-  border-left: 2px solid var(--accent);
-  border-radius: 0;
-  color: var(--text);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
 }
-.chapter-thoughts blockquote p {
-  margin: 0;
-  line-height: 1.6;
+.chapter-thoughts details em {
+  font-style: normal;
+}
+.chapter-thoughts > p {
+  position: relative;
+  margin: 0.4rem 0 2.25rem 0;
+  padding: 0;
+  color: var(--text);
+  line-height: 1.65;
+}
+.chapter-thoughts > p::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.5rem - 3px);
+  top: 0.55rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.15s ease;
+}
+.chapter-thoughts > p:hover::before {
+  background: var(--accent);
 }
 .linked-heading {
   position: relative;

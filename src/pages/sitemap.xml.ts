@@ -19,6 +19,7 @@ export const GET: APIRoute = async () => {
       continue;
     if (entry.kind === "page" && entry.page.data.sitemap?.disable === true)
       continue;
+    if (entry.route !== "/tags/" && entry.route.startsWith("/tags/")) continue;
     const date =
       entry.kind === "post"
         ? entry.post.data.date
