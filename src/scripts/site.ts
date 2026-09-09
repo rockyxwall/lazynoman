@@ -167,5 +167,10 @@ function loadAds() {
   );
   document.head.append(script);
 }
+if ("requestIdleCallback" in window) {
+  (window as any).requestIdleCallback(loadAds, { timeout: 3000 });
+} else {
+  setTimeout(loadAds, 3000);
+}
 addEventListener("scroll", loadAds, { once: true, passive: true });
 addEventListener("pointerdown", loadAds, { once: true, passive: true });

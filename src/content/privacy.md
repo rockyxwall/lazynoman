@@ -2,7 +2,7 @@
 title: Privacy Policy
 author: LazyNoman
 type: page
-date: 2018-09-19T15:25:58+00:00
+date: 2026-09-09
 ---
 LazyNoman operates the https://lazynoman.com website, which provides the SERVICE.
 
@@ -25,6 +25,14 @@ We want to inform you that whenever you visit our Service, we collect informatio
 Cookies are files with small amount of data that is commonly used an anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your computer’s hard drive.
 
 Our website uses these &#8220;cookies&#8221; to collection information and to improve our Service. You have the option to either accept or refuse these cookies, and know when a cookie is being sent to your computer. If you choose to refuse our cookies, you may not be able to use some portions of our Service.
+
+## Advertising & Third-Party Cookies
+
+We partner with third-party advertising partners, including **Google AdSense**, to serve advertisements when you visit our website.
+
+* Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites.
+* Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet.
+* Users may opt out of personalized advertising by visiting [Google Ads Settings](https://www.google.com/settings/ads). Alternatively, users can opt out of third-party vendor cookies for personalized advertising by visiting [www.aboutads.info](https://www.aboutads.info/).
 
 ## Service Providers
 
@@ -51,10 +59,8 @@ Our Services do not address anyone under the age of 13. We do not knowingly coll
 
 ## Changes to This Privacy Policy
 
-We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately, after they are posted on this page. This Privacy Policy was created with the [GDPR Privacy Policy Generator][1].
+We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately, after they are posted on this page.
 
 ## Contact Us
 
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.
-
- [1]: https://gdprprivacypolicy.net
+If you have any questions or suggestions about our Privacy Policy, please [contact us](/contact/) at [contact@lazynoman.com](mailto:contact@lazynoman.com).

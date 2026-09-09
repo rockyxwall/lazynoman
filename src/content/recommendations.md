@@ -17,6 +17,3 @@ Curated reading lists, top tier novels, and progression fantasy recommendations.
 
 ### Browse by Category
 - [Novels](/categories/novel/)
-- [Manga & Manhwa](/categories/manga/)
-- [Anime](/categories/anime/)
-- [Games](/categories/game/)

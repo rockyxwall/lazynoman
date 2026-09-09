@@ -2,9 +2,9 @@
 title: Terms of Service
 author: LazyNoman
 type: page
-date: 2018-09-19T15:29:33+00:00
+date: 2026-09-09
 ---
-Last updated: September 19, 2018
+Last updated: September 9, 2026
 
 Please read these Terms of Service (&#8220;Terms&#8221;, &#8220;Terms of Service&#8221;) carefully before using the https://lazynoman.com website (the &#8220;Service&#8221;) operated by LazyNoman (&#8220;us&#8221;, &#8220;we&#8221;, or &#8220;our&#8221;).
 
@@ -54,6 +54,4 @@ By continuing to access or use our Service after those revisions become effectiv
 
 ## Contact Us
 
-If you have any questions about these Terms, please contact us.
-
- [1]: https://termsfeed.com/terms-conditions/generator/
+If you have any questions about these Terms, please [contact us](/contact/) at [contact@lazynoman.com](mailto:contact@lazynoman.com).
