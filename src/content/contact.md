@@ -10,7 +10,6 @@ Have a question, feedback, or a novel recommendation you would like to see revie
 
 - **Email:** [contact@lazynoman.com](mailto:contact@lazynoman.com)
 - **Community:** Leave comments directly on our review articles powered by our Waline comment system.
-- **Social:** Connect with us on [X (formerly Twitter)](https://x.com) to discuss recommendations and upcoming reading lists.
 
 ## Corrections & Updates
 

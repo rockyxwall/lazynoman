@@ -6,7 +6,7 @@ date: "2026-09-09"
 
 Welcome to **LazyNoman**, an independent publication dedicated to in-depth, honest reviews, tier lists, and recommendations for webnovels, light novels, and progression fantasy.
 
-## Editorial Philosophy
+## Editorial Philosophy<span style="color: var(--accent);">*</span>
 
 Most novel review websites rely on superficial synopses or scraped ratings. At LazyNoman, every review is written by readers who spend dozens—often hundreds—of chapters with each story before sharing an evaluation.
 
@@ -15,6 +15,8 @@ We critique stories across four core pillars:
 - **Character Agency:** Do protagonists face real stakes and obstacles, or is victory handed to them without tension?
 - **World-Building & Lore:** Are cultivation realms, magic systems, and factions given depth and internal consistency?
 - **Translation & Readability:** Reading flow, terminology consistency, and prose quality.
+
+<span style="color: var(--accent);">*</span> *Review criteria and scoring rubric are subject to change as our coverage expands.*
 
 ## Who Runs LazyNoman?
 
