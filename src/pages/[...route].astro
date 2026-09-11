@@ -62,7 +62,7 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
       </div>
     </article>
   </>}
-  {descriptor.kind === "page" && <article class="reading"><header class="article-header"><h1>{descriptor.page.data.title}</h1>{descriptor.page.data.description && <p class="lede">{descriptor.page.data.description}</p>}</header><div class="article-body"><Content /></div></article>}
+  {descriptor.kind === "page" && <article class="content-container reading"><header class="article-header"><h1>{descriptor.page.data.title}</h1>{descriptor.page.data.description && <p class="lede">{descriptor.page.data.description}</p>}</header><div class="article-body"><Content /></div></article>}
   {descriptor.kind === "listing" && <section class="container listing-page"><header class="article-header"><p class="eyebrow">Topic</p><h1>{descriptor.listing.title}</h1>{descriptor.listing.description && <p class="lede">{descriptor.listing.description}</p>}</header><PostList posts={descriptor.listing.posts} prioritizeFirst /><Pagination page={descriptor.listing.page} pages={descriptor.listing.pages} base={descriptor.listing.base} /></section>}
   {descriptor.kind === "terms" && <section class="container"><h1>{descriptor.title}</h1><div class="chips">{descriptor.terms.map((term) => <a class="chip" href={`${descriptor.root}${term.slug}/`}>{term.name} ({term.count})</a>)}</div><Pagination page={descriptor.page} pages={descriptor.pages} base={descriptor.root} /></section>}
 </BaseLayout>

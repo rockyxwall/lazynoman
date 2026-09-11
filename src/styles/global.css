@@ -1,46 +1,21 @@
+@import "./tokens.css";
+@import "./content.css";
+
 @font-face {
   font-family: "PT Sans";
   src: url("/fonts/pt-sans-400.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "PT Sans";
   src: url("/fonts/pt-sans-700.woff2") format("woff2");
   font-style: normal;
   font-weight: 700;
-  font-display: optional;
+  font-display: swap;
 }
-:root {
-  color-scheme: dark;
-  --bg: #111015;
-  --surface: #191820;
-  --surface-2: #24222c;
-  --text: #f4f3f7;
-  --muted: #a6a1b2;
-  --accent: #e63946;
-  --accent-strong: #ff5260;
-  --accent-ink: #ffffff;
-  --border: #322f3d;
-  --shadow: none;
-  --radius: 4px;
-  --max: 1180px;
-  --reading: 760px;
-}
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #f8f7fa;
-  --surface: #ffffff;
-  --surface-2: #f0eef5;
-  --text: #1a1820;
-  --muted: #645f70;
-  --accent: #c92a37;
-  --accent-strong: #a61c28;
-  --accent-ink: #ffffff;
-  --border: #dfdbe6;
-  --shadow: none;
-}
+
 * {
   box-sizing: border-box;
 }
@@ -53,12 +28,12 @@ body {
   background:
     radial-gradient(
       circle at 50% -20rem,
-      color-mix(in srgb, var(--accent) 13%, transparent),
+      color-mix(in srgb, var(--accent) 10%, transparent),
       transparent 44rem
     ),
     var(--bg);
   color: var(--text);
-  font-family: "PT Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.55;
 }
@@ -82,13 +57,26 @@ button,
 input {
   font: inherit;
 }
-.container {
-  width: min(calc(100% - 1.5rem), var(--max));
+
+/* ==========================================================================
+   Unified Layout Containers (Same Gutter Padding Everywhere)
+   ========================================================================== */
+.container,
+.content-container,
+.page-container {
+  width: 100%;
+  max-width: var(--layout-max-width);
   margin-inline: auto;
+  padding-inline: var(--gutter-x);
 }
 .reading {
-  width: min(calc(100% - 1.5rem), var(--reading));
+  width: 100%;
+  max-width: var(--reading-max-width);
   margin-inline: auto;
+  padding-inline: var(--gutter-x);
+}
+.article-shell > .reading {
+  padding-inline: 0;
 }
 .sr-only {
   position: absolute;
@@ -112,9 +100,6 @@ input {
   z-index: 100;
   font-weight: 700;
   border-radius: var(--radius);
-}
-.skip-link:focus {
-  transform: translateY(0);
 }
 .site-header {
   position: sticky;
@@ -158,6 +143,7 @@ input {
   display: none;
   margin-left: auto;
 }
+
 .icon-button,
 .primary-button {
   border: 1px solid var(--border);
@@ -186,10 +172,13 @@ main {
   padding-block: clamp(1.25rem, 3vw, 2.5rem);
 }
 .hero {
-  padding-block: clamp(1.25rem, 4vw, 3rem);
+  padding-block: clamp(1rem, 2.5vw, 1.75rem);
 }
 .hero:first-child {
-  padding-top: clamp(1.75rem, 5vw, 4rem);
+  padding-top: clamp(1rem, 3vw, 2rem);
+}
+.hero .lede {
+  margin-top: 0.35rem;
 }
 .eyebrow {
   margin: 0 0 0.35rem;
@@ -232,18 +221,31 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
 }
 .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   overflow: clip;
   box-shadow: var(--shadow);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.card:hover {
+  border-color: var(--accent);
 }
 .card img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  display: block;
 }
 .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 0.9rem;
 }
 .card h2,
@@ -255,6 +257,10 @@ h2 {
   color: var(--text);
   text-decoration: none;
 }
+.card-body > .chips {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
 .chips,
 .feed-list {
   display: flex;
@@ -264,12 +270,20 @@ h2 {
 .chip {
   display: inline-flex;
   align-items: center;
-  padding: 0.2rem 0.5rem;
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
-  border-radius: var(--radius);
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 9999px;
   text-decoration: none;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.chip:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
 }
 .section-heading {
   display: flex;
@@ -280,16 +294,25 @@ h2 {
 .article-header {
   margin-bottom: 1.25rem;
 }
+
+/* Unified article reading shell */
 .article-shell {
   display: grid;
-  grid-template-columns: minmax(170px, 220px) minmax(0, var(--reading));
+  grid-template-columns: minmax(0, var(--reading-max-width)) minmax(
+      180px,
+      var(--sidebar-width)
+    );
   justify-content: center;
+  align-items: start;
   gap: clamp(1.5rem, 3vw, 3rem);
 }
 .article-shell > .reading {
+  grid-column: 1;
   width: 100%;
 }
-.article-toc {
+.article-shell > .article-toc {
+  grid-column: 2;
+  grid-row: 1;
   position: sticky;
   top: 7rem;
   align-self: start;
@@ -306,162 +329,38 @@ h2 {
   list-style: none;
   padding: 0;
   margin: 0;
-  border-left: 1px solid var(--border);
+  border-left: 1px solid var(--divider);
 }
 .article-toc li a {
   display: block;
   padding: 0.25rem 0 0.25rem 0.85rem;
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.92rem;
-  line-height: 1.35;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  transition: color 0.2s ease;
 }
 .article-toc li.nested a {
   padding-left: 1.55rem;
-  font-size: 0.86rem;
+  font-size: 0.82rem;
+}
+.article-toc li a:hover {
+  color: var(--text);
 }
 .article-toc a[aria-current] {
   color: var(--accent);
   border-left: 2px solid var(--accent);
   margin-left: -1px;
+  font-weight: 600;
 }
 .article-image {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
 }
-.article-body {
-  font-size: 1.08rem;
-}
-.article-body :is(pre, table, iframe) {
-  max-width: 100%;
-}
-.article-body h2 {
-  margin-top: 2rem;
-}
-.article-body h3 {
-  margin-top: 1.5rem;
-}
-.chapter-thoughts {
-  position: relative;
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--border);
-  margin: 2.25rem 0 2.5rem 0.5rem;
-}
-.chapter-thoughts details {
-  position: relative;
-  margin: 2rem 0 0.4rem 0;
-  padding: 0;
-  border: none;
-}
-.chapter-thoughts details:first-of-type {
-  margin-top: 0.5rem;
-}
-.chapter-thoughts details::before {
-  content: "";
-  position: absolute;
-  left: calc(-1.5rem - 5px);
-  top: 0.35rem;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  background: var(--bg);
-  box-sizing: border-box;
-  transition:
-    background 0.15s ease,
-    transform 0.15s ease;
-}
-.chapter-thoughts details:hover::before {
-  transform: scale(1.25);
-}
-.chapter-thoughts details[open]::before {
-  background: var(--accent);
-}
-.chapter-thoughts details summary {
-  list-style: none;
-  cursor: pointer;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 700;
-  color: var(--text);
-  user-select: none;
-  background: transparent;
-  border: none;
-  padding: 0;
-  transition: color 0.15s ease;
-}
-.chapter-thoughts details summary:hover {
-  color: var(--text-heading, var(--text));
-  text-decoration: underline;
-}
-.chapter-thoughts details summary::-webkit-details-marker,
-.chapter-thoughts details summary::marker {
-  display: none;
-}
-.chapter-thoughts details summary::after {
-  content: "▸";
-  font-size: 0.75rem;
-  color: var(--muted);
-  transition: transform 0.15s ease;
-}
-.chapter-thoughts details[open] summary::after {
-  transform: rotate(90deg);
-}
-.chapter-thoughts details p {
-  font-style: normal;
-  color: var(--muted);
-  line-height: 1.6;
-  margin: 0.65rem 0 0.75rem 0.25rem;
-  padding: 0.2rem 0 0.2rem 0.85rem;
-  border-left: 2px dashed var(--border);
-  background: transparent;
-  border-top: none;
-  border-right: none;
-  border-bottom: none;
-}
-.chapter-thoughts details em {
-  font-style: normal;
-}
-.chapter-thoughts > p {
-  position: relative;
-  margin: 0.4rem 0 2.25rem 0;
-  padding: 0;
-  color: var(--text);
-  line-height: 1.65;
-}
-.chapter-thoughts > p::before {
-  content: "";
-  position: absolute;
-  left: calc(-1.5rem - 3px);
-  top: 0.55rem;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.15s ease;
-}
-.chapter-thoughts > p:hover::before {
-  background: var(--accent);
-}
-.linked-heading {
-  position: relative;
-}
-.heading-link {
-  position: absolute;
-  right: 100%;
-  padding-right: 0.4rem;
-  opacity: 0;
-  text-decoration: none;
-}
-.linked-heading:hover .heading-link,
-.heading-link:focus {
-  opacity: 1;
-}
+
 .share-row {
   display: flex;
   align-items: center;
@@ -494,55 +393,6 @@ h2 {
     var(--accent) var(--reading-progress, 0%),
     transparent 0
   );
-}
-pre {
-  position: relative;
-  overflow: auto;
-  padding: 0.9rem;
-  border: 1px solid var(--border);
-  background: #061019;
-  color: #eef6fa;
-  border-radius: var(--radius);
-}
-.astro-code span[style*="#6A737D"] {
-  color: #aebdca !important;
-}
-.code-copy {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  border: 1px solid #496173;
-  background: #142430;
-  color: #fff;
-  border-radius: var(--radius);
-  padding: 0.2rem 0.45rem;
-  cursor: pointer;
-}
-.table-scroll {
-  overflow-x: auto;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th,
-td {
-  border: 1px solid var(--border);
-  padding: 0.55rem;
-  text-align: left;
-}
-.notice {
-  margin-block: 1rem;
-  padding: 0.75rem 0.9rem;
-  border: 1px solid var(--accent);
-  border-left-width: 0.35rem;
-  background: var(--surface-2);
-  border-radius: var(--radius);
-}
-.notice-title {
-  margin: 0;
-  color: var(--accent);
-  font-weight: 700;
 }
 .ad-slot {
   min-height: 90px;
@@ -638,13 +488,16 @@ td {
   flex-wrap: wrap;
   gap: 0.75rem;
 }
+
 @media (max-width: 940px) {
   .article-shell {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
   .article-toc {
+    order: -1;
     position: static;
-    width: min(100%, var(--reading));
+    width: min(100%, var(--reading-max-width));
     max-height: none;
     margin: 0 auto 1.25rem;
     padding: 0.75rem 0.9rem;
