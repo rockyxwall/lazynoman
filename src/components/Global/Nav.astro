@@ -21,7 +21,6 @@ const { render = true, overlap = false } = Astro.props;
     <header class:list={["nav_wrap", overlap && "overlap"]}>
       <div class="nav_inner">
         <a class="nav_logo" href="/" aria-label={SITE_NAME}>
-          <img src="/images/navlogo.webp" width="38" height="38" alt="" />
           <img src="/images/navlogo.webp" width="32" height="32" alt="" />
           <span class="nav_site_title">{SITE_NAME}</span>
         </a>
@@ -33,7 +32,6 @@ const { render = true, overlap = false } = Astro.props;
                 <NavLink href="/posts/">Posts</NavLink>
                 <NavLink href="/categories/">Topics</NavLink>
                 <NavLink href="/tags/">Tags</NavLink>
-                <NavLink href="/search/">Search</NavLink>
               </ul>
             </div>
           </nav>
@@ -55,10 +53,8 @@ const { render = true, overlap = false } = Astro.props;
               stroke-linejoin="round"
               aria-hidden="true"
             >
-              <>
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </>
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
             </svg>
             <span class="nav_search_text">Search</span>
             <kbd class="nav_search_key">Ctrl K</kbd>
@@ -82,21 +78,17 @@ const { render = true, overlap = false } = Astro.props;
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <>
-                  <path d="M4 11a9 9 0 0 1 9 9" />
-                  <path d="M4 4a16 16 0 0 1 16 16" />
-                  <circle cx="5" cy="19" r="1" />
-                </>
+                <path d="M4 11a9 9 0 0 1 9 9" />
+                <path d="M4 4a16 16 0 0 1 16 16" />
+                <circle cx="5" cy="19" r="1" />
               </svg>
             </a>
             <button
               class="theme_toggle"
               type="button"
               data-theme-toggle
-              aria-label="Switch to light theme"
               aria-label="Switch color theme"
             >
-              <span data-theme-icon aria-hidden="true">☀</span>
               <svg
                 class="theme_icon theme_icon_sun"
                 xmlns="http://www.w3.org/2000/svg"
@@ -110,17 +102,15 @@ const { render = true, overlap = false } = Astro.props;
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <>
-                  <circle cx="12" cy="12" r="4" />
-                  <path d="M12 2v2" />
-                  <path d="M12 20v2" />
-                  <path d="m4.93 4.93 1.41 1.41" />
-                  <path d="m17.66 17.66 1.41 1.41" />
-                  <path d="M2 12h2" />
-                  <path d="M20 12h2" />
-                  <path d="m6.34 17.66-1.41 1.41" />
-                  <path d="m19.07 4.93-1.41 1.41" />
-                </>
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
               </svg>
               <svg
                 class="theme_icon theme_icon_moon"
@@ -235,7 +225,7 @@ const { render = true, overlap = false } = Astro.props;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       color: var(--text);
-      border-bottom: var(--border-width) solid var(--border);
+      border-bottom: 1px solid var(--divider, var(--border));
 
       &.overlap {
         position: fixed;
@@ -253,10 +243,41 @@ const { render = true, overlap = false } = Astro.props;
       min-height: var(--nav-height);
     }
 
+    .nav_logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: auto;
+      text-decoration: none;
+      transition: opacity var(--hover-duration) var(--hover-ease);
+      @media (hover: hover) {
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .nav_logo img {
+      width: 1.75rem;
+      height: 1.75rem;
+      max-width: 1.75rem;
+      max-height: 1.75rem;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: var(--radius-small);
+    }
+
+    .nav_site_title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
     .nav_right {
       display: flex;
       align-items: center;
-      gap: var(--space-4);
+      gap: var(--space-3);
     }
 
     .nav_search_btn {
@@ -302,7 +323,6 @@ const { render = true, overlap = false } = Astro.props;
     .nav_actions {
       display: flex;
       align-items: center;
-      gap: var(--space-2);
       gap: 2px;
       height: 2.25rem;
       padding: 0 4px;
@@ -361,76 +381,16 @@ const { render = true, overlap = false } = Astro.props;
       display: block;
     }
 
-    .nav_logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      width: auto;
-      text-decoration: none;
-      transition: opacity var(--hover-duration) var(--hover-ease);
-      @media (hover: hover) {
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-    }
-
-    .nav_logo img {
-      width: 1.875rem;
-      height: 1.875rem;
-      max-width: 1.875rem;
-      max-height: 1.875rem;
-      width: 1.75rem;
-      height: 1.75rem;
-      max-width: 1.75rem;
-      max-height: 1.75rem;
-      object-fit: contain;
-      flex-shrink: 0;
-      border-radius: var(--radius-small);
-    }
-
-    .nav_site_title {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
-    }
-
-    .theme_toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--radius-pill);
-      background-color: var(--background-2);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 0.875rem;
-      line-height: 1;
-      transition:
-        background-color var(--hover-duration) var(--hover-ease),
-        border-color var(--hover-duration) var(--hover-ease);
-      @media (hover: hover) {
-        &:hover {
-          background-color: var(--background-3);
-          border-color: var(--brand-500);
-        }
-      }
-    }
-
     .nav_toggle {
       --_icon-width: 1.25rem;
       --_bar-gap: 0.375rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 2.25rem;
-      min-height: var(--nav-height);
-      margin-right: calc((2.25rem - var(--_icon-width)) / -2);
+      width: 1.875rem;
+      height: 1.875rem;
       color: inherit;
-      border-radius: var(--radius-small);
+      border-radius: var(--radius-pill);
       transition: opacity var(--hover-duration) var(--hover-ease);
       @media (hover: hover) {
         &:hover {
@@ -482,7 +442,7 @@ const { render = true, overlap = false } = Astro.props;
       overflow-y: auto;
       overscroll-behavior: contain;
       background-color: var(--background);
-      border-bottom: var(--border-width) solid var(--border);
+      border-bottom: 1px solid var(--divider, var(--border));
       transition:
         grid-template-rows var(--open-duration) var(--open-ease),
         visibility var(--open-duration) var(--open-ease);
