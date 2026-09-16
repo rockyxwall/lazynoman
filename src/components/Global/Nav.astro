@@ -125,7 +125,9 @@ const { render = true, overlap = false } = Astro.props;
       display: flex;
       justify-content: center;
       padding-inline: var(--site-margin);
-      background-color: var(--background);
+      background-color: color-mix(in srgb, var(--background) 82%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       color: var(--text);
       border-bottom: var(--border-width) solid var(--border);
 
@@ -195,7 +197,7 @@ const { render = true, overlap = false } = Astro.props;
       width: 2rem;
       height: 2rem;
       border: var(--border-width) solid var(--border);
-      border-radius: var(--radius-small);
+      border-radius: var(--radius-pill);
       background-color: var(--background-2);
       color: var(--text);
       cursor: pointer;
@@ -310,17 +312,17 @@ const { render = true, overlap = false } = Astro.props;
     .nav_link {
       display: block;
       padding-block: var(--space-3);
-      color: color-mix(in lab, currentcolor 60%, transparent);
+      color: var(--text-2);
       text-decoration: none;
-      text-underline-offset: 0.4em;
-      text-decoration-thickness: var(--border-width);
+      font-weight: 500;
       transition: color var(--hover-duration) var(--hover-ease);
       &[aria-current="page"] {
-        color: var(--text);
+        color: var(--brand-400);
+        font-weight: 600;
       }
       @media (hover: hover) {
         &:hover {
-          color: var(--text);
+          color: var(--brand-400);
         }
       }
     }
@@ -358,7 +360,8 @@ const { render = true, overlap = false } = Astro.props;
       .nav_link {
         padding-block: 0;
         &[aria-current="page"] {
-          text-decoration: underline;
+          text-decoration: none;
+          color: var(--brand-400);
         }
       }
     }

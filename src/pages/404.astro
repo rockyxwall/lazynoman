@@ -1,11 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Section from "@/components/Wrapper/Section.astro";
-import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
-import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
-import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
 import Button from "@/components/Button.astro";
 ---
 
@@ -15,17 +9,18 @@ import Button from "@/components/Button.astro";
   canonical="/404.html"
   robots="noindex, nofollow"
 >
-  <Section class="flex-grow">
-    <ContentWrapper centered={true}>
-      <Eyebrow>404</Eyebrow>
-      <Heading tag="h1">That page wandered off.</Heading>
-      <Paragraph variant="large">
+  <section class="section flex-grow">
+    <div class="container alignment-center">
+      <p class="eyebrow text-style-eyebrow">404</p>
+      <h1 class="heading text-style-h1">That page wandered off.</h1>
+      <p class="text text-style-large">
         Try a search, browse the latest posts, or head back home.
-      </Paragraph>
-      <ButtonWrapper>
+      </p>
+      <div class="button-wrapper">
         <Button element="link" href="/search/">Search the site</Button>
-        <Button element="link" href="/" emphasis="secondary">Return home</Button>
-      </ButtonWrapper>
-    </ContentWrapper>
-  </Section>
+        <Button element="link" href="/" emphasis="secondary">Return home</Button
+        >
+      </div>
+    </div>
+  </section>
 </BaseLayout>

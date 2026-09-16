@@ -1,10 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Section from "@/components/Wrapper/Section.astro";
-import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
-import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
 import Button from "@/components/Button.astro";
 ---
 
@@ -13,14 +8,14 @@ import Button from "@/components/Button.astro";
   description="Get LazyNoman updates and new review announcements"
   canonical="/newsletter/"
 >
-  <Section>
-    <ContentWrapper>
-      <Eyebrow>Stay current</Eyebrow>
-      <Heading tag="h1">Be the first to know</Heading>
-      <Paragraph variant="large">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow text-style-eyebrow">Stay current</p>
+      <h1 class="heading text-style-h1">Be the first to know</h1>
+      <p class="text text-style-large">
         Get updates, new review drops, and curated webnovel tier lists directly
         to your inbox.
-      </Paragraph>
+      </p>
       <form
         class="display-flex flex-direction-column gap-3 width-100 padding-all-large background-2 radius-main"
         data-newsletter-form
@@ -58,11 +53,15 @@ import Button from "@/components/Button.astro";
           You are signing up to receive updates from LazyNoman.
         </p>
       </form>
-    </ContentWrapper>
-  </Section>
+    </div>
+  </section>
   <script>
-    const form = document.querySelector<HTMLFormElement>("[data-newsletter-form]");
-    const notice = document.querySelector<HTMLElement>("[data-newsletter-notice]");
+    const form = document.querySelector<HTMLFormElement>(
+      "[data-newsletter-form]",
+    );
+    const notice = document.querySelector<HTMLElement>(
+      "[data-newsletter-notice]",
+    );
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
       if (notice) notice.hidden = false;

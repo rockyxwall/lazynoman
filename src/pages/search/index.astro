@@ -1,8 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Section from "@/components/Wrapper/Section.astro";
-import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
-import Heading from "@/components/Typography/Heading.astro";
 import Button from "@/components/Button.astro";
 ---
 
@@ -12,11 +9,17 @@ import Button from "@/components/Button.astro";
   canonical="/search/"
   robots="noindex, follow"
 >
-  <Section>
-    <ContentWrapper>
-      <Heading tag="h1">Search</Heading>
-      <form role="search" data-search-form class="display-flex flex-direction-column gap-3 width-100">
-        <label for="search-query" class="text-style-small">Search reviews and posts</label>
+  <section class="section">
+    <div class="container">
+      <h1 class="heading text-style-h1">Search</h1>
+      <form
+        role="search"
+        data-search-form
+        class="display-flex flex-direction-column gap-3 width-100"
+      >
+        <label for="search-query" class="text-style-small"
+          >Search reviews and posts</label
+        >
         <div class="display-flex gap-2 width-100">
           <input
             id="search-query"
@@ -28,12 +31,20 @@ import Button from "@/components/Button.astro";
           <Button type="submit">Search</Button>
         </div>
       </form>
-      <p class="text-style-small color-muted" aria-live="polite" data-search-status>
+      <p
+        class="text-style-small color-muted"
+        aria-live="polite"
+        data-search-status
+      >
         Enter a search term.
       </p>
-      <div class="display-flex flex-direction-column gap-4 width-100" data-search-results></div>
-    </ContentWrapper>
-  </Section>
+      <div
+        class="display-flex flex-direction-column gap-4 width-100"
+        data-search-results
+      >
+      </div>
+    </div>
+  </section>
   <script>
     const form = document.querySelector<HTMLFormElement>("[data-search-form]");
     const input = document.querySelector<HTMLInputElement>("#search-query");

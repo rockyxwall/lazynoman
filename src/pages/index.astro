@@ -1,100 +1,137 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostCard from "../components/PostCard.astro";
-import Section from "@/components/Wrapper/Section.astro";
-import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
-import Grid from "@/components/Wrapper/Grid.astro";
-import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
 import Button from "@/components/Button.astro";
-import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
-import Card from "@/components/Item/Card.astro";
-import { getAllPosts, getPublishedPosts, homepagePosts, taxonomy } from "../lib/content";
+import {
+  getAllPosts,
+  getPublishedPosts,
+  homepagePosts,
+  taxonomy,
+} from "../lib/content";
 
 const allPosts = await getAllPosts();
 const posts = await getPublishedPosts();
 const featured = homepagePosts(allPosts);
-const featuredImage = featured[0]?.data.image ? `/${featured[0].data.image.replace(/^\//, "")}` : undefined;
+const featuredImage = featured[0]?.data.image
+  ? `/${featured[0].data.image.replace(/^\//, "")}`
+  : undefined;
 const topics = [...taxonomy(posts, "categories").entries()]
-  .map(([slug, group]) => ({ slug, name: group.name, count: group.posts.length }))
-  .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name))
+  .map(([slug, group]) => ({
+    slug,
+    name: group.name,
+    count: group.posts.length,
+  }))
+  .sort(
+    (left, right) =>
+      right.count - left.count || left.name.localeCompare(right.name),
+  )
   .slice(0, 8);
 ---
 
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
-  <Section paddingBottom="small">
-    <ContentWrapper>
-      <Eyebrow>Webnovels, Anime & Gaming</Eyebrow>
-      <Heading tag="h1">Honest reviews, recommendations, and guides.</Heading>
-      <Paragraph variant="large">Webnovels, light novels, anime, manga, games, tier lists, and top picks — zero fluff.</Paragraph>
-    </ContentWrapper>
-  </Section>
+  <section class="section padding-bottom-small">
+    <div class="container">
+      <p class="eyebrow text-style-eyebrow">Webnovels, Anime & Gaming</p>
+      <h1 class="heading text-style-h1">
+        Honest reviews, recommendations, and guides.
+      </h1>
+      <p class="text text-style-large">
+        Webnovels, light novels, anime, manga, games, tier lists, and top picks
+        — zero fluff.
+      </p>
+    </div>
+  </section>
 
-  <Section paddingTop="small" paddingBottom="small">
-    <ContentWrapper>
-      <Heading tag="h2">Featured Posts</Heading>
-      <Grid small={1} medium={2} large={3}>
-        {featured.map((post, index) => <PostCard post={post} heading="h3" priority={index === 0} />)}
-      </Grid>
-    </ContentWrapper>
-  </Section>
+  <section class="section padding-top-small padding-bottom-small">
+    <div class="container">
+      <h2 class="heading text-style-h2">Featured Posts</h2>
+      <div class="wotaku-grid">
+        {
+          featured.map((post, index) => (
+            <PostCard post={post} heading="h3" priority={index === 0} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-  <Section paddingTop="small" paddingBottom="small">
-    <ContentWrapper>
-      <Heading tag="h2">Explore Topics</Heading>
-      <ButtonWrapper>
-        {topics.map((topic) => (
-          <Button element="link" href={`/categories/${topic.slug}/`} emphasis="secondary" size="small">
-            {topic.name} ({topic.count})
-          </Button>
-        ))}
-      </ButtonWrapper>
-    </ContentWrapper>
-  </Section>
+  <section class="section padding-top-small padding-bottom-small">
+    <div class="container">
+      <h2 class="heading text-style-h2">Explore Topics</h2>
+      <div class="button-wrapper">
+        {
+          topics.map((topic) => (
+            <Button
+              element="link"
+              href={`/categories/${topic.slug}/`}
+              emphasis="secondary"
+              size="small"
+            >
+              {topic.name} ({topic.count})
+            </Button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-  <Section paddingTop="small" paddingBottom="small">
-    <ContentWrapper>
-      <Heading tag="h2">Latest Posts</Heading>
-      <Grid small={1} medium={2} large={3}>
+  <section class="section padding-top-small padding-bottom-small">
+    <div class="container">
+      <h2 class="heading text-style-h2">Latest Posts</h2>
+      <div class="wotaku-grid">
         {posts.slice(0, 6).map((post) => <PostCard post={post} heading="h3" />)}
-      </Grid>
-      <ButtonWrapper>
+      </div>
+      <div class="button-wrapper">
         <Button element="link" href="/posts/">Browse all posts →</Button>
-      </ButtonWrapper>
-    </ContentWrapper>
-  </Section>
+      </div>
+    </div>
+  </section>
 
-  <Section paddingTop="small" paddingBottom="medium" aria-labelledby="hub-heading">
-    <ContentWrapper>
-      <Eyebrow>Quick Navigation</Eyebrow>
-      <Heading tag="h2" id="hub-heading">Explore the Archive</Heading>
-      <Grid small={1} medium={2} large={4}>
-        <Card
-          heading="All Posts"
-          text="Browse full catalog of posts and reviews."
-          buttonLabel="Browse posts →"
-          buttonHref="/posts/"
-        />
-        <Card
-          heading="Topics"
-          text="Filter by Novels, Anime, Manga, Games, Recommendations, and more."
-          buttonLabel="Browse topics →"
-          buttonHref="/categories/"
-        />
-        <Card
-          heading="Tags"
-          text="Browse all specific tropes, character traits, and tags."
-          buttonLabel="Browse tags →"
-          buttonHref="/tags/"
-        />
-        <Card
-          heading="RSS Feed"
-          text="Subscribe to latest updates in your favorite RSS reader."
-          buttonLabel="Get feed →"
-          buttonHref="/rss/"
-        />
-      </Grid>
-    </ContentWrapper>
-  </Section>
+  <section
+    class="section padding-top-small padding-bottom-medium"
+    aria-labelledby="hub-heading"
+  >
+    <div class="container">
+      <p class="eyebrow text-style-eyebrow">Quick Navigation</p>
+      <h2 class="heading text-style-h2" id="hub-heading">
+        Explore the Archive
+      </h2>
+      <div class="wotaku-grid grid-4">
+        <a href="/posts/" class="wotaku-card quick-card">
+          <div class="card-body">
+            <h3 class="card-title">All Posts</h3>
+            <p class="card-text">Browse full catalog of posts and reviews.</p>
+            <span class="card-cta">Browse posts →</span>
+          </div>
+        </a>
+        <a href="/categories/" class="wotaku-card quick-card">
+          <div class="card-body">
+            <h3 class="card-title">Topics</h3>
+            <p class="card-text">
+              Filter by Novels, Anime, Manga, Games, Recommendations, and more.
+            </p>
+            <span class="card-cta">Browse topics →</span>
+          </div>
+        </a>
+        <a href="/tags/" class="wotaku-card quick-card">
+          <div class="card-body">
+            <h3 class="card-title">Tags</h3>
+            <p class="card-text">
+              Browse all specific tropes, character traits, and tags.
+            </p>
+            <span class="card-cta">Browse tags →</span>
+          </div>
+        </a>
+        <a href="/rss/" class="wotaku-card quick-card">
+          <div class="card-body">
+            <h3 class="card-title">RSS Feed</h3>
+            <p class="card-text">
+              Subscribe to latest updates in your favorite RSS reader.
+            </p>
+            <span class="card-cta">Get feed →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -1,7 +1,6 @@
 ---
 import type { Post } from "../lib/content";
 import { displayDate, summary } from "../lib/content";
-import Card from "@/components/Item/Card.astro";
 
 interface Props {
   post: Post;
@@ -9,24 +8,39 @@ interface Props {
   priority?: boolean;
 }
 
-const { post, heading = "h2" } = Astro.props;
+const { post, heading = "h2", priority = false } = Astro.props;
 const image = post.data.image
   ? `/${post.data.image.replace(/^\//, "")}`
   : "/images/bannerbackground.webp";
 const category = post.data.categories[0];
-const eyebrowText = category
-  ? `${category} · ${displayDate(post)}`
-  : displayDate(post);
+const HeadingTag = heading;
 ---
 
-<Card
-  variant="stacked"
-  image={image}
-  imageAlt={`${post.data.title} featured image`}
-  eyebrow={eyebrowText}
-  heading={post.data.title}
-  headingTag={heading}
-  text={summary(post, 150)}
-  buttonLabel="Read review"
-  buttonHref={post.data.url}
-/>
+<article class="wotaku-card">
+  <a href={post.data.url} class="card-link" aria-label={post.data.title}>
+    <div class="card-visual">
+      <img
+        src={image}
+        alt={`${post.data.title} featured image`}
+        loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
+        fetchpriority={priority ? "high" : undefined}
+        width="1200"
+        height="675"
+      />
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        {category && <span class="card-badge">{category}</span>}
+        <time datetime={post.data.date} class="card-date"
+          >{displayDate(post)}</time
+        >
+      </div>
+      <HeadingTag class="card-title">{post.data.title}</HeadingTag>
+      <p class="card-text">{summary(post, 140)}</p>
+      <span class="card-cta">
+        Read review <span aria-hidden="true">→</span>
+      </span>
+    </div>
+  </a>
+</article>

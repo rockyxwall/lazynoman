@@ -1,7 +1,6 @@
 ---
 import type { Post } from "../lib/content";
 import PostCard from "./PostCard.astro";
-import Grid from "@/components/Wrapper/Grid.astro";
 
 interface Props {
   posts: Post[];
@@ -12,7 +11,7 @@ interface Props {
 const { posts, heading = "h2", prioritizeFirst = false } = Astro.props;
 ---
 
-<Grid small={1} medium={2} large={3}>
+<div class="wotaku-grid">
   {
     posts.map((post, index) => (
       <PostCard
@@ -22,4 +21,4 @@ const { posts, heading = "h2", prioritizeFirst = false } = Astro.props;
       />
     ))
   }
-</Grid>
+</div>

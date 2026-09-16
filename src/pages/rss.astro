@@ -1,13 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Section from "@/components/Wrapper/Section.astro";
-import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
-import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
-import Card from "@/components/Item/Card.astro";
 import Button from "@/components/Button.astro";
-import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
 import { getPublishedPosts, taxonomy } from "../lib/content";
 
 const categories = [
@@ -21,35 +14,39 @@ const categories = [
   canonical="/rss/"
   robots="noindex, follow"
 >
-  <Section>
-    <ContentWrapper>
-      <Eyebrow>Subscribe your way</Eyebrow>
-      <Heading tag="h1">RSS Feeds</Heading>
-      <Paragraph variant="large">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow text-style-eyebrow">Subscribe your way</p>
+      <h1 class="heading text-style-h1">RSS Feeds</h1>
+      <p class="text text-style-large">
         Follow every post or choose a topic-specific feed.
-      </Paragraph>
+      </p>
 
-      <Card
-        heading="All posts"
-        text="Subscribe to the main RSS feed for all updates."
-        buttonLabel="Subscribe to feed"
-        buttonHref="/index.xml"
-      />
+      <a href="/index.xml" class="wotaku-card quick-card">
+        <div class="card-body">
+          <h2 class="card-title">All posts</h2>
+          <p class="card-text">
+            Subscribe to the main RSS feed for all updates.
+          </p>
+          <span class="card-cta">Subscribe to feed →</span>
+        </div>
+      </a>
 
-      <Heading tag="h2">Topics</Heading>
-      <ButtonWrapper>
+      <h2 class="heading text-style-h2">Topics</h2>
+      <div class="button-wrapper">
         {
           categories.map(([slug, group]) => (
             <Button
               element="link"
               href={`/categories/${slug}/index.xml`}
               emphasis="secondary"
+              size="small"
             >
               {group.name} RSS
             </Button>
           ))
         }
-      </ButtonWrapper>
-    </ContentWrapper>
-  </Section>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
