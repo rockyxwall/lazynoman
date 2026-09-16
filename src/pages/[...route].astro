@@ -228,6 +228,14 @@ const feed =
               </h1>
 
               <div class="display-flex align-center flex-flow-wrap gap-3 margin-block-small text-style-small color-muted">
+                {descriptor.post.data.categories.map((category) => (
+                  <a
+                    href={`/categories/${taxonomySlug(category)}/`}
+                    class="VPBadge info"
+                  >
+                    {category}
+                  </a>
+                ))}
                 <span class="display-flex align-center gap-1">
                   <svg
                     width="14"
@@ -240,12 +248,10 @@ const feed =
                     stroke-linejoin="round"
                     aria-hidden="true"
                   >
-                    <>
-                      <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                      <line x1="16" x2="16" y1="2" y2="6" />
-                      <line x1="8" x2="8" y1="2" y2="6" />
-                      <line x1="3" x2="21" y1="10" y2="10" />
-                    </>
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
                   </svg>
                   <time datetime={descriptor.post.data.date}>
                     {displayDate(descriptor.post)}
@@ -264,24 +270,11 @@ const feed =
                     stroke-linejoin="round"
                     aria-hidden="true"
                   >
-                    <>
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </>
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
                   </svg>
                   {readingMinutes(descriptor.post)} min read
                 </span>
-              </div>
-
-              <div class="display-flex align-center flex-flow-wrap gap-2 margin-bottom-4">
-                {descriptor.post.data.categories.map((category) => (
-                  <a
-                    href={`/categories/${taxonomySlug(category)}/`}
-                    class="VPBadge info"
-                  >
-                    {category}
-                  </a>
-                ))}
               </div>
 
               {articleImage && (

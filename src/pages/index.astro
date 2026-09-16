@@ -29,7 +29,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
 ---
 
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
-  <section class="section padding-bottom-0">
+  <section class="section">
     <div class="wotaku-hero">
       <div class="wotaku-hero-badge">
         <span class="VPBadge info">LazyNoman</span>
@@ -49,158 +49,165 @@ const topics = [...taxonomy(posts, "categories").entries()]
         </Button>
       </div>
     </div>
-  </section>
 
-  <section class="section padding-top-small padding-bottom-small">
-    <div class="container">
-      <h2 class="heading text-style-h2">Featured Posts</h2>
-      <div class="wotaku-grid">
-        {
-          featured.map((post, index) => (
-            <PostCard post={post} heading="h3" priority={index === 0} />
-          ))
-        }
+    <div class="container home-content">
+      <div class="home-section width-100">
+        <div class="display-flex align-center justify-between margin-bottom-4">
+          <h2 class="heading text-style-h2 margin-bottom-0">Featured Posts</h2>
+          <a href="/posts/" class="footer_link text-style-small">Browse all →</a
+          >
+        </div>
+        <div class="wotaku-grid">
+          {
+            featured.map((post, index) => (
+              <PostCard post={post} heading="h3" priority={index === 0} />
+            ))
+          }
+        </div>
       </div>
-    </div>
-  </section>
 
-  <section class="section padding-top-small padding-bottom-small">
-    <div class="container">
-      <h2 class="heading text-style-h2">Explore Topics</h2>
-      <div class="button-wrapper">
-        {
-          topics.map((topic) => (
-            <Button
-              element="link"
-              href={`/categories/${topic.slug}/`}
-              emphasis="secondary"
-              size="small"
-            >
-              {topic.name} ({topic.count})
-            </Button>
-          ))
-        }
+      <div class="home-section width-100">
+        <h2 class="heading text-style-h2 margin-bottom-4">Explore Topics</h2>
+        <div class="button-wrapper margin-top-0">
+          {
+            topics.map((topic) => (
+              <Button
+                element="link"
+                href={`/categories/${topic.slug}/`}
+                emphasis="secondary"
+                size="small"
+              >
+                {topic.name} ({topic.count})
+              </Button>
+            ))
+          }
+        </div>
       </div>
-    </div>
-  </section>
 
-  <section class="section padding-top-small padding-bottom-small">
-    <div class="container">
-      <h2 class="heading text-style-h2">Latest Posts</h2>
-      <div class="wotaku-grid">
-        {posts.slice(0, 6).map((post) => <PostCard post={post} heading="h3" />)}
+      <div class="home-section width-100">
+        <div class="display-flex align-center justify-between margin-bottom-4">
+          <h2 class="heading text-style-h2 margin-bottom-0">Latest Posts</h2>
+          <a href="/posts/" class="footer_link text-style-small"
+            >View all posts →</a
+          >
+        </div>
+        <div class="wotaku-grid">
+          {
+            posts
+              .slice(0, 6)
+              .map((post) => <PostCard post={post} heading="h3" />)
+          }
+        </div>
       </div>
-      <div class="button-wrapper">
-        <Button element="link" href="/posts/">Browse all posts →</Button>
-      </div>
-    </div>
-  </section>
 
-  <section
-    class="section padding-top-small padding-bottom-medium"
-    aria-labelledby="hub-heading"
-  >
-    <div class="container">
-      <h2 class="heading text-style-h2" id="hub-heading">
-        Explore the Archive
-      </h2>
-      <div class="wotaku-grid grid-4">
-        <a href="/posts/" class="feature-card">
-          <div class="feature-card-inner">
-            <div class="feature-icon-box" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path
-                  d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"
-                ></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg
-              >
+      <div class="home-section width-100" aria-labelledby="hub-heading">
+        <h2 class="heading text-style-h2 margin-bottom-4" id="hub-heading">
+          Explore the Archive
+        </h2>
+        <div class="wotaku-grid grid-4">
+          <a href="/posts/" class="feature-card">
+            <div class="feature-card-inner">
+              <div class="feature-icon-box" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"
+                  ></path>
+                  <path d="M6 6h10"></path>
+                  <path d="M6 10h10"></path>
+                </svg>
+              </div>
+              <h3 class="card-title">All Posts</h3>
+              <p class="card-text">
+                Browse full catalog of posts, reviews, and tier lists.
+              </p>
             </div>
-            <h3 class="card-title">All Posts</h3>
-            <p class="card-text">
-              Browse full catalog of posts, reviews, and tier lists.
-            </p>
-          </div>
-        </a>
-        <a href="/categories/" class="feature-card">
-          <div class="feature-card-inner">
-            <div class="feature-icon-box" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path
-                  d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"
-                ></path><circle cx="7" cy="7" r=".5" fill="currentColor"
-                ></circle></svg
-              >
+          </a>
+          <a href="/categories/" class="feature-card">
+            <div class="feature-card-inner">
+              <div class="feature-icon-box" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"
+                  ></path>
+                  <circle cx="7" cy="7" r=".5" fill="currentColor"></circle>
+                </svg>
+              </div>
+              <h3 class="card-title">Topics</h3>
+              <p class="card-text">
+                Filter by Novels, Anime, Manga, Games, and Recommendations.
+              </p>
             </div>
-            <h3 class="card-title">Topics</h3>
-            <p class="card-text">
-              Filter by Novels, Anime, Manga, Games, and Recommendations.
-            </p>
-          </div>
-        </a>
-        <a href="/tags/" class="feature-card">
-          <div class="feature-card-inner">
-            <div class="feature-icon-box" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
-                ></path></svg
-              >
+          </a>
+          <a href="/tags/" class="feature-card">
+            <div class="feature-card-inner">
+              <div class="feature-icon-box" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="card-title">Tags</h3>
+              <p class="card-text">
+                Browse all specific tropes, character traits, and subgenres.
+              </p>
             </div>
-            <h3 class="card-title">Tags</h3>
-            <p class="card-text">
-              Browse all specific tropes, character traits, and subgenres.
-            </p>
-          </div>
-        </a>
-        <a href="/rss/" class="feature-card">
-          <div class="feature-card-inner">
-            <div class="feature-icon-box" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path d="M4 11a9 9 0 0 1 9 9"></path><path
-                  d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"
-                ></circle></svg
-              >
+          </a>
+          <a href="/rss/" class="feature-card">
+            <div class="feature-card-inner">
+              <div class="feature-icon-box" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 11a9 9 0 0 1 9 9"></path>
+                  <path d="M4 4a16 16 0 0 1 16 16"></path>
+                  <circle cx="5" cy="19" r="1"></circle>
+                </svg>
+              </div>
+              <h3 class="card-title">RSS Feed</h3>
+              <p class="card-text">
+                Subscribe to latest updates in your favorite RSS reader.
+              </p>
             </div>
-            <h3 class="card-title">RSS Feed</h3>
-            <p class="card-text">
-              Subscribe to latest updates in your favorite RSS reader.
-            </p>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </section>

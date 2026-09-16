@@ -61,6 +61,28 @@ const { render = true, overlap = false } = Astro.props;
           </a>
           <div class="nav_actions">
             <a
+              href="/search/"
+              class="nav_action_btn nav_action_search"
+              aria-label="Search"
+              title="Search"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </a>
+            <a
               href="/rss/"
               class="nav_action_btn"
               aria-label="RSS Feed"
@@ -359,6 +381,13 @@ const { render = true, overlap = false } = Astro.props;
           color: var(--text);
           background-color: color-mix(in srgb, var(--text) 10%, transparent);
         }
+      }
+    }
+
+    .nav_action_search {
+      display: inline-flex;
+      @media (width >= 48rem) {
+        display: none;
       }
     }
 

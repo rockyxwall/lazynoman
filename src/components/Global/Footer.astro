@@ -73,13 +73,10 @@ const { render = true } = Astro.props;
     .footer_wrap {
       display: flex;
       justify-content: center;
-      padding-block: var(--section-space-small);
       padding-block: var(--space-6, 2rem);
       padding-inline: var(--site-margin);
-      background-color: var(--background);
       background-color: var(--background-alt);
       color: var(--text);
-      border-top: var(--border-width) solid var(--border);
       border-top: 1px solid var(--divider);
     }
 
@@ -118,18 +115,18 @@ const { render = true } = Astro.props;
       transition: color var(--hover-duration) var(--hover-ease);
       @media (hover: hover) {
         &:hover {
-          color: var(--brand-500);
+          color: var(--text);
         }
       }
     }
 
     .footer_bottom {
       padding-top: var(--space-4);
-      border-top: var(--border-width) solid var(--border);
+      border-top: 1px solid var(--divider);
     }
 
     .footer_copyright {
-      color: var(--text-2);
+      color: var(--text-3, var(--text-2));
     }
   }
 </style>
