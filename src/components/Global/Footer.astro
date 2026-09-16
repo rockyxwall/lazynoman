@@ -16,12 +16,36 @@ const { render = true } = Astro.props;
         <div class="footer_top">
           <nav aria-label="Footer">
             <ul class="footer_links">
-              <li><a class="footer_link" href="/posts/">Posts</a></li>
-              <li><a class="footer_link" href="/categories/">Topics</a></li>
-              <li><a class="footer_link" href="/tags/">Tags</a></li>
-              <li><a class="footer_link" href="/rss/">RSS</a></li>
-              <li><a class="footer_link" href="/privacy/">Privacy</a></li>
-              <li><a class="footer_link" href="/terms-conditions/">Terms</a></li>
+              <li>
+                <a class="footer_link" href="/posts/">
+                  Posts
+                </a>
+              </li>
+              <li>
+                <a class="footer_link" href="/categories/">
+                  Topics
+                </a>
+              </li>
+              <li>
+                <a class="footer_link" href="/tags/">
+                  Tags
+                </a>
+              </li>
+              <li>
+                <a class="footer_link" href="/rss/">
+                  RSS
+                </a>
+              </li>
+              <li>
+                <a class="footer_link" href="/privacy/">
+                  Privacy
+                </a>
+              </li>
+              <li>
+                <a class="footer_link" href="/terms-conditions/">
+                  Terms
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -85,11 +109,13 @@ const { render = true } = Astro.props;
 
     .footer_link {
       color: var(--text-2);
-      text-decoration: none;
+      text-decoration-line: underline;
+      text-decoration-style: dashed;
+      text-underline-offset: 5px;
       transition: color var(--hover-duration) var(--hover-ease);
       @media (hover: hover) {
         &:hover {
-          color: var(--text);
+          color: var(--brand-500);
         }
       }
     }

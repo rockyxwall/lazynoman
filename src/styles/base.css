@@ -29,8 +29,10 @@
   --brand-950: oklch(0.186 0.029 247.31);
   --brand-text: #ffffff;
 
-  /* Typography primitives */
-  --primary-family: "PT Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Typography primitives - Wotaku System */
+  --primary-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    "PT Sans", sans-serif;
   --primary-regular: 400;
   --primary-medium: 500;
   --primary-bold: 700;
@@ -666,6 +668,23 @@
   --link-border: transparent;
   --link-text-hover: var(--brand-300);
   --link-border-hover: var(--brand-400);
+
+  /* Wotaku Custom Block & Badge Tokens */
+  --custom-block-info-bg: rgba(30, 58, 138, 0.15);
+  --custom-block-info-border: #1e3a8a;
+  --custom-block-info-text: #93c5fd;
+
+  --custom-block-tip-bg: rgba(22, 101, 52, 0.15);
+  --custom-block-tip-border: #166534;
+  --custom-block-tip-text: #bbf7d0;
+
+  --custom-block-warning-bg: rgba(133, 77, 14, 0.15);
+  --custom-block-warning-border: #854d0e;
+  --custom-block-warning-text: #fef08a;
+
+  --custom-block-danger-bg: rgba(153, 27, 27, 0.15);
+  --custom-block-danger-border: #991b1b;
+  --custom-block-danger-text: #fca5a5;
 }
 
 :root[data-theme="light"],
@@ -723,6 +742,23 @@
   --link-border: transparent;
   --link-text-hover: var(--brand-600);
   --link-border-hover: var(--brand-500);
+
+  /* Wotaku Custom Block & Badge Tokens */
+  --custom-block-info-bg: #eff6ff;
+  --custom-block-info-border: #93c5fd;
+  --custom-block-info-text: #1e40af;
+
+  --custom-block-tip-bg: #f0fdf4;
+  --custom-block-tip-border: #86efac;
+  --custom-block-tip-text: #166534;
+
+  --custom-block-warning-bg: #fefce8;
+  --custom-block-warning-border: #fde047;
+  --custom-block-warning-text: #854d0e;
+
+  --custom-block-danger-bg: #fef2f2;
+  --custom-block-danger-border: #fca5a5;
+  --custom-block-danger-text: #991b1b;
 }
 
 .theme-brand {
