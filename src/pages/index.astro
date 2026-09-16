@@ -23,7 +23,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
 ---
 
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
-  <Section>
+  <Section paddingBottom="small">
     <ContentWrapper>
       <Eyebrow>Webnovels, Anime & Gaming</Eyebrow>
       <Heading tag="h1">Honest reviews, recommendations, and guides.</Heading>
@@ -31,7 +31,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
     </ContentWrapper>
   </Section>
 
-  <Section>
+  <Section paddingTop="small" paddingBottom="small">
     <ContentWrapper>
       <Heading tag="h2">Featured Posts</Heading>
       <Grid small={1} medium={2} large={3}>
@@ -40,7 +40,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
     </ContentWrapper>
   </Section>
 
-  <Section>
+  <Section paddingTop="small" paddingBottom="small">
     <ContentWrapper>
       <Heading tag="h2">Explore Topics</Heading>
       <ButtonWrapper>
@@ -53,7 +53,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
     </ContentWrapper>
   </Section>
 
-  <Section>
+  <Section paddingTop="small" paddingBottom="small">
     <ContentWrapper>
       <Heading tag="h2">Latest Posts</Heading>
       <Grid small={1} medium={2} large={3}>
@@ -65,7 +65,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
     </ContentWrapper>
   </Section>
 
-  <Section aria-labelledby="hub-heading">
+  <Section paddingTop="small" paddingBottom="medium" aria-labelledby="hub-heading">
     <ContentWrapper>
       <Eyebrow>Quick Navigation</Eyebrow>
       <Heading tag="h2" id="hub-heading">Explore the Archive</Heading>

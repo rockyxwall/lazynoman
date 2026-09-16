@@ -51,84 +51,93 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
 ---
 <BaseLayout title={title} description={description} canonical={descriptor.route} image={descriptor.kind === "post" ? descriptor.post.data.image : undefined} type={descriptor.kind === "post" ? "article" : "website"} publishedTime={descriptor.kind === "post" ? descriptor.post.data.date : undefined} preloadImage={listingImage} previous={previous} next={next} robots={robots} feed={feed}>
   {descriptor.kind === "post" && (
-    <Section>
-      <ContentWrapper>
-        <Eyebrow>Post</Eyebrow>
-        <Heading tag="h1">{descriptor.post.data.title}</Heading>
-        <Paragraph class="text-style-small color-muted">
-          <time datetime={descriptor.post.data.date}>{displayDate(descriptor.post)}</time> · {readingMinutes(descriptor.post)} min read
-        </Paragraph>
-        <ButtonWrapper>
-          {descriptor.post.data.categories.map((category) => (
-            <Button element="link" href={`/categories/${taxonomySlug(category)}/`} emphasis="secondary">
-              {category}
-            </Button>
-          ))}
-        </ButtonWrapper>
-        {articleImage && (
-          <img
-            src={articleImage}
-            data-cf-image
-            alt={`${descriptor.post.data.title} featured image`}
-            width="1200"
-            height="675"
-            class="radius-small width-100"
-          />
-        )}
-        <div class="display-flex align-center flex-flow-wrap gap-2 margin-block-small">
-          <span class="text-style-small color-muted">Share:</span>
-          <Button element="link" href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`} emphasis="secondary">X (Twitter)</Button>
-          <Button element="link" href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`} emphasis="secondary">Bluesky</Button>
-          <Button element="link" href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`} emphasis="secondary">Reddit</Button>
-        </div>
-        {toc.length > 0 && (
-          <aside class="padding-all-medium background-2 radius-small margin-block-medium width-100" aria-label="On this page">
-            <Eyebrow>On this page</Eyebrow>
-            <nav data-toc>
-              <ol class="display-flex flex-direction-column gap-1 padding-left-small">
-                {toc.map((heading) => (
-                  <li class:list={{ "margin-left-2": heading.depth === 3 }}>
-                    <a href={`#${heading.slug}`}>{heading.text}</a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          </aside>
-        )}
-        <div class="rich-text width-100 margin-block-large">
-          <Content />
-        </div>
-        {descriptor.post.data.tags.length > 0 && (
-          <div class="display-flex flex-direction-column gap-2 margin-top-large width-100">
-            <Heading tag="h2">Tags</Heading>
+    <>
+      <div class="reading-progress" data-reading-progress aria-hidden="true" />
+      <Section>
+        <div class="article-shell">
+          {toc.length > 0 && (
+            <aside class="article-toc" aria-label="On this page">
+              <details class="article-toc-details" data-responsive-toc open>
+                <summary>On this page</summary>
+                <nav data-toc>
+                  <Eyebrow>On this page</Eyebrow>
+                  <ol>
+                    {toc.map((heading) => (
+                      <li class:list={{ nested: heading.depth === 3 }}>
+                        <a href={`#${heading.slug}`}>{heading.text}</a>
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              </details>
+            </aside>
+          )}
+          <article class="reading display-flex flex-direction-column">
+            <Eyebrow>Post</Eyebrow>
+            <Heading tag="h1">{descriptor.post.data.title}</Heading>
+            <Paragraph class="text-style-small color-muted">
+              <time datetime={descriptor.post.data.date}>{displayDate(descriptor.post)}</time> · {readingMinutes(descriptor.post)} min read
+            </Paragraph>
             <ButtonWrapper>
-              {descriptor.post.data.tags.map((tag) => (
-                <Button element="link" href={`/tags/${taxonomySlug(tag)}/`} emphasis="secondary">
-                  {tag}
+              {descriptor.post.data.categories.map((category) => (
+                <Button element="link" href={`/categories/${taxonomySlug(category)}/`} emphasis="secondary">
+                  {category}
                 </Button>
               ))}
             </ButtonWrapper>
-          </div>
-        )}
-        {related.length > 0 && (
-          <div class="display-flex flex-direction-column gap-4 margin-top-large width-100" aria-labelledby="related-heading">
-            <Heading tag="h2" id="related-heading">Related posts</Heading>
-            <PostList posts={related} heading="h3" />
-          </div>
-        )}
-        <Comments />
-      </ContentWrapper>
-    </Section>
+            {articleImage && (
+              <img
+                src={articleImage}
+                data-cf-image
+                alt={`${descriptor.post.data.title} featured image`}
+                width="1200"
+                height="675"
+                class="radius-small width-100 margin-top-4"
+              />
+            )}
+            <div class="display-flex align-center flex-flow-wrap gap-2 margin-block-small">
+              <span class="text-style-small color-muted">Share:</span>
+              <Button element="link" href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`} emphasis="secondary">X (Twitter)</Button>
+              <Button element="link" href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`} emphasis="secondary">Bluesky</Button>
+              <Button element="link" href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`} emphasis="secondary">Reddit</Button>
+              <Button type="button" data-copy-page emphasis="secondary">Copy link</Button>
+            </div>
+            <div class="rich-text article-body width-100 margin-block-large">
+              <Content />
+            </div>
+            {descriptor.post.data.tags.length > 0 && (
+              <div class="display-flex flex-direction-column gap-2 margin-top-large width-100">
+                <Heading tag="h2">Tags</Heading>
+                <ButtonWrapper>
+                  {descriptor.post.data.tags.map((tag) => (
+                    <Button element="link" href={`/tags/${taxonomySlug(tag)}/`} emphasis="secondary">
+                      {tag}
+                    </Button>
+                  ))}
+                </ButtonWrapper>
+              </div>
+            )}
+            {related.length > 0 && (
+              <div class="display-flex flex-direction-column gap-4 margin-top-large width-100" aria-labelledby="related-heading">
+                <Heading tag="h2" id="related-heading">Related posts</Heading>
+                <PostList posts={related} heading="h3" />
+              </div>
+            )}
+            <Comments />
+          </article>
+        </div>
+      </Section>
+    </>
   )}
   {descriptor.kind === "page" && (
     <Section>
-      <ContentWrapper>
+      <article class="reading display-flex flex-direction-column">
         <Heading tag="h1">{descriptor.page.data.title}</Heading>
         {descriptor.page.data.description && <Paragraph variant="large">{descriptor.page.data.description}</Paragraph>}
-        <div class="rich-text width-100 margin-block-large">
+        <div class="rich-text article-body width-100 margin-block-large">
           <Content />
         </div>
-      </ContentWrapper>
+      </article>
     </Section>
   )}
   {descriptor.kind === "listing" && (

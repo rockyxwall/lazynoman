@@ -82,8 +82,16 @@ import Button from "@/components/Button.astro";
         results.replaceChildren(
           ...matches.map((item) => {
             const article = document.createElement("article");
-            article.className = "card card-body";
+            article.className =
+              "padding-all-medium background-2 radius-small display-flex flex-direction-column gap-2";
+            if (item.categories?.length) {
+              const category = document.createElement("span");
+              category.className = "text-style-small color-muted";
+              category.textContent = item.categories.join(", ");
+              article.append(category);
+            }
             const heading = document.createElement("h2");
+            heading.className = "text-style-h3";
             const link = document.createElement("a");
             link.href = item.permalink;
             link.textContent = item.title;

@@ -21,28 +21,41 @@ const { render = true, overlap = false } = Astro.props;
     <header class:list={["nav_wrap", overlap && "overlap"]}>
       <div class="nav_inner">
         <a class="nav_logo" href="/" aria-label={SITE_NAME}>
-          <img src="/images/navlogo.webp" width="38" height="38" alt={SITE_NAME} />
+          <img src="/images/navlogo.webp" width="38" height="38" alt="" />
+          <span class="nav_site_title">{SITE_NAME}</span>
         </a>
-        <button
-          class="nav_toggle"
-          type="button"
-          aria-label="Menu"
-          aria-expanded="false"
-          aria-controls="nav-menu"
-        >
-          <span class="nav_toggle_icon" />
-        </button>
-        <nav class="nav_menu" id="nav-menu" aria-label="Main">
-          <div class="nav_menu_inner">
-            <ul class="nav_links">
-              <NavLink href="/">Home</NavLink>
-              <NavLink href="/posts/">Posts</NavLink>
-              <NavLink href="/categories/">Topics</NavLink>
-              <NavLink href="/tags/">Tags</NavLink>
-              <NavLink href="/search/">Search</NavLink>
-            </ul>
+        <div class="nav_right">
+          <nav class="nav_menu" id="nav-menu" aria-label="Main">
+            <div class="nav_menu_inner">
+              <ul class="nav_links">
+                <NavLink href="/">Home</NavLink>
+                <NavLink href="/posts/">Posts</NavLink>
+                <NavLink href="/categories/">Topics</NavLink>
+                <NavLink href="/tags/">Tags</NavLink>
+                <NavLink href="/search/">Search</NavLink>
+              </ul>
+            </div>
+          </nav>
+          <div class="nav_actions">
+            <button
+              class="theme_toggle"
+              type="button"
+              data-theme-toggle
+              aria-label="Switch to light theme"
+            >
+              <span data-theme-icon aria-hidden="true">☀</span>
+            </button>
+            <button
+              class="nav_toggle"
+              type="button"
+              aria-label="Menu"
+              aria-expanded="false"
+              aria-controls="nav-menu"
+            >
+              <span class="nav_toggle_icon" />
+            </button>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   )
@@ -128,7 +141,19 @@ const { render = true, overlap = false } = Astro.props;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0 var(--space-6);
+      gap: 0 var(--space-4);
+    }
+
+    .nav_right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .nav_actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
     }
 
     /* Bar height */
@@ -140,11 +165,44 @@ const { render = true, overlap = false } = Astro.props;
     .nav_logo {
       display: flex;
       align-items: center;
-      width: 6.5rem;
+      gap: 0.6rem;
+      width: auto;
+      text-decoration: none;
       transition: opacity var(--hover-duration) var(--hover-ease);
       @media (hover: hover) {
         &:hover {
-          opacity: 0.6;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .nav_site_title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .theme_toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-small);
+      background-color: var(--background-2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      transition:
+        background-color var(--hover-duration) var(--hover-ease),
+        border-color var(--hover-duration) var(--hover-ease);
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--background-3);
+          border-color: var(--brand-500);
         }
       }
     }

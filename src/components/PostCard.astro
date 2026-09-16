@@ -13,13 +13,17 @@ const { post, heading = "h2" } = Astro.props;
 const image = post.data.image
   ? `/${post.data.image.replace(/^\//, "")}`
   : "/images/bannerbackground.webp";
+const category = post.data.categories[0];
+const eyebrowText = category
+  ? `${category} · ${displayDate(post)}`
+  : displayDate(post);
 ---
 
 <Card
   variant="stacked"
   image={image}
   imageAlt={`${post.data.title} featured image`}
-  eyebrow={displayDate(post)}
+  eyebrow={eyebrowText}
   heading={post.data.title}
   headingTag={heading}
   text={summary(post, 150)}

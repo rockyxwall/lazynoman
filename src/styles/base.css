@@ -273,14 +273,22 @@
 .theme-light .theme-invert {
   color-scheme: dark;
 
-  --background: var(--dark-900);
-  --background-2: var(--dark-800);
-  --background-3: var(--dark-700);
+  --background: #111015;
+  --background-2: #191820;
+  --background-3: #24222c;
   --background-skeleton: color-mix(in lab, currentcolor 10%, transparent);
-  --text: var(--light-100);
-  --text-2: color-mix(in lab, currentcolor 60%, transparent);
-  --border: color-mix(in lab, var(--text) 20%, transparent);
+  --text: #f4f3f7;
+  --text-2: #a6a1b2;
+  --border: #322f3d;
   --heading-accent: var(--brand-500);
+
+  /* Fallback aliases for components/Waline */
+  --accent: var(--brand-500);
+  --accent-strong: #ff5260;
+  --surface: var(--background-2);
+  --surface-2: var(--background-3);
+  --muted: var(--text-2);
+  --radius: var(--radius-small);
 
   --selection-background: var(--text);
   --selection-text: var(--background);
@@ -311,14 +319,22 @@
 .theme-brand .theme-invert {
   color-scheme: light;
 
-  --background: var(--light-300);
-  --background-2: var(--light-200);
-  --background-3: var(--light-100);
+  --background: #fdfdfd;
+  --background-2: #f4f3f6;
+  --background-3: #e8e6ed;
   --background-skeleton: color-mix(in lab, currentcolor 10%, transparent);
-  --text: var(--dark-900);
-  --text-2: color-mix(in lab, currentcolor 60%, transparent);
-  --border: color-mix(in lab, var(--text) 20%, transparent);
-  --heading-accent: color-mix(in srgb, var(--brand-500), black 20%);
+  --text: #1a1820;
+  --text-2: #645f70;
+  --border: #dfdbe6;
+  --heading-accent: var(--brand-500);
+
+  /* Fallback aliases for components/Waline */
+  --accent: var(--brand-500);
+  --accent-strong: #c92a37;
+  --surface: var(--background-2);
+  --surface-2: var(--background-3);
+  --muted: var(--text-2);
+  --radius: var(--radius-small);
 
   --selection-background: var(--text);
   --selection-text: var(--background);

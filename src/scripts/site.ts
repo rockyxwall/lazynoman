@@ -3,21 +3,24 @@ root.classList.add("js");
 
 function syncThemeControl() {
   const light = root.dataset.theme === "light";
-  const toggle = document.querySelector<HTMLButtonElement>(
-    "[data-theme-toggle]",
-  );
-  toggle?.setAttribute(
-    "aria-label",
-    `Switch to ${light ? "dark" : "light"} theme`,
-  );
-  const icon = toggle?.querySelector<HTMLElement>("[data-theme-icon]");
-  if (icon) icon.textContent = light ? "☾" : "☀";
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-theme-toggle]")
+    .forEach((toggle) => {
+      toggle.setAttribute(
+        "aria-label",
+        `Switch to ${light ? "dark" : "light"} theme`,
+      );
+      const icon = toggle.querySelector<HTMLElement>("[data-theme-icon]");
+      if (icon) icon.textContent = light ? "☾" : "☀";
+    });
 }
 
-document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {
-  root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-  localStorage.setItem("theme", root.dataset.theme);
-  syncThemeControl();
+document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+  toggle.addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+    localStorage.setItem("theme", root.dataset.theme);
+    syncThemeControl();
+  });
 });
 syncThemeControl();
 
