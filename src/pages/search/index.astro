@@ -38,11 +38,7 @@ import Button from "@/components/Button.astro";
       >
         Enter a search term.
       </p>
-      <div
-        class="display-flex flex-direction-column gap-4 width-100"
-        data-search-results
-      >
-      </div>
+      <div class="wotaku-grid" data-search-results></div>
     </div>
   </section>
   <script>
@@ -93,21 +89,39 @@ import Button from "@/components/Button.astro";
         results.replaceChildren(
           ...matches.map((item) => {
             const article = document.createElement("article");
-            article.className =
-              "padding-all-medium background-2 radius-small display-flex flex-direction-column gap-2";
+            article.className = "wotaku-card quick-card";
+            const body = document.createElement("div");
+            body.className = "card-body";
             if (item.categories?.length) {
-              const category = document.createElement("span");
-              category.className = "text-style-small color-muted";
-              category.textContent = item.categories.join(", ");
-              article.append(category);
+              const meta = document.createElement("div");
+              meta.className = "card-meta";
+              const badge = document.createElement("span");
+              badge.className = "card-badge";
+              badge.textContent = item.categories[0];
+              meta.append(badge);
+              body.append(meta);
             }
             const heading = document.createElement("h2");
-            heading.className = "text-style-h3";
+            heading.className = "card-title";
             const link = document.createElement("a");
             link.href = item.permalink;
             link.textContent = item.title;
             heading.append(link);
-            article.append(heading);
+            body.append(heading);
+            if (item.contents) {
+              const text = document.createElement("p");
+              text.className = "card-text";
+              text.textContent =
+                item.contents.length > 140
+                  ? `${item.contents.slice(0, 140)}...`
+                  : item.contents;
+              body.append(text);
+            }
+            const cta = document.createElement("span");
+            cta.className = "card-cta";
+            cta.textContent = "Read review →";
+            body.append(cta);
+            article.append(body);
             return article;
           }),
         );

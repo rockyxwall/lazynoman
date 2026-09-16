@@ -657,10 +657,10 @@
   --button-border-hover: var(--brand-400);
   --button-text-hover: #121316;
 
-  --button-2-background: rgba(255, 255, 255, 0.04);
-  --button-2-border: var(--border);
+  --button-2-background: var(--background-2);
+  --button-2-border: var(--border-strong, #3d3d3d);
   --button-2-text: var(--text);
-  --button-2-background-hover: rgba(56, 189, 248, 0.12);
+  --button-2-background-hover: var(--background-3);
   --button-2-border-hover: var(--brand-500);
   --button-2-text-hover: var(--brand-400);
 

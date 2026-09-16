@@ -29,16 +29,25 @@ const topics = [...taxonomy(posts, "categories").entries()]
 ---
 
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
-  <section class="section padding-bottom-small">
-    <div class="container">
-      <p class="eyebrow text-style-eyebrow">Webnovels, Anime & Gaming</p>
-      <h1 class="heading text-style-h1">
+  <section class="section padding-bottom-0">
+    <div class="wotaku-hero">
+      <div class="wotaku-hero-badge">
+        <span class="VPBadge info">LazyNoman</span>
+        <span>Webnovels, Anime & Gaming</span>
+      </div>
+      <h1 class="wotaku-hero-title">
         Honest reviews, recommendations, and guides.
       </h1>
-      <p class="text text-style-large">
-        Webnovels, light novels, anime, manga, games, tier lists, and top picks
-        — zero fluff.
+      <p class="wotaku-hero-description">
+        Webnovels, light novels, progression fantasy, anime, manga, games, tier
+        lists, and top picks — zero fluff.
       </p>
+      <div class="wotaku-hero-actions">
+        <Button element="link" href="/posts/">Browse Reviews →</Button>
+        <Button element="link" href="/categories/" emphasis="secondary">
+          Explore Topics
+        </Button>
+      </div>
     </div>
   </section>
 
@@ -92,43 +101,104 @@ const topics = [...taxonomy(posts, "categories").entries()]
     aria-labelledby="hub-heading"
   >
     <div class="container">
-      <p class="eyebrow text-style-eyebrow">Quick Navigation</p>
       <h2 class="heading text-style-h2" id="hub-heading">
         Explore the Archive
       </h2>
       <div class="wotaku-grid grid-4">
-        <a href="/posts/" class="wotaku-card quick-card">
-          <div class="card-body">
+        <a href="/posts/" class="feature-card">
+          <div class="feature-card-inner">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"
+                ></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg
+              >
+            </div>
             <h3 class="card-title">All Posts</h3>
-            <p class="card-text">Browse full catalog of posts and reviews.</p>
-            <span class="card-cta">Browse posts →</span>
+            <p class="card-text">
+              Browse full catalog of posts, reviews, and tier lists.
+            </p>
           </div>
         </a>
-        <a href="/categories/" class="wotaku-card quick-card">
-          <div class="card-body">
+        <a href="/categories/" class="feature-card">
+          <div class="feature-card-inner">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"
+                ></path><circle cx="7" cy="7" r=".5" fill="currentColor"
+                ></circle></svg
+              >
+            </div>
             <h3 class="card-title">Topics</h3>
             <p class="card-text">
-              Filter by Novels, Anime, Manga, Games, Recommendations, and more.
+              Filter by Novels, Anime, Manga, Games, and Recommendations.
             </p>
-            <span class="card-cta">Browse topics →</span>
           </div>
         </a>
-        <a href="/tags/" class="wotaku-card quick-card">
-          <div class="card-body">
+        <a href="/tags/" class="feature-card">
+          <div class="feature-card-inner">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
+                ></path></svg
+              >
+            </div>
             <h3 class="card-title">Tags</h3>
             <p class="card-text">
-              Browse all specific tropes, character traits, and tags.
+              Browse all specific tropes, character traits, and subgenres.
             </p>
-            <span class="card-cta">Browse tags →</span>
           </div>
         </a>
-        <a href="/rss/" class="wotaku-card quick-card">
-          <div class="card-body">
+        <a href="/rss/" class="feature-card">
+          <div class="feature-card-inner">
+            <div class="feature-icon-box" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M4 11a9 9 0 0 1 9 9"></path><path
+                  d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"
+                ></circle></svg
+              >
+            </div>
             <h3 class="card-title">RSS Feed</h3>
             <p class="card-text">
               Subscribe to latest updates in your favorite RSS reader.
             </p>
-            <span class="card-cta">Get feed →</span>
           </div>
         </a>
       </div>
