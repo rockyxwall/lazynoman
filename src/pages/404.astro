@@ -10,13 +10,16 @@ import Button from "@/components/Button.astro";
   robots="noindex, nofollow"
 >
   <section class="section flex-grow">
-    <div class="container alignment-center">
-      <p class="eyebrow text-style-eyebrow">404</p>
-      <h1 class="heading text-style-h1">That page wandered off.</h1>
-      <p class="text text-style-large">
-        Try a search, browse the latest posts, or head back home.
+    <div class="wotaku-hero" style="margin: auto;">
+      <div class="wotaku-hero-badge">
+        <span class="VPBadge danger">404</span>
+        <span>Page Not Found</span>
+      </div>
+      <h1 class="wotaku-hero-title">That page wandered off.</h1>
+      <p class="wotaku-hero-description">
+        The page you are looking for does not exist or may have been moved.
       </p>
-      <div class="button-wrapper">
+      <div class="wotaku-hero-actions">
         <Button element="link" href="/search/">Search the site</Button>
         <Button element="link" href="/" emphasis="secondary">Return home</Button
         >

@@ -182,6 +182,7 @@ const feed =
                   alt={`${descriptor.post.data.title} featured image`}
                   width="1200"
                   height="675"
+                  class="radius-small width-100 margin-top-4"
                   class="post-featured-image width-100 margin-top-4"
                 />
               )}
@@ -281,7 +282,13 @@ const feed =
     descriptor.kind === "listing" && (
       <section class="section">
         <div class="container">
-          <p class="eyebrow text-style-eyebrow">Topic</p>
+          <p class="eyebrow text-style-eyebrow">
+            {descriptor.route.startsWith("/categories/")
+              ? "Topic"
+              : descriptor.route.startsWith("/tags/")
+                ? "Tag"
+                : "Archive"}
+          </p>
           <h1 class="heading text-style-h1">{descriptor.listing.title}</h1>
           {descriptor.listing.description && (
             <p class="text text-style-large">

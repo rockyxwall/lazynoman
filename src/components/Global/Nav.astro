@@ -21,6 +21,7 @@ const { render = true, overlap = false } = Astro.props;
     <header class:list={["nav_wrap", overlap && "overlap"]}>
       <div class="nav_inner">
         <a class="nav_logo" href="/" aria-label={SITE_NAME}>
+          <img src="/images/navlogo.webp" width="38" height="38" alt="" />
           <img src="/images/navlogo.webp" width="32" height="32" alt="" />
           <span class="nav_site_title">{SITE_NAME}</span>
         </a>
@@ -32,6 +33,7 @@ const { render = true, overlap = false } = Astro.props;
                 <NavLink href="/posts/">Posts</NavLink>
                 <NavLink href="/categories/">Topics</NavLink>
                 <NavLink href="/tags/">Tags</NavLink>
+                <NavLink href="/search/">Search</NavLink>
               </ul>
             </div>
           </nav>
@@ -91,8 +93,10 @@ const { render = true, overlap = false } = Astro.props;
               class="theme_toggle"
               type="button"
               data-theme-toggle
+              aria-label="Switch to light theme"
               aria-label="Switch color theme"
             >
+              <span data-theme-icon aria-hidden="true">☀</span>
               <svg
                 class="theme_icon theme_icon_sun"
                 xmlns="http://www.w3.org/2000/svg"
@@ -298,6 +302,7 @@ const { render = true, overlap = false } = Astro.props;
     .nav_actions {
       display: flex;
       align-items: center;
+      gap: var(--space-2);
       gap: 2px;
       height: 2.25rem;
       padding: 0 4px;
@@ -371,6 +376,10 @@ const { render = true, overlap = false } = Astro.props;
     }
 
     .nav_logo img {
+      width: 1.875rem;
+      height: 1.875rem;
+      max-width: 1.875rem;
+      max-height: 1.875rem;
       width: 1.75rem;
       height: 1.75rem;
       max-width: 1.75rem;
@@ -385,6 +394,30 @@ const { render = true, overlap = false } = Astro.props;
       font-size: 1.05rem;
       letter-spacing: -0.02em;
       color: var(--text);
+    }
+
+    .theme_toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-pill);
+      background-color: var(--background-2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      line-height: 1;
+      transition:
+        background-color var(--hover-duration) var(--hover-ease),
+        border-color var(--hover-duration) var(--hover-ease);
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--background-3);
+          border-color: var(--brand-500);
+        }
+      }
     }
 
     .nav_toggle {
