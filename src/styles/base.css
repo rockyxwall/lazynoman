@@ -75,102 +75,102 @@
   --nav-height: 5rem;
 
   /* Typography styles */
-  --display: clamp(var(--display-min) / 16 * 1rem, ((var(--display-min) - ((var(--display-max) - var(--display-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--display-max) - var(--display-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--display-max) / 16 * 1rem);
-  --display-min: 64;
-  --display-max: 112;
-  --display-line-height: var(--line-height-small);
+  --display: clamp(2.25rem, 1.8rem + 2vw, 3.5rem);
+  --display-min: 36;
+  --display-max: 56;
+  --display-line-height: var(--line-height-medium);
   --display-letter-spacing: var(--letter-spacing-tight);
   --display-text-transform: none;
-  --display-margin-top: var(--space-7);
-  --display-margin-bottom: var(--space-6);
+  --display-margin-top: var(--space-6);
+  --display-margin-bottom: var(--space-5);
   --display-font-family: var(--primary-family);
-  --display-font-weight: var(--primary-medium);
-  --display-trim-top: var(--primary-trim-top);
-  --display-trim-bottom: var(--primary-trim-bottom);
+  --display-font-weight: var(--primary-bold);
+  --display-trim-top: 0;
+  --display-trim-bottom: 0;
   --display-text-wrap: balance;
 
-  --h1: clamp(var(--h1-min) / 16 * 1rem, ((var(--h1-min) - ((var(--h1-max) - var(--h1-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h1-max) - var(--h1-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h1-max) / 16 * 1rem);
-  --h1-min: 48;
-  --h1-max: 80;
-  --h1-line-height: var(--line-height-small);
-  --h1-letter-spacing: var(--letter-spacing-tight);
+  --h1: clamp(1.875rem, 1.5rem + 1.8vw, 2.75rem);
+  --h1-min: 30;
+  --h1-max: 44;
+  --h1-line-height: var(--line-height-large);
+  --h1-letter-spacing: -0.025em;
   --h1-text-transform: none;
-  --h1-margin-top: var(--space-7);
-  --h1-margin-bottom: var(--space-6);
+  --h1-margin-top: var(--space-6);
+  --h1-margin-bottom: var(--space-4);
   --h1-font-family: var(--primary-family);
-  --h1-font-weight: var(--primary-medium);
-  --h1-trim-top: var(--primary-trim-top);
-  --h1-trim-bottom: var(--primary-trim-bottom);
+  --h1-font-weight: var(--primary-bold);
+  --h1-trim-top: 0;
+  --h1-trim-bottom: 0;
   --h1-text-wrap: balance;
 
-  --h2: clamp(var(--h2-min) / 16 * 1rem, ((var(--h2-min) - ((var(--h2-max) - var(--h2-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h2-max) - var(--h2-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h2-max) / 16 * 1rem);
-  --h2-min: 40;
-  --h2-max: 64;
-  --h2-line-height: var(--line-height-small);
-  --h2-letter-spacing: var(--letter-spacing-tight);
+  --h2: clamp(1.375rem, 1.2rem + 1vw, 2rem);
+  --h2-min: 22;
+  --h2-max: 32;
+  --h2-line-height: var(--line-height-large);
+  --h2-letter-spacing: -0.015em;
   --h2-text-transform: none;
-  --h2-margin-top: var(--space-7);
-  --h2-margin-bottom: var(--space-5);
+  --h2-margin-top: var(--space-5);
+  --h2-margin-bottom: var(--space-3);
   --h2-font-family: var(--primary-family);
-  --h2-font-weight: var(--primary-medium);
-  --h2-trim-top: var(--primary-trim-top);
-  --h2-trim-bottom: var(--primary-trim-bottom);
+  --h2-font-weight: var(--primary-bold);
+  --h2-trim-top: 0;
+  --h2-trim-bottom: 0;
   --h2-text-wrap: balance;
 
-  --h3: clamp(var(--h3-min) / 16 * 1rem, ((var(--h3-min) - ((var(--h3-max) - var(--h3-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h3-max) - var(--h3-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h3-max) / 16 * 1rem);
-  --h3-min: 36;
-  --h3-max: 48;
-  --h3-line-height: var(--line-height-medium);
-  --h3-letter-spacing: var(--letter-spacing-tight);
+  --h3: clamp(1.125rem, 1.05rem + 0.5vw, 1.5rem);
+  --h3-min: 18;
+  --h3-max: 24;
+  --h3-line-height: var(--line-height-large);
+  --h3-letter-spacing: -0.01em;
   --h3-text-transform: none;
-  --h3-margin-top: var(--space-6);
-  --h3-margin-bottom: var(--space-5);
+  --h3-margin-top: var(--space-4);
+  --h3-margin-bottom: var(--space-2);
   --h3-font-family: var(--primary-family);
-  --h3-font-weight: var(--primary-medium);
-  --h3-trim-top: var(--primary-trim-top);
-  --h3-trim-bottom: var(--primary-trim-bottom);
+  --h3-font-weight: var(--primary-bold);
+  --h3-trim-top: 0;
+  --h3-trim-bottom: 0;
   --h3-text-wrap: balance;
 
-  --h4: clamp(var(--h4-min) / 16 * 1rem, ((var(--h4-min) - ((var(--h4-max) - var(--h4-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h4-max) - var(--h4-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h4-max) / 16 * 1rem);
-  --h4-min: 28;
-  --h4-max: 32;
-  --h4-line-height: var(--line-height-medium);
-  --h4-letter-spacing: var(--letter-spacing-tight);
+  --h4: clamp(1.05rem, 1rem + 0.25vw, 1.25rem);
+  --h4-min: 17;
+  --h4-max: 20;
+  --h4-line-height: var(--line-height-large);
+  --h4-letter-spacing: normal;
   --h4-text-transform: none;
-  --h4-margin-top: var(--space-6);
-  --h4-margin-bottom: var(--space-4);
+  --h4-margin-top: var(--space-4);
+  --h4-margin-bottom: var(--space-2);
   --h4-font-family: var(--primary-family);
-  --h4-font-weight: var(--primary-medium);
-  --h4-trim-top: var(--primary-trim-top);
-  --h4-trim-bottom: var(--primary-trim-bottom);
+  --h4-font-weight: var(--primary-bold);
+  --h4-trim-top: 0;
+  --h4-trim-bottom: 0;
   --h4-text-wrap: balance;
 
-  --h5: clamp(var(--h5-min) / 16 * 1rem, ((var(--h5-min) - ((var(--h5-max) - var(--h5-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h5-max) - var(--h5-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h5-max) / 16 * 1rem);
-  --h5-min: 22;
-  --h5-max: 24;
-  --h5-line-height: var(--line-height-medium);
-  --h5-letter-spacing: var(--letter-spacing-tight);
+  --h5: clamp(1rem, 0.95rem + 0.15vw, 1.125rem);
+  --h5-min: 16;
+  --h5-max: 18;
+  --h5-line-height: var(--line-height-large);
+  --h5-letter-spacing: normal;
   --h5-text-transform: none;
-  --h5-margin-top: var(--space-5);
-  --h5-margin-bottom: var(--space-4);
+  --h5-margin-top: var(--space-3);
+  --h5-margin-bottom: var(--space-2);
   --h5-font-family: var(--primary-family);
-  --h5-font-weight: var(--primary-medium);
-  --h5-trim-top: var(--primary-trim-top);
-  --h5-trim-bottom: var(--primary-trim-bottom);
+  --h5-font-weight: var(--primary-bold);
+  --h5-trim-top: 0;
+  --h5-trim-bottom: 0;
   --h5-text-wrap: balance;
 
-  --h6: clamp(var(--h6-min) / 16 * 1rem, ((var(--h6-min) - ((var(--h6-max) - var(--h6-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h6-max) - var(--h6-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h6-max) / 16 * 1rem);
-  --h6-min: 16;
-  --h6-max: 18;
-  --h6-line-height: var(--line-height-medium);
-  --h6-letter-spacing: var(--letter-spacing-tight);
+  --h6: clamp(0.875rem, 0.85rem + 0.1vw, 1rem);
+  --h6-min: 14;
+  --h6-max: 16;
+  --h6-line-height: var(--line-height-large);
+  --h6-letter-spacing: normal;
   --h6-text-transform: none;
-  --h6-margin-top: var(--space-5);
-  --h6-margin-bottom: var(--space-3);
+  --h6-margin-top: var(--space-3);
+  --h6-margin-bottom: var(--space-2);
   --h6-font-family: var(--primary-family);
-  --h6-font-weight: var(--primary-medium);
-  --h6-trim-top: var(--primary-trim-top);
-  --h6-trim-bottom: var(--primary-trim-bottom);
+  --h6-font-weight: var(--primary-bold);
+  --h6-trim-top: 0;
+  --h6-trim-bottom: 0;
   --h6-text-wrap: balance;
 
   --text-large: clamp(var(--text-large-min) / 16 * 1rem, ((var(--text-large-min) - ((var(--text-large-max) - var(--text-large-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--text-large-max) - var(--text-large-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--text-large-max) / 16 * 1rem);
@@ -675,17 +675,7 @@ h6,
   --_margin-bottom: var(--h6-margin-bottom);
 }
 
-/* Leading trim */
-:is(h1, h2, h3, h4, h5, h6, p, [class*="text-style-"]:not(:has(h1, h2, h3, h4, h5, h6, p))) {
-  display: flow-root;
-  &::before {
-    content: "";
-    display: table;
-    margin-bottom: calc(-0.5lh + var(--_trim-top));
-  }
-  &::after {
-    content: "";
-    display: table;
-    margin-bottom: calc(-0.5lh + var(--_trim-bottom));
-  }
+/* Typographic reset */
+:is(h1, h2, h3, h4, h5, h6) {
+  text-wrap: balance;
 }

@@ -14,9 +14,6 @@ const { render = true } = Astro.props;
     <footer class="footer_wrap">
       <div class="footer_inner">
         <div class="footer_top">
-          <a class="footer_logo" href="/" aria-label={SITE_NAME}>
-            <img src="/images/navlogo.webp" width="38" height="38" alt={SITE_NAME} />
-          </a>
           <nav aria-label="Footer">
             <ul class="footer_links">
               <li><a class="footer_link" href="/posts/">Posts</a></li>
@@ -64,27 +61,17 @@ const { render = true } = Astro.props;
       max-width: var(--max-width-main);
       display: flex;
       flex-direction: column;
-      gap: var(--space-6);
+      gap: var(--space-4);
+      align-items: center;
+      text-align: center;
     }
 
     .footer_top {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4) var(--space-6);
-    }
-
-    .footer_logo {
-      display: block;
-      width: 7.5rem;
-      max-width: 100%;
-      transition: opacity var(--hover-duration) var(--hover-ease);
-      @media (hover: hover) {
-        &:hover {
-          opacity: 0.6;
-        }
-      }
+      justify-content: center;
+      gap: var(--space-4);
     }
 
     .footer_links {

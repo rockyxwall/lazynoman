@@ -141,10 +141,10 @@ if (import.meta.env.DEV && render) {
           <Eyebrow>
             <Fragment set:html={eyebrow} />
           </Eyebrow>
-          <Heading tag={headingTag} variant="h5">
+          <Heading tag={headingTag} variant="h4">
             <Fragment set:html={heading} />
           </Heading>
-          <Paragraph>
+          <Paragraph class="text-style-small color-muted line-clamp-3">
             <Fragment set:html={text} />
           </Paragraph>
           <ButtonWrapper>
@@ -165,24 +165,35 @@ if (import.meta.env.DEV && render) {
 <style is:global>
   @layer components {
     .card_wrap {
-      --_padding: var(--space-6);
+      --_padding: var(--space-5);
       --_min-height: 20rem;
-      --_visual-ratio: 3 / 2;
+      --_visual-ratio: 16 / 9;
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: var(--_padding);
       position: relative;
       background-color: var(--background-2);
-      border-radius: var(--radius-main);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-small);
       overflow: clip;
+      transition:
+        border-color var(--hover-duration) var(--hover-ease),
+        box-shadow var(--hover-duration) var(--hover-ease);
 
       &.cover {
         min-height: var(--_min-height);
+        gap: var(--_padding);
       }
       &.stacked {
-        background-color: transparent;
-        overflow: visible;
+        background-color: var(--background-2);
+        border: var(--border-width) solid var(--border);
+        border-radius: var(--radius-small);
+        overflow: clip;
+      }
+      @media (hover: hover) {
+        &:hover {
+          border-color: color-mix(in srgb, var(--brand-500) 60%, var(--border));
+        }
       }
     }
 
@@ -190,7 +201,7 @@ if (import.meta.env.DEV && render) {
       position: relative;
       width: 100%;
       flex: none;
-      border-radius: inherit;
+      border-radius: 0;
       overflow: clip;
 
       .stacked > & {
@@ -222,7 +233,7 @@ if (import.meta.env.DEV && render) {
        grows. This outranks the margin `.button-wrapper` sets for itself. */
     .card_content > .button-wrapper:last-child {
       margin-top: auto;
-      padding-top: var(--space-6);
+      padding-top: var(--space-4);
     }
 
     .card_content {
@@ -234,14 +245,14 @@ if (import.meta.env.DEV && render) {
       width: 100%;
       max-width: 100%;
       padding: var(--_padding);
+      gap: var(--space-2);
 
       .cover > & {
         z-index: 1;
       }
 
       .stacked > & {
-        padding-inline: 0;
-        padding-top: 0;
+        padding: var(--space-4);
       }
     }
 

@@ -86,6 +86,7 @@ type Kind =
 type Props = {
   /** Set to `false` to skip rendering this component and its children. */
   render?: boolean;
+  size?: "main" | "small";
 } & Tag &
   Kind;
 
@@ -100,12 +101,14 @@ type AllProps = HTMLAttributes<"button"> &
     element?: "button" | "link";
     href?: string;
     type?: "button" | "submit" | "reset";
+    size?: "main" | "small";
   };
 
 const {
   render = true,
   variant = "main",
   emphasis = "primary",
+  size = "main",
   label,
   pressed = false,
   direction = "forward",
@@ -141,6 +144,7 @@ const named = {
         "button_wrap",
         emphasis !== "primary" && emphasis,
         variant !== "main" && variant,
+        size === "small" && "small",
         variant === "arrow" && direction === "back" && "back",
         className,
       ]}
@@ -203,6 +207,11 @@ const named = {
         --button-background-hover: var(--button-2-background-hover);
         --button-text-hover: var(--button-2-text-hover);
         --button-border-hover: var(--button-2-border-hover);
+      }
+      &.small {
+        padding: 0.35em 0.85em;
+        font-size: var(--text-small);
+        border-radius: var(--radius-small);
       }
       &.link {
         --button-background: transparent;

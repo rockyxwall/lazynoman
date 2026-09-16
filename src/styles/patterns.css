@@ -1,5 +1,5 @@
-.heading:has(+ .text) {
-  margin-bottom: var(--_margin-bottom);
+.heading:not(:last-child) {
+  margin-bottom: var(--_margin-bottom, var(--space-4));
 }
 
 .heading,
@@ -8,7 +8,8 @@
   max-width: var(--_mw, none);
 }
 
-.heading + .text {
+.heading + .text,
+.heading + .grid {
   margin-top: 0;
 }
 

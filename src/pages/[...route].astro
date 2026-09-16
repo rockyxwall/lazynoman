@@ -80,7 +80,7 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
             </Paragraph>
             <ButtonWrapper>
               {descriptor.post.data.categories.map((category) => (
-                <Button element="link" href={`/categories/${taxonomySlug(category)}/`} emphasis="secondary">
+                <Button element="link" href={`/categories/${taxonomySlug(category)}/`} emphasis="secondary" size="small">
                   {category}
                 </Button>
               ))}
@@ -97,10 +97,10 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
             )}
             <div class="display-flex align-center flex-flow-wrap gap-2 margin-block-small">
               <span class="text-style-small color-muted">Share:</span>
-              <Button element="link" href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`} emphasis="secondary">X (Twitter)</Button>
-              <Button element="link" href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`} emphasis="secondary">Bluesky</Button>
-              <Button element="link" href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`} emphasis="secondary">Reddit</Button>
-              <Button type="button" data-copy-page emphasis="secondary">Copy link</Button>
+              <Button element="link" href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`} emphasis="secondary" size="small">X (Twitter)</Button>
+              <Button element="link" href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`} emphasis="secondary" size="small">Bluesky</Button>
+              <Button element="link" href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`} emphasis="secondary" size="small">Reddit</Button>
+              <Button type="button" data-copy-page emphasis="secondary" size="small">Copy link</Button>
             </div>
             <div class="rich-text article-body width-100 margin-block-large">
               <Content />
@@ -110,7 +110,7 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
                 <Heading tag="h2">Tags</Heading>
                 <ButtonWrapper>
                   {descriptor.post.data.tags.map((tag) => (
-                    <Button element="link" href={`/tags/${taxonomySlug(tag)}/`} emphasis="secondary">
+                    <Button element="link" href={`/tags/${taxonomySlug(tag)}/`} emphasis="secondary" size="small">
                       {tag}
                     </Button>
                   ))}
@@ -157,7 +157,7 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
         <Heading tag="h1">{descriptor.title}</Heading>
         <ButtonWrapper>
           {descriptor.terms.map((term) => (
-            <Button element="link" href={`${descriptor.root}${term.slug}/`} emphasis="secondary">
+            <Button element="link" href={`${descriptor.root}${term.slug}/`} emphasis="secondary" size="small">
               {term.name} ({term.count})
             </Button>
           ))}

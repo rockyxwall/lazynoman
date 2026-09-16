@@ -45,7 +45,7 @@ const topics = [...taxonomy(posts, "categories").entries()]
       <Heading tag="h2">Explore Topics</Heading>
       <ButtonWrapper>
         {topics.map((topic) => (
-          <Button element="link" href={`/categories/${topic.slug}/`} emphasis="secondary">
+          <Button element="link" href={`/categories/${topic.slug}/`} emphasis="secondary" size="small">
             {topic.name} ({topic.count})
           </Button>
         ))}

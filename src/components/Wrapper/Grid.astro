@@ -82,6 +82,7 @@ type AllProps = Base & {
   large?: number;
   maxColumnCount?: number;
   minColumnWidth?: number;
+  gap?: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "gutter" | "small" | "medium" | "large";
 };
 
 const {
@@ -93,6 +94,7 @@ const {
   large,
   maxColumnCount,
   minColumnWidth,
+  gap,
   class: className,
   ...rest
 } = Astro.props as AllProps;
@@ -114,17 +116,21 @@ if (
   );
 }
 
+const gapValue = gap ? (["gutter", "small", "medium", "large"].includes(gap) ? `var(--section-space-${gap}, var(--space-6))` : `var(--space-${gap})`) : undefined;
+
 const columns =
   (variant !== "columns"
     ? [
         maxColumnCount !== undefined && `--_max-cols: ${maxColumnCount}`,
         validMinColumnWidth && `--_min-col-width: ${minColumnWidth}`,
+        gapValue && `--_gap-size: ${gapValue}`,
       ]
     : [
         xsmall !== 1 && `--_cols-xs: ${xsmall}`,
         small !== undefined && `--_cols-sm: ${small}`,
         medium !== undefined && `--_cols-md: ${medium}`,
         large !== undefined && `--_cols-lg: ${large}`,
+        gapValue && `--_gap-size: ${gapValue}`,
       ]
   )
     .filter(Boolean)
@@ -151,11 +157,10 @@ const columns =
       --_cols-sm: var(--_cols-xs);
       --_cols-md: var(--_cols-sm);
       --_cols-lg: var(--_cols-md);
-      --_gap-size: var(--site-gutter);
+      --_gap-size: var(--space-6, 1.75rem);
       width: 100%;
       display: grid;
-      grid-column-gap: var(--_gap-size);
-      grid-row-gap: var(--_gap-size);
+      gap: var(--_gap-size);
       grid-template-columns: repeat(var(--_cols), minmax(0, 1fr));
       @media (width >= 30rem) {
         --_cols: var(--_cols-sm);

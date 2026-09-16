@@ -176,9 +176,19 @@ const { render = true, overlap = false } = Astro.props;
       }
     }
 
+    .nav_logo img {
+      width: 2rem;
+      height: 2rem;
+      max-width: 2rem;
+      max-height: 2rem;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: var(--radius-small);
+    }
+
     .nav_site_title {
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       letter-spacing: -0.02em;
       color: var(--text);
     }
