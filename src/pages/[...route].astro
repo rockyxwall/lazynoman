@@ -5,6 +5,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Comments from "../components/Comments.astro";
 import Pagination from "../components/Pagination.astro";
 import PostList from "../components/PostList.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Eyebrow from "@/components/Typography/Eyebrow.astro";
+import Button from "@/components/Button.astro";
+import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
 import { displayDate, getPages, getPublishedPosts, readingMinutes, relatedPosts, site, summary, taxonomySlug } from "../lib/content";
 import { buildPageDescriptors, routeParam, type PageDescriptor } from "../lib/routes";
 
@@ -43,26 +50,111 @@ const robots = descriptor.kind === "page" && descriptor.page.data.sitemap?.disab
 const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xml` : descriptor.kind === "terms" ? `${descriptor.root}index.xml` : undefined;
 ---
 <BaseLayout title={title} description={description} canonical={descriptor.route} image={descriptor.kind === "post" ? descriptor.post.data.image : undefined} type={descriptor.kind === "post" ? "article" : "website"} publishedTime={descriptor.kind === "post" ? descriptor.post.data.date : undefined} preloadImage={listingImage} previous={previous} next={next} robots={robots} feed={feed}>
-  {descriptor.kind === "post" && <>
-    <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
-    <article class="article-shell container">
-      {toc.length > 0 && <aside class="article-toc" aria-label="On this page"><details class="article-toc-details" data-responsive-toc><summary>On this page</summary><nav data-toc><p class="eyebrow">On this page</p><ol>{toc.map((heading) => <li class:list={{ nested: heading.depth === 3 }}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav></details></aside>}
-      <div class="reading">
-        <header class="article-header"><p class="eyebrow">Post</p><h1>{descriptor.post.data.title}</h1><p class="meta"><time datetime={descriptor.post.data.date}>{displayDate(descriptor.post)}</time> · {readingMinutes(descriptor.post)} min read</p><div class="chips">{descriptor.post.data.categories.map((category) => <a class="chip" href={`/categories/${taxonomySlug(category)}/`}>{category}</a>)}</div></header>
-        {articleImage && <img class="article-image" src={articleImage} data-cf-image alt={`${descriptor.post.data.title} featured image`} width="1200" height="675" />}
-        <div class="share-row" aria-label="Share this post"><span>Share</span><a href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`}>X (Twitter)</a><a href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`}>Bluesky</a><a href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`}>Reddit</a><button type="button" data-copy-page>Copy link</button></div>
-        <div class="article-body"><Content /></div>
-        <aside class="ad-slot" data-ad-slot aria-label="Advertisement">
-          <span>Advertisement</span>
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5027399024636019" data-ad-slot="2001915683" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        </aside>
-        {descriptor.post.data.tags.length > 0 && <footer><h2>Tags</h2><div class="chips">{descriptor.post.data.tags.map((tag) => <a class="chip" href={`/tags/${taxonomySlug(tag)}/`}>{tag}</a>)}</div></footer>}
-        {related.length > 0 && <section aria-labelledby="related-heading"><h2 id="related-heading">Related posts</h2><PostList posts={related} heading="h3" /></section>}
+  {descriptor.kind === "post" && (
+    <Section>
+      <ContentWrapper>
+        <Eyebrow>Post</Eyebrow>
+        <Heading tag="h1">{descriptor.post.data.title}</Heading>
+        <Paragraph class="text-style-small color-muted">
+          <time datetime={descriptor.post.data.date}>{displayDate(descriptor.post)}</time> · {readingMinutes(descriptor.post)} min read
+        </Paragraph>
+        <ButtonWrapper>
+          {descriptor.post.data.categories.map((category) => (
+            <Button element="link" href={`/categories/${taxonomySlug(category)}/`} emphasis="secondary">
+              {category}
+            </Button>
+          ))}
+        </ButtonWrapper>
+        {articleImage && (
+          <img
+            src={articleImage}
+            data-cf-image
+            alt={`${descriptor.post.data.title} featured image`}
+            width="1200"
+            height="675"
+            class="radius-small width-100"
+          />
+        )}
+        <div class="display-flex align-center flex-flow-wrap gap-2 margin-block-small">
+          <span class="text-style-small color-muted">Share:</span>
+          <Button element="link" href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`} emphasis="secondary">X (Twitter)</Button>
+          <Button element="link" href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`} emphasis="secondary">Bluesky</Button>
+          <Button element="link" href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`} emphasis="secondary">Reddit</Button>
+        </div>
+        {toc.length > 0 && (
+          <aside class="padding-all-medium background-2 radius-small margin-block-medium width-100" aria-label="On this page">
+            <Eyebrow>On this page</Eyebrow>
+            <nav data-toc>
+              <ol class="display-flex flex-direction-column gap-1 padding-left-small">
+                {toc.map((heading) => (
+                  <li class:list={{ "margin-left-2": heading.depth === 3 }}>
+                    <a href={`#${heading.slug}`}>{heading.text}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </aside>
+        )}
+        <div class="rich-text width-100 margin-block-large">
+          <Content />
+        </div>
+        {descriptor.post.data.tags.length > 0 && (
+          <div class="display-flex flex-direction-column gap-2 margin-top-large width-100">
+            <Heading tag="h2">Tags</Heading>
+            <ButtonWrapper>
+              {descriptor.post.data.tags.map((tag) => (
+                <Button element="link" href={`/tags/${taxonomySlug(tag)}/`} emphasis="secondary">
+                  {tag}
+                </Button>
+              ))}
+            </ButtonWrapper>
+          </div>
+        )}
+        {related.length > 0 && (
+          <div class="display-flex flex-direction-column gap-4 margin-top-large width-100" aria-labelledby="related-heading">
+            <Heading tag="h2" id="related-heading">Related posts</Heading>
+            <PostList posts={related} heading="h3" />
+          </div>
+        )}
         <Comments />
-      </div>
-    </article>
-  </>}
-  {descriptor.kind === "page" && <article class="reading"><header class="article-header"><h1>{descriptor.page.data.title}</h1>{descriptor.page.data.description && <p class="lede">{descriptor.page.data.description}</p>}</header><div class="article-body"><Content /></div></article>}
-  {descriptor.kind === "listing" && <section class="container listing-page"><header class="article-header"><p class="eyebrow">Topic</p><h1>{descriptor.listing.title}</h1>{descriptor.listing.description && <p class="lede">{descriptor.listing.description}</p>}</header><PostList posts={descriptor.listing.posts} prioritizeFirst /><Pagination page={descriptor.listing.page} pages={descriptor.listing.pages} base={descriptor.listing.base} /></section>}
-  {descriptor.kind === "terms" && <section class="container"><h1>{descriptor.title}</h1><div class="chips">{descriptor.terms.map((term) => <a class="chip" href={`${descriptor.root}${term.slug}/`}>{term.name} ({term.count})</a>)}</div><Pagination page={descriptor.page} pages={descriptor.pages} base={descriptor.root} /></section>}
+      </ContentWrapper>
+    </Section>
+  )}
+  {descriptor.kind === "page" && (
+    <Section>
+      <ContentWrapper>
+        <Heading tag="h1">{descriptor.page.data.title}</Heading>
+        {descriptor.page.data.description && <Paragraph variant="large">{descriptor.page.data.description}</Paragraph>}
+        <div class="rich-text width-100 margin-block-large">
+          <Content />
+        </div>
+      </ContentWrapper>
+    </Section>
+  )}
+  {descriptor.kind === "listing" && (
+    <Section>
+      <ContentWrapper>
+        <Eyebrow>Topic</Eyebrow>
+        <Heading tag="h1">{descriptor.listing.title}</Heading>
+        {descriptor.listing.description && <Paragraph variant="large">{descriptor.listing.description}</Paragraph>}
+        <PostList posts={descriptor.listing.posts} prioritizeFirst />
+        <Pagination page={descriptor.listing.page} pages={descriptor.listing.pages} base={descriptor.listing.base} />
+      </ContentWrapper>
+    </Section>
+  )}
+  {descriptor.kind === "terms" && (
+    <Section>
+      <ContentWrapper>
+        <Heading tag="h1">{descriptor.title}</Heading>
+        <ButtonWrapper>
+          {descriptor.terms.map((term) => (
+            <Button element="link" href={`${descriptor.root}${term.slug}/`} emphasis="secondary">
+              {term.name} ({term.count})
+            </Button>
+          ))}
+        </ButtonWrapper>
+        <Pagination page={descriptor.page} pages={descriptor.pages} base={descriptor.root} />
+      </ContentWrapper>
+    </Section>
+  )}
 </BaseLayout>

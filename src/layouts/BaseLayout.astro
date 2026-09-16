@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 import { site } from "../lib/content";
+import SkipLink from "@/components/Global/SkipLink.astro";
+import Nav from "@/components/Global/Nav.astro";
+import Footer from "@/components/Global/Footer.astro";
 
 interface Props {
   title?: string;
@@ -166,49 +169,12 @@ const structuredData = JSON.stringify({
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <nav class="nav container" aria-label="Primary navigation">
-        <a class="nav-logo" href="/" aria-label="LazyNoman Home"
-          ><img
-            src="/images/navlogo.webp"
-            width="38"
-            height="38"
-            alt="LazyNoman"
-          /></a
-        >
-        <button
-          class="menu-button icon-button"
-          type="button"
-          data-menu-toggle
-          aria-expanded="false"
-          aria-controls="primary-links">Menu</button
-        >
-        <div class="nav-links" id="primary-links" data-menu>
-          <a href="/posts/">Posts</a><a href="/categories/">Topics</a><a
-            href="/tags/">Tags</a><a href="/search/">Search</a>
-          <button
-            class="icon-button"
-            type="button"
-            data-theme-toggle
-            aria-label="Switch to light theme"
-            ><span aria-hidden="true" data-theme-icon>☀</span><span
-              class="sr-only">Change color theme</span
-            ></button
-          >
-        </div>
-      </nav>
-    </header>
-    <main id="main"><slot /></main>
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-links">
-          <a href="/posts/">Posts</a><a href="/categories/">Topics</a><a
-            href="/tags/">Tags</a><a href="/rss/">RSS</a><a href="/privacy/"
-            >Privacy</a><a href="/terms-conditions/">Terms</a>
-        </div><p>© {new Date().getFullYear()} {site.name}</p>
-      </div>
-    </footer>
+    <SkipLink />
+    <Nav />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
     <script>
       import "../scripts/site.ts";
     </script>

@@ -1,8 +1,25 @@
 ---
 import type { Post } from "../lib/content";
 import PostCard from "./PostCard.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
 
-interface Props { posts: Post[]; heading?: "h2" | "h3"; prioritizeFirst?: boolean }
+interface Props {
+  posts: Post[];
+  heading?: "h2" | "h3";
+  prioritizeFirst?: boolean;
+}
+
 const { posts, heading = "h2", prioritizeFirst = false } = Astro.props;
 ---
-<div class="grid post-grid">{posts.map((post, index) => <PostCard post={post} heading={heading} priority={prioritizeFirst && index === 0} />)}</div>
+
+<Grid small={1} medium={2} large={3}>
+  {
+    posts.map((post, index) => (
+      <PostCard
+        post={post}
+        heading={heading}
+        priority={prioritizeFirst && index === 0}
+      />
+    ))
+  }
+</Grid>

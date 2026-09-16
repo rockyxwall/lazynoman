@@ -1,7 +1,15 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostCard from "../components/PostCard.astro";
-import PostList from "../components/PostList.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Eyebrow from "@/components/Typography/Eyebrow.astro";
+import Button from "@/components/Button.astro";
+import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
+import Card from "@/components/Item/Card.astro";
 import { getAllPosts, getPublishedPosts, homepagePosts, taxonomy } from "../lib/content";
 
 const allPosts = await getAllPosts();
@@ -13,33 +21,80 @@ const topics = [...taxonomy(posts, "categories").entries()]
   .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name))
   .slice(0, 8);
 ---
+
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
-  <section class="hero container">
-    <p class="eyebrow">Webnovels, Anime & Gaming</p>
-    <h1>Honest reviews, recommendations, and guides.</h1>
-    <p class="lede">Webnovels, light novels, anime, manga, games, tier lists, and top picks — zero fluff.</p>
-  </section>
-  <section class="container">
-    <h2>Featured Posts</h2>
-    <div class="grid post-grid">{featured.map((post, index) => <PostCard post={post} heading="h3" priority={index === 0} />)}</div>
-  </section>
-  <section class="container">
-    <h2>Explore Topics</h2>
-    <div class="chips">{topics.map((topic) => <a class="chip" href={`/categories/${topic.slug}/`}>{topic.name} ({topic.count})</a>)}</div>
-  </section>
-  <section class="container">
-    <h2>Latest Posts</h2>
-    <PostList posts={posts.slice(0, 10)} heading="h3" />
-    <p><a href="/posts/">Browse all posts →</a></p>
-  </section>
-  <section class="container" aria-labelledby="hub-heading">
-    <p class="eyebrow">Quick Navigation</p>
-    <h2 id="hub-heading">Explore the Archive</h2>
-    <div class="grid action-grid">
-      <article class="card"><div class="card-body"><h3>All Posts</h3><p>Browse full catalog of posts and reviews.</p><a href="/posts/">Browse posts →</a></div></article>
-      <article class="card"><div class="card-body"><h3>Topics</h3><p>Filter by Novels, Anime, Manga, Games, Recommendations, and more.</p><a href="/categories/">Browse topics →</a></div></article>
-      <article class="card"><div class="card-body"><h3>Tags</h3><p>Browse all specific tropes, character traits, and tags.</p><a href="/tags/">Browse tags →</a></div></article>
-      <article class="card"><div class="card-body"><h3>RSS Feed</h3><p>Subscribe to latest updates in your favorite RSS reader.</p><a href="/rss/">Get feed →</a></div></article>
-    </div>
-  </section>
+  <Section>
+    <ContentWrapper>
+      <Eyebrow>Webnovels, Anime & Gaming</Eyebrow>
+      <Heading tag="h1">Honest reviews, recommendations, and guides.</Heading>
+      <Paragraph variant="large">Webnovels, light novels, anime, manga, games, tier lists, and top picks — zero fluff.</Paragraph>
+    </ContentWrapper>
+  </Section>
+
+  <Section>
+    <ContentWrapper>
+      <Heading tag="h2">Featured Posts</Heading>
+      <Grid small={1} medium={2} large={3}>
+        {featured.map((post, index) => <PostCard post={post} heading="h3" priority={index === 0} />)}
+      </Grid>
+    </ContentWrapper>
+  </Section>
+
+  <Section>
+    <ContentWrapper>
+      <Heading tag="h2">Explore Topics</Heading>
+      <ButtonWrapper>
+        {topics.map((topic) => (
+          <Button element="link" href={`/categories/${topic.slug}/`} emphasis="secondary">
+            {topic.name} ({topic.count})
+          </Button>
+        ))}
+      </ButtonWrapper>
+    </ContentWrapper>
+  </Section>
+
+  <Section>
+    <ContentWrapper>
+      <Heading tag="h2">Latest Posts</Heading>
+      <Grid small={1} medium={2} large={3}>
+        {posts.slice(0, 6).map((post) => <PostCard post={post} heading="h3" />)}
+      </Grid>
+      <ButtonWrapper>
+        <Button element="link" href="/posts/">Browse all posts →</Button>
+      </ButtonWrapper>
+    </ContentWrapper>
+  </Section>
+
+  <Section aria-labelledby="hub-heading">
+    <ContentWrapper>
+      <Eyebrow>Quick Navigation</Eyebrow>
+      <Heading tag="h2" id="hub-heading">Explore the Archive</Heading>
+      <Grid small={1} medium={2} large={4}>
+        <Card
+          heading="All Posts"
+          text="Browse full catalog of posts and reviews."
+          buttonLabel="Browse posts →"
+          buttonHref="/posts/"
+        />
+        <Card
+          heading="Topics"
+          text="Filter by Novels, Anime, Manga, Games, Recommendations, and more."
+          buttonLabel="Browse topics →"
+          buttonHref="/categories/"
+        />
+        <Card
+          heading="Tags"
+          text="Browse all specific tropes, character traits, and tags."
+          buttonLabel="Browse tags →"
+          buttonHref="/tags/"
+        />
+        <Card
+          heading="RSS Feed"
+          text="Subscribe to latest updates in your favorite RSS reader."
+          buttonLabel="Get feed →"
+          buttonHref="/rss/"
+        />
+      </Grid>
+    </ContentWrapper>
+  </Section>
 </BaseLayout>

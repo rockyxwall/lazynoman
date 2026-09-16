@@ -1,8 +1,55 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
+import Eyebrow from "@/components/Typography/Eyebrow.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Card from "@/components/Item/Card.astro";
+import Button from "@/components/Button.astro";
+import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
 import { getPublishedPosts, taxonomy } from "../lib/content";
-const categories = [...taxonomy(await getPublishedPosts(), "categories").entries()].sort((a, b) => a[1].name.localeCompare(b[1].name));
+
+const categories = [
+  ...taxonomy(await getPublishedPosts(), "categories").entries(),
+].sort((a, b) => a[1].name.localeCompare(b[1].name));
 ---
-<BaseLayout title="RSS Feeds" description="Subscribe to LazyNoman posts and reviews by RSS" canonical="/rss/" robots="noindex, follow">
-  <section class="reading"><header class="article-header"><p class="eyebrow">Subscribe your way</p><h1>RSS Feeds</h1><p class="lede">Follow every post or choose a topic-specific feed.</p></header><div class="card"><div class="card-body"><h2>All posts</h2><p><a href="/index.xml">Subscribe to the main RSS feed</a></p></div></div><h2>Topics</h2><div class="feed-list">{categories.map(([slug, group]) => <a class="chip" href={`/categories/${slug}/index.xml`}>{group.name} RSS</a>)}</div></section>
+
+<BaseLayout
+  title="RSS Feeds"
+  description="Subscribe to LazyNoman posts and reviews by RSS"
+  canonical="/rss/"
+  robots="noindex, follow"
+>
+  <Section>
+    <ContentWrapper>
+      <Eyebrow>Subscribe your way</Eyebrow>
+      <Heading tag="h1">RSS Feeds</Heading>
+      <Paragraph variant="large">
+        Follow every post or choose a topic-specific feed.
+      </Paragraph>
+
+      <Card
+        heading="All posts"
+        text="Subscribe to the main RSS feed for all updates."
+        buttonLabel="Subscribe to feed"
+        buttonHref="/index.xml"
+      />
+
+      <Heading tag="h2">Topics</Heading>
+      <ButtonWrapper>
+        {
+          categories.map(([slug, group]) => (
+            <Button
+              element="link"
+              href={`/categories/${slug}/index.xml`}
+              emphasis="secondary"
+            >
+              {group.name} RSS
+            </Button>
+          ))
+        }
+      </ButtonWrapper>
+    </ContentWrapper>
+  </Section>
 </BaseLayout>

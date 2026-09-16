@@ -1,6 +1,50 @@
 ---
-interface Props { page: number; pages: number; base: string }
+import Button from "@/components/Button.astro";
+
+interface Props {
+  page: number;
+  pages: number;
+  base: string;
+}
+
 const { page, pages, base } = Astro.props;
-const route = (value: number) => value === 1 ? base : `${base}page/${value}/`;
+const route = (value: number) =>
+  value === 1 ? base : `${base}page/${value}/`;
 ---
-{pages > 1 && <nav class="pagination" aria-label="Pagination"><span>{page > 1 && <a rel="prev" href={route(page - 1)}>← Newer</a>}</span><span>Page {page} of {pages}</span><span>{page < pages && <a rel="next" href={route(page + 1)}>Older →</a>}</span></nav>}
+
+{
+  pages > 1 && (
+    <nav
+      class="display-flex align-center justify-between gap-4 margin-top-large"
+      aria-label="Pagination"
+    >
+      <div>
+        {page > 1 && (
+          <Button
+            element="link"
+            rel="prev"
+            href={route(page - 1)}
+            emphasis="secondary"
+          >
+            ← Newer
+          </Button>
+        )}
+      </div>
+      <span class="text-style-small color-muted">
+        Page {page} of {pages}
+      </span>
+      <div>
+        {page < pages && (
+          <Button
+            element="link"
+            rel="next"
+            href={route(page + 1)}
+            emphasis="secondary"
+          >
+            Older →
+          </Button>
+        )}
+      </div>
+    </nav>
+  )
+}
