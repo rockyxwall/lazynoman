@@ -72,7 +72,7 @@
   --max-width-full: 100%;
 
   /* Nav */
-  --nav-height: 5rem;
+  --nav-height: 3.5rem;
 
   /* Typography styles */
   --display: clamp(2.25rem, 1.8rem + 2vw, 3.5rem);
