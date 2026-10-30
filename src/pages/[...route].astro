@@ -1,5 +1,6 @@
 ---
 import { render } from "astro:content";
+import { List, ChevronDown } from "@lucide/astro";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Comments from "../components/Comments.astro";
@@ -46,7 +47,23 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
   {descriptor.kind === "post" && <>
     <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
     <article class="article-shell container">
-      {toc.length > 0 && <aside class="article-toc" aria-label="On this page"><details class="article-toc-details" data-responsive-toc><summary>On this page</summary><nav data-toc><ol>{toc.map((heading) => <li class:list={{ nested: heading.depth === 3 }}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav></details></aside>}
+      {toc.length > 0 && (
+        <aside class="article-toc" aria-label="On this page">
+          <div class="toc-sidebar-header">
+            <List class="w-3.5 h-3.5 text-[var(--accent)]" />
+            <span class="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">On this page</span>
+          </div>
+          <nav data-toc>
+            <ol>
+              {toc.map((heading) => (
+                <li class:list={{ nested: heading.depth === 3 }}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+      )}
       <div class="reading">
         <header class="article-header">
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text)] mb-3">{descriptor.post.data.title}</h1>
@@ -61,6 +78,36 @@ const feed = descriptor.kind === "listing" ? `${descriptor.listing.base}index.xm
           <a href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`}>Reddit</a>
           <button type="button" data-copy-page>Copy link</button>
         </div>
+
+        {toc.length > 0 && (
+          <aside class="article-toc-inline" aria-label="Table of contents" data-responsive-toc>
+            <details class="toc-inline-details">
+              <summary class="toc-inline-summary">
+                <span class="flex items-center gap-2 text-sm font-bold text-[var(--text)]">
+                  <List class="w-4 h-4 text-[var(--accent)]" />
+                  <span>Table of Contents</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--surface-elv)] text-[var(--muted)] border border-[var(--border)] font-mono font-normal">
+                    {toc.length}
+                  </span>
+                </span>
+                <ChevronDown class="w-4 h-4 text-[var(--muted)] toc-chevron transition-transform duration-200" />
+              </summary>
+              <nav data-toc>
+                <ol class="toc-inline-list">
+                  {toc.map((heading) => (
+                    <li class:list={{ nested: heading.depth === 3 }}>
+                      <a href={`#${heading.slug}`}>
+                        <span class="toc-bullet" aria-hidden="true">{heading.depth === 3 ? "›" : "•"}</span>
+                        <span>{heading.text}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </details>
+          </aside>
+        )}
+
         <div class="article-body"><Content /></div>
         <aside class="ad-slot" data-ad-slot aria-label="Advertisement">
           <span>Advertisement</span>

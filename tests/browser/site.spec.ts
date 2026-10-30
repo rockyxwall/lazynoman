@@ -100,7 +100,9 @@ test("article exposes navigation and interactions", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Comprehension Ability",
   );
-  const toc = page.locator("[data-responsive-toc]");
+  const toc = isMobile
+    ? page.locator("[data-responsive-toc]")
+    : page.locator(".article-toc");
   await expect(toc).toBeVisible();
   if (isMobile) await toc.locator("summary").click();
   await expect(toc.locator("[data-toc]")).toBeVisible();
@@ -200,4 +202,48 @@ test("mobile navigation opens with an accessible control", async ({
   await expect(
     nav.getByRole("link", { name: "Topics", exact: true }),
   ).toBeVisible();
+});
+
+test("settings customization flyout opens, updates options, and dismisses", async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto("/");
+  if (isMobile) {
+    const menuBtn = page.getByRole("button", { name: "Menu" });
+    await menuBtn.click();
+  }
+
+  const trigger = page.locator("[data-settings-trigger]");
+  await expect(trigger).toBeVisible();
+  await trigger.click();
+
+  const menu = page.locator("[data-settings-menu]");
+  await expect(menu).toBeVisible();
+
+  // Bounding box must be inside visible viewport
+  const box = await menu.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBeGreaterThanOrEqual(0);
+
+  // Palette choice updates html attribute
+  const asukaBtn = page.locator('[data-accent-choice="asuka"]');
+  await asukaBtn.click();
+  await expect(page.locator("html")).toHaveAttribute("data-accent", "asuka");
+
+  // Density choice updates html attribute
+  const compactBtn = page.locator('[data-density-choice="compact"]');
+  await compactBtn.click();
+  await expect(page.locator("html")).toHaveAttribute("data-card-density", "compact");
+
+  if (isMobile) {
+    const closeBtn = page.locator("[data-settings-close]");
+    await expect(closeBtn).toBeVisible();
+    await closeBtn.click();
+    await expect(menu).toBeHidden();
+  } else {
+    // Outside click dismisses on desktop
+    await page.locator("main").click({ position: { x: 50, y: 50 } });
+    await expect(menu).toBeHidden();
+  }
 });
