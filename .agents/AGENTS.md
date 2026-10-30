@@ -6,6 +6,7 @@
 - Use raw commands when exact stdout, stderr, or exit status is the behavior being tested.
 - Preserve unrelated worktree changes and inspect `git status --short` before editing.
 - Do not expose secrets, tokens, private keys, sessions, or environment files.
+- Never push or ship changes to git remotes unless explicitly instructed by the user to push or ship.
 
 ## Project overview
 
