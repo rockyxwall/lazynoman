@@ -11,11 +11,12 @@ data/
 public/
 tests/baseline/
 package-lock.json
-AGENTS.md
-SPEC.md
+.agents/AGENTS.md
+.agents/SPEC.md
 *.webp
 *.png
 *.jpg
 *.jpeg
 *.gif
 *.woff2
+.temp/
