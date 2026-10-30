@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import { site } from "../lib/content";
+import { Sun, Moon, Menu as MenuIcon, Search as SearchIcon } from "@lucide/astro";
+import SettingsFlyout from "../components/SettingsFlyout.astro";
 
 interface Props {
   title?: string;
@@ -29,6 +31,7 @@ const {
   next,
   feed,
 } = Astro.props;
+
 const pageTitle = title === site.title ? title : `${title} | ${site.name}`;
 const canonicalUrl = new URL(canonical, site.url).toString();
 const imageUrl = new URL(
@@ -159,56 +162,103 @@ const structuredData = JSON.stringify({
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
     <script is:inline type="application/ld+json" set:html={structuredData} />
+    <!-- Zero-Flash Pre-Paint Theme & Customization Init -->
     <script is:inline>
-      document.documentElement.classList.add("js");
-      const saved = localStorage.getItem("theme");
-      document.documentElement.dataset.theme = saved ?? "dark";
+      (function() {
+        try {
+          var el = document.documentElement;
+          el.classList.add("js");
+          var theme = localStorage.getItem("theme");
+          el.dataset.theme = theme ?? "dark";
+
+          var accent = localStorage.getItem("preference-accent-color");
+          if (accent) el.setAttribute("data-accent", accent);
+
+          var accentBg = localStorage.getItem("preference-accent-bg");
+          if (accentBg) el.setAttribute("data-accent-bg", accentBg);
+
+          var density = localStorage.getItem("preference-card-density");
+          if (density) el.setAttribute("data-card-density", density);
+        } catch (e) {}
+      })();
     </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <nav class="nav container" aria-label="Primary navigation">
-        <a class="nav-logo" href="/" aria-label="LazyNoman Home"
-          ><img
+        <a class="nav-logo" href="/" aria-label="LazyNoman Home">
+          <img
             src="/images/navlogo.webp"
             width="38"
             height="38"
             alt="LazyNoman"
-          /></a
-        >
+          />
+        </a>
+
+        <!-- Mobile Menu Hamburger -->
         <button
           class="menu-button icon-button"
           type="button"
           data-menu-toggle
           aria-expanded="false"
-          aria-controls="primary-links">Menu</button
+          aria-controls="primary-links"
         >
+          <MenuIcon class="w-4 h-4 mr-1 inline-block" />
+          <span>Menu</span>
+        </button>
+
         <div class="nav-links" id="primary-links" data-menu>
-          <a href="/posts/">Posts</a><a href="/categories/">Topics</a><a
-            href="/tags/">Tags</a><a href="/search/">Search</a>
-          <button
-            class="icon-button"
-            type="button"
-            data-theme-toggle
-            aria-label="Switch to light theme"
-            ><span aria-hidden="true" data-theme-icon>☀</span><span
-              class="sr-only">Change color theme</span
-            ></button
+          <a href="/posts/">Posts</a>
+          <a href="/categories/">Topics</a>
+          <a href="/tags/">Tags</a>
+          <a
+            href="/search/"
+            class="icon-button inline-flex items-center gap-1.5"
+            aria-label="Search"
+            title="Search reviews"
           >
+            <SearchIcon class="w-4 h-4" />
+            <span>Search</span>
+          </a>
+
+          <div class="nav-controls flex items-center gap-1.5 ml-auto sm:ml-0">
+            <!-- UI Customization Flyout -->
+            <SettingsFlyout />
+
+            <!-- Theme Toggle Button -->
+            <button
+              class="icon-button"
+              type="button"
+              data-theme-toggle
+              aria-label="Switch to light theme"
+            >
+              <Sun class="w-4 h-4 hidden [html[data-theme='light']_&]:block" />
+              <Moon class="w-4 h-4 block [html[data-theme='light']_&]:hidden" />
+              <span class="sr-only" data-theme-icon aria-hidden="true">☀</span>
+              <span class="sr-only">Change color theme</span>
+            </button>
+          </div>
         </div>
       </nav>
     </header>
+
     <main id="main"><slot /></main>
+
     <footer class="site-footer">
       <div class="container">
         <div class="footer-links">
-          <a href="/posts/">Posts</a><a href="/categories/">Topics</a><a
-            href="/tags/">Tags</a><a href="/rss/">RSS</a><a href="/privacy/"
-            >Privacy</a><a href="/terms-conditions/">Terms</a>
-        </div><p>© {new Date().getFullYear()} {site.name}</p>
+          <a href="/posts/">Posts</a>
+          <a href="/categories/">Topics</a>
+          <a href="/tags/">Tags</a>
+          <a href="/rss/">RSS</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms-conditions/">Terms</a>
+        </div>
+        <p>© {new Date().getFullYear()} {site.name} · Independent webfiction reviews & curated rankings</p>
       </div>
     </footer>
+
     <script>
       import "../scripts/site.ts";
     </script>

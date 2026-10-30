@@ -13,4 +13,5 @@ playwright-report/
 
 .temp/
 .vscode/
+.impeccable/
 .DS_Store

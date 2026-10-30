@@ -1,27 +1,65 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Search as SearchIcon } from "@lucide/astro";
 ---
 
 <BaseLayout
   title="Search"
-  description="Search LazyNoman posts and reviews"
+  description="Search LazyNoman posts, reviews, and novel rankings"
   canonical="/search/"
   robots="noindex, follow"
 >
-  <section class="reading">
-    <h1>Search</h1><form role="search" data-search-form>
-      <label for="search-query">Search reviews and posts</label><div class="search-row">
-        <input
-          id="search-query"
-          name="s"
-          type="search"
-          autocomplete="off"
-        /><button class="primary-button" type="submit">Search</button>
+  <section class="reading pt-6 pb-12">
+    <div class="mb-6 pb-2 border-b border-[var(--border)]">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text)] mt-0 mb-2">
+        Search Archive
+      </h1>
+      <p class="text-[var(--muted)] text-sm m-0">
+        Filter reviews, cultivation breakdowns, tropes, and tier lists instantly.
+      </p>
+    </div>
+
+    <form role="search" data-search-form class="mb-4">
+      <label for="search-query" class="sr-only">Search reviews and posts</label>
+      <div class="search-row flex gap-2">
+        <div class="relative flex-1">
+          <input
+            id="search-query"
+            name="s"
+            type="search"
+            autocomplete="off"
+            placeholder="Type a title, trope (e.g. System, Dao, Simulation)..."
+            class="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] focus:border-[var(--accent)] outline-none transition-colors"
+          />
+        </div>
+        <button class="primary-button" type="submit" aria-label="Search">
+          <SearchIcon class="w-4 h-4 inline mr-1" />
+          <span>Search</span>
+        </button>
       </div>
-    </form><p class="muted" aria-live="polite" data-search-status>
+    </form>
+
+    <!-- Quick search suggestion chips -->
+    <div class="flex items-center gap-2 mb-6 flex-wrap text-xs text-[var(--muted)]">
+      <span class="font-medium">Quick suggestions:</span>
+      {["System", "Dao", "Simulation", "Cultivation", "Apocalypse"].map((tag) => (
+        <button
+          type="button"
+          class="search-tag-chip px-2.5 py-1 rounded-full border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] hover:text-[var(--text)] text-[var(--muted)] transition-colors cursor-pointer"
+          data-suggest-term={tag}
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+
+    <p class="muted text-sm" aria-live="polite" data-search-status>
       Enter a search term.
-    </p><div class="grid" data-search-results></div>
+    </p>
+
+    <div class="grid gap-3 mt-4" data-search-results></div>
   </section>
+
   <script>
     const form = document.querySelector<HTMLFormElement>("[data-search-form]");
     const input = document.querySelector<HTMLInputElement>("#search-query");
@@ -39,6 +77,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         }>
       | undefined;
     let searchGeneration = 0;
+
     async function search(query: string) {
       if (!status || !results) return;
       const generation = ++searchGeneration;
@@ -70,13 +109,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         results.replaceChildren(
           ...matches.map((item) => {
             const article = document.createElement("article");
-            article.className = "card card-body";
+            article.className = "card card-body p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors";
             const heading = document.createElement("h2");
+            heading.className = "text-lg font-bold m-0";
             const link = document.createElement("a");
             link.href = item.permalink;
             link.textContent = item.title;
+            link.className = "text-[var(--text)] hover:text-[var(--accent)] transition-colors";
             heading.append(link);
             article.append(heading);
+
+            if (item.categories && item.categories.length > 0) {
+              const chipRow = document.createElement("div");
+              chipRow.className = "chips mt-2";
+              item.categories.forEach((cat) => {
+                const span = document.createElement("span");
+                span.className = "chip text-xs";
+                span.textContent = cat;
+                chipRow.append(span);
+              });
+              article.append(chipRow);
+            }
+
             return article;
           }),
         );
@@ -86,9 +140,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             error instanceof Error ? error.message : "Search failed.";
       }
     }
+
     const initial = new URLSearchParams(location.search).get("s") ?? "";
     if (input) input.value = initial;
     if (initial) void search(initial);
+
     form?.addEventListener("submit", (event) => {
       event.preventDefault();
       const query = input?.value.trim() ?? "";
@@ -103,6 +159,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         results?.replaceChildren();
         if (status) status.textContent = "Enter a search term.";
       }
+    });
+
+    document.querySelectorAll<HTMLButtonElement>("[data-suggest-term]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const term = btn.getAttribute("data-suggest-term") || "";
+        if (input) {
+          input.value = term;
+          form?.dispatchEvent(new Event("submit", { cancelable: true }));
+        }
+      });
     });
   </script>
 </BaseLayout>

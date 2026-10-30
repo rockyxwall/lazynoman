@@ -1,0 +1,234 @@
+---
+import { SlidersHorizontal, Check, Sparkles, LayoutGrid } from "@lucide/astro";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const palettes = [
+  { id: "asuka", name: "Asuka", color: "oklch(0.650 0.240 30)", desc: "Vibrant Crimson" },
+  { id: "ayanami", name: "Ayanami", color: "oklch(0.626 0.098 247.46)", desc: "Azure Blue" },
+  { id: "miku", name: "Miku", color: "oklch(0.711 0.123 185.28)", desc: "Cyan Teal" },
+  { id: "inanis", name: "Ina'nis", color: "oklch(0.663 0.102 301.22)", desc: "Royal Violet" },
+  { id: "amelia", name: "Amelia", color: "oklch(0.710 0.090 72.47)", desc: "Warm Amber" },
+  { id: "fubuki", name: "Fubuki", color: "oklch(0.78 0 0)", desc: "Clean Monochrome" },
+];
+---
+
+<div class={`settings-flyout-root relative ${className}`} data-settings-root>
+  <button
+    type="button"
+    class="icon-button settings-trigger"
+    data-settings-trigger
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label="Customize interface"
+    title="Customize site theme & accents"
+  >
+    <SlidersHorizontal class="w-4 h-4" />
+  </button>
+
+  <div
+    class="settings-popover hidden absolute right-0 top-full mt-2 w-72 p-3 rounded-xl border border-[var(--border)] bg-[var(--surface-elv)] shadow-2xl z-50 backdrop-blur-md"
+    data-settings-menu
+    role="dialog"
+    aria-label="Interface Customization"
+  >
+    <div class="flex items-center justify-between pb-2 mb-2 border-b border-[var(--border)]">
+      <span class="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+        Customization
+      </span>
+      <span class="text-[0.7rem] px-1.5 py-0.5 rounded bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]">
+        Client Stored
+      </span>
+    </div>
+
+    <!-- Accent Palette Picker -->
+    <div class="mb-3">
+      <div class="flex items-center gap-1.5 text-xs font-semibold text-[var(--text)] mb-2">
+        <Sparkles class="w-3.5 h-3.5 text-[var(--accent)]" />
+        <span>Accent Palette</span>
+      </div>
+      <div class="grid grid-cols-2 gap-1.5" role="radiogroup" aria-label="Accent Palette">
+        {palettes.map((p) => (
+          <button
+            type="button"
+            class="palette-btn flex items-center justify-between p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] transition-colors text-left text-xs"
+            data-accent-choice={p.id}
+            role="radio"
+            aria-checked="false"
+          >
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full flex-shrink-0" style={`background-color: ${p.color};`} />
+              <span class="font-medium text-[var(--text)] truncate">{p.name}</span>
+            </div>
+            <Check class="palette-check w-3 h-3 text-[var(--accent)] opacity-0" />
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Background Tint Toggle -->
+    <div class="pt-2 mb-3 border-t border-[var(--border)]">
+      <label class="flex items-center justify-between text-xs cursor-pointer text-[var(--text)]">
+        <span class="font-medium">Accent Tint Background</span>
+        <input
+          type="checkbox"
+          class="accent-bg-checkbox rounded border-[var(--border)] bg-[var(--surface)] accent-[var(--accent)] cursor-pointer"
+          data-accent-bg-toggle
+        />
+      </label>
+      <p class="text-[0.72rem] text-[var(--muted)] mt-0.5">
+        Infuse subtle accent glow into surfaces.
+      </p>
+    </div>
+
+    <!-- Card Display Density -->
+    <div class="pt-2 border-t border-[var(--border)]">
+      <div class="flex items-center gap-1.5 text-xs font-semibold text-[var(--text)] mb-1.5">
+        <LayoutGrid class="w-3.5 h-3.5 text-[var(--muted)]" />
+        <span>Review Card Layout</span>
+      </div>
+      <div class="grid grid-cols-2 gap-1.5">
+        <button
+          type="button"
+          class="density-btn text-xs py-1 px-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] text-[var(--text)] font-medium text-center transition-colors"
+          data-density-choice="magazine"
+        >
+          Magazine
+        </button>
+        <button
+          type="button"
+          class="density-btn text-xs py-1 px-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] text-[var(--text)] font-medium text-center transition-colors"
+          data-density-choice="compact"
+        >
+          Compact
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initSettingsFlyout() {
+    const root = document.querySelector('[data-settings-root]');
+    if (!root) return;
+
+    const trigger = root.querySelector('[data-settings-trigger]') as HTMLButtonElement | null;
+    const menu = root.querySelector('[data-settings-menu]') as HTMLElement | null;
+    const bgToggle = root.querySelector('[data-accent-bg-toggle]') as HTMLInputElement | null;
+    const paletteButtons = root.querySelectorAll('[data-accent-choice]');
+    const densityButtons = root.querySelectorAll('[data-density-choice]');
+
+    if (!trigger || !menu) return;
+
+    function openMenu() {
+      menu?.classList.remove('hidden');
+      trigger?.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMenu() {
+      menu?.classList.add('hidden');
+      trigger?.setAttribute('aria-expanded', 'false');
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!root.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    // Sync current values from documentElement or localStorage
+    const currentAccent = document.documentElement.getAttribute('data-accent') || 'asuka';
+    const currentBg = document.documentElement.getAttribute('data-accent-bg') === 'true';
+    const currentDensity = document.documentElement.getAttribute('data-card-density') || 'magazine';
+
+    function updatePaletteUI(activeId: string) {
+      paletteButtons.forEach((btn) => {
+        const id = btn.getAttribute('data-accent-choice');
+        const check = btn.querySelector('.palette-check');
+        const isActive = id === activeId;
+        btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        if (isActive) {
+          btn.classList.add('border-[var(--accent)]', 'bg-[var(--surface-2)]');
+          check?.classList.remove('opacity-0');
+        } else {
+          btn.classList.remove('border-[var(--accent)]', 'bg-[var(--surface-2)]');
+          check?.classList.add('opacity-0');
+        }
+      });
+    }
+
+    function updateDensityUI(activeDensity: string) {
+      densityButtons.forEach((btn) => {
+        const d = btn.getAttribute('data-density-choice');
+        const isActive = d === activeDensity;
+        if (isActive) {
+          btn.classList.add('border-[var(--accent)]', 'text-[var(--accent)]', 'bg-[var(--surface-2)]');
+        } else {
+          btn.classList.remove('border-[var(--accent)]', 'text-[var(--accent)]', 'bg-[var(--surface-2)]');
+        }
+      });
+    }
+
+    updatePaletteUI(currentAccent);
+    updateDensityUI(currentDensity);
+    if (bgToggle) bgToggle.checked = currentBg;
+
+    paletteButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-accent-choice');
+        if (!id) return;
+        document.documentElement.setAttribute('data-accent', id);
+        try {
+          localStorage.setItem('preference-accent-color', id);
+        } catch {}
+        updatePaletteUI(id);
+      });
+    });
+
+    if (bgToggle) {
+      bgToggle.addEventListener('change', () => {
+        const val = bgToggle.checked;
+        document.documentElement.setAttribute('data-accent-bg', val ? 'true' : 'false');
+        try {
+          localStorage.setItem('preference-accent-bg', val ? 'true' : 'false');
+        } catch {}
+      });
+    }
+
+    densityButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const d = btn.getAttribute('data-density-choice');
+        if (!d) return;
+        document.documentElement.setAttribute('data-card-density', d);
+        try {
+          localStorage.setItem('preference-card-density', d);
+        } catch {}
+        updateDensityUI(d);
+      });
+    });
+  }
+
+  initSettingsFlyout();
+  document.addEventListener('astro:page-load', initSettingsFlyout);
+</script>
+

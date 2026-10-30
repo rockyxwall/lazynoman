@@ -1,6 +1,6 @@
 {
   "name": "lazynoman",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -38,12 +38,16 @@
   "dependencies": {
     "@astrojs/rss": "4.0.19",
     "@astrojs/sitemap": "3.7.3",
+    "@lucide/astro": "^1.65.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "7.4.4",
     "fast-glob": "3.3.3",
     "gray-matter": "4.0.3",
     "markdown-it": "15.0.0",
     "reading-time": "1.5.0",
     "sanitize-html": "2.17.7",
+    "tailwindcss": "^4.3.3",
     "yaml": "2.9.0"
   },
   "devDependencies": {

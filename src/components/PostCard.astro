@@ -1,18 +1,43 @@
 ---
 import type { Post } from "../lib/content";
-import { displayDate, summary, taxonomySlug } from "../lib/content";
+import { displayDate, readingMinutes, summary, taxonomySlug } from "../lib/content";
 
 interface Props { post: Post; heading?: "h2" | "h3"; priority?: boolean }
 const { post, heading = "h2", priority = false } = Astro.props;
 const Heading = heading;
 const image = post.data.image ? `/${post.data.image.replace(/^\//, "")}` : "/images/bannerbackground.webp";
 ---
-<article class="card">
-  <a href={post.data.url}><img src={image} data-cf-image={priority ? undefined : ""} width="640" height="360" loading={priority ? "eager" : "lazy"} fetchpriority={priority ? "high" : "auto"} alt={`${post.data.title} featured image`} /></a>
+<article class="card group transition-all duration-150 hover:border-[#e63946]/50">
+  <a href={post.data.url} class="overflow-hidden block">
+    <img
+      src={image}
+      data-cf-image={priority ? undefined : ""}
+      width="640"
+      height="360"
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : "auto"}
+      alt={`${post.data.title} featured image`}
+      class="transition-transform duration-200 group-hover:scale-[1.02]"
+    />
+  </a>
   <div class="card-body">
-    <p class="meta"><time datetime={post.data.date}>{displayDate(post)}</time></p>
-    <Heading><a href={post.data.url}>{post.data.title}</a></Heading>
-    <p>{summary(post, 150)}</p>
-    <div class="chips">{post.data.categories.map((category) => <a class="chip" href={`/categories/${taxonomySlug(category)}/`}>{category}</a>)}</div>
+    <p class="meta">
+      <time datetime={post.data.date}>{displayDate(post)}</time>
+      <span>·</span>
+      <span>{readingMinutes(post)} min read</span>
+    </p>
+    <Heading class="font-bold text-[1.25rem] leading-snug">
+      <a href={post.data.url} class="text-[var(--text)] hover:text-[var(--accent)] transition-colors">
+        {post.data.title}
+      </a>
+    </Heading>
+    <p class="text-[var(--muted)] text-[0.88rem] line-clamp-3 leading-relaxed">
+      {summary(post, 150)}
+    </p>
+    <div class="chips">
+      {post.data.categories.map((category) => (
+        <a class="chip" href={`/categories/${taxonomySlug(category)}/`}>{category}</a>
+      ))}
+    </div>
   </div>
 </article>

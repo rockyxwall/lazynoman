@@ -2,44 +2,187 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostCard from "../components/PostCard.astro";
 import PostList from "../components/PostList.astro";
-import { getAllPosts, getPublishedPosts, homepagePosts, taxonomy } from "../lib/content";
+import {
+  getAllPosts,
+  getPublishedPosts,
+  homepagePosts,
+  taxonomy,
+  displayDate,
+  readingMinutes,
+  summary,
+  taxonomySlug,
+} from "../lib/content";
+import { ArrowRight, BookOpen, Layers, Tag as TagIcon, Rss, Sparkles } from "@lucide/astro";
 
 const allPosts = await getAllPosts();
 const posts = await getPublishedPosts();
 const featured = homepagePosts(allPosts);
-const featuredImage = featured[0]?.data.image ? `/${featured[0].data.image.replace(/^\//, "")}` : undefined;
+const leadFeatured = featured[0];
+const secondaryFeatured = featured.slice(1);
+const featuredImage = leadFeatured?.data.image
+  ? `/${leadFeatured.data.image.replace(/^\//, "")}`
+  : undefined;
+
 const topics = [...taxonomy(posts, "categories").entries()]
   .map(([slug, group]) => ({ slug, name: group.name, count: group.posts.length }))
   .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name))
   .slice(0, 8);
 ---
+
 <BaseLayout preloadImage={featuredImage} feed="/index.xml">
-  <section class="hero container">
-    <p class="eyebrow">Webnovels, Anime & Gaming</p>
-    <h1>Honest reviews, recommendations, and guides.</h1>
-    <p class="lede">Webnovels, light novels, anime, manga, games, tier lists, and top picks — zero fluff.</p>
+  <!-- Wotaku Magazine Hero -->
+  <section class="hero container pt-8 pb-10">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--surface-2)] border border-[var(--border)] text-xs font-semibold text-[var(--accent)] mb-4">
+        <Sparkles class="w-3.5 h-3.5" />
+        <span>Independent Webfiction Review Hub</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--text)] leading-[1.08] mb-4">
+        Honest reviews, recommendations, and tier lists.
+      </h1>
+      <p class="lede text-lg sm:text-xl text-[var(--muted)] leading-relaxed max-w-2xl mb-6">
+        Critical, hype-free analysis of webnovels, light novels, cultivation, and progression fantasy — grounded in exhaustive personal reading experience.
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="/posts/" class="primary-button">
+          <span>Browse Reviews</span>
+          <ArrowRight class="w-4 h-4" />
+        </a>
+        <a href="/search/" class="icon-button px-4 py-2 text-sm font-bold flex items-center gap-1.5">
+          <span>Search Index</span>
+        </a>
+      </div>
+    </div>
   </section>
-  <section class="container">
-    <h2>Featured Posts</h2>
-    <div class="grid post-grid">{featured.map((post, index) => <PostCard post={post} heading="h3" priority={index === 0} />)}</div>
+
+  <!-- Lead Featured Review Banner -->
+  <section class="container my-8">
+    <div class="mb-6 pb-2 border-b border-[var(--border)]">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mt-0 mb-0">Featured Deep Dives</h2>
+    </div>
+
+    {leadFeatured && (
+      <div class="mb-6">
+        <article class="card group border border-[var(--border)] hover:border-[var(--accent)] transition-all bg-[var(--surface)] rounded-[var(--radius)] overflow-hidden grid lg:grid-cols-12 gap-0 shadow-lg">
+          <a href={leadFeatured.data.url} class="lg:col-span-7 overflow-hidden block">
+            <img
+              src={leadFeatured.data.image ? `/${leadFeatured.data.image.replace(/^\//, "")}` : "/images/bannerbackground.webp"}
+              width="960"
+              height="540"
+              loading="eager"
+              fetchpriority="high"
+              alt={`${leadFeatured.data.title} lead review image`}
+              class="w-full h-full object-cover min-h-[260px] lg:min-h-[360px] transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </a>
+          <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <p class="meta flex items-center gap-2 mb-2 text-sm text-[var(--muted)]">
+                <time datetime={leadFeatured.data.date}>{displayDate(leadFeatured)}</time>
+                <span>·</span>
+                <span>{readingMinutes(leadFeatured)} min read</span>
+              </p>
+              <h3 class="text-2xl sm:text-3xl font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors leading-tight mb-3">
+                <a href={leadFeatured.data.url}>{leadFeatured.data.title}</a>
+              </h3>
+              <p class="text-[var(--muted)] text-base leading-relaxed line-clamp-4 mb-4">
+                {summary(leadFeatured, 220)}
+              </p>
+            </div>
+            <div class="chips pt-2">
+              {leadFeatured.data.categories.map((category) => (
+                <a class="chip" href={`/categories/${taxonomySlug(category)}/`}>{category}</a>
+              ))}
+            </div>
+          </div>
+        </article>
+      </div>
+    )}
+
+    {secondaryFeatured.length > 0 && (
+      <div class="grid post-grid">
+        {secondaryFeatured.map((post) => (
+          <PostCard post={post} heading="h3" />
+        ))}
+      </div>
+    )}
   </section>
-  <section class="container">
-    <h2>Explore Topics</h2>
-    <div class="chips">{topics.map((topic) => <a class="chip" href={`/categories/${topic.slug}/`}>{topic.name} ({topic.count})</a>)}</div>
+
+  <!-- Curated Topics Taxonomy -->
+  <section class="container my-12">
+    <div class="flex items-baseline justify-between mb-4 pb-2 border-b border-[var(--border)]">
+      <h2 class="text-2xl font-bold tracking-tight mt-0 mb-0">Curated Topics</h2>
+      <a href="/categories/" class="text-sm font-bold text-[var(--muted)] hover:text-[var(--accent)] transition-colors">
+        All Categories →
+      </a>
+    </div>
+    <div class="flex flex-wrap gap-2.5">
+      {topics.map((topic) => (
+        <a
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[var(--radius-pill)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] text-sm font-bold hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors shadow-sm"
+          href={`/categories/${topic.slug}/`}
+        >
+          <span>{topic.name}</span>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--surface-2)] text-[var(--muted)]">{topic.count}</span>
+        </a>
+      ))}
+    </div>
   </section>
-  <section class="container">
-    <h2>Latest Posts</h2>
+
+  <!-- Latest Posts Grid (Direct Parent Section for Playwright Contract) -->
+  <section class="container my-12">
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4 pb-2 border-b border-[var(--border)]">Latest Posts</h2>
     <PostList posts={posts.slice(0, 10)} heading="h3" />
-    <p><a href="/posts/">Browse all posts →</a></p>
+    <div class="mt-6 pt-4 text-center">
+      <a href="/posts/" class="primary-button inline-flex">
+        <span>Browse All Reviews & Articles</span>
+        <ArrowRight class="w-4 h-4" />
+      </a>
+    </div>
   </section>
-  <section class="container" aria-labelledby="hub-heading">
-    <p class="eyebrow">Quick Navigation</p>
-    <h2 id="hub-heading">Explore the Archive</h2>
-    <div class="grid action-grid">
-      <article class="card"><div class="card-body"><h3>All Posts</h3><p>Browse full catalog of posts and reviews.</p><a href="/posts/">Browse posts →</a></div></article>
-      <article class="card"><div class="card-body"><h3>Topics</h3><p>Filter by Novels, Anime, Manga, Games, Recommendations, and more.</p><a href="/categories/">Browse topics →</a></div></article>
-      <article class="card"><div class="card-body"><h3>Tags</h3><p>Browse all specific tropes, character traits, and tags.</p><a href="/tags/">Browse tags →</a></div></article>
-      <article class="card"><div class="card-body"><h3>RSS Feed</h3><p>Subscribe to latest updates in your favorite RSS reader.</p><a href="/rss/">Get feed →</a></div></article>
+
+  <!-- Archive Quick Navigation Matrix -->
+  <section class="container my-16" aria-labelledby="hub-heading">
+    <div class="mb-6 pb-2 border-b border-[var(--border)]">
+      <h2 id="hub-heading" class="text-2xl font-bold tracking-tight mt-0 mb-1">Explore the Archive</h2>
+      <p class="text-[var(--muted)] text-sm">Direct pathways through the LazyNoman catalog and feeds.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <a href="/posts/" class="group p-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors block text-decoration-none shadow-sm">
+        <div class="flex items-center justify-between mb-3 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">
+          <BookOpen class="w-5 h-5" />
+          <ArrowRight class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors mt-0 mb-1">All Reviews</h3>
+        <p class="text-sm text-[var(--muted)] m-0 leading-snug">Full chronological catalog of webfiction breakdowns.</p>
+      </a>
+
+      <a href="/categories/" class="group p-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors block text-decoration-none shadow-sm">
+        <div class="flex items-center justify-between mb-3 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">
+          <Layers class="w-5 h-5" />
+          <ArrowRight class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors mt-0 mb-1">Topics</h3>
+        <p class="text-sm text-[var(--muted)] m-0 leading-snug">Filter by Novels, Anime, Manga, and Recommendations.</p>
+      </a>
+
+      <a href="/tags/" class="group p-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors block text-decoration-none shadow-sm">
+        <div class="flex items-center justify-between mb-3 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">
+          <TagIcon class="w-5 h-5" />
+          <ArrowRight class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors mt-0 mb-1">Tropes & Tags</h3>
+        <p class="text-sm text-[var(--muted)] m-0 leading-snug">System, Cultivation, Overpowered MC, Transmigration.</p>
+      </a>
+
+      <a href="/rss/" class="group p-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors block text-decoration-none shadow-sm">
+        <div class="flex items-center justify-between mb-3 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">
+          <Rss class="w-5 h-5" />
+          <ArrowRight class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+        <h3 class="text-lg font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors mt-0 mb-1">RSS Feeds</h3>
+        <p class="text-sm text-[var(--muted)] m-0 leading-snug">Subscribe to global or taxonomy-filtered XML feeds.</p>
+      </a>
     </div>
   </section>
 </BaseLayout>
