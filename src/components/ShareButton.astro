@@ -1,0 +1,240 @@
+---
+import { Share2, Copy } from "@lucide/astro";
+
+interface Props {
+  title: string;
+  url: string;
+  class?: string;
+}
+
+const { title, url, class: className = "" } = Astro.props;
+const shareText = encodeURIComponent(title);
+const shareUrl = encodeURIComponent(url);
+---
+
+<div class:list={["share-menu-container", className]}>
+  <button
+    type="button"
+    class="share-btn"
+    data-share-btn
+    data-title={title}
+    data-url={url}
+    aria-label="Share this article"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <Share2
+      class="w-3.5 h-3.5 text-[var(--accent)] shrink-0"
+      aria-hidden="true"
+    />
+    <span>Share</span>
+  </button>
+
+  <!-- Flyout dropdown fallback for browsers without Web Share API -->
+  <div class="share-flyout" data-share-flyout role="menu" hidden>
+    <a
+      role="menuitem"
+      class="share-flyout-item"
+      href={`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>X (Twitter)</span>
+    </a>
+    <a
+      role="menuitem"
+      class="share-flyout-item"
+      href={`https://bsky.app/intent/compose?text=${shareText}%20${shareUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>Bluesky</span>
+    </a>
+    <a
+      role="menuitem"
+      class="share-flyout-item"
+      href={`https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>Reddit</span>
+    </a>
+    <button
+      type="button"
+      role="menuitem"
+      class="share-flyout-item copy-item"
+      data-copy-btn
+    >
+      <Copy
+        class="w-3.5 h-3.5 text-[var(--muted)] shrink-0"
+        aria-hidden="true"
+      />
+      <span class="copy-label">Copy link</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  function setupShareButtons() {
+    document.querySelectorAll(".share-menu-container").forEach((container) => {
+      const btn =
+        container.querySelector<HTMLButtonElement>("[data-share-btn]");
+      const flyout = container.querySelector<HTMLElement>(
+        "[data-share-flyout]",
+      );
+      const copyBtn =
+        container.querySelector<HTMLButtonElement>("[data-copy-btn]");
+      const copyLabel = container.querySelector<HTMLElement>(".copy-label");
+
+      if (!btn || !flyout) return;
+
+      btn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const title = btn.dataset.title || document.title;
+        const url = btn.dataset.url || window.location.href;
+
+        // Try native Web Share API first (supported on all mobile & modern desktop browsers)
+        if (typeof navigator !== "undefined" && navigator.share) {
+          try {
+            await navigator.share({ title, url });
+            return;
+          } catch (err: any) {
+            // User cancelled or dismissed share sheet
+            if (err.name === "AbortError") return;
+          }
+        }
+
+        // Fallback: toggle dropdown flyout
+        const isHidden = flyout.hasAttribute("hidden");
+        // Close other open flyouts
+        document.querySelectorAll("[data-share-flyout]").forEach((f) => {
+          f.setAttribute("hidden", "");
+        });
+        document.querySelectorAll("[data-share-btn]").forEach((b) => {
+          b.setAttribute("aria-expanded", "false");
+        });
+
+        if (isHidden) {
+          flyout.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+
+      // Copy link inside flyout
+      copyBtn?.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const url = btn.dataset.url || window.location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          if (copyLabel) copyLabel.textContent = "Copied!";
+          setTimeout(() => {
+            if (copyLabel) copyLabel.textContent = "Copy link";
+            flyout.setAttribute("hidden", "");
+            btn.setAttribute("aria-expanded", "false");
+          }, 1500);
+        } catch {
+          if (copyLabel) copyLabel.textContent = "Failed to copy";
+        }
+      });
+    });
+
+    // Close on click outside
+    document.addEventListener("click", () => {
+      document.querySelectorAll("[data-share-flyout]").forEach((f) => {
+        f.setAttribute("hidden", "");
+      });
+      document.querySelectorAll("[data-share-btn]").forEach((b) => {
+        b.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  // Setup on page load and client transitions
+  setupShareButtons();
+  document.addEventListener("astro:page-load", setupShareButtons);
+</script>
+
+<style>
+  .share-menu-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.22rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease,
+      background 0.15s ease;
+  }
+
+  .share-btn:hover,
+  .share-btn[aria-expanded="true"] {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  }
+
+  /* Flyout Dropdown Menu */
+  .share-flyout {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 50;
+    min-width: 145px;
+    padding: 0.35rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface-elv);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-flyout);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .share-flyout[hidden] {
+    display: none;
+  }
+
+  .share-flyout-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--radius-xs);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background 0.12s ease,
+      color 0.12s ease;
+  }
+
+  .share-flyout-item:hover {
+    background: var(--surface-2);
+    color: var(--accent);
+  }
+
+  .copy-item {
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 0.15rem;
+    padding-top: 0.4rem;
+  }
+</style>

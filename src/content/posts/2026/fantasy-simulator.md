@@ -12,34 +12,13 @@ tags:
   - Cultivation
   - Overpowered MC
   - Transmigration
+novel: fantasy-simulator
 draft: false
 ---
 
 *Fantasy Simulator* is a fast-paced Progression Fantasy web novel that excels in grand-scale kingdom building and strategic power optimization but struggles with emotional detachment and character continuity. Readers who enjoy cold, logic-driven protagonists and multiversal transmigration will find this highly engaging.
 
 <!--more-->
-
-## Novel Info
-
-| Feature | Details |
-|---|---|
-| **Title** | Fantasy Simulator |
-| **Associated Names** | 玄幻模拟器 (Xuanhuan Simulator) |
-| **Author** | Salted Fish Jienan (咸鱼洁南) |
-| **Type** | Web Novel (CN) |
-| **Language** | Chinese |
-| **Year** | 2021 |
-| **Status in COO** | 856 Chapters (Completed) |
-| **Licensed** | Yes |
-| **Translation** | Completely Translated |
-| **Word Count** | ~1.62M words (853 Chapters) |
-| **Original Publisher** | Qidian |
-| **English Publisher** | Webnovel |
-| **NovelUpdates Rating** | 3.6 / 5.0 (140 votes) |
-| **Genre** | Adventure, Drama, Fantasy, Psychological, Supernatural, Xuanhuan |
-| **Tags** | Academy, Alchemy, Aliens, Antihero Protagonist, Apocalypse, Battle Academy, Bloodlines, Calm Protagonist, Cautious Protagonist, Cheats, Clever Protagonist, Cultivation, Cunning Protagonist, Demonic Cultivation Technique, Determined Protagonist, Dishonest Protagonist, Doting Older Siblings, Doting Parents, Elemental Magic, Fantasy World, Fast Learner, Game Elements, Genetic Modifications, Genius Protagonist, Godly Powers, Gods, Handsome Male Lead, Hiding True Abilities, Hiding True Identity, Interdimensional Travel, Kingdom Building, Kingdoms, Knights, Loyal Subordinates, Male Protagonist, Manipulative Characters, Master-Disciple Relationship, Medieval, Modern Knowledge, Multiple Identities, Multiple Realms, Orphans, Overpowered Protagonist, Parallel Worlds, Pragmatic Protagonist, Proactive Protagonist, Protagonist with Multiple Bodies, Race Change, Ruthless Protagonist, Schemes And Conspiracies, Sect Development, Sister Complex, Special Abilities, Strength-based Social Hierarchy, Sword And Magic, Sword Wielder, System Administrator, Technological Gap, Time Skip, Transported to Another World, Wars, Weak to Strong, Wizards, World Hopping, World Travel |
-| **Description** | After dying, Chen Heng finds that he has transmigrated to an alternate reality: everything is the same, except the world is now a Wuxia world heavily influenced by martial arts! Not only this, he discovers that he has a Fantasy Simulator, from which he obtains rewards that make him incredibly powerful in his new reality as well. Martial arts, immortal cultivation, and overpowered abilities–all of this begins from a single simulation! |
-
 
 ## What to Expect
 The novel is easy to describe: there are no important characters except the MC, Chen Heng. The story is a pure world-hopper where he jumps from one world to another with different power systems, eventually becoming the strongest being in the novel. Side characters are introduced and forgotten as soon as their arc ends.

@@ -1,0 +1,459 @@
+---
+import { BookOpen, Star, ChevronDown } from "@lucide/astro";
+import type { NovelData } from "../lib/novel";
+import type { Post } from "../lib/content";
+import { displayDate, readingMinutes, taxonomySlug } from "../lib/content";
+import ShareButton from "./ShareButton.astro";
+
+interface Props {
+  novel: NovelData;
+  image?: string;
+  post: Post;
+  canonicalUrl: string;
+}
+
+const { novel, image, post, canonicalUrl } = Astro.props;
+
+const isCompleted =
+  novel.statusInCoo?.toLowerCase().includes("complete") ||
+  novel.translation?.toLowerCase().includes("complete");
+
+const statusDotClass = isCompleted
+  ? "status-completed"
+  : novel.statusInCoo?.toLowerCase().includes("hiatus")
+    ? "status-hiatus"
+    : "status-ongoing";
+
+const statusText = isCompleted
+  ? "Completed"
+  : novel.statusInCoo?.toLowerCase().includes("hiatus")
+    ? "Hiatus"
+    : "Ongoing";
+
+// Extract chapter count
+const chapterCount =
+  novel.statusInCoo?.match(/(\d+)\s*chapters?/i)?.[1] ??
+  novel.wordCount?.match(/(\d+)\s*chapters?/i)?.[1] ??
+  (novel.statusInCoo
+    ? novel.statusInCoo.replace(/\(.*?\)/g, "").trim()
+    : "N/A");
+
+const chineseOrAssocTitle =
+  novel.associatedNames?.find((name) => /[\u4e00-\u9fff]/.test(name)) ??
+  novel.associatedNames?.[0];
+
+// Format Length
+const lengthDisplay = novel.wordCount?.split("(")[0]?.trim() ?? "N/A";
+
+// Display Chips: Combine primary genres and first few tags
+const allChips = [
+  ...(novel.genres ?? []),
+  ...(novel.tags ? novel.tags.slice(0, 8) : []),
+];
+const displayChips = Array.from(new Set(allChips));
+---
+
+<header class="novel-review-header" aria-label="Novel Review Header">
+  <!-- H1 Title & Subtitle blending seamlessly with site -->
+  <div class="novel-heading-block">
+    <h1
+      class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text)] mb-1"
+    >
+      {post.data.title}
+    </h1>
+    {
+      chineseOrAssocTitle && (
+        <p class="text-base sm:text-lg text-[var(--muted)] font-normal mb-3">
+          {chineseOrAssocTitle}
+        </p>
+      )
+    }
+  </div>
+
+  <!-- Meta Info: Date, Read Time, Categories & Share -->
+  <div
+    class="meta flex items-center justify-between gap-3 text-sm text-[var(--muted)] mb-4 flex-wrap"
+  >
+    <div class="flex items-center gap-2">
+      <time datetime={post.data.date}>{displayDate(post)}</time> · {
+        readingMinutes(post)
+      } min read
+    </div>
+    <div class="flex items-center gap-2">
+      {
+        post.data.categories.length > 0 && (
+          <div class="chips !p-0 !m-0">
+            {post.data.categories.map((category) => (
+              <a class="chip" href={`/categories/${taxonomySlug(category)}/`}>
+                {category}
+              </a>
+            ))}
+          </div>
+        )
+      }
+      <ShareButton title={post.data.title} url={canonicalUrl} />
+    </div>
+  </div>
+
+  <!-- Novel Hero: 3:4 Cover on Left + 6 Stats on Right -->
+  <div class="novel-hero-layout">
+    {
+      image && (
+        <figure class="novel-cover-figure">
+          <img
+            class="novel-cover-img"
+            src={image}
+            alt={`${post.data.title} cover`}
+            loading="eager"
+            width="400"
+            height="533"
+          />
+        </figure>
+      )
+    }
+
+    <!-- 6-Tile Stats Grid blending into site surface -->
+    <div class="novel-stats-grid">
+      <!-- 1: Status -->
+      <div class="stat-tile">
+        <span class="stat-label">Status</span>
+        <div class="stat-value-wrap">
+          <span class={`status-dot ${statusDotClass}`} aria-hidden="true"
+          ></span>
+          <span class="stat-value">{statusText}</span>
+        </div>
+      </div>
+
+      <!-- 2: Rating -->
+      <div class="stat-tile">
+        <span class="stat-label">Rating</span>
+        <div class="stat-value-wrap">
+          {
+            novel.rating ? (
+              <>
+                <Star
+                  class="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0"
+                  aria-hidden="true"
+                />
+                <span class="stat-value text-amber-400 font-bold">
+                  {novel.rating.score.toFixed(1)}
+                </span>
+                {novel.rating.votes && (
+                  <span class="stat-sub">({novel.rating.votes})</span>
+                )}
+              </>
+            ) : (
+              <span class="stat-value text-[var(--muted)]">N/A</span>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- 3: Chapters -->
+      <div class="stat-tile">
+        <span class="stat-label">Chapters</span>
+        <div class="stat-value-wrap">
+          <span class="stat-value font-mono">{chapterCount}</span>
+        </div>
+      </div>
+
+      <!-- 4: Words / Length -->
+      <div class="stat-tile">
+        <span class="stat-label">Length</span>
+        <div class="stat-value-wrap">
+          <span class="stat-value font-mono">{lengthDisplay}</span>
+        </div>
+      </div>
+
+      <!-- 5: Author -->
+      <div class="stat-tile">
+        <span class="stat-label">Author</span>
+        <div class="stat-value-wrap">
+          <span class="stat-value truncate" title={novel.author}>
+            {novel.author ?? "Unknown"}
+          </span>
+        </div>
+      </div>
+
+      <!-- 6: Translation -->
+      <div class="stat-tile">
+        <span class="stat-label">Translation</span>
+        <div class="stat-value-wrap">
+          <span class="stat-value truncate" title={novel.translation}>
+            {novel.publishers?.english ?? novel.translation ?? "N/A"}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Genre & Tag Chips using site's native .chips -->
+  {
+    displayChips.length > 0 && (
+      <div class="chips !m-0 !pt-1" aria-label="Novel genres and tags">
+        {displayChips.map((chip) => (
+          <span class="chip cursor-default">{chip}</span>
+        ))}
+      </div>
+    )
+  }
+
+  <!-- Collapsible Deep Details Drawer -->
+  {
+    (novel.description ||
+      (novel.tags && novel.tags.length > 8) ||
+      (novel.associatedNames && novel.associatedNames.length > 1)) && (
+      <details class="novel-drawer group">
+        <summary class="drawer-summary">
+          <span class="flex items-center gap-2">
+            <BookOpen
+              class="w-4 h-4 text-[var(--accent)] shrink-0"
+              aria-hidden="true"
+            />
+            <span class="font-semibold text-xs sm:text-sm text-[var(--text)]">
+              Official Synopsis & Index Tags
+            </span>
+            {novel.tags && (
+              <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--surface-elv)] text-[var(--muted)] border border-[var(--border)] font-mono">
+                {novel.tags.length}
+              </span>
+            )}
+          </span>
+          <ChevronDown
+            class="w-4 h-4 text-[var(--muted)] transition-transform duration-200 group-open:rotate-180 shrink-0"
+            aria-hidden="true"
+          />
+        </summary>
+
+        <div class="drawer-content">
+          {novel.associatedNames && novel.associatedNames.length > 0 && (
+            <div class="drawer-section">
+              <span class="drawer-section-title">Associated Names</span>
+              <p class="text-sm italic text-[var(--text)] m-0 leading-relaxed">
+                {novel.associatedNames.join(" · ")}
+              </p>
+            </div>
+          )}
+
+          {novel.description && (
+            <div class="drawer-section">
+              <span class="drawer-section-title">Official Synopsis</span>
+              <div class="drawer-synopsis-box">{novel.description}</div>
+            </div>
+          )}
+
+          {novel.tags && novel.tags.length > 0 && (
+            <div class="drawer-section">
+              <span class="drawer-section-title">
+                All Tags ({novel.tags.length})
+              </span>
+              <div class="drawer-tags-cloud">
+                {novel.tags.map((tag) => (
+                  <span class="drawer-tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </details>
+    )
+  }
+</header>
+
+<style>
+  /* Borderless outer container: blends directly into page ground */
+  .novel-review-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .novel-heading-block {
+    margin: 0;
+  }
+
+  /* Hero Layout: Cover Left + Stats Right */
+  .novel-hero-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 640px) {
+    .novel-hero-layout {
+      flex-direction: row;
+      gap: 1.25rem;
+    }
+  }
+
+  /* Cover figure: matches .article-image border and radius */
+  .novel-cover-figure {
+    margin: 0;
+    flex-shrink: 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (min-width: 640px) {
+    .novel-cover-figure {
+      width: 160px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .novel-cover-figure {
+      width: 185px;
+    }
+  }
+
+  .novel-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+    display: block;
+  }
+
+  /* Stats Grid: clean tiles on var(--surface) */
+  .novel-stats-grid {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    align-content: center;
+  }
+
+  @media (min-width: 500px) {
+    .novel-stats-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+
+  .stat-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.75rem 0.85rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    gap: 0.3rem;
+    transition: border-color 0.15s ease;
+  }
+  .stat-tile:hover {
+    border-color: var(--border-strong);
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .stat-value-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 1.25rem;
+    width: 100%;
+  }
+
+  .stat-value {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .stat-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* Drawer: clean, quiet, blended */
+  .novel-drawer {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem;
+    margin-top: 0.25rem;
+  }
+
+  .drawer-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    padding: 0.25rem 0;
+  }
+  .drawer-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .drawer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .drawer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .drawer-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  .drawer-synopsis-box {
+    font-size: 0.95rem;
+    line-height: 1.68;
+    color: var(--text);
+    padding: 0.9rem 1.15rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    white-space: pre-line;
+  }
+
+  .drawer-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .drawer-tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    color: var(--muted);
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .drawer-tag:hover {
+    color: var(--text);
+    border-color: var(--border);
+  }
+</style>

@@ -39,6 +39,7 @@ const shared = z
       .union([z.literal(1), z.literal(2), z.literal(3)])
       .optional(),
     tables: z.record(z.string(), tableValue).optional(),
+    novel: z.string().optional(),
     build: z.record(z.string(), z.unknown()).optional(),
     sitemap: z.record(z.string(), z.unknown()).optional(),
     _sourcePath: z.string(),
