@@ -41,7 +41,7 @@
     "@astrojs/sitemap": "3.7.3",
     "@lucide/astro": "^1.65.0",
     "@tailwindcss/typography": "^0.5.20",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.5",
     "astro": "7.4.4",
     "fast-glob": "3.3.3",
     "gray-matter": "4.0.3",
